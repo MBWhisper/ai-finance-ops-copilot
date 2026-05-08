@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { LayoutDashboard, TrendingUp, Receipt, Settings } from "lucide-react";
+import { LogoutButton } from "@/components/dashboard/logout-button";
 
 const navItems = [
   { label: "Overview", href: "/dashboard/overview", icon: LayoutDashboard },
@@ -10,11 +11,11 @@ const navItems = [
 
 export function Sidebar() {
   return (
-    <aside className="fixed left-0 top-0 h-screen w-64 border-r bg-white p-6">
+    <aside className="fixed left-0 top-0 flex h-screen w-64 flex-col border-r bg-white p-6">
       <Link href="/dashboard/overview" className="mb-8 block text-xl font-bold">
         Finance Copilot
       </Link>
-      <nav className="space-y-2">
+      <nav className="flex-1 space-y-2">
         {navItems.map((item) => (
           <Link
             key={item.href}
@@ -26,6 +27,9 @@ export function Sidebar() {
           </Link>
         ))}
       </nav>
+      <div className="border-t pt-4">
+        <LogoutButton />
+      </div>
     </aside>
   );
 }
