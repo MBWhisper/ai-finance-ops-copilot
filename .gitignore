@@ -10,3 +10,5 @@ coverage/
 .drizzle/
 cache/
 package-lock.backup.json
+
+.vercel
