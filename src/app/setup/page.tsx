@@ -40,7 +40,7 @@ export default async function SetupPage() {
       throw new Error("Failed to save Stripe key: " + error.message);
     }
 
-    redirect("/overview?welcome=true");
+    redirect("/dashboard/overview?welcome=true");
   }
 
   return (

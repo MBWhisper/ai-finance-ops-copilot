@@ -53,8 +53,8 @@ export async function saveStripeKey(formData: FormData): Promise<void> {
 
     await syncStripeData(user.id);
 
-    revalidatePath("/overview");
-    redirect("/overview");
+    revalidatePath("/dashboard/overview");
+    redirect("/dashboard/overview");
   } catch (err) {
     logger.error({ err, userId: user.id }, "Failed to save Stripe key");
     throw err;

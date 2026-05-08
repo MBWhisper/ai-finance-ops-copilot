@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     password = formData.get('password') as string
   }
 
-  const response = NextResponse.redirect(new URL('/overview', request.url), {
+  const response = NextResponse.redirect(new URL('/dashboard/overview', request.url), {
     status: 303,
   })
 

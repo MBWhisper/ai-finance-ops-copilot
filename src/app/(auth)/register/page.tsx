@@ -10,7 +10,7 @@ export default async function RegisterPage() {
   } = await supabase.auth.getUser();
 
   if (user) {
-    redirect("/overview");
+    redirect("/dashboard/overview");
   }
 
   async function signUp(formData: FormData): Promise<void> {
@@ -42,7 +42,7 @@ export default async function RegisterPage() {
       await admin.auth.admin.updateUserById(data.user.id, { email_confirm: true });
     }
 
-    redirect("/overview");
+    redirect("/dashboard/overview");
   }
 
   return (

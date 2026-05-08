@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { Sidebar } from "@/components/dashboard/sidebar";
+import { redirect } from "next/navigation";
 
 export default async function DashboardLayout({
   children,
@@ -12,11 +13,7 @@ export default async function DashboardLayout({
   } = await supabase.auth.getUser();
 
   if (!user) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <p>Not authenticated. <a href="/login">Sign in</a></p>
-      </div>
-    );
+    redirect("/login");
   }
 
   return (

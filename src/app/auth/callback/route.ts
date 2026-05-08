@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function GET(request: NextRequest) {
   const requestUrl = new URL(request.url)
   const code = requestUrl.searchParams.get('code')
-  const redirectUrl = new URL('/overview', requestUrl)
+  const redirectUrl = new URL('/dashboard/overview', requestUrl)
 
   let response = NextResponse.redirect(redirectUrl)
 

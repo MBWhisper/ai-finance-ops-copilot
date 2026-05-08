@@ -26,7 +26,7 @@ export async function middleware(request: NextRequest) {
 
   const pathname = request.nextUrl.pathname
 
-  const publicPaths = ['/login', '/register', '/signup', '/auth', '/api/auth', '/', '/marketing', '/pricing', '/callback']
+  const publicPaths = ['/login', '/register', '/signup', '/auth/callback', '/auth/login', '/api/auth', '/', '/marketing', '/pricing']
   const isPublicPath = publicPaths.some(path =>
     pathname === path || pathname.startsWith(path + '/')
   )
@@ -37,9 +37,9 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  if (user && pathname === '/login') {
+  if (user && (pathname === '/login' || pathname === '/')) {
     const url = request.nextUrl.clone()
-    url.pathname = '/overview'
+    url.pathname = '/dashboard/overview'
     return NextResponse.redirect(url)
   }
 

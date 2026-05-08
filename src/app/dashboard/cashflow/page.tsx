@@ -71,7 +71,7 @@ export default async function CashFlowPage({
         <PeriodSelector
           selectedPeriod={period}
           onPeriodChange={(p) => {
-            window.location.href = `/cashflow?period=${p}`;
+            window.location.href = `/dashboard/cashflow?period=${p}`;
           }}
         />
       </div>

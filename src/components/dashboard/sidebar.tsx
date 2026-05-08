@@ -2,16 +2,16 @@ import Link from "next/link";
 import { LayoutDashboard, TrendingUp, Receipt, Settings } from "lucide-react";
 
 const navItems = [
-  { label: "Overview", href: "/overview", icon: LayoutDashboard },
-  { label: "Cash Flow", href: "/cashflow", icon: TrendingUp },
-  { label: "AR", href: "/ar", icon: Receipt },
-  { label: "Settings", href: "/settings", icon: Settings },
+  { label: "Overview", href: "/dashboard/overview", icon: LayoutDashboard },
+  { label: "Cash Flow", href: "/dashboard/cashflow", icon: TrendingUp },
+  { label: "AR", href: "/dashboard/ar", icon: Receipt },
+  { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ];
 
 export function Sidebar() {
   return (
     <aside className="fixed left-0 top-0 h-screen w-64 border-r bg-white p-6">
-      <Link href="/overview" className="mb-8 block text-xl font-bold">
+      <Link href="/dashboard/overview" className="mb-8 block text-xl font-bold">
         Finance Copilot
       </Link>
       <nav className="space-y-2">

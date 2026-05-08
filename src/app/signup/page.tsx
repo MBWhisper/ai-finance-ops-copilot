@@ -15,7 +15,7 @@ export default async function SignupPage({
   } = await supabase.auth.getUser();
 
   if (user) {
-    redirect("/overview");
+    redirect("/dashboard/overview");
   }
 
   const selectedPlan = searchParams.plan || "starter";
@@ -32,7 +32,7 @@ export default async function SignupPage({
       password,
       options: {
         data: { name, plan: selectedPlan },
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/callback`,
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
       },
     });
 
@@ -49,7 +49,7 @@ export default async function SignupPage({
       await admin.auth.admin.updateUserById(data.user.id, { email_confirm: true });
     }
 
-    redirect("/overview");
+    redirect("/dashboard/overview");
   }
 
   async function signUpWithGoogle(): Promise<void> {

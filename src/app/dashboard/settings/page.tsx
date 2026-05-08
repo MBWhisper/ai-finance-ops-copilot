@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { createClient } from "@/lib/supabase/server";
 import { db } from "@/db";
 import { logger } from "@/lib/logger";
+import { StripeKeyForm } from "@/components/settings/stripe-key-form";
 
 export default async function SettingsPage() {
   const supabase = createClient();
@@ -45,25 +46,7 @@ export default async function SettingsPage() {
               Stripe connected and synced. Last sync: recently.
             </div>
           )}
-          <form action="/api/stripe-key" method="POST" className="space-y-4">
-            <div>
-              <label htmlFor="stripeKey" className="mb-1 block text-sm font-medium">
-                Stripe Secret Key
-              </label>
-              <input
-                id="stripeKey"
-                name="stripeKey"
-                type="password"
-                placeholder="sk_live_..."
-                required
-                className="w-full rounded-md border border-gray-300 px-3 py-2 font-mono text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
-              />
-              <p className="mt-1 text-xs text-gray-500">
-                Find this in your Stripe Dashboard → Developers → API keys
-              </p>
-            </div>
-            <Button type="submit">Save & Sync</Button>
-          </form>
+          <StripeKeyForm />
         </CardContent>
       </Card>
 
