@@ -25,7 +25,7 @@ export default async function RegisterPage() {
       password,
       options: {
         data: { name },
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/callback`,
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
       },
     });
 
