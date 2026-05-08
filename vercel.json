@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/cron/forecast-refresh",
-      "schedule": "0 */6 * * *"
+      "schedule": "0 2 * * *"
     },
     {
       "path": "/api/cron/ar-reminders",
@@ -10,7 +10,7 @@
     },
     {
       "path": "/api/cron/stripe-sync",
-      "schedule": "0 */4 * * *"
+      "schedule": "0 4 * * *"
     }
   ]
 }
