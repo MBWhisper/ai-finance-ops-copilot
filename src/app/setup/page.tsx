@@ -3,6 +3,10 @@ import { redirect } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { encrypt } from "@/lib/crypto";
+import { db } from "@/db";
+import { stripeAccounts } from "@/db/schema";
+import { eq } from "drizzle-orm";
 
 export default async function SetupPage() {
   const supabase = createClient();
@@ -16,7 +20,6 @@ export default async function SetupPage() {
 
   async function connectStripe(formData: FormData) {
     "use server";
-    const supabase = createClient();
     const stripeKey = formData.get("stripeKey") as string;
 
     if (!stripeKey) {
@@ -27,17 +30,21 @@ export default async function SetupPage() {
       throw new Error("Invalid Stripe key format. Must start with sk_test_ or sk_live_");
     }
 
-    const { error } = await supabase
-      .from("stripe_accounts")
-      .insert({
-        user_id: user!.id,
-        stripe_account_id: "manual_" + Date.now(),
-        access_token: stripeKey,
-        last_sync_at: new Date().toISOString(),
-      });
+    const encrypted = encrypt(stripeKey);
 
-    if (error) {
-      throw new Error("Failed to save Stripe key: " + error.message);
+    const existing = await db.query.stripeAccounts.findFirst({
+      where: eq(stripeAccounts.userId, user!.id),
+    });
+
+    if (existing) {
+      await db.update(stripeAccounts)
+        .set({ accessToken: encrypted, lastSyncAt: null })
+        .where(eq(stripeAccounts.userId, user!.id));
+    } else {
+      await db.insert(stripeAccounts).values({
+        userId: user!.id,
+        accessToken: encrypted,
+      });
     }
 
     redirect("/dashboard/overview?welcome=true");

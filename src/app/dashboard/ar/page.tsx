@@ -12,7 +12,7 @@ export default async function ARPage() {
         <h1 className="text-3xl font-bold tracking-tight text-gray-900">AR / Invoices</h1>
         <p className="text-gray-500 mt-1">Manage your accounts receivable and invoices.</p>
       </div>
-      <div className="bg-white rounded-xl border border-gray-200 rounded-xl overflow-hidden">
+      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
         <div className="p-4 border-b border-gray-200 flex items-center justify-between">
           <h2 className="text-sm font-semibold text-gray-700">All Invoices</h2>
           <span className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">0 invoices</span>

@@ -1,21 +1,29 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
+import { TrialBanner } from '@/components/dashboard/trial-banner'
 
-export default async function OverviewPage() {
+export default async function OverviewPage({ searchParams }: { searchParams: { welcome?: string } }) {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
 
-  if (!user) {
-    redirect('/login')
-  }
+  if (!user) { redirect('/login') }
+
+  const { data: profile } = await supabase
+    .from('users')
+    .select('trial_ends_at, plan')
+    .eq('id', user.id)
+    .single()
 
   return (
     <div className="space-y-6">
+      <TrialBanner
+        trialEndsAt={profile?.trial_ends_at ?? null}
+        plan={profile?.plan ?? 'starter'}
+        showWelcome={searchParams.welcome === 'true'}
+      />
       <div>
         <h1 className="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
-        <p className="text-gray-500 mt-1">
-          Welcome back{user.email ? `, ${user.email}` : ''} 👋
-        </p>
+        <p className="text-gray-500 mt-1">Welcome back{user.email ? `, ${user.email}` : ''}</p>
       </div>
 
       {/* KPI Cards */}
