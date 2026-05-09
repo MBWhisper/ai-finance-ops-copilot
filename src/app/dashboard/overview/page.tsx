@@ -1,18 +1,47 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { TrialBanner } from '@/components/dashboard/trial-banner'
+import { KPICGrid } from '@/components/dashboard/kpi-grid'
+import { RevenueChart } from '@/components/dashboard/revenue-chart'
+import { getLatestMetrics, getMetricsHistory } from '@/db/queries/metrics'
+import { getInvoiceStats } from '@/db/queries/invoices'
+import { getStripeAccount } from '@/db/queries/stripe-accounts'
+import { formatCurrency } from '@/lib/utils'
+import Link from 'next/link'
 
-export default async function OverviewPage({ searchParams }: { searchParams: { welcome?: string } }) {
+export default async function OverviewPage({
+  searchParams,
+}: {
+  searchParams: { welcome?: string }
+}) {
   const supabase = createClient()
   const { data: { user } } = await supabase.auth.getUser()
-
-  if (!user) { redirect('/login') }
+  if (!user) redirect('/login')
 
   const { data: profile } = await supabase
     .from('users')
     .select('trial_ends_at, plan')
     .eq('id', user.id)
     .single()
+
+  const [latestMetrics, metricsHistory, invoiceStats, stripeAccount] = await Promise.all([
+    getLatestMetrics(user.id),
+    getMetricsHistory(user.id, 90),
+    getInvoiceStats(user.id),
+    getStripeAccount(user.id),
+  ])
+
+  const hasStripe = !!stripeAccount
+  const metricResult = latestMetrics ?? { mrrCents: 0, arrCents: 0, churnRate: 0, ltvCents: 0 }
+  const prevPeriod = metricsHistory.length > 30 ? metricsHistory[30] : null
+  const changes = prevPeriod
+    ? {
+        mrr: prevPeriod.mrrCents > 0 ? ((metricResult.mrrCents - prevPeriod.mrrCents) / prevPeriod.mrrCents) * 100 : 0,
+        arr: prevPeriod.arrCents > 0 ? ((metricResult.arrCents - prevPeriod.arrCents) / prevPeriod.arrCents) * 100 : 0,
+        churn: prevPeriod.churnRate > 0 ? metricResult.churnRate - prevPeriod.churnRate : 0,
+        ltv: prevPeriod.ltvCents > 0 ? ((metricResult.ltvCents - prevPeriod.ltvCents) / prevPeriod.ltvCents) * 100 : 0,
+      }
+    : undefined
 
   return (
     <div className="space-y-6">
@@ -21,69 +50,83 @@ export default async function OverviewPage({ searchParams }: { searchParams: { w
         plan={profile?.plan ?? 'starter'}
         showWelcome={searchParams.welcome === 'true'}
       />
-      <div>
-        <h1 className="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
-        <p className="text-gray-500 mt-1">Welcome back{user.email ? `, ${user.email}` : ''}</p>
+
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
+          <p className="mt-1 text-gray-500">
+            Welcome back{user.email ? `, ${user.email}` : ''}
+          </p>
+        </div>
+        {!hasStripe && (
+          <Link
+            href="/dashboard/settings"
+            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+          >
+            Connect Stripe
+          </Link>
+        )}
       </div>
 
-      {/* KPI Cards */}
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-          <p className="text-sm font-medium text-gray-500">MRR</p>
-          <p className="text-3xl font-bold text-gray-900 mt-1">$0</p>
-          <p className="text-xs text-gray-400 mt-1">Connect Stripe to track</p>
-        </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-          <p className="text-sm font-medium text-gray-500">ARR</p>
-          <p className="text-3xl font-bold text-gray-900 mt-1">$0</p>
-          <p className="text-xs text-gray-400 mt-1">Connect Stripe to track</p>
-        </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-          <p className="text-sm font-medium text-gray-500">Churn Rate</p>
-          <p className="text-3xl font-bold text-gray-900 mt-1">0%</p>
-          <p className="text-xs text-gray-400 mt-1">Connect Stripe to track</p>
-        </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-          <p className="text-sm font-medium text-gray-500">LTV</p>
-          <p className="text-3xl font-bold text-gray-900 mt-1">$0</p>
-          <p className="text-xs text-gray-400 mt-1">Connect Stripe to track</p>
-        </div>
-      </div>
+      {!hasStripe ? (
+        <>
+          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+            {(['MRR', 'ARR', 'Churn Rate', 'LTV'] as const).map((label) => (
+              <div key={label} className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+                <p className="text-sm font-medium text-gray-500">{label}</p>
+                <p className="mt-1 text-3xl font-bold text-gray-900">
+                  {label === 'Churn Rate' ? '0%' : '$0'}
+                </p>
+                <p className="mt-1 text-xs text-gray-400">Connect Stripe to track</p>
+              </div>
+            ))}
+          </div>
 
-      {/* Invoice Stats */}
-      <div className="grid gap-4 md:grid-cols-3">
-        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-          <p className="text-sm font-medium text-gray-500">Total Invoices</p>
-          <p className="text-3xl font-bold text-gray-900 mt-1">0</p>
-        </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-          <p className="text-sm font-medium text-gray-500">Paid</p>
-          <p className="text-3xl font-bold text-green-600 mt-1">0</p>
-        </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
-          <p className="text-sm font-medium text-gray-500">Outstanding</p>
-          <p className="text-3xl font-bold text-amber-600 mt-1">0</p>
-        </div>
-      </div>
+          <div className="rounded-xl border-2 border-dashed border-gray-200 bg-white p-12 text-center">
+            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-50">
+              <svg className="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+            <h3 className="mb-2 text-lg font-semibold text-gray-900">Get Started</h3>
+            <p className="mx-auto max-w-sm text-sm text-gray-500">
+              Connect your Stripe account in Settings to automatically import invoices and track MRR, ARR, and churn.
+            </p>
+            <Link
+              href="/dashboard/settings"
+              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+            >
+              Go to Settings
+            </Link>
+          </div>
+        </>
+      ) : (
+        <>
+          <KPICGrid metrics={metricResult} changes={changes} />
 
-      {/* Get Started CTA */}
-      <div className="bg-white rounded-xl border-2 border-dashed border-gray-200 p-12 text-center">
-        <div className="mx-auto w-12 h-12 bg-blue-50 rounded-full flex items-center justify-center mb-4">
-          <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-          </svg>
-        </div>
-        <h3 className="text-lg font-semibold text-gray-900 mb-2">Get Started</h3>
-        <p className="text-sm text-gray-500 max-w-sm mx-auto">
-          Connect your Stripe account in Settings to automatically import invoices and track MRR, ARR, and churn.
-        </p>
-        <a
-          href="/dashboard/settings"
-          className="inline-flex mt-4 items-center gap-2 bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-blue-700 transition-colors"
-        >
-          Go to Settings
-        </a>
-      </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+              <p className="text-sm font-medium text-gray-500">Total Invoices</p>
+              <p className="mt-1 text-3xl font-bold text-gray-900">{invoiceStats.total}</p>
+            </div>
+            <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+              <p className="text-sm font-medium text-gray-500">Paid</p>
+              <p className="mt-1 text-3xl font-bold text-green-600">{invoiceStats.paid}</p>
+            </div>
+            <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+              <p className="text-sm font-medium text-gray-500">Outstanding</p>
+              <p className="mt-1 text-3xl font-bold text-amber-600">
+                {formatCurrency(invoiceStats.totalAmountCents - (invoiceStats.paid * (invoiceStats.totalAmountCents / (invoiceStats.total || 1))))}
+              </p>
+            </div>
+          </div>
+
+          <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+            <h2 className="mb-4 text-base font-semibold text-gray-900">Revenue Over Time</h2>
+            <RevenueChart data={metricsHistory.slice().reverse()} />
+          </div>
+        </>
+      )}
     </div>
   )
 }
