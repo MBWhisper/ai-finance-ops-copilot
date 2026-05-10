@@ -1,126 +1,100 @@
-import { createClient } from "@/lib/supabase/server";
-import { createClient as createAdminClient } from "@supabase/supabase-js";
-import { redirect } from "next/navigation";
-import Link from "next/link";
+'use client'
+import { useState } from 'react'
+import { createClient } from '@/lib/supabase/browser'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
-export default async function RegisterPage() {
-  const supabase = createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+export default function RegisterPage() {
+  const router = useRouter()
+  const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  if (user) {
-    redirect("/dashboard/overview");
-  }
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setLoading(true)
+    setError('')
 
-  async function signUp(formData: FormData): Promise<void> {
-    "use server";
-    const supabase = createClient();
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    const name = formData.get("name") as string;
+    const formData = new FormData(e.currentTarget)
+    const email = formData.get('email') as string
+    const password = formData.get('password') as string
+    const name = formData.get('name') as string
 
-    const { data, error } = await supabase.auth.signUp({
+    const supabase = createClient()
+    const { error } = await supabase.auth.signUp({
       email,
       password,
       options: {
         data: { name },
-        emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL}/auth/callback`,
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
       },
-    });
+    })
 
     if (error) {
-      throw new Error(error.message);
+      setError(error.message)
+      setLoading(false)
+      return
     }
 
-    if (!data.session && data.user && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-      const admin = createAdminClient(
-        process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY,
-        { auth: { autoRefreshToken: false, persistSession: false } }
-      );
-      await admin.auth.admin.updateUserById(data.user.id, { email_confirm: true });
-    }
-
-    redirect("/dashboard/overview");
+    router.push('/setup')
   }
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md space-y-6 rounded-lg bg-white p-8 shadow">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold tracking-tight">
-            Create Account
-          </h1>
-          <p className="mt-2 text-sm text-muted-foreground">
-            Start tracking your SaaS metrics today.
-          </p>
-        </div>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow">
+        <h1 className="text-2xl font-bold mb-1">Create Account</h1>
+        <p className="text-gray-500 mb-6">Start tracking your SaaS metrics today.</p>
 
-        <form action={signUp} className="space-y-4">
+        {error && (
+          <div className="bg-red-50 text-red-600 p-3 rounded mb-4 text-sm border border-red-200">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label
-              htmlFor="name"
-              className="mb-1 block text-sm font-medium text-gray-700"
-            >
-              Name
-            </label>
+            <label className="block text-sm font-medium mb-1">Name</label>
             <input
-              id="name"
               name="name"
               type="text"
               required
               placeholder="Jane Doe"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
-            <label
-              htmlFor="email"
-              className="mb-1 block text-sm font-medium text-gray-700"
-            >
-              Email
-            </label>
+            <label className="block text-sm font-medium mb-1">Email</label>
             <input
-              id="email"
               name="email"
               type="email"
               required
               placeholder="founder@saas.com"
-              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <div>
-            <label
-              htmlFor="password"
-              className="mb-1 block text-sm font-medium text-gray-700"
-            >
-              Password
-            </label>
+            <label className="block text-sm font-medium mb-1">Password</label>
             <input
-              id="password"
               name="password"
               type="password"
               required
               minLength={8}
-              className="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="w-full border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
           <button
             type="submit"
-            className="w-full rounded-md bg-blue-600 px-4 py-2 text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            disabled={loading}
+            className="w-full bg-blue-600 text-white py-2 rounded font-medium disabled:opacity-50 hover:bg-blue-700 transition-colors"
           >
-            Create Account
+            {loading ? 'Creating account...' : 'Create Account'}
           </button>
         </form>
 
-        <p className="text-center text-sm text-muted-foreground">
-          Already have an account?{" "}
-          <Link href="/login" className="font-medium text-blue-600 hover:underline">
-            Sign in
-          </Link>
+        <p className="text-center text-sm mt-4">
+          Already have an account?{' '}
+          <Link href="/login" className="text-blue-600 hover:underline">Sign in</Link>
         </p>
       </div>
     </div>
-  );
+  )
 }
