@@ -1,9 +1,14 @@
+import { Resend } from "resend";
 import { db } from "@/db";
 import { invoices } from "@/db/schema";
 import { MAX_REMINDER_COUNT } from "@/lib/constants";
 import { eq, and, lt, lte } from "drizzle-orm";
 import { buildReminderEmail } from "./templates";
 import { logger } from "@/lib/logger";
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+
+const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "noreply@ai-finance-ops.com";
 
 export async function sendArReminders(): Promise<number> {
   const today = new Date().toISOString().split("T")[0]!;
@@ -22,7 +27,7 @@ export async function sendArReminders(): Promise<number> {
     try {
       const dueDate = new Date(inv.dueDate);
       const daysOverdue = Math.floor(
-        (new Date().getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24)
+        (Date.now() - dueDate.getTime()) / (1000 * 60 * 60 * 24)
       );
 
       const email = buildReminderEmail({
@@ -33,15 +38,31 @@ export async function sendArReminders(): Promise<number> {
         daysOverdue,
       });
 
-      logger.info(
-        { invoiceId: inv.id, to: email.to, subject: email.subject },
-        "Sending AR reminder"
-      );
+      // Fix #3: actually send the email via Resend
+      const { error } = await resend.emails.send({
+        from: FROM_EMAIL,
+        to: email.to,
+        subject: email.subject,
+        html: email.html,
+      });
+
+      if (error) {
+        logger.error(
+          { invoiceId: inv.id, to: email.to, error },
+          "Resend rejected AR reminder"
+        );
+        continue; // don't increment counter if send failed
+      }
 
       await db
         .update(invoices)
         .set({ remindersSent: inv.remindersSent + 1 })
         .where(eq(invoices.id, inv.id));
+
+      logger.info(
+        { invoiceId: inv.id, to: email.to, subject: email.subject, daysOverdue },
+        "AR reminder sent"
+      );
 
       sentCount++;
     } catch (err) {
@@ -49,5 +70,6 @@ export async function sendArReminders(): Promise<number> {
     }
   }
 
+  logger.info({ sentCount, totalOverdue: overdueInvoices.length }, "AR reminders run complete");
   return sentCount;
 }

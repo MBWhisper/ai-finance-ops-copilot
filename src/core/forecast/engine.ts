@@ -10,7 +10,10 @@ function linearRegression(values: number[]) {
   const sumXY = indices.reduce((sum, i) => sum + i * values[i]!, 0);
   const sumX2 = indices.reduce((sum, i) => sum + i * i, 0);
 
-  const slope = (n * sumXY - sumX * sumY) / (n * sumX2 - sumX * sumX);
+  const denom = n * sumX2 - sumX * sumX;
+  if (denom === 0) return { slope: 0, intercept: sumY / n };
+
+  const slope = (n * sumXY - sumX * sumY) / denom;
   const intercept = (sumY - slope * sumX) / n;
 
   return { slope, intercept };
@@ -43,6 +46,11 @@ function applySeasonality(dayIndex: number, factor: number): number {
 export function generateForecast(input: ForecastInput): ForecastResult {
   const { historicalMrr, period, growthRate, seasonalityFactor } = input;
 
+  // Fix #5: guard against empty or insufficient historical data
+  if (!historicalMrr || historicalMrr.length === 0) {
+    throw new Error("generateForecast requires at least 1 historical MRR data point");
+  }
+
   const sorted = [...historicalMrr].sort(
     (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
   );
@@ -51,6 +59,8 @@ export function generateForecast(input: ForecastInput): ForecastResult {
   const lastDate = sorted[sorted.length - 1]!.date;
   const lastMrr = mrrValues[mrrValues.length - 1]!;
 
+  // With a single data point, regression degenerates — slope stays 0, intercept = lastMrr.
+  // The forecast will rely entirely on growthRate, which is the correct fallback.
   const { slope, intercept } = linearRegression(mrrValues);
   const residualStd = calculateResidualStd(mrrValues, slope, intercept);
 
@@ -63,6 +73,7 @@ export function generateForecast(input: ForecastInput): ForecastResult {
     const dailyGrowthRate = growthRate / period;
     const trendValue = lastMrr * (1 + (dailyGrowthRate * i) / 100);
     const regressionValue = slope * (mrrValues.length + i) + intercept;
+    // Blend trend + regression; when historicalMrr.length === 1, regressionValue === lastMrr
     const baseValue = (trendValue + regressionValue) / 2;
 
     const amountCents = Math.round(baseValue * seasonality);
