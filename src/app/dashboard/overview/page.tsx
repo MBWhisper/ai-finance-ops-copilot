@@ -2,7 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { TrialBanner } from '@/components/dashboard/trial-banner'
 import { KPICGrid } from '@/components/dashboard/kpi-grid'
-import { RevenueChart } from '@/components/dashboard/revenue-chart'
+import { MrrHistoryChart } from '@/components/dashboard/mrr-history-chart'
 import { getLatestMetrics, getMetricsHistory } from '@/db/queries/metrics'
 import { getInvoiceStats } from '@/db/queries/invoices'
 import { getStripeAccount } from '@/db/queries/stripe-accounts'
@@ -104,6 +104,7 @@ export default async function OverviewPage({
         <>
           <KPICGrid metrics={metricResult} changes={changes} />
 
+          {/* Invoice stats row */}
           <div className="grid gap-4 md:grid-cols-3">
             <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
               <p className="text-sm font-medium text-gray-500">Total Invoices</p>
@@ -116,14 +117,17 @@ export default async function OverviewPage({
             <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
               <p className="text-sm font-medium text-gray-500">Outstanding</p>
               <p className="mt-1 text-3xl font-bold text-amber-600">
-                {formatCurrency(invoiceStats.totalAmountCents - (invoiceStats.paid * (invoiceStats.totalAmountCents / (invoiceStats.total || 1))))}
+                {formatCurrency(
+                  invoiceStats.totalAmountCents -
+                    invoiceStats.paid * (invoiceStats.totalAmountCents / (invoiceStats.total || 1))
+                )}
               </p>
             </div>
           </div>
 
+          {/* MRR History Chart — replaces old RevenueChart */}
           <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-            <h2 className="mb-4 text-base font-semibold text-gray-900">Revenue Over Time</h2>
-            <RevenueChart data={metricsHistory.slice().reverse()} />
+            <MrrHistoryChart data={metricsHistory} />
           </div>
         </>
       )}
