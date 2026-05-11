@@ -22,29 +22,29 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  // Use getSession first (reads cookie, no server round-trip)
-  const { data: { session } } = await supabase.auth.getSession()
-  const user = session?.user ?? null
+  // ✅ Use getUser() — verifies token with Supabase server (not just cookie)
+  const { data: { user } } = await supabase.auth.getUser()
 
   const pathname = request.nextUrl.pathname
 
   const publicPaths = [
-    '/login', 
-    '/register', 
-    '/signup', 
-    '/auth/callback', 
-    '/auth/login', 
-    '/api/auth', 
-    '/', 
-    '/marketing', 
-    '/pricing', 
-    '/api/health', 
-    '/api/stripe/webhook'
+    '/login',
+    '/register',
+    '/signup',
+    '/auth/callback',
+    '/auth/login',
+    '/api/auth',
+    '/',
+    '/marketing',
+    '/pricing',
+    '/api/health',
+    '/api/stripe/webhook',
+    '/api/webhooks/lemonsqueezy',  // ✅ allow webhook without auth
   ]
-  
+
   const isSetupPath = pathname === '/setup'
   const isAuthPage = pathname === '/login' || pathname === '/register' || pathname === '/signup'
-  const isPublicPath = publicPaths.some(path => 
+  const isPublicPath = publicPaths.some(path =>
     pathname === path || pathname.startsWith(path + '/')
   )
 
