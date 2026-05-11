@@ -12,3 +12,4 @@ cache/
 package-lock.backup.json
 
 .vercel
+.env*.local
