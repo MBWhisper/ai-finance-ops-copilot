@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { NextRequest, NextResponse } from 'next/server';
 import crypto from 'crypto';
 
@@ -43,12 +44,12 @@ export async function POST(req: NextRequest) {
       case 'subscription_updated':
       case 'subscription_resumed': {
         const userEmail = data?.user_email;
-        const status = data?.status; // 'active' | 'paused' | 'cancelled' | 'expired'
+        const status = data?.status;
         const variantId = String(data?.variant_id);
         const subscriptionId = String(event.data?.id);
         const renewsAt = data?.renews_at;
 
-        console.log(`[LemonSqueezy] Subscription ${status} for ${userEmail}, variant: ${variantId}`);
+        console.log(`[LemonSqueezy] Subscription ${status} for ${userEmail}, variant: ${variantId}, id: ${subscriptionId}, renews: ${renewsAt}`);
         // TODO: Update user subscription in your DB
         // await updateUserSubscription({ userEmail, status, variantId, subscriptionId, renewsAt });
         break;
