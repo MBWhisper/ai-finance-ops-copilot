@@ -1,93 +1,96 @@
-'use client'
-import { useEffect, useState } from 'react'
-import { createClient } from '@/lib/supabase/browser'
-import { useRouter } from 'next/navigation'
+import { redirect } from 'next/navigation'
+import { createClient } from '@/lib/supabase/server'
+import { ensureUserRecord } from '@/lib/auth/ensure-user'
 import { Button } from '@/components/ui/button'
 
-export default function SetupPage() {
-  const router = useRouter()
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState('')
+async function setupUser() {
+  'use server'
+  
+  const supabase = createClient()
+  const { data: { session }, error: sessionError } = await supabase.auth.getSession()
 
-  useEffect(() => {
-    async function init() {
-      const supabase = createClient()
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) {
-        router.push('/login')
-        return
-      }
+  if (sessionError || !session) {
+    throw new Error('NO_SESSION')
+  }
 
-      const { data: existing } = await supabase
-        .from('users')
-        .select('id')
-        .eq('id', user.id)
-        .single()
+  const user = session.user
+  // eslint-disable-next-line no-console
+  console.log('setup: session user id:', user.id)
 
-      if (!existing) {
-        const res = await fetch('/api/auth/create-user', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            userId: user.id,
-            email: user.email,
-            name: user.user_metadata?.name ?? '',
-          }),
-        })
-
-        if (!res.ok) {
-          const data = await res.json()
-          setError(data.error || 'Failed to create user')
-          setLoading(false)
-          return
-        }
-      }
-
-      setLoading(false)
-    }
-    init()
-  }, [router])
-
-  return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow text-center">
-        {loading ? (
-          <>
-            <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent" />
-            <p className="text-gray-500">Setting up your account...</p>
-          </>
-        ) : error ? (
-          <>
-            <h1 className="text-2xl font-bold mb-2">Something went wrong</h1>
-            <p className="text-red-600 mb-4">{error}</p>
-            <Button onClick={() => router.push('/dashboard/overview')}>
-              Go to Dashboard
-            </Button>
-          </>
-        ) : (
-          <>
-            <h1 className="text-2xl font-bold mb-2">You&apos;re all set!</h1>
-            <p className="text-gray-500 mb-6">
-              Your account is ready. Connect your Stripe account to start tracking metrics.
-            </p>
-            <div className="space-y-3">
-              <Button
-                className="w-full"
-                onClick={() => router.push('/dashboard/settings')}
-              >
-                Connect Stripe
-              </Button>
-              <Button
-                variant="outline"
-                className="w-full"
-                onClick={() => router.push('/dashboard/overview')}
-              >
-                Go to Dashboard
-              </Button>
-            </div>
-          </>
-        )}
-      </div>
-    </div>
+  // eslint-disable-next-line no-console
+  console.log('setup: calling ensureUserRecord...')
+  const userRecord = await ensureUserRecord(
+    user.id,
+    user.email ?? '',
+    user.user_metadata?.name as string | undefined
   )
+  // eslint-disable-next-line no-console
+  console.log('setup: result:', userRecord.id)
+  return userRecord
+}
+
+export default async function SetupPage() {
+  const supabase = createClient()
+  const { data: { session }, error: sessionError } = await supabase.auth.getSession()
+
+  if (sessionError) {
+    // eslint-disable-next-line no-console
+    console.log('setup: session error:', sessionError.message)
+  }
+
+  if (!session) {
+    // eslint-disable-next-line no-console
+    console.log('setup: no session, redirecting to /login')
+    redirect('/login')
+  }
+
+  const user = session.user
+  // eslint-disable-next-line no-console
+  console.log('setup: session user id:', user.id)
+
+  let userRecord = null
+  let setupError = null
+
+  try {
+    // eslint-disable-next-line no-console
+    console.log('setup: calling ensureUserRecord...')
+    userRecord = await ensureUserRecord(
+      user.id,
+      user.email ?? '',
+      user.user_metadata?.name as string | undefined
+    )
+    // eslint-disable-next-line no-console
+    console.log('setup: result:', userRecord.id)
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.log('setup: ensureUserRecord failed:', err)
+    setupError = err instanceof Error ? err.message : 'Failed to set up account'
+  }
+
+  if (setupError) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="w-full max-w-md p-8 bg-white rounded-lg shadow text-center">
+          <h1 className="text-2xl font-bold mb-2">Something went wrong</h1>
+          <p className="text-red-600 mb-4">{setupError}</p>
+          <form action={async () => {
+            'use server'
+            try {
+              await setupUser()
+              redirect('/dashboard/overview')
+            } catch {
+            }
+          }}>
+            <Button type="submit" className="w-full">
+              Try Again
+            </Button>
+          </form>
+        </div>
+      </div>
+    )
+  }
+
+  // eslint-disable-next-line no-console
+  console.log('setup: redirecting to /dashboard/overview')
+  redirect('/dashboard/overview')
 }

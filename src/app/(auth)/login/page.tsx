@@ -4,11 +4,11 @@ import { createClient } from '@/lib/supabase/browser'
 
 export default function LoginPage() {
   const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setLoading(true)
+    setIsLoading(true)
     setError('')
 
     const formData = new FormData(e.currentTarget)
@@ -16,16 +16,26 @@ export default function LoginPage() {
     const password = formData.get('password') as string
 
     const supabase = createClient()
-    const { error } = await supabase.auth.signInWithPassword({ email, password })
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    })
 
     if (error) {
+      // eslint-disable-next-line no-console
+      console.error('login error:', error.message)
       setError(error.message)
-      setLoading(false)
+      setIsLoading(false)
       return
     }
 
-    // Hard redirect so middleware picks up the new session cookie
-    window.location.href = '/dashboard/overview'
+    // eslint-disable-next-line no-console
+    console.log('login success, user:', data.user?.id)
+    // eslint-disable-next-line no-console
+    console.log('redirecting to /setup...')
+
+    // لا تستخدم router.push هنا - استخدم window.location مباشرة
+    window.location.href = '/setup'
   }
 
   return (
@@ -62,10 +72,10 @@ export default function LoginPage() {
           </div>
           <button
             type="submit"
-            disabled={loading}
+            disabled={isLoading}
             className="w-full bg-blue-600 text-white py-2 rounded font-medium disabled:opacity-50 hover:bg-blue-700 transition-colors"
           >
-            {loading ? 'Signing in...' : 'Sign In'}
+            {isLoading ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
 

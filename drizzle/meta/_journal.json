@@ -8,6 +8,13 @@
       "when": 1778258952143,
       "tag": "0000_lucky_mystique",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1778467751886,
+      "tag": "0001_curved_wonder_man",
+      "breakpoints": true
     }
   ]
 }

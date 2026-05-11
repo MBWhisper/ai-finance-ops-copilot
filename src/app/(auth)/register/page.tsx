@@ -2,10 +2,8 @@
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/browser'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 export default function RegisterPage() {
-  const router = useRouter()
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
@@ -30,12 +28,16 @@ export default function RegisterPage() {
     })
 
     if (error) {
+      // eslint-disable-next-line no-console
+      console.error('register error:', error.message)
       setError(error.message)
       setLoading(false)
       return
     }
 
-    router.push('/setup')
+    // eslint-disable-next-line no-console
+    console.log('register success, redirecting to /setup...')
+    window.location.href = '/setup'
   }
 
   return (
