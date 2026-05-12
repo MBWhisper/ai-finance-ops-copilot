@@ -104,11 +104,13 @@ export async function POST(req: NextRequest) {
         if (!userId) break;
 
         await upsertSubscription(userId, {
-          plan: 'starter',
+          plan: 'free',
           status: eventName === 'subscription_cancelled' ? 'canceled' : 'expired',
           isCancelled: true,
           endsAt: new Date(),
         });
+
+        await db.update(users).set({ plan: 'free' }).where(eq(users.email, userEmail));
         break;
       }
 
@@ -120,10 +122,12 @@ export async function POST(req: NextRequest) {
         if (!userId) break;
 
         await upsertSubscription(userId, {
-          plan: 'starter',
+          plan: 'free',
           status: 'paused',
           isCancelled: false,
         });
+
+        await db.update(users).set({ plan: 'free' }).where(eq(users.email, userEmail));
         break;
       }
 

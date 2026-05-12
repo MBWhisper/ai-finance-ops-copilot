@@ -54,8 +54,9 @@ export async function ensureUserRecord(
       id: userId,
       email,
       name: name || '',
-      plan: 'starter',
+      plan: 'free',
       trial_ends_at: trialEndDate.toISOString().split('T')[0],
+      onboarding_completed: false,
     })
     .select()
     .single()

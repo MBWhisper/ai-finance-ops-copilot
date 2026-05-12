@@ -29,8 +29,8 @@ export default async function DashboardLayout({
     )
     logger.info({ userId: userRecord.id }, '[DASHBOARD-LAYOUT] User profile exists')
   } catch {
-    logger.info('[DASHBOARD-LAYOUT] Failed to verify profile, redirecting to /setup')
-    redirect('/setup')
+    logger.info('[DASHBOARD-LAYOUT] Failed to verify profile, redirecting to /onboarding')
+    redirect('/onboarding')
   }
 
   return (

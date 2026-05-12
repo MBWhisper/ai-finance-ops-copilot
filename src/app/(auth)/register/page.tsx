@@ -36,8 +36,8 @@ export default function RegisterPage() {
     }
 
     // eslint-disable-next-line no-console
-    console.log('register success, redirecting to /setup...')
-    window.location.href = '/setup'
+    console.log('register success, redirecting to /onboarding...')
+    window.location.href = '/onboarding'
   }
 
   return (

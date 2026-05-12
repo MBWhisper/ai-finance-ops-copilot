@@ -32,10 +32,9 @@ export default function LoginPage() {
     // eslint-disable-next-line no-console
     console.log('login success, user:', data.user?.id)
     // eslint-disable-next-line no-console
-    console.log('redirecting to /setup...')
+    console.log('redirecting to /onboarding...')
 
-    // لا تستخدم router.push هنا - استخدم window.location مباشرة
-    window.location.href = '/setup'
+    window.location.href = '/onboarding'
   }
 
   return (

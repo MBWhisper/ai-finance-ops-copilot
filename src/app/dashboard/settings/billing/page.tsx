@@ -1,7 +1,7 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import { getSubscription } from '@/db/queries/subscriptions'
-import { PLANS, FREE_TRIAL_DAYS } from '@/lib/plans'
+import { PLAN_LIMITS as PLANS, FREE_TRIAL_DAYS } from '@/lib/plans'
 import { PlanBadge } from '@/components/settings/plan-badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'

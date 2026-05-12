@@ -22,9 +22,7 @@ export async function middleware(request: NextRequest) {
     }
   )
 
-  // ✅ Use getUser() — verifies token with Supabase server (not just cookie)
   const { data: { user } } = await supabase.auth.getUser()
-
   const pathname = request.nextUrl.pathname
 
   const publicPaths = [
@@ -44,12 +42,13 @@ export async function middleware(request: NextRequest) {
   ]
 
   const isSetupPath = pathname === '/setup'
+  const isOnboardingPath = pathname === '/onboarding'
   const isAuthPage = pathname === '/login' || pathname === '/register' || pathname === '/signup'
   const isPublicPath = publicPaths.some(path =>
     pathname === path || pathname.startsWith(path + '/')
   )
 
-  if (!user && !isPublicPath && !isSetupPath) {
+  if (!user && !isPublicPath && !isSetupPath && !isOnboardingPath) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
@@ -57,17 +56,23 @@ export async function middleware(request: NextRequest) {
 
   if (user && isAuthPage) {
     const url = request.nextUrl.clone()
-    url.pathname = '/setup'
+    url.pathname = '/onboarding'
     return NextResponse.redirect(url)
   }
 
   if (user && pathname === '/') {
     const url = request.nextUrl.clone()
-    url.pathname = '/setup'
+    url.pathname = '/onboarding'
     return NextResponse.redirect(url)
   }
 
-  if (isSetupPath && !user) {
+  if (user && isSetupPath) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/onboarding'
+    return NextResponse.redirect(url)
+  }
+
+  if (!user && isOnboardingPath) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
