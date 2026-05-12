@@ -20,6 +20,7 @@
   "dependencies": {
     "@lemonsqueezy/lemonsqueezy.js": "^4.0.0",
     "@next/third-parties": "^16.2.6",
+    "@react-email/components": "^1.0.12",
     "@supabase/ssr": "^0.10.3",
     "@supabase/supabase-js": "^2.105.4",
     "@vercel/speed-insights": "^2.0.0",
@@ -28,6 +29,7 @@
     "date-fns": "^3.6.0",
     "dotenv": "^17.4.2",
     "drizzle-orm": "^0.45.2",
+    "framer-motion": "^12.38.0",
     "lucide-react": "^0.400.0",
     "next": "^14.2.5",
     "pg": "^8.20.0",
@@ -38,6 +40,7 @@
     "react-dom": "^18.3.1",
     "recharts": "^2.12.7",
     "resend": "^6.12.3",
+    "sharp": "^0.34.5",
     "stripe": "^16.5.0",
     "tailwind-merge": "^2.4.0",
     "zod": "^3.23.8"

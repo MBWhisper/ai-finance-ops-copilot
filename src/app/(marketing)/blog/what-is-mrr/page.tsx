@@ -1,5 +1,4 @@
 import Link from "next/link"
-import { ArrowLeft } from "lucide-react"
 
 export const metadata = {
   title: "What is MRR? The SaaS Founder's Complete Guide | AI Finance Ops",
@@ -11,13 +10,6 @@ export default function WhatIsMrrPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-300">
       <article className="mx-auto max-w-3xl px-6 py-16">
-        <Link
-          href="/blog"
-          className="mb-8 inline-flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
-        >
-          <ArrowLeft className="h-4 w-4" /> Back to Blog
-        </Link>
-
         <h1 className="text-4xl font-bold text-white mb-4">
           What is MRR and Why Every SaaS Founder Should Track It Daily
         </h1>

@@ -3,7 +3,9 @@
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/browser'
 import { InvoiceStatusBadge } from '@/components/ar/invoice-status-badge'
+import { PlanGate } from '@/components/plan-gate'
 import { formatCurrency, formatDate } from '@/lib/utils'
+import type { PlanId } from '@/lib/subscription'
 
 interface Invoice {
   id: string
@@ -20,6 +22,7 @@ export default function ARPage() {
   const [invoices, setInvoices] = useState<Invoice[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [plan, setPlan] = useState<PlanId>('free')
 
   useEffect(() => {
     async function load() {
@@ -28,6 +31,17 @@ export default function ARPage() {
         const supabase = createClient()
         const { data: { user } } = await supabase.auth.getUser()
         if (!user) { window.location.href = '/login'; return }
+
+        // Fetch current plan
+        const { data: sub } = await supabase
+          .from('subscriptions')
+          .select('plan, status')
+          .eq('user_id', user.id)
+          .in('status', ['active', 'on_trial'])
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .single()
+        setPlan((sub?.plan as PlanId) ?? 'free')
 
         const { data, error: err } = await supabase
           .from('invoices')
@@ -62,73 +76,75 @@ export default function ARPage() {
         <p className="mt-1 text-gray-500">Manage your accounts receivable and invoices.</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-5">
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <p className="text-sm font-medium text-gray-500">Total</p>
-          <p className="mt-1 text-2xl font-bold text-gray-900">{stats.total}</p>
-        </div>
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <p className="text-sm font-medium text-gray-500">Paid</p>
-          <p className="mt-1 text-2xl font-bold text-green-600">{stats.paid}</p>
-        </div>
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <p className="text-sm font-medium text-gray-500">Sent</p>
-          <p className="mt-1 text-2xl font-bold text-amber-600">{stats.sent}</p>
-        </div>
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <p className="text-sm font-medium text-gray-500">Overdue</p>
-          <p className="mt-1 text-2xl font-bold text-red-600">{stats.overdue}</p>
-        </div>
-        <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <p className="text-sm font-medium text-gray-500">Outstanding</p>
-          <p className="mt-1 text-2xl font-bold text-gray-900">{formatCurrency(stats.overdueAmount)}</p>
-        </div>
-      </div>
-
-      <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
-        <div className="border-b border-gray-200 px-6 py-4">
-          <h2 className="text-sm font-semibold text-gray-700">All Invoices</h2>
+      <PlanGate requiredPlan="starter" currentPlan={plan} feature="Invoice tracking">
+        <div className="grid gap-4 md:grid-cols-5">
+          <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+            <p className="text-sm font-medium text-gray-500">Total</p>
+            <p className="mt-1 text-2xl font-bold text-gray-900">{stats.total}</p>
+          </div>
+          <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+            <p className="text-sm font-medium text-gray-500">Paid</p>
+            <p className="mt-1 text-2xl font-bold text-green-600">{stats.paid}</p>
+          </div>
+          <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+            <p className="text-sm font-medium text-gray-500">Sent</p>
+            <p className="mt-1 text-2xl font-bold text-amber-600">{stats.sent}</p>
+          </div>
+          <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+            <p className="text-sm font-medium text-gray-500">Overdue</p>
+            <p className="mt-1 text-2xl font-bold text-red-600">{stats.overdue}</p>
+          </div>
+          <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+            <p className="text-sm font-medium text-gray-500">Outstanding</p>
+            <p className="mt-1 text-2xl font-bold text-gray-900">{formatCurrency(stats.overdueAmount)}</p>
+          </div>
         </div>
 
-        {loading ? (
-          <div className="flex items-center justify-center p-12">
-            <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent" />
+        <div className="mt-6 overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+          <div className="border-b border-gray-200 px-6 py-4">
+            <h2 className="text-sm font-semibold text-gray-700">All Invoices</h2>
           </div>
-        ) : error ? (
-          <div className="p-12 text-center text-sm text-red-500">{error}</div>
-        ) : invoices.length === 0 ? (
-          <div className="p-12 text-center">
-            <p className="text-sm text-gray-500">No invoices found. Connect Stripe to import automatically.</p>
-          </div>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-gray-100 bg-gray-50">
-                  <th className="px-6 py-3 text-left font-medium text-gray-500">Customer</th>
-                  <th className="px-6 py-3 text-left font-medium text-gray-500">Amount</th>
-                  <th className="px-6 py-3 text-left font-medium text-gray-500">Due Date</th>
-                  <th className="px-6 py-3 text-left font-medium text-gray-500">Status</th>
-                  <th className="px-6 py-3 text-left font-medium text-gray-500">Reminders</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-gray-100">
-                {invoices.map((inv) => (
-                  <tr key={inv.id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 text-gray-900">{inv.customer_email}</td>
-                    <td className="px-6 py-4 font-medium text-gray-900">{formatCurrency(inv.amount_cents)}</td>
-                    <td className="px-6 py-4 text-gray-600">{formatDate(new Date(inv.due_date))}</td>
-                    <td className="px-6 py-4">
-                      <InvoiceStatusBadge status={inv.status} />
-                    </td>
-                    <td className="px-6 py-4 text-gray-500">{inv.reminders_sent}/3</td>
+
+          {loading ? (
+            <div className="flex items-center justify-center p-12">
+              <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent" />
+            </div>
+          ) : error ? (
+            <div className="p-12 text-center text-sm text-red-500">{error}</div>
+          ) : invoices.length === 0 ? (
+            <div className="p-12 text-center">
+              <p className="text-sm text-gray-500">No invoices found. Connect Stripe to import automatically.</p>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-gray-100 bg-gray-50">
+                    <th className="px-6 py-3 text-left font-medium text-gray-500">Customer</th>
+                    <th className="px-6 py-3 text-left font-medium text-gray-500">Amount</th>
+                    <th className="px-6 py-3 text-left font-medium text-gray-500">Due Date</th>
+                    <th className="px-6 py-3 text-left font-medium text-gray-500">Status</th>
+                    <th className="px-6 py-3 text-left font-medium text-gray-500">Reminders</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {invoices.map((inv) => (
+                    <tr key={inv.id} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 text-gray-900">{inv.customer_email}</td>
+                      <td className="px-6 py-4 font-medium text-gray-900">{formatCurrency(inv.amount_cents)}</td>
+                      <td className="px-6 py-4 text-gray-600">{formatDate(new Date(inv.due_date))}</td>
+                      <td className="px-6 py-4">
+                        <InvoiceStatusBadge status={inv.status} />
+                      </td>
+                      <td className="px-6 py-4 text-gray-500">{inv.reminders_sent}/3</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      </PlanGate>
     </div>
   )
 }

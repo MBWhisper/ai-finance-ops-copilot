@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowRight, ArrowLeft } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 
 export const metadata = {
   title: "Blog | AI Finance Ops",
@@ -38,13 +38,6 @@ export default function BlogPage() {
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100">
       <div className="mx-auto max-w-4xl px-6 py-24">
-        <Link
-          href="/"
-          className="mb-8 inline-flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
-        >
-          <ArrowLeft className="h-4 w-4" /> Back to home
-        </Link>
-
         <h1 className="text-4xl font-bold text-white mb-2">Blog</h1>
         <p className="text-gray-400 mb-12 text-lg">
           SaaS finance tips, MRR guides, and cash flow strategies for early-stage founders.

@@ -1,0 +1,13 @@
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: *
+Disallow:
+
+Sitemap: https://www.aifinanceops.app/sitemap.xml

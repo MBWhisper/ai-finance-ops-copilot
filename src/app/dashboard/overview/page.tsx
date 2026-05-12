@@ -3,6 +3,8 @@ import { redirect } from 'next/navigation'
 import { TrialBanner } from '@/components/dashboard/trial-banner'
 import { KPICGrid } from '@/components/dashboard/kpi-grid'
 import { MrrHistoryChart } from '@/components/dashboard/mrr-history-chart'
+import { PlanGate } from '@/components/plan-gate'
+import { getUserSubscription } from '@/lib/subscription'
 import { getLatestMetrics, getMetricsHistory } from '@/db/queries/metrics'
 import { getInvoiceStats } from '@/db/queries/invoices'
 import { getStripeAccount } from '@/db/queries/stripe-accounts'
@@ -24,6 +26,8 @@ export default async function OverviewPage({
     .select('trial_ends_at, plan')
     .eq('id', user.id)
     .single()
+
+  const subscription = await getUserSubscription(user.id)
 
   const [latestMetrics, metricsHistory, invoiceStats, stripeAccount] = await Promise.all([
     getLatestMetrics(user.id),
@@ -107,30 +111,34 @@ export default async function OverviewPage({
           <KPICGrid metrics={metricResult} changes={changes} />
 
           {/* Invoice stats row */}
-          <div className="grid gap-4 md:grid-cols-3">
-            <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-              <p className="text-sm font-medium text-gray-500">Total Invoices</p>
-              <p className="mt-1 text-3xl font-bold text-gray-900">{invoiceStats.total}</p>
+          <PlanGate requiredPlan="starter" currentPlan={subscription.plan} feature="Invoice tracking">
+            <div className="grid gap-4 md:grid-cols-3">
+              <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+                <p className="text-sm font-medium text-gray-500">Total Invoices</p>
+                <p className="mt-1 text-3xl font-bold text-gray-900">{invoiceStats.total}</p>
+              </div>
+              <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+                <p className="text-sm font-medium text-gray-500">Paid</p>
+                <p className="mt-1 text-3xl font-bold text-green-600">{invoiceStats.paid}</p>
+              </div>
+              <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+                <p className="text-sm font-medium text-gray-500">Outstanding</p>
+                <p className="mt-1 text-3xl font-bold text-amber-600">
+                  {formatCurrency(
+                    invoiceStats.totalAmountCents -
+                      invoiceStats.paid * (invoiceStats.totalAmountCents / (invoiceStats.total || 1))
+                  )}
+                </p>
+              </div>
             </div>
-            <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-              <p className="text-sm font-medium text-gray-500">Paid</p>
-              <p className="mt-1 text-3xl font-bold text-green-600">{invoiceStats.paid}</p>
-            </div>
-            <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-              <p className="text-sm font-medium text-gray-500">Outstanding</p>
-              <p className="mt-1 text-3xl font-bold text-amber-600">
-                {formatCurrency(
-                  invoiceStats.totalAmountCents -
-                    invoiceStats.paid * (invoiceStats.totalAmountCents / (invoiceStats.total || 1))
-                )}
-              </p>
-            </div>
-          </div>
+          </PlanGate>
 
-          {/* MRR History Chart — replaces old RevenueChart */}
-          <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-            <MrrHistoryChart data={metricsHistory} />
-          </div>
+          {/* MRR History Chart */}
+          <PlanGate requiredPlan="pro" currentPlan={subscription.plan} feature="MRR History Chart">
+            <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+              <MrrHistoryChart data={metricsHistory} />
+            </div>
+          </PlanGate>
         </>
       )}
     </div>

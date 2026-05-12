@@ -53,7 +53,73 @@
   * {
     @apply border-border;
   }
-  body {
-    @apply bg-background text-foreground;
+  html, body {
+    @apply bg-background text-foreground overflow-x-hidden;
   }
+}
+
+/* ── Autofill fix — keeps text visible on all browsers ── */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+textarea:-webkit-autofill,
+select:-webkit-autofill {
+  -webkit-text-fill-color: #e2e8f0 !important;
+  -webkit-box-shadow: 0 0 0px 1000px #1a1a2e inset !important;
+  box-shadow: 0 0 0px 1000px #1a1a2e inset !important;
+  transition: background-color 5000s ease-in-out 0s !important;
+  caret-color: #e2e8f0 !important;
+}
+
+/* ── Auth page floating label animations ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(1deg); }
+}
+@keyframes float2 {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(-0.5deg); }
+}
+@keyframes gradientShift {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 10px) scale(0.95); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+@keyframes gradientShift2 {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-25px, 15px) scale(0.95); }
+  66% { transform: translate(20px, -25px) scale(1.05); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+@keyframes gradientShift3 {
+  0% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(15px, 25px) scale(1.05); }
+  66% { transform: translate(-30px, -10px) scale(0.95); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
+.auth-shake {
+  animation: shake 0.4s ease-in-out;
+}
+
+/* Sidebar drawer slide-in */
+@keyframes slide-in-right {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+.animate-slide-in-right {
+  animation: slide-in-right 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
