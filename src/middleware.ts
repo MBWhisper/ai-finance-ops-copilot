@@ -28,6 +28,7 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
   const publicPaths = [
+<<<<<<< HEAD
     '/login',
     '/register',
     '/signup',
@@ -40,6 +41,21 @@ export async function middleware(request: NextRequest) {
     '/api/health',
     '/api/stripe/webhook',
     '/api/webhooks/lemonsqueezy',  // ✅ allow webhook without auth
+=======
+    '/login', 
+    '/register', 
+    '/signup', 
+    '/auth/callback', 
+    '/auth/login', 
+    '/api/auth', 
+    '/', 
+    '/marketing', 
+    '/pricing', 
+    '/api/health', 
+    '/api/stripe/webhook',
+    '/api/webhooks/lemonsqueezy',
+    '/demo',
+>>>>>>> eff36f7 (fix: RLS policies configured correctly)
   ]
 
   const isSetupPath = pathname === '/setup'

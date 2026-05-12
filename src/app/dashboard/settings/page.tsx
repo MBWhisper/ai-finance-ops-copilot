@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
+import Link from 'next/link'
 import { StripeKeyForm } from '@/components/settings/stripe-key-form'
 import { PlanBadge } from '@/components/settings/plan-badge'
 import { getStripeAccount } from '@/db/queries/stripe-accounts'
@@ -34,8 +35,11 @@ export default async function SettingsPage() {
           {profile?.plan && (
             <div>
               <label className="text-xs font-medium uppercase tracking-wide text-gray-500">Plan</label>
-              <div className="mt-1">
+              <div className="mt-1 flex items-center gap-3">
                 <PlanBadge plan={profile.plan as 'starter' | 'pro' | 'scale'} />
+                <Link href="/dashboard/settings/billing" className="text-sm text-blue-600 hover:text-blue-700">
+                  Manage billing
+                </Link>
               </div>
             </div>
           )}

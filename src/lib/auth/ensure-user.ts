@@ -5,6 +5,7 @@ export interface UserRecord {
   email: string
   name: string | null
   plan: string
+  trial_ends_at: string | null
   created_at: string
 }
 
@@ -13,7 +14,7 @@ export async function ensureUserRecord(
   email: string,
   name?: string
 ): Promise<UserRecord> {
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.NEXT_SUPABASE_SERVICE_ROLE_KEY
   if (!serviceKey) {
     throw new Error('Server configuration missing')
   }
@@ -44,6 +45,9 @@ export async function ensureUserRecord(
     return existing as UserRecord
   }
 
+  const trialEndDate = new Date()
+  trialEndDate.setDate(trialEndDate.getDate() + 14)
+
   const { data: created, error: insertError } = await admin
     .from('users')
     .insert({
@@ -51,6 +55,7 @@ export async function ensureUserRecord(
       email,
       name: name || '',
       plan: 'starter',
+      trial_ends_at: trialEndDate.toISOString().split('T')[0],
     })
     .select()
     .single()

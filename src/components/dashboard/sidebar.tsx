@@ -1,7 +1,7 @@
 'use client'
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { LayoutDashboard, TrendingUp, Receipt, Settings, LogOut } from "lucide-react"
+import { LayoutDashboard, TrendingUp, Receipt, Settings, CreditCard, LogOut } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { createClient } from "@/lib/supabase/browser"
 
@@ -9,6 +9,7 @@ const navItems = [
   { label: "Overview", href: "/dashboard/overview", icon: LayoutDashboard },
   { label: "Cash Flow", href: "/dashboard/cashflow", icon: TrendingUp },
   { label: "AR / Invoices", href: "/dashboard/ar", icon: Receipt },
+  { label: "Billing", href: "/dashboard/settings/billing", icon: CreditCard },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ]
 

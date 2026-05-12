@@ -6,9 +6,17 @@ import { eq, and, lt, lte } from "drizzle-orm";
 import { buildReminderEmail } from "./templates";
 import { logger } from "@/lib/logger";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+function getResendClient(): Resend {
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    throw new Error("Missing RESEND_API_KEY environment variable");
+  }
+  return new Resend(apiKey);
+}
 
-const FROM_EMAIL = process.env.RESEND_FROM_EMAIL ?? "noreply@ai-finance-ops.com";
+function getFromEmail(): string {
+  return process.env.RESEND_FROM_EMAIL ?? "noreply@ai-finance-ops.com";
+}
 
 export async function sendArReminders(): Promise<number> {
   const today = new Date().toISOString().split("T")[0]!;
@@ -38,9 +46,9 @@ export async function sendArReminders(): Promise<number> {
         daysOverdue,
       });
 
-      // Fix #3: actually send the email via Resend
+      const resend = getResendClient();
       const { error } = await resend.emails.send({
-        from: FROM_EMAIL,
+        from: getFromEmail(),
         to: email.to,
         subject: email.subject,
         html: email.html,
@@ -51,7 +59,7 @@ export async function sendArReminders(): Promise<number> {
           { invoiceId: inv.id, to: email.to, error },
           "Resend rejected AR reminder"
         );
-        continue; // don't increment counter if send failed
+        continue;
       }
 
       await db

@@ -24,6 +24,23 @@ vi.mock("@/lib/logger", () => ({
   logger: { info: vi.fn(), error: vi.fn() },
 }));
 
+vi.mock("resend", () => {
+  const mockSend = vi.fn().mockResolvedValue({ error: null, data: {} });
+  return {
+    Resend: vi.fn().mockImplementation(() => ({
+      emails: { send: mockSend },
+    })),
+  };
+});
+
+vi.mock("@/lib/constants", () => ({
+  MAX_REMINDER_COUNT: 3,
+}));
+
+beforeAll(() => {
+  process.env.RESEND_API_KEY = "re_test_mock";
+});
+
 import { sendArReminders } from "@/core/notifications/ar-reminders";
 
 describe("sendArReminders", () => {
