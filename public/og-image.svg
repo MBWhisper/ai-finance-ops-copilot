@@ -1,0 +1,18 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#020617"/>
+  <rect x="60" y="60" width="32" height="32" rx="8" fill="#10b981"/>
+  <path d="M72 72l-8 12h6l-2 10 8-14h-6l2-8z" fill="white"/>
+  <text x="110" y="85" font-family="system-ui, sans-serif" font-size="28" font-weight="700" fill="white">AI Finance Ops</text>
+  <text x="60" y="320" font-family="system-ui, sans-serif" font-size="56" font-weight="800" fill="white">AI-Powered Financial</text>
+  <text x="60" y="400" font-family="system-ui, sans-serif" font-size="56" font-weight="800" fill="#10b981">Dashboard</text>
+  <text x="60" y="460" font-family="system-ui, sans-serif" font-size="22" fill="#94a3b8">Track MRR, forecast cash flow, and automate AR for your SaaS.</text>
+  <rect x="60" y="510" width="220" height="56" rx="12" fill="#10b981"/>
+  <text x="93" y="545" font-family="system-ui, sans-serif" font-size="18" font-weight="600" fill="white">Start Free Trial</text>
+  <circle cx="980" cy="400" r="180" fill="#10b981" opacity="0.05"/>
+  <circle cx="1050" cy="350" r="120" fill="#10b981" opacity="0.08"/>
+  <rect x="700" y="150" width="400" height="250" rx="16" fill="#0f172a" stroke="#1e293b" stroke-width="2"/>
+  <rect x="730" y="180" width="80" height="40" rx="6" fill="#1e293b"/>
+  <rect x="830" y="180" width="80" height="40" rx="6" fill="#1e293b"/>
+  <rect x="730" y="240" width="340" height="80" rx="8" fill="#1e293b"/>
+  <rect x="730" y="340" width="200" height="30" rx="4" fill="#1e293b"/>
+</svg>

@@ -49,6 +49,7 @@ export default async function OverviewPage({
       <TrialBanner
         trialEndsAt={profile?.trial_ends_at ?? null}
         plan={profile?.plan ?? 'starter'}
+        createdAt={user.created_at}
         showWelcome={searchParams.welcome === 'true'}
       />
 

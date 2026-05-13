@@ -1,5 +1,6 @@
 import Link from "next/link"
-import { Check, BarChart3, TrendingUp, Receipt, ArrowRight, Star, Quote, Menu, X } from "lucide-react"
+import { Check, BarChart3, TrendingUp, Receipt, ArrowRight, Star, Quote } from "lucide-react"
+import { Logo } from "@/components/logo"
 
 export default function LandingPage() {
   return (
@@ -8,9 +9,7 @@ export default function LandingPage() {
       <header className="sticky top-0 z-50 border-b border-gray-800 bg-gray-950/95 backdrop-blur supports-[backdrop-filter]:bg-gray-950/60">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
           <Link href="/" className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500 text-sm font-bold text-white">
-              F
-            </div>
+            <Logo size={32} />
             <span className="text-lg font-bold text-white">AI Finance Ops</span>
           </Link>
           <nav className="hidden items-center gap-8 md:flex">
@@ -20,8 +19,11 @@ export default function LandingPage() {
             <Link href="#pricing" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
               Pricing
             </Link>
-            <Link href="#testimonials" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
-              Testimonials
+            <Link href="/blog" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
+              Blog
+            </Link>
+            <Link href="/about" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
+              About
             </Link>
             <Link href="/login" className="text-sm font-medium text-gray-400 hover:text-white transition-colors">
               Sign In
@@ -392,42 +394,67 @@ export default function LandingPage() {
       </main>
 
       {/* FOOTER */}
-      <footer className="border-t border-gray-800 px-6 py-12">
+      <footer className="border-t border-gray-800 px-6 py-16">
         <div className="mx-auto max-w-6xl">
-          <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
-            <div className="flex items-center gap-2">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-emerald-500 text-sm font-bold text-white">
-                F
+          <div className="grid gap-12 md:grid-cols-4">
+            {/* Column 1 — Brand */}
+            <div>
+              <div className="flex items-center gap-2 mb-4">
+                <Logo size={28} />
+                <span className="text-sm font-bold text-white">AI Finance Ops</span>
               </div>
-              <span className="text-sm font-bold text-white">AI Finance Ops</span>
+              <p className="text-sm text-gray-500 leading-relaxed mb-4">
+                SaaS financial intelligence for early-stage founders.
+              </p>
+              <p className="text-xs text-gray-600">&copy; 2026 AI Finance Ops. All rights reserved.</p>
             </div>
-            <div className="flex flex-wrap justify-center gap-8 text-sm">
-              <Link href="#features" className="text-gray-400 hover:text-white transition-colors">
-                Features
-              </Link>
-              <Link href="#pricing" className="text-gray-400 hover:text-white transition-colors">
-                Pricing
-              </Link>
-              <Link href="/demo" className="text-gray-400 hover:text-white transition-colors">
-                Demo
-              </Link>
-              <Link href="/login" className="text-gray-400 hover:text-white transition-colors">
-                Sign In
-              </Link>
+
+            {/* Column 2 — Product */}
+            <div>
+              <h3 className="text-sm font-semibold text-white mb-4">Product</h3>
+              <ul className="space-y-3">
+                <li><Link href="#features" className="text-sm text-gray-400 hover:text-white transition-colors">Features</Link></li>
+                <li><Link href="#pricing" className="text-sm text-gray-400 hover:text-white transition-colors">Pricing</Link></li>
+                <li><Link href="/blog" className="text-sm text-gray-400 hover:text-white transition-colors">Blog</Link></li>
+                <li><Link href="/register" className="text-sm text-gray-400 hover:text-white transition-colors">Start Free Trial</Link></li>
+              </ul>
             </div>
-            <div className="flex gap-6">
-              <span className="text-gray-500 text-sm cursor-default">Privacy</span>
-              <span className="text-gray-500 text-sm cursor-default">Terms</span>
-              <a href="#" className="text-gray-500 hover:text-gray-300 transition-colors">
-                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M18.2 6.7c.7-.4 1.3-1 1.8-1.7-.7.3-1.4.5-2.2.6-1-.7-2.3-1-3.6-1-2.7 0-4.9 2.2-4.9 4.9 0 .4 0 .8.1 1.1C7.7 8.7 4.6 6.8 2.5 4c-.4.7-.6 1.5-.6 2.4 0 1.7.9 3.2 2.2 4.1-.8 0-1.6-.2-2.2-.6v.1c0 2.4 1.7 4.4 4 4.9-.4.1-.8.1-1.3.1-.3 0-.6 0-.9-.1.6 1.9 2.4 3.3 4.6 3.3-1.7 1.3-3.8 2.1-6.1 2.1-.4 0-.8 0-1.2-.1 2.2 1.4 4.8 2.2 7.5 2.2 9.1 0 14-7.5 14-14v-.6c1-.7 1.8-1.6 2.5-2.6-.9.4-1.9.7-2.9.8z"/></svg>
-              </a>
-              <a href="#" className="text-gray-500 hover:text-gray-300 transition-colors">
-                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25A1.75 1.75 0 118.3 6.5a1.78 1.78 0 01-1.8 1.75zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19a.66.66 0 000 .14V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.36.86 3.36 3.66z"/></svg>
-              </a>
+
+            {/* Column 3 — Company */}
+            <div>
+              <h3 className="text-sm font-semibold text-white mb-4">Company</h3>
+              <ul className="space-y-3">
+                <li><Link href="/about" className="text-sm text-gray-400 hover:text-white transition-colors">About</Link></li>
+                <li><a href="mailto:hello@aifinanceops.app" className="text-sm text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                <li><a href="https://www.linkedin.com/in/mo-systemarchitect" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">LinkedIn</a></li>
+                <li><a href="https://twitter.com/MbtechE80106" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">Twitter / X</a></li>
+              </ul>
+            </div>
+
+            {/* Column 4 — Follow Mo */}
+            <div>
+              <h3 className="text-sm font-semibold text-white mb-4">Follow Mo</h3>
+              <ul className="space-y-3">
+                <li><a href="https://www.youtube.com/@AIKnowlidgi" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">▶ YouTube</a></li>
+                <li><a href="https://www.tiktok.com/@aiknowleedge" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">🎵 TikTok</a></li>
+                <li><a href="https://www.instagram.com/aiknowleedge" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">📸 Instagram</a></li>
+                <li><a href="https://www.facebook.com/opsssimoo" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">📘 Facebook</a></li>
+                <li><a href="https://web3-jobs-hazel.vercel.app" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">🌐 Web3 Jobs</a></li>
+              </ul>
             </div>
           </div>
-          <div className="mt-8 border-t border-gray-800 pt-8 text-center">
-            <p className="text-sm text-gray-600">&copy; 2026 AI Finance Ops. All rights reserved.</p>
+
+          {/* Divider + Partner Links */}
+          <div className="mt-12 border-t border-gray-800 pt-8">
+            <p className="text-xs text-gray-600 mb-3">Recommended tools:</p>
+            <div className="flex flex-wrap gap-4 text-xs">
+              <a href="https://go.fiverr.com/visit/?bta=870194&brand=fiverraffiliates" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-300 transition-colors">
+                Fiverr Affiliates
+              </a>
+              <a href="https://www.binance.com/register?ref=782089850" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-300 transition-colors">
+                Binance
+              </a>
+            </div>
           </div>
         </div>
       </footer>

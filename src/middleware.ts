@@ -39,6 +39,8 @@ export async function middleware(request: NextRequest) {
     '/api/stripe/webhook',
     '/api/webhooks/lemonsqueezy',
     '/demo',
+    '/about',
+    '/blog',
   ]
 
   const isSetupPath = pathname === '/setup'
