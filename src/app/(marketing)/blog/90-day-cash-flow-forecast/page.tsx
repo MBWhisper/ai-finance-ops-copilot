@@ -11,6 +11,11 @@ export default function CashFlowForecastPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-300">
       <article className="mx-auto max-w-3xl px-6 py-16">
+        <img
+          src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&h=630&fit=crop"
+          alt="SaaS cash flow forecast chart on a modern dashboard"
+          className="w-full rounded-xl mb-8 aspect-video object-cover"
+        />
         <h1 className="text-4xl font-bold text-white mb-4">
           How to Build a 90-Day Cash Flow Forecast for Your SaaS
         </h1>

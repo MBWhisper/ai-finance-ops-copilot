@@ -11,6 +11,11 @@ export default function ArAutomationGuidePage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-300">
       <article className="mx-auto max-w-3xl px-6 py-16">
+        <img
+          src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1200&h=630&fit=crop"
+          alt="SaaS accounts receivable automation dashboard"
+          className="w-full rounded-xl mb-8 aspect-video object-cover"
+        />
         <h1 className="text-4xl font-bold text-white mb-4">
           The Founder&apos;s Guide to Accounts Receivable Automation
         </h1>

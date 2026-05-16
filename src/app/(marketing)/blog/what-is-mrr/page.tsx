@@ -10,6 +10,11 @@ export default function WhatIsMrrPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-300">
       <article className="mx-auto max-w-3xl px-6 py-16">
+        <img
+          src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop"
+          alt="SaaS MRR growth chart on a modern dashboard"
+          className="w-full rounded-xl mb-8 aspect-video object-cover"
+        />
         <h1 className="text-4xl font-bold text-white mb-4">
           What is MRR and Why Every SaaS Founder Should Track It Daily
         </h1>

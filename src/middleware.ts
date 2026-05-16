@@ -41,6 +41,12 @@ export async function middleware(request: NextRequest) {
     '/demo',
     '/about',
     '/blog',
+    '/mrr-tracker',
+    '/churn-calculator',
+    '/baremetrics-alternative',
+    '/cash-flow-tracker',
+    '/automate-reporting',
+    '/runway-calculator',
   ]
 
   const isSetupPath = pathname === '/setup'
