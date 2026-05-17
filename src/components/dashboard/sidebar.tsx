@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import {
   LayoutDashboard, TrendingUp, Receipt, Settings, CreditCard,
-  Menu, X, LogOut, Bell, AlertTriangle,
+  Menu, X, LogOut, Bell, AlertTriangle, BarChart3,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { createClient } from "@/lib/supabase/browser"
@@ -19,6 +19,8 @@ export const navItems: NavItem[] = [
   { label: "Overview", href: "/dashboard/overview", icon: LayoutDashboard },
   { label: "Cash Flow", href: "/dashboard/cashflow", icon: TrendingUp },
   { label: "AR / Invoices", href: "/dashboard/ar", icon: Receipt },
+  { label: "Cohorts", href: "/dashboard/cohorts", icon: BarChart3 },
+  { label: "Warnings", href: "/dashboard/warnings", icon: AlertTriangle },
   { label: "Billing", href: "/dashboard/settings/billing", icon: CreditCard },
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ]
@@ -92,6 +94,7 @@ export function Sidebar({ userEmail, plan, unreadAlerts = 0 }: { userEmail: stri
       <nav className="flex-1 space-y-1 p-2 overflow-y-auto scroll-container-touch">
         {navItems.map((item) => {
           const active = isActive(item.href)
+          const showBadge = item.href === "/dashboard/warnings" && unreadAlerts > 0
           return (
             <Link
               key={item.href}
@@ -106,8 +109,24 @@ export function Sidebar({ userEmail, plan, unreadAlerts = 0 }: { userEmail: stri
               )}
               title={!sidebarExpanded ? item.label : undefined}
             >
-              <item.icon className={cn("h-5 w-5 shrink-0", active ? "text-blue-700" : "text-gray-400")} />
-              {sidebarExpanded && <span className="truncate">{item.label}</span>}
+              <div className="relative">
+                <item.icon className={cn("h-5 w-5 shrink-0", active ? "text-blue-700" : "text-gray-400")} />
+                {showBadge && !sidebarExpanded && (
+                  <span className="absolute -top-1 -right-1 flex h-3.5 w-3.5 items-center justify-center rounded-full bg-red-500 text-[8px] font-bold text-white">
+                    {unreadAlerts > 9 ? '9+' : unreadAlerts}
+                  </span>
+                )}
+              </div>
+              {sidebarExpanded && (
+                <>
+                  <span className="truncate">{item.label}</span>
+                  {showBadge && (
+                    <span className="ml-auto flex h-5 min-w-[20px] items-center justify-center rounded-full bg-red-500 px-1.5 text-[10px] font-bold text-white">
+                      {unreadAlerts > 99 ? '99+' : unreadAlerts}
+                    </span>
+                  )}
+                </>
+              )}
             </Link>
           )
         })}

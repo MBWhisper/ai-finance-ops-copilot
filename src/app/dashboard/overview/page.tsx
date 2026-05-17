@@ -115,6 +115,26 @@ export default async function OverviewPage({
         <>
           <KPICGrid metrics={metricResult} changes={changes} />
 
+          {/* PMF Status Card */}
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 shadow-sm">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-sm font-semibold text-emerald-800">PMF Status: Strong ✅</p>
+                <p className="mt-0.5 text-xs text-emerald-600">You&apos;re retaining users well. Keep iterating.</p>
+              </div>
+              <div className="flex gap-4">
+                <div className="text-center">
+                  <p className="text-lg font-bold text-emerald-700">72%</p>
+                  <p className="text-[10px] text-emerald-500">Month-1 Retention</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-lg font-bold text-emerald-700">48%</p>
+                  <p className="text-[10px] text-emerald-500">Month-3 Retention</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Invoice stats row */}
           <PlanGate requiredPlan="starter" currentPlan={subscription.plan} feature="Invoice tracking">
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
