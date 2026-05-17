@@ -15,7 +15,7 @@ interface KPICGridProps {
 
 export function KPICGrid({ metrics, changes = {} }: KPICGridProps) {
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-4">
       <KPICard
         title="MRR"
         value={metrics.mrrCents}

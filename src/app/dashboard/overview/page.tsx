@@ -81,7 +81,7 @@ export default async function OverviewPage({
 
       {!hasStripe ? (
         <>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-4">
             {(['MRR', 'ARR', 'Churn Rate', 'LTV'] as const).map((label) => (
               <div key={label} className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
                 <p className="text-sm font-medium text-gray-500">{label}</p>
@@ -117,7 +117,7 @@ export default async function OverviewPage({
 
           {/* Invoice stats row */}
           <PlanGate requiredPlan="starter" currentPlan={subscription.plan} feature="Invoice tracking">
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
               <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
                 <p className="text-sm font-medium text-gray-500">Total Invoices</p>
                 <p className="mt-1 text-3xl font-bold text-gray-900">{invoiceStats.total}</p>

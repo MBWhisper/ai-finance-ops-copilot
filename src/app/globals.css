@@ -129,3 +129,88 @@ select:-webkit-autofill {
   content-visibility: auto;
   contain-intrinsic-size: 0 500px;
 }
+
+/* ── Safari-specific fixes ── */
+@supports (-webkit-touch-callout: none) {
+  .safari-safe-area {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .safari-h-dvh {
+    height: -webkit-fill-available;
+  }
+}
+
+/* Touch scroll containers */
+.scroll-container-touch {
+  -webkit-overflow-scrolling: touch;
+  overflow-y: auto;
+}
+
+/* 100dvh fallback — Safari fix for address bar */
+.h-dvh-fallback {
+  height: 100vh;
+  height: 100dvh;
+}
+
+/* Sticky with Safari prefix */
+.sticky-safari {
+  position: -webkit-sticky;
+  position: sticky;
+}
+
+/* Backdrop blur with Safari prefix */
+.backdrop-blur-safari {
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+}
+
+/* Bottom tab bar safe area for iOS */
+.bottom-tab-safe {
+  padding-bottom: max(0px, env(safe-area-inset-bottom));
+}
+
+/* Minimum touch target size */
+.min-touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Clamp-based responsive font sizes */
+.clamp-body {
+  font-size: clamp(0.875rem, 1vw + 0.5rem, 1rem);
+}
+.clamp-h1 {
+  font-size: clamp(1.75rem, 4vw + 0.5rem, 2.5rem);
+}
+.clamp-h2 {
+  font-size: clamp(1.25rem, 3vw + 0.5rem, 1.875rem);
+}
+
+/* Table card view for mobile */
+@media (max-width: 767px) {
+  .table-card-view tr {
+    display: block;
+    border: 1px solid hsl(var(--border));
+    border-radius: var(--radius);
+    padding: 12px;
+    margin-bottom: 8px;
+  }
+  .table-card-view td {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    border: none;
+  }
+  .table-card-view thead {
+    display: none;
+  }
+  .table-card-view td::before {
+    content: attr(data-label);
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: hsl(var(--muted-foreground));
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
