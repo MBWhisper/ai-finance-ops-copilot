@@ -1,21 +1,31 @@
 import Link from "next/link"
-import { Check, BarChart3, TrendingUp, Receipt, ArrowRight } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 import { Logo } from "@/components/logo"
+import { OptimizedImage } from "@/components/OptimizedImage"
+import dynamic from "next/dynamic"
+import { Suspense } from "react"
 import "@/components/animations.css"
-import { ScrollReveal, FaqAccordion, TestimonialCarousel, AnimatedCounter, BackToTop, LiveVisitorBadge } from "@/components/landing-interactive"
+import { ScrollReveal } from "@/components/landing-interactive"
+import { LiveVisitorBadge } from "@/components/landing-interactive"
+import { BackToTop } from "@/components/landing-interactive"
+
+const SocialProofSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.SocialProofSection })), { ssr: true })
+const ProblemSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.ProblemSection })), { ssr: true })
+const FeaturesSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.FeaturesSection })), { ssr: true })
+const PricingSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.PricingSection })), { ssr: true })
+const TestimonialsSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.TestimonialsSection })), { ssr: true })
+const FAQSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.FAQSection })), { ssr: true })
 
 export default function LandingPage() {
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100">
 
       <main>
-        {/* ─── HERO ─── */}
+        {/* ─── HERO ─── (static, critical for LCP) */}
         <section className="relative overflow-hidden px-6 py-24 sm:py-32 lg:px-8">
-          {/* Animated floating particles */}
           <div className="absolute inset-0 -z-10 overflow-hidden">
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-900/20 via-gray-950 to-gray-950" />
             <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-emerald-500/10 blur-3xl animate-pulse-glow" />
-            {/* Floating orbs */}
             <div className="absolute top-[15%] left-[10%] h-4 w-4 rounded-full bg-emerald-400/20 blur-sm animate-float" />
             <div className="absolute top-[30%] right-[15%] h-6 w-6 rounded-full bg-emerald-500/15 blur-sm animate-float-delayed" />
             <div className="absolute bottom-[25%] left-[20%] h-3 w-3 rounded-full bg-emerald-400/20 blur-sm animate-float" style={{ animationDelay: "2s" }} />
@@ -45,7 +55,7 @@ export default function LandingPage() {
               </p>
               <div className="mt-6 flex items-center justify-center gap-3 text-sm text-gray-500">
                 <span className="h-px w-8 bg-gray-800" />
-                Built by <span className="font-medium text-gray-300">Mo</span> — a founder, for founders
+                Built by <span className="font-medium text-gray-300">Mo</span> &mdash; a founder, for founders
                 <span className="h-px w-8 bg-gray-800" />
               </div>
             </ScrollReveal>
@@ -73,77 +83,14 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* ─── SOCIAL PROOF ─── */}
-        <section className="border-t border-gray-800 px-6 py-16">
-          <div className="mx-auto max-w-6xl">
-            <ScrollReveal>
-              <p className="mb-10 text-center text-sm font-medium uppercase tracking-widest text-gray-500">
-                Trusted by 200+ SaaS founders
-              </p>
-            </ScrollReveal>
-            <div className="grid grid-cols-2 gap-8 md:grid-cols-4 mb-12">
-              <AnimatedCounter target={200} suffix="+" label="Active founders" />
-              <AnimatedCounter target={12} suffix="M+" label="MRR tracked" />
-              <AnimatedCounter target={98} suffix="%" label="Would recommend" />
-              <AnimatedCounter target={47} suffix="K" label="Invoices processed" />
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-12 opacity-30">
-              <svg viewBox="0 0 120 30" className="h-8 w-32 text-gray-400" fill="currentColor">
-                <rect x="0" y="5" width="24" height="20" rx="4" opacity="0.4" />
-                <rect x="30" y="5" width="24" height="20" rx="4" opacity="0.6" />
-                <rect x="60" y="5" width="24" height="20" rx="4" opacity="0.5" />
-                <rect x="90" y="5" width="24" height="20" rx="4" opacity="0.3" />
-              </svg>
-              <svg viewBox="0 0 120 30" className="h-8 w-32 text-gray-400" fill="currentColor">
-                <circle cx="15" cy="15" r="10" opacity="0.4" />
-                <circle cx="45" cy="15" r="10" opacity="0.6" />
-                <circle cx="75" cy="15" r="10" opacity="0.5" />
-                <circle cx="105" cy="15" r="10" opacity="0.3" />
-              </svg>
-              <svg viewBox="0 0 120 30" className="h-8 w-32 text-gray-400" fill="currentColor">
-                <polygon points="12,2 22,22 2,22" opacity="0.4" />
-                <polygon points="42,2 52,22 32,22" opacity="0.6" />
-                <polygon points="72,2 82,22 62,22" opacity="0.5" />
-                <polygon points="102,2 112,22 92,22" opacity="0.3" />
-              </svg>
-              <svg viewBox="0 0 120 30" className="h-8 w-32 text-gray-400" fill="currentColor">
-                <rect x="2" y="2" width="26" height="26" rx="6" opacity="0.5" />
-                <rect x="32" y="2" width="26" height="26" rx="6" opacity="0.3" />
-                <rect x="62" y="2" width="26" height="26" rx="6" opacity="0.6" />
-                <rect x="92" y="2" width="26" height="26" rx="6" opacity="0.4" />
-              </svg>
-            </div>
-          </div>
-        </section>
+        {/* ─── LAZY-LOADED SECTIONS (below the fold) ─── */}
+        <Suspense fallback={<div className="h-48 animate-pulse bg-gray-900/50" />}>
+          <SocialProofSection />
+        </Suspense>
 
-        {/* ─── PROBLEM ─── */}
-        <section className="border-t border-gray-800 px-6 py-24">
-          <div className="mx-auto max-w-6xl">
-            <ScrollReveal>
-              <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-white">Sound familiar?</h2>
-                <p className="mt-4 text-lg text-gray-400">The struggles every SaaS founder knows too well.</p>
-              </div>
-            </ScrollReveal>
-            <div className="grid gap-8 md:grid-cols-3">
-              {[
-                { emoji: "😰", bg: "bg-red-500/10", title: "I don't know if I can make payroll next month", desc: "Cash runway is a guessing game. You have revenue coming in but no clear picture of when the money runs out." },
-                { emoji: "📊", bg: "bg-amber-500/10", title: "My spreadsheet is always 2 weeks behind", desc: "Manual data entry is error-prone and stale. By the time you update your models, the numbers have already changed." },
-                { emoji: "🎯", bg: "bg-purple-500/10", title: "I have no idea what my real MRR is", desc: "Between refunds, upgrades, downgrades, and failed payments — calculating real MRR requires more than just adding up invoices." },
-              ].map((card, i) => (
-                <ScrollReveal key={card.title} delay={i * 100}>
-                  <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-8 hover:border-gray-700 transition-colors group">
-                    <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl ${card.bg} group-hover:scale-110 transition-transform`}>
-                      <span className="text-2xl">{card.emoji}</span>
-                    </div>
-                    <h3 className="mb-3 text-lg font-semibold text-white">{card.title}</h3>
-                    <p className="text-gray-400 text-sm leading-relaxed">{card.desc}</p>
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
-          </div>
-        </section>
+        <Suspense fallback={<div className="h-96 animate-pulse bg-gray-900/50" />}>
+          <ProblemSection />
+        </Suspense>
 
         {/* ─── FOUNDER STORY ─── */}
         <section className="border-t border-gray-800 px-6 py-24">
@@ -159,14 +106,15 @@ export default function LandingPage() {
             </ScrollReveal>
 
             <div className="grid gap-12 md:grid-cols-5 items-center">
-              {/* Founder Photo + Social */}
               <ScrollReveal delay={100} className="md:col-span-2">
                 <div className="flex flex-col items-center">
                   <div className="relative mb-6">
-                    <img
+                    <OptimizedImage
                       src="/founder.jpg"
-                      alt="Mo — Founder of AI Finance Ops"
+                      alt="Mo \u2014 Founder of AI Finance Ops"
                       className="h-48 w-48 rounded-2xl object-cover border border-emerald-500/10 shadow-lg"
+                      width={192}
+                      height={192}
                     />
                     <div className="absolute -bottom-3 -right-3 rounded-full bg-emerald-500 px-4 py-1.5 text-xs font-semibold text-white shadow-lg">
                       Founder
@@ -183,7 +131,6 @@ export default function LandingPage() {
                 </div>
               </ScrollReveal>
 
-              {/* Story */}
               <ScrollReveal delay={200} className="md:col-span-3">
                 <div className="space-y-5 text-gray-300 leading-relaxed">
                   <div className="rounded-xl border-l-4 border-emerald-500 bg-gray-900/50 pl-6 pr-4 py-4">
@@ -204,7 +151,7 @@ export default function LandingPage() {
                   </p>
                   <p className="text-sm text-gray-500">
                     Today, AI Finance Ops helps 200+ founders track their MRR, forecast runway, and
-                    automate AR — completely bootstrapped and built in public.
+                    automate AR \u2014 completely bootstrapped and built in public.
                   </p>
                   <div className="flex items-center gap-3 pt-2">
                     <span className="text-xs text-gray-500">Follow the journey:</span>
@@ -212,7 +159,7 @@ export default function LandingPage() {
                     <span className="text-gray-700">·</span>
                     <a href="https://www.youtube.com/@AIKnowlidgi" target="_blank" rel="noopener noreferrer" className="text-xs text-emerald-400 hover:text-emerald-300 transition-colors">YouTube</a>
                     <span className="text-gray-700">·</span>
-                    <Link href="/about" className="text-xs text-emerald-400 hover:text-emerald-300 transition-colors">Full story →</Link>
+                    <Link href="/about" className="text-xs text-emerald-400 hover:text-emerald-300 transition-colors">Full story \u2192</Link>
                   </div>
                 </div>
               </ScrollReveal>
@@ -220,34 +167,9 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* ─── SOLUTION ─── */}
-        <section id="features" className="border-t border-gray-800 px-6 py-24">
-          <div className="mx-auto max-w-6xl">
-            <ScrollReveal>
-              <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-white">Built for SaaS founders who need answers now</h2>
-                <p className="mt-4 text-lg text-gray-400">Everything you need to understand your financial health at a glance.</p>
-              </div>
-            </ScrollReveal>
-            <div className="grid gap-8 md:grid-cols-3">
-              {[
-                { icon: BarChart3, color: "text-emerald-400", bg: "bg-emerald-500/10", title: "MRR & KPI Dashboard", desc: "Real-time MRR, ARR, churn rate, and LTV — automatically calculated from your billing data. No manual entry required." },
-                { icon: TrendingUp, color: "text-blue-400", bg: "bg-blue-500/10", title: "Cash Flow Forecast P50/P80/P95", desc: "30/60/90 day projections with confidence bands. Know your best, expected, and worst case runway scenarios." },
-                { icon: Receipt, color: "text-amber-400", bg: "bg-amber-500/10", title: "Accounts Receivable + Smart Reminders", desc: "Track overdue invoices, send automated payment reminders, and reduce DSO with AI-powered AR management." },
-              ].map((feat, i) => (
-                <ScrollReveal key={feat.title} delay={i * 100}>
-                  <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-8 hover:border-gray-700 transition-colors group">
-                    <div className={`mb-5 flex h-14 w-14 items-center justify-center rounded-xl ${feat.bg} group-hover:scale-110 transition-transform`}>
-                      <feat.icon className={`h-7 w-7 ${feat.color}`} />
-                    </div>
-                    <h3 className="mb-3 text-lg font-semibold text-white">{feat.title}</h3>
-                    <p className="text-gray-400 text-sm leading-relaxed">{feat.desc}</p>
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
-          </div>
-        </section>
+        <Suspense fallback={<div className="h-96 animate-pulse bg-gray-900/50" />}>
+          <FeaturesSection />
+        </Suspense>
 
         {/* ─── DEMO SCREENSHOT ─── */}
         <section className="border-t border-gray-800 px-6 py-24">
@@ -285,7 +207,7 @@ export default function LandingPage() {
                       </div>
                     </div>
                     <div className="h-48 w-full rounded-lg bg-gray-700/50 flex items-center justify-center">
-                      <span className="text-gray-500 text-sm">Dashboard Preview — 90-Day Forecast Chart</span>
+                      <span className="text-gray-500 text-sm">Dashboard Preview \u2014 90-Day Forecast Chart</span>
                     </div>
                   </div>
                 </div>
@@ -294,104 +216,17 @@ export default function LandingPage() {
           </div>
         </section>
 
-        {/* ─── PRICING ─── */}
-        <section id="pricing" className="border-t border-gray-800 px-6 py-24">
-          <div className="mx-auto max-w-6xl">
-            <ScrollReveal>
-              <div className="text-center mb-16">
-                <h2 className="text-4xl font-bold text-white">Simple, transparent pricing</h2>
-                <p className="mt-4 text-lg text-gray-400">Start free. Upgrade when you need more power.</p>
-              </div>
-            </ScrollReveal>
-            <div className="grid gap-8 lg:grid-cols-3">
-              {[
-                {
-                  name: "Starter", price: 29, desc: "For solo founders getting started",
-                  features: ["1 workspace", "KPI dashboard (MRR, ARR, Churn)", "30-day cash flow forecast", "Single billing integration", "Email support"],
-                  highlighted: false,
-                },
-                {
-                  name: "Growth", price: 79, desc: "For growing SaaS teams",
-                  features: ["3 workspaces", "Everything in Starter", "90-day P50/P80/P95 forecast", "Multiple billing integrations", "Smart AR reminders", "Priority support"],
-                  highlighted: true,
-                },
-                {
-                  name: "Scale", price: 199, desc: "For established businesses",
-                  features: ["Unlimited workspaces", "Everything in Growth", "API access & webhooks", "AI-powered insights", "Custom integrations", "Dedicated account manager"],
-                  highlighted: false,
-                },
-              ].map((plan, i) => (
-                <ScrollReveal key={plan.name} delay={i * 100}>
-                  <div className={`relative flex flex-col rounded-2xl p-8 ${plan.highlighted ? "border-2 border-emerald-500 bg-gray-900 shadow-xl shadow-emerald-500/10" : "border border-gray-800 bg-gray-900/50"} hover:border-emerald-500/50 transition-colors`}>
-                    {plan.highlighted && (
-                      <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-emerald-500 px-4 py-1 text-sm font-semibold text-white">
-                        Recommended
-                      </div>
-                    )}
-                    <h3 className="text-xl font-bold text-white">{plan.name}</h3>
-                    <p className="mt-2 text-sm text-gray-400">{plan.desc}</p>
-                    <div className="mt-6">
-                      <span className="text-5xl font-bold text-white">${plan.price}</span>
-                      <span className="text-gray-500">/mo</span>
-                    </div>
-                    <ul className="mt-8 flex-1 space-y-4">
-                      {plan.features.map((f) => (
-                        <li key={f} className="flex items-start gap-3">
-                          <Check className="mt-0.5 h-5 w-5 flex-shrink-0 text-emerald-500" />
-                          <span className="text-sm text-gray-300">{f}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <Link href="/register" className="mt-8 block">
-                      <span className={`flex w-full items-center justify-center rounded-lg px-6 py-3 text-sm font-semibold transition-all ${
-                        plan.highlighted
-                          ? "bg-emerald-500 text-white hover:bg-emerald-400 shadow-lg shadow-emerald-500/25"
-                          : "border border-gray-700 text-gray-300 hover:border-gray-500 hover:text-white"
-                      }`}>
-                        Start Free Trial
-                      </span>
-                    </Link>
-                  </div>
-                </ScrollReveal>
-              ))}
-            </div>
-            <ScrollReveal>
-              <p className="mt-8 text-center text-sm text-gray-500">
-                14-day free trial &bull; No credit card required &bull; Cancel anytime
-              </p>
-            </ScrollReveal>
-          </div>
-        </section>
+        <Suspense fallback={<div className="h-96 animate-pulse bg-gray-900/50" />}>
+          <PricingSection />
+        </Suspense>
 
-        {/* ─── TESTIMONIALS ─── */}
-        <section id="testimonials" className="border-t border-gray-800 px-6 py-24">
-          <div className="mx-auto max-w-3xl">
-            <ScrollReveal>
-              <div className="text-center mb-12">
-                <h2 className="text-4xl font-bold text-white">Loved by SaaS founders</h2>
-                <p className="mt-4 text-lg text-gray-400">Real founders, real results.</p>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal>
-              <TestimonialCarousel />
-            </ScrollReveal>
-          </div>
-        </section>
+        <Suspense fallback={<div className="h-64 animate-pulse bg-gray-900/50" />}>
+          <TestimonialsSection />
+        </Suspense>
 
-        {/* ─── FAQ ─── */}
-        <section id="faq" className="border-t border-gray-800 px-6 py-24">
-          <div className="mx-auto max-w-3xl">
-            <ScrollReveal>
-              <div className="text-center mb-12">
-                <h2 className="text-4xl font-bold text-white">Frequently asked questions</h2>
-                <p className="mt-4 text-lg text-gray-400">Everything you need to know.</p>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal>
-              <FaqAccordion />
-            </ScrollReveal>
-          </div>
-        </section>
+        <Suspense fallback={<div className="h-48 animate-pulse bg-gray-900/50" />}>
+          <FAQSection />
+        </Suspense>
 
         {/* ─── CTA ─── */}
         <section className="border-t border-gray-800 px-6 py-24">
@@ -399,18 +234,20 @@ export default function LandingPage() {
             <ScrollReveal>
               <div className="mx-auto max-w-md rounded-2xl border border-gray-800 bg-gray-900/50 p-6 mb-12 text-left">
                 <div className="flex items-start gap-4">
-                  <img
+                  <OptimizedImage
                     src="/founder.jpg"
                     alt="Mo"
                     className="h-12 w-12 shrink-0 rounded-xl object-cover"
+                    width={48}
+                    height={48}
                   />
                   <div>
                     <p className="text-sm text-gray-300 leading-relaxed italic">
                       &ldquo;I built AI Finance Ops because I was tired of spreadsheet chaos.
-                      If you&apos;re a founder who wants real answers without the headache —
+                      If you&apos;re a founder who wants real answers without the headache \u2014
                       this is for you.&rdquo;
                     </p>
-                    <p className="text-xs text-gray-500 mt-2">— Mo, Founder of AI Finance Ops</p>
+                    <p className="text-xs text-gray-500 mt-2">\u2014 Mo, Founder of AI Finance Ops</p>
                   </div>
                 </div>
               </div>

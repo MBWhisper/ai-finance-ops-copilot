@@ -1,8 +1,8 @@
 import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
+import dynamic from 'next/dynamic'
 import { TrialBanner } from '@/components/dashboard/trial-banner'
 import { KPICGrid } from '@/components/dashboard/kpi-grid'
-import { MrrHistoryChart } from '@/components/dashboard/mrr-history-chart'
 import { PlanGate } from '@/components/plan-gate'
 import { getUserSubscription } from '@/lib/subscription'
 import { getLatestMetrics, getMetricsHistory } from '@/db/queries/metrics'
@@ -10,6 +10,11 @@ import { getInvoiceStats } from '@/db/queries/invoices'
 import { getStripeAccount } from '@/db/queries/stripe-accounts'
 import { formatCurrency } from '@/lib/utils'
 import Link from 'next/link'
+
+const MrrHistoryChart = dynamic(
+  () => import('@/components/dashboard/mrr-history-chart').then(m => ({ default: m.MrrHistoryChart })),
+  { ssr: true, loading: () => <div className="h-64 animate-pulse rounded-lg bg-gray-200" /> }
+)
 
 export default async function OverviewPage({
   searchParams,

@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { OptimizedImage } from "@/components/OptimizedImage"
 import { Calculator, Users, TrendingDown, AlertTriangle, Check } from "lucide-react"
 
 export const metadata: Metadata = {
@@ -47,10 +48,12 @@ export default function ChurnCalculatorPage() {
         >
           Track churn automatically — start free
         </Link>
-        <img
+        <OptimizedImage
           src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop"
           alt="Churn rate analytics dashboard showing customer retention metrics"
           className="w-full max-w-4xl mx-auto mt-12 rounded-xl aspect-video object-cover shadow-2xl"
+          width={1200}
+          height={630}
         />
       </section>
 

@@ -1,19 +1,23 @@
 import Link from "next/link"
+import { OptimizedImage } from "@/components/OptimizedImage"
 
 export const metadata = {
-  title: "What is MRR? The SaaS Founder's Complete Guide | AI Finance Ops",
+    title: "What is MRR? The SaaS Founder's Complete Guide | AI Finance Ops",
   description:
     "Learn what Monthly Recurring Revenue is, how to calculate it correctly, and the 3 mistakes that give founders a false picture of their SaaS growth.",
+  alternates: { canonical: 'https://www.aifinanceops.app/blog/what-is-mrr' },
 }
 
 export default function WhatIsMrrPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-300">
       <article className="mx-auto max-w-3xl px-6 py-16">
-        <img
+        <OptimizedImage
           src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop"
           alt="SaaS MRR growth chart on a modern dashboard"
           className="w-full rounded-xl mb-8 aspect-video object-cover"
+          width={1200}
+          height={630}
         />
         <h1 className="text-4xl font-bold text-white mb-4">
           What is MRR and Why Every SaaS Founder Should Track It Daily

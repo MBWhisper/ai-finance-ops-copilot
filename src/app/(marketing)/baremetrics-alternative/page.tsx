@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { OptimizedImage } from "@/components/OptimizedImage"
 import { Check, X, Sparkles, DollarSign } from "lucide-react"
 
 export const metadata: Metadata = {
@@ -65,10 +66,12 @@ export default function BaremetricsAlternativePage() {
             View pricing
           </Link>
         </div>
-        <img
+        <OptimizedImage
           src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=630&fit=crop"
           alt="SaaS analytics dashboard comparison with AI insights"
           className="w-full max-w-4xl mx-auto mt-12 rounded-xl aspect-video object-cover shadow-2xl"
+          width={1200}
+          height={630}
         />
       </section>
 

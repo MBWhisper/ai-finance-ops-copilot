@@ -1,20 +1,24 @@
 import Link from "next/link"
+import { OptimizedImage } from "@/components/OptimizedImage"
 //
 
 export const metadata = {
-  title: "How to Build a 90-Day Cash Flow Forecast for Your SaaS | AI Finance Ops",
+    title: "How to Build a 90-Day Cash Flow Forecast for Your SaaS | AI Finance Ops",
   description:
     "A step-by-step guide to building P50/P80/P95 confidence-band forecasts — and why spreadsheets always fail at this.",
+  alternates: { canonical: 'https://www.aifinanceops.app/blog/90-day-cash-flow-forecast' },
 }
 
 export default function CashFlowForecastPage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-300">
       <article className="mx-auto max-w-3xl px-6 py-16">
-        <img
+        <OptimizedImage
           src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&h=630&fit=crop"
           alt="SaaS cash flow forecast chart on a modern dashboard"
           className="w-full rounded-xl mb-8 aspect-video object-cover"
+          width={1200}
+          height={630}
         />
         <h1 className="text-4xl font-bold text-white mb-4">
           How to Build a 90-Day Cash Flow Forecast for Your SaaS

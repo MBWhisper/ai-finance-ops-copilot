@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { OptimizedImage } from "@/components/OptimizedImage"
 import { Check, TrendingUp, TrendingDown, BarChart3, AlertTriangle } from "lucide-react"
 
 export const metadata: Metadata = {
@@ -70,10 +71,12 @@ export default function MrrTrackerPage() {
             See demo
           </Link>
         </div>
-        <img
+        <OptimizedImage
           src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop"
           alt="MRR tracking dashboard with charts and analytics"
           className="w-full max-w-4xl mx-auto mt-12 rounded-xl aspect-video object-cover shadow-2xl"
+          width={1200}
+          height={630}
         />
       </section>
 

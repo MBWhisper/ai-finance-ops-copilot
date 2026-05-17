@@ -1,20 +1,24 @@
 import Link from "next/link"
+import { OptimizedImage } from "@/components/OptimizedImage"
 //
 
 export const metadata = {
-  title: "The Founder's Guide to Accounts Receivable Automation | AI Finance Ops",
+    title: "The Founder's Guide to Accounts Receivable Automation | AI Finance Ops",
   description:
     "Stop chasing unpaid invoices manually. Learn how to set up automated AR reminders that recover revenue on autopilot.",
+  alternates: { canonical: 'https://www.aifinanceops.app/blog/ar-automation-guide' },
 }
 
 export default function ArAutomationGuidePage() {
   return (
     <div className="min-h-screen bg-slate-950 text-slate-300">
       <article className="mx-auto max-w-3xl px-6 py-16">
-        <img
+        <OptimizedImage
           src="https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1200&h=630&fit=crop"
           alt="SaaS accounts receivable automation dashboard"
           className="w-full rounded-xl mb-8 aspect-video object-cover"
+          width={1200}
+          height={630}
         />
         <h1 className="text-4xl font-bold text-white mb-4">
           The Founder&apos;s Guide to Accounts Receivable Automation

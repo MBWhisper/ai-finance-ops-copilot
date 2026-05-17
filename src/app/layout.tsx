@@ -5,7 +5,13 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Navbar } from "@/components/layout/Navbar";
 import "./globals.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  preload: true,
+  variable: "--font-inter",
+  fallback: ["system-ui", "arial"],
+});
 
 export const metadata: Metadata = {
   title: 'AI Finance Ops — Intelligent Financial Copilot',
@@ -50,10 +56,44 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.variable} ${inter.className}`}>
         <Navbar />
         {children}
         <SpeedInsights />
+        <Script id="web-vitals" strategy="afterInteractive">
+          {`
+            function sendWebVital(metric) {
+              if (typeof gtag !== 'undefined') {
+                gtag('event', metric.name, {
+                  value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
+                  event_label: metric.id,
+                  non_interaction: true,
+                });
+              }
+            }
+            (function() {
+              try {
+                new PerformanceObserver(function(list) {
+                  list.getEntries().forEach(function(entry) {
+                    if (entry.entryType === 'largest-contentful-paint' || entry.entryType === 'first-input' || entry.entryType === 'layout-shift') {
+                      sendWebVital({ name: entry.entryType === 'largest-contentful-paint' ? 'LCP' : entry.entryType === 'first-input' ? 'FID' : 'CLS', value: entry.entryType === 'layout-shift' ? entry.value : entry.startTime, id: entry.id || '' });
+                    }
+                  });
+                }).observe({ type: 'largest-contentful-paint', buffered: true });
+                new PerformanceObserver(function(list) {
+                  list.getEntries().forEach(function(entry) {
+                    sendWebVital({ name: 'FID', value: entry.processingStart - entry.startTime, id: entry.id || '' });
+                  });
+                }).observe({ type: 'first-input', buffered: true });
+                new PerformanceObserver(function(list) {
+                  list.getEntries().forEach(function(entry) {
+                    sendWebVital({ name: 'CLS', value: entry.value, id: entry.id || '' });
+                  });
+                }).observe({ type: 'layout-shift', buffered: true });
+              } catch(e) {}
+            })();
+          `}
+        </Script>
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
           strategy="afterInteractive"

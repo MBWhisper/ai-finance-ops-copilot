@@ -1,5 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
+import { OptimizedImage } from "@/components/OptimizedImage"
 import { FileText, Clock, BarChart3, Check } from "lucide-react"
 
 export const metadata: Metadata = {
@@ -48,10 +49,12 @@ export default function AutomateReportingPage() {
         >
           Automate reports — start free
         </Link>
-        <img
+        <OptimizedImage
           src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?w=1200&h=630&fit=crop"
           alt="Automated SaaS reporting dashboard with real-time metrics"
           className="w-full max-w-4xl mx-auto mt-12 rounded-xl aspect-video object-cover shadow-2xl"
+          width={1200}
+          height={630}
         />
       </section>
 

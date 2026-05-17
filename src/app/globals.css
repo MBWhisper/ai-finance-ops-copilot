@@ -123,3 +123,9 @@ select:-webkit-autofill {
 .animate-slide-in-right {
   animation: slide-in-right 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
+/* Content visibility for long articles */
+.article-body {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 500px;
+}

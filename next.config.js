@@ -28,11 +28,46 @@ const securityHeaders = [
 ]
 
 const nextConfig = {
+  // Image optimization
+  images: {
+    formats: ['image/avif', 'image/webp'],
+    minimumCacheTTL: 60,
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256],
+  },
+
+  // File compression
+  compress: true,
+
+  // Bundle optimization
+  experimental: {
+    optimizePackageImports: [
+      'lucide-react',
+      'date-fns',
+    ],
+  },
+
+  // Security & behavior
+  poweredByHeader: false,
+  reactStrictMode: true,
+
   async headers() {
     return [
       {
         source: '/:path*',
         headers: securityHeaders,
+      },
+      {
+        source: '/static/(.*)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
+      },
+      {
+        source: '/_next/static/(.*)',
+        headers: [
+          { key: 'Cache-Control', value: 'public, max-age=31536000, immutable' },
+        ],
       },
     ]
   },
