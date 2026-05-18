@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import {
   LayoutDashboard, TrendingUp, Receipt, Settings, CreditCard,
-  Menu, X, LogOut, Bell, AlertTriangle, BarChart3,
+  Menu, X, LogOut, Bell, AlertTriangle, BarChart3, Bot,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { createClient } from "@/lib/supabase/browser"
@@ -17,6 +17,7 @@ export interface NavItem {
 
 export const navItems: NavItem[] = [
   { label: "Overview", href: "/dashboard/overview", icon: LayoutDashboard },
+  { label: "AI Copilot", href: "/dashboard/ai-chat", icon: Bot },
   { label: "Cash Flow", href: "/dashboard/cashflow", icon: TrendingUp },
   { label: "AR / Invoices", href: "/dashboard/ar", icon: Receipt },
   { label: "Cohorts", href: "/dashboard/cohorts", icon: BarChart3 },

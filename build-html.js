@@ -1,0 +1,1048 @@
+const fs = require('fs');
+const path = 'D:\\ai finance ops copilot\\aifinanceops-dashboard.html';
+const append = (html) => fs.appendFileSync(path, html, 'utf8');
+
+fs.writeFileSync(path, '', 'utf8');
+
+// ── HEAD ──
+append(`<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Finance Ops — AI-powered financial copilot for SaaS founders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300..700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js" defer></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.5;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit;border:none;background:none}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+@media(prefers-reduced-motion:reduce){*{animation-duration:0.01ms!important;transition-duration:0.01ms!important}}
+:root{--bg:#080c14;--surface:#0f1624;--surface-2:#151e2e;--border:#243045;--divider:#1e2a3d;--text:#f1f5f9;--muted:#94a3b8;--faint:#475569;--primary:#10b981;--primary-hover:#059669;--highlight:#064e3b;--warn:#f59e0b;--err:#ef4444;--blue:#3b82f6;--purple:#8b5cf6;--fs-xs:clamp(0.6875rem,0.6vw+0.5rem,0.75rem);--fs-sm:clamp(0.75rem,0.7vw+0.5rem,0.875rem);--fs-base:clamp(0.875rem,0.9vw+0.5rem,1rem);--fs-lg:clamp(1rem,1.1vw+0.5rem,1.125rem);--fs-xl:clamp(1.125rem,1.5vw+0.5rem,1.5rem);--fs-2xl:clamp(1.25rem,2vw+0.5rem,1.875rem);--fs-3xl:clamp(1.5rem,3vw+0.5rem,2.25rem);--fs-hero:clamp(2rem,5vw+0.5rem,3.5rem);--s1:4px;--s2:8px;--s3:12px;--s4:16px;--s5:20px;--s6:24px;--s8:32px;--s10:40px;--s12:48px;--s16:64px}
+[data-theme="light"]{--bg:#f8fafc;--surface:#fff;--surface-2:#f1f5f9;--border:#cbd5e1;--divider:#e2e8f0;--text:#0f172a;--muted:#475569;--faint:#94a3b8;--primary:#059669;--highlight:#d1fae5}
+.tnum{font-variant-numeric:tabular-nums}
+.page{display:none}.page.active{display:block;animation:fadeIn .2s}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:8px 16px;border-radius:8px;font-size:var(--fs-sm);font-weight:500;min-height:44px;border:1px solid transparent}
+.btn-primary{background:var(--primary);color:#fff}
+.btn-ghost{background:transparent;color:var(--muted);border-color:var(--border)}
+.btn-primary:hover{background:var(--primary-hover)}
+.btn-ghost:hover{background:var(--surface-2);color:var(--text)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:var(--s5)}
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s4);margin-bottom:var(--s6)}
+.kpi-card .lbl{font-size:var(--fs-xs);color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.kpi-card .val{font-size:var(--fs-2xl);font-weight:700;font-variant-numeric:tabular-nums;margin:4px 0}
+.kpi-trend{display:inline-flex;align-items:center;gap:4px;font-size:var(--fs-xs);padding:2px 8px;border-radius:999px}
+.kpi-trend.up{background:var(--highlight);color:var(--primary)}
+.kpi-trend.down{color:var(--err)}
+.dash-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5)}
+.chart-container{height:280px}
+.sidebar{width:240px;background:var(--surface);border-right:1px solid var(--divider);position:fixed;top:0;left:0;height:100vh;z-index:50;display:flex;flex-direction:column}
+.sidebar-nav{flex:1;padding:var(--s3);overflow-y:auto}
+.sidebar-nav a{display:flex;align-items:center;gap:var(--s3);padding:8px 12px;border-radius:8px;font-size:var(--fs-sm);color:var(--muted);min-height:44px;position:relative}
+.sidebar-nav a:hover{background:var(--surface-2);color:var(--text)}
+.sidebar-nav a.active{background:var(--highlight);color:var(--primary)}
+.sidebar-nav a.active::before{content:'';position:absolute;left:0;top:50%;width:3px;height:20px;background:var(--primary)}
+.main-content{flex:1;margin-left:240px;display:flex;flex-direction:column;min-height:100vh}
+.page-content{padding:var(--s6);flex:1;overflow-y:auto}
+.page-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:var(--s6);flex-wrap:wrap;gap:var(--s4)}
+.page-header h1{font-size:var(--fs-2xl);font-weight:700}
+.hero{min-height:calc(100vh - 80px);display:flex;align-items:center;justify-content:center;text-align:center;padding:var(--s8) var(--s6)}
+.hero h1{font-size:var(--fs-hero);font-weight:700;line-height:1.1;margin-bottom:var(--s5)}
+.hero p{font-size:var(--fs-lg);color:var(--muted);max-width:600px;margin:0 auto var(--s8)}
+.section{padding:var(--s16) var(--s6);max-width:1200px;margin:0 auto}
+.section-title{text-align:center;font-size:var(--fs-3xl);font-weight:700;margin-bottom:var(--s12)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s6)}
+.feature-row{display:grid;grid-template-columns:1fr 1fr;gap:var(--s10);align-items:center;margin-bottom:var(--s16)}
+.feature-row.reversed{direction:rtl}.feature-row.reversed>*{direction:ltr}
+.table-container{overflow-x:auto;border:1px solid var(--border);border-radius:16px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:12px 16px;text-align:left;font-size:var(--fs-sm);border-bottom:1px solid var(--divider)}
+th{font-size:var(--fs-xs);color:var(--muted);text-transform:uppercase;cursor:pointer}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--surface-2)}
+.modal-overlay{position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:var(--s4)}
+.modal{background:var(--surface);border:1px solid var(--border);border-radius:20px;width:100%;max-width:560px;max-height:90vh;overflow-y:auto}
+.form-group{margin-bottom:var(--s4)}
+.form-group label{display:block;font-size:var(--fs-xs);color:var(--muted);margin-bottom:4px}
+.form-group input,.form-group select{width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:var(--fs-sm);min-height:44px;outline:none}
+.status-badge{display:inline-flex;padding:2px 10px;border-radius:999px;font-size:var(--fs-xs);font-weight:500}
+.status-badge.paid,.status-safe{background:var(--highlight);color:var(--primary)}
+.status-badge.pending{background:rgba(245,158,11,.15);color:var(--warn)}
+.status-badge.overdue,.status-danger{background:rgba(239,68,68,.12);color:var(--err)}
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:var(--s12);text-align:center}
+@keyframes chatBounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}.chat-messages::-webkit-scrollbar{width:4px}.chat-messages::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+.toggle{display:inline-flex;align-items:center;gap:var(--s3);cursor:pointer;min-height:44px}
+.toggle-track{width:44px;height:24px;background:var(--surface-2);border-radius:12px;position:relative}
+.toggle-track::after{content:'';position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:var(--muted)}
+.toggle input{position:absolute;opacity:0}
+.toggle input:checked+.toggle-track{background:var(--primary)}
+.toggle input:checked+.toggle-track::after{left:22px;background:#fff}
+.mobile-tabs{display:none}
+.landing-nav-links{display:flex;gap:var(--s6)}
+.landing-nav-links a{color:var(--muted);font-weight:500;min-height:44px;display:flex;align-items:center}
+.landing-nav-links a:hover{color:var(--text)}
+@media(max-width:1023px){
+.pricing-grid{grid-template-columns:1fr;max-width:420px;margin:0 auto}
+.feature-row,.feature-row.reversed{grid-template-columns:1fr;direction:ltr}
+.kpi-grid{grid-template-columns:repeat(2,1fr)}
+.dash-grid{grid-template-columns:1fr}
+.landing-nav-links{display:none}
+}
+@media(max-width:767px){
+.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}
+.main-content{margin-left:0}
+.mobile-tabs{display:flex!important;position:fixed;bottom:0;left:0;right:0;z-index:50;background:var(--surface);border-top:1px solid var(--divider)}
+.mobile-tabs a{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:6px 0;font-size:10px;color:var(--faint);min-height:56px;justify-content:center}
+.mobile-tabs a.active{color:var(--primary)}
+.page-content{padding:var(--s4);padding-bottom:80px}
+.hero h1{font-size:var(--fs-2xl)}
+.modal{max-width:100%;border-radius:0;min-height:100vh;margin:0}
+.chart-container{height:200px}
+}
+</style>
+</head>
+<body>
+<canvas id="confetti-canvas"></canvas>
+`);
+
+// ── ANNOUNCEMENT + LANDING NAV ──
+append(`
+<div class="announcement-bar" id="announcement-bar" style="background:var(--primary);color:#fff;padding:8px 16px;display:flex;align-items:center;justify-content:center;gap:var(--s3);font-size:var(--fs-sm);font-weight:500;min-height:40px;position:relative">
+<span>AI Finance Ops is live! Get 50% off your first month → Use code LAUNCH50</span>
+<button class="dismiss" onclick="dismissAnnouncement()" style="position:absolute;right:var(--s3);opacity:.7;width:32px;height:32px" aria-label="Dismiss">✕</button>
+</div>
+<nav class="landing-nav" style="position:sticky;top:0;z-index:50;background:rgba(8,12,20,.8);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--divider)">
+<div style="display:flex;align-items:center;justify-content:space-between;padding:12px 24px;max-width:1280px;margin:0 auto">
+<div style="display:flex;align-items:center;gap:var(--s8)">
+  <a href="#landing" onclick="navigate('#landing')" style="display:flex;align-items:center;gap:var(--s3);min-height:44px">
+    <svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#10b981"/><path d="M20 5L14 16h5l-7 11h2l8-13h-5l6-9z" fill="#fff"/></svg>
+    <span style="font-weight:600;font-size:var(--fs-base)">AI Finance Ops</span>
+  </a>
+  <div class="landing-nav-links">
+    <a href="#landing" onclick="navigate('#landing')">Home</a>
+    <a href="#landing" onclick="document.getElementById('features').scrollIntoView({behavior:'smooth'})">Features</a>
+    <a href="#landing" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">Pricing</a>
+    <a href="#landing" onclick="document.getElementById('faq').scrollIntoView({behavior:'smooth'})">FAQ</a>
+  </div>
+</div>
+<div style="display:flex;align-items:center;gap:var(--s3)">
+  <button onclick="toggleTheme()" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:var(--muted)" aria-label="Toggle theme">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+  <a href="#signin" class="btn btn-ghost" onclick="navigate('#signin')">Sign in</a>
+  <a href="#signup" class="btn btn-primary" onclick="navigate('#signup')">Start free →</a>
+  <button class="hamburger" onclick="toggleMobileMenu()" style="display:none;width:44px;height:44px;align-items:center;justify-content:center;border-radius:8px;color:var(--muted)" aria-label="Menu">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h16"/><path d="M4 6h16"/><path d="M4 18h16"/></svg>
+  </button>
+</div>
+</div>
+</nav>
+`);
+
+// ── LANDING PAGE ──
+append(`
+<section id="landing" class="page active landing-page">
+<div class="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-content">
+    <h1>Your SaaS Finances,<br>Finally Under Control</h1>
+    <p>AI Finance Ops gives founders real-time MRR tracking, invoice automation, and churn prediction — all in one place.</p>
+    <div style="display:flex;align-items:center;justify-content:center;gap:var(--s4);flex-wrap:wrap;margin-bottom:var(--s6)">
+      <a href="#signup" class="btn btn-primary" onclick="navigate('#signup')">Start free — no credit card</a>
+      <a href="#dashboard" class="btn btn-ghost" onclick="navigate('#dashboard')">See live demo →</a>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:center;gap:var(--s3);font-size:var(--fs-xs);color:var(--muted)">
+      <div style="display:flex">
+        <span style="width:32px;height:32px;border-radius:50%;border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;margin-right:-8px;background:#3b82f6;color:#fff">A</span>
+        <span style="width:32px;height:32px;border-radius:50%;border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;margin-right:-8px;background:#8b5cf6;color:#fff">M</span>
+        <span style="width:32px;height:32px;border-radius:50%;border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;margin-right:-8px;background:#10b981;color:#fff">K</span>
+        <span style="width:32px;height:32px;border-radius:50%;border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;margin-right:-8px;background:#f59e0b;color:#fff">J</span>
+        <span style="width:32px;height:32px;border-radius:50%;border:2px solid var(--bg);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;background:#ef4444;color:#fff">R</span>
+      </div>
+      <span>Trusted by 200+ SaaS founders</span>
+    </div>
+  </div>
+</div>
+
+<div style="background:var(--surface);border-top:1px solid var(--divider);border-bottom:1px solid var(--divider);padding:var(--s6) var(--s6)">
+  <p style="text-align:center;font-size:var(--fs-xs);color:var(--faint);text-transform:uppercase;letter-spacing:.1em;margin-bottom:var(--s4)">Integrates with your stack</p>
+  <div style="display:flex;justify-content:center;gap:var(--s8);flex-wrap:wrap;opacity:.5">
+    <span style="font-weight:700;font-size:var(--fs-lg)">Stripe</span>
+    <span style="font-weight:700;font-size:var(--fs-lg)">Paddle</span>
+    <span style="font-weight:700;font-size:var(--fs-lg)">QuickBooks</span>
+    <span style="font-weight:700;font-size:var(--fs-lg)">Xero</span>
+    <span style="font-weight:700;font-size:var(--fs-lg)">Braintree</span>
+    <span style="font-weight:700;font-size:var(--fs-lg)">CSV</span>
+  </div>
+</div>
+
+<div class="section" id="features">
+  <h2 class="section-title">Everything a SaaS founder needs</h2>
+  <p style="text-align:center;font-size:var(--fs-base);color:var(--muted);max-width:600px;margin:0 auto var(--s12)">AI-powered tools to track, predict, and grow your SaaS revenue.</p>
+
+  <div class="feature-row">
+    <div><h3 style="font-size:var(--fs-xl);font-weight:600;margin-bottom:var(--s3)">Real-time MRR & ARR tracking</h3><p style="color:var(--muted);line-height:1.7">Track monthly and annual recurring revenue with live updates. See where your business stands at a glance with trend indicators.</p></div>
+    <div class="card" style="height:260px;display:grid;grid-template-columns:1fr 1fr;gap:var(--s3)">
+      <div style="background:var(--surface-2);border-radius:8px;padding:var(--s3)"><p style="font-size:10px;color:var(--faint);text-transform:uppercase">MRR</p><p style="font-size:var(--fs-xl);font-weight:700;color:var(--primary)" class="tnum">$72.6K</p><p style="font-size:10px;color:var(--primary)">↑ 12.4%</p></div>
+      <div style="background:var(--surface-2);border-radius:8px;padding:var(--s3)"><p style="font-size:10px;color:var(--faint);text-transform:uppercase">ARR</p><p style="font-size:var(--fs-xl);font-weight:700;color:var(--blue)" class="tnum">$871K</p><p style="font-size:10px;color:var(--primary)">↑ 12.4%</p></div>
+      <div style="background:var(--surface-2);border-radius:8px;padding:var(--s3)"><p style="font-size:10px;color:var(--faint);text-transform:uppercase">Churn</p><p style="font-size:var(--fs-xl);font-weight:700" class="tnum">0.80%</p><p style="font-size:10px;color:var(--primary)">↓ 0.2%</p></div>
+      <div style="background:var(--surface-2);border-radius:8px;padding:var(--s3)"><p style="font-size:10px;color:var(--faint);text-transform:uppercase">LTV</p><p style="font-size:var(--fs-xl);font-weight:700" class="tnum">$92K</p><p style="font-size:10px;color:var(--primary)">↑ 8.1%</p></div>
+    </div>
+  </div>
+
+  <div class="feature-row reversed">
+    <div><h3 style="font-size:var(--fs-xl);font-weight:600;margin-bottom:var(--s3)">AI-powered churn prediction</h3><p style="color:var(--muted);line-height:1.7">Our ML models analyze usage patterns, payment history, and engagement to predict which customers are at risk — before they leave.</p></div>
+    <div class="card" style="height:260px;display:flex;flex-direction:column;gap:var(--s3);justify-content:center">
+      <div style="display:flex;justify-content:space-between;padding:var(--s3);background:var(--surface-2);border-radius:8px"><span>Acme Corp</span><span style="color:var(--primary);font-weight:600">Safe 92%</span></div>
+      <div style="display:flex;justify-content:space-between;padding:var(--s3);background:var(--surface-2);border-radius:8px"><span>TechFlow Inc</span><span style="color:var(--warn);font-weight:600">Watch 55%</span></div>
+      <div style="display:flex;justify-content:space-between;padding:var(--s3);background:var(--surface-2);border-radius:8px"><span>StartupXYZ</span><span style="color:var(--err);font-weight:600">Critical 87%</span></div>
+    </div>
+  </div>
+
+  <div class="feature-row">
+    <div><h3 style="font-size:var(--fs-xl);font-weight:600;margin-bottom:var(--s3)">Automated invoice management</h3><p style="color:var(--muted);line-height:1.7">Send invoices, track payments, and automate reminders. Powered by AI to match payments and flag anomalies in real-time.</p></div>
+    <div class="card" style="height:260px;display:flex;flex-direction:column;gap:var(--s2);justify-content:center">
+      <div style="display:flex;justify-content:space-between;padding:8px 12px;background:var(--surface-2);border-radius:6px"><span>#001</span><span style="color:var(--primary)">Paid</span><span>$1,200</span></div>
+      <div style="display:flex;justify-content:space-between;padding:8px 12px;background:var(--surface-2);border-radius:6px"><span>#002</span><span style="color:var(--warn)">Pending</span><span>$3,500</span></div>
+      <div style="display:flex;justify-content:space-between;padding:8px 12px;background:var(--surface-2);border-radius:6px"><span>#003</span><span style="color:var(--err)">Overdue</span><span>$800</span></div>
+    </div>
+  </div>
+
+  <div class="feature-row reversed">
+    <div><h3 style="font-size:var(--fs-xl);font-weight:600;margin-bottom:var(--s3)">PMF Score & retention analytics</h3><p style="color:var(--muted);line-height:1.7">Understand your product-market fit with cohort retention tables, PMF scoring, and industry benchmarks.</p></div>
+    <div class="card" style="height:260px;display:flex;align-items:center;justify-content:center;gap:var(--s6)">
+      <div style="text-align:center"><p style="font-size:var(--fs-2xl);font-weight:700;color:var(--primary)" class="tnum">72%</p><p style="font-size:10px;color:var(--faint)">Month-1</p></div>
+      <div style="width:1px;height:40px;background:var(--border)"></div>
+      <div style="text-align:center"><p style="font-size:var(--fs-2xl);font-weight:700;color:var(--primary)" class="tnum">48%</p><p style="font-size:10px;color:var(--faint)">Month-3</p></div>
+      <div style="width:1px;height:40px;background:var(--border)"></div>
+      <div style="text-align:center"><p style="font-size:var(--fs-xl);font-weight:700;color:var(--blue)">Strong ✅</p><p style="font-size:10px;color:var(--faint)">PMF Status</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="metrics-bar" style="background:var(--surface);border-top:1px solid var(--divider);border-bottom:1px solid var(--divider);padding:var(--s12) var(--s6)">
+  <div style="max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:var(--s8);text-align:center">
+    <div><p class="tnum" style="font-size:var(--fs-3xl);font-weight:700" data-count="200">0</p><p style="font-size:var(--fs-sm);color:var(--muted);margin-top:4px">Founders</p></div>
+    <div><p class="tnum" style="font-size:var(--fs-3xl);font-weight:700" data-count="50">0</p><p style="font-size:var(--fs-sm);color:var(--muted);margin-top:4px">M+ Tracked</p></div>
+    <div><p class="tnum" style="font-size:var(--fs-3xl);font-weight:700" data-count="0.8">0</p><p style="font-size:var(--fs-sm);color:var(--muted);margin-top:4px">Avg Churn Rate</p></div>
+    <div><p class="tnum" style="font-size:var(--fs-3xl);font-weight:700" data-count="4.9">0</p><p style="font-size:var(--fs-sm);color:var(--muted);margin-top:4px">Rating</p></div>
+  </div>
+</div>
+
+<div class="section" id="pricing">
+  <h2 class="section-title">Simple, transparent pricing</h2>
+  <p style="text-align:center;font-size:var(--fs-base);color:var(--muted);max-width:600px;margin:0 auto var(--s8)">Start for free. Upgrade when you grow.</p>
+  <div style="display:flex;justify-content:center;gap:var(--s3);margin-bottom:var(--s8)">
+    <button id="pm-btn" class="btn btn-primary btn-sm" onclick="setPricing('monthly')">Monthly</button>
+    <button id="pa-btn" class="btn btn-ghost btn-sm" onclick="setPricing('annual')">Annual <span style="color:var(--primary);font-weight:600">Save 20%</span></button>
+  </div>
+  <div class="pricing-grid">
+    <div class="card"><p style="font-size:var(--fs-lg);font-weight:600;margin-bottom:4px">Starter</p><p style="font-size:var(--fs-3xl);font-weight:700" class="tnum" id="price-starter">$49<span style="font-size:var(--fs-base);font-weight:400;color:var(--muted)">/mo</span></p><p style="font-size:var(--fs-xs);color:var(--muted);margin:4px 0 var(--s5)">For solo founders</p><a href="#signup" class="btn btn-ghost" style="width:100%" onclick="navigate('#signup')">Start free trial</a></div>
+    <div class="card" style="border-color:var(--primary);box-shadow:0 0 0 1px var(--primary);position:relative"><span style="position:absolute;top:var(--s3);right:var(--s3);background:var(--primary);color:#fff;font-size:11px;font-weight:600;padding:4px 12px;border-radius:999px">Most Popular</span><p style="font-size:var(--fs-lg);font-weight:600;margin-bottom:4px">Pro</p><p style="font-size:var(--fs-3xl);font-weight:700" class="tnum" id="price-pro">$149<span style="font-size:var(--fs-base);font-weight:400;color:var(--muted)">/mo</span></p><p style="font-size:var(--fs-xs);color:var(--muted);margin:4px 0 var(--s5)">For growing teams</p><a href="#signup" class="btn btn-primary" style="width:100%" onclick="navigate('#signup')">Start free trial</a></div>
+    <div class="card"><p style="font-size:var(--fs-lg);font-weight:600;margin-bottom:4px">Enterprise</p><p style="font-size:var(--fs-3xl);font-weight:700" id="price-enterprise">Custom</p><p style="font-size:var(--fs-xs);color:var(--muted);margin:4px 0 var(--s5)">For large orgs</p><a href="#" class="btn btn-ghost" style="width:100%">Contact sales</a></div>
+  </div>
+</div>
+
+<div class="section">
+  <h2 class="section-title">Loved by SaaS founders</h2>
+  <p style="text-align:center;font-size:var(--fs-base);color:var(--muted);max-width:600px;margin:0 auto var(--s12)">See what our users say.</p>
+  <div class="testimonial-grid">
+    <div class="card" style="grid-row:span 2"><div style="display:flex;align-items:center;gap:var(--s3);margin-bottom:var(--s3)"><div style="width:40px;height:40px;border-radius:50%;background:#3b82f6;display:flex;align-items:center;justify-content:center;font-weight:600;color:#fff">S</div><div><p style="font-weight:600">Sarah Chen</p><span style="font-size:var(--fs-xs);color:var(--muted)">CEO, DataPulse</span></div></div><p style="font-style:italic;color:var(--muted);line-height:1.7">&ldquo;AI Finance Ops transformed how we track SaaS metrics. The churn prediction alone saved us 3 major accounts.&rdquo;</p></div>
+    <div class="card"><div style="display:flex;align-items:center;gap:var(--s3);margin-bottom:var(--s3)"><div style="width:40px;height:40px;border-radius:50%;background:#10b981;display:flex;align-items:center;justify-content:center;font-weight:600;color:#fff">M</div><div><p style="font-weight:600">Marcus Rivera</p><span style="font-size:var(--fs-xs);color:var(--muted)">CTO, CloudBase</span></div></div><p style="font-style:italic;color:var(--muted);line-height:1.7">&ldquo;Set up in 5 minutes. The dashboard is incredibly clean.&rdquo;</p></div>
+    <div class="card"><div style="display:flex;align-items:center;gap:var(--s3);margin-bottom:var(--s3)"><div style="width:40px;height:40px;border-radius:50%;background:#f59e0b;display:flex;align-items:center;justify-content:center;font-weight:600;color:#fff">A</div><div><p style="font-weight:600">Amira Patel</p><span style="font-size:var(--fs-xs);color:var(--muted)">Founder, NovaSaaS</span></div></div><p style="font-style:italic;color:var(--muted);line-height:1.7">&ldquo;The PMF score helped us pivot messaging and saw 40% improvement in trial conversion.&rdquo;</p></div>
+  </div>
+</div>
+
+<div class="section" id="faq">
+  <h2 class="section-title">FAQ</h2>
+  <div class="faq-list" style="max-width:700px;margin:0 auto">
+    <div class="faq-item" style="border-bottom:1px solid var(--divider)"><button class="faq-question" onclick="toggleFaq(this)" style="width:100%;display:flex;justify-content:space-between;padding:var(--s4) 0;font-size:var(--fs-base);font-weight:500;text-align:left;min-height:44px">What is AI Finance Ops? <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button><div class="faq-answer" style="overflow:hidden;max-height:300px;padding:0 0 var(--s4)"><p style="color:var(--muted);line-height:1.7">AI Finance Ops is an AI-powered financial copilot for SaaS founders. It tracks MRR, manages invoices, predicts churn, and measures PMF.</p></div></div>
+    <div class="faq-item" style="border-bottom:1px solid var(--divider)"><button class="faq-question" onclick="toggleFaq(this)" style="width:100%;display:flex;justify-content:space-between;padding:var(--s4) 0;font-size:var(--fs-base);font-weight:500;text-align:left;min-height:44px">How does the free trial work? <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button><div class="faq-answer" style="overflow:hidden;max-height:0;padding:0"><p style="color:var(--muted);line-height:1.7">14 days free on any plan. No credit card required. Your account pauses if you don't upgrade.</p></div></div>
+    <div class="faq-item" style="border-bottom:1px solid var(--divider)"><button class="faq-question" onclick="toggleFaq(this)" style="width:100%;display:flex;justify-content:space-between;padding:var(--s4) 0;font-size:var(--fs-base);font-weight:500;text-align:left;min-height:44px">Can I cancel anytime? <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button><div class="faq-answer" style="overflow:hidden;max-height:0;padding:0"><p style="color:var(--muted);line-height:1.7">Yes. Cancel from settings. Your data is exported on request.</p></div></div>
+    <div class="faq-item" style="border-bottom:1px solid var(--divider)"><button class="faq-question" onclick="toggleFaq(this)" style="width:100%;display:flex;justify-content:space-between;padding:var(--s4) 0;font-size:var(--fs-base);font-weight:500;text-align:left;min-height:44px">Which payment providers integrate? <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button><div class="faq-answer" style="overflow:hidden;max-height:0;padding:0"><p style="color:var(--muted);line-height:1.7">Stripe, Paddle, Braintree, QuickBooks, Xero, and manual CSV import.</p></div></div>
+    <div class="faq-item" style="border-bottom:1px solid var(--divider)"><button class="faq-question" onclick="toggleFaq(this)" style="width:100%;display:flex;justify-content:space-between;padding:var(--s4) 0;font-size:var(--fs-base);font-weight:500;text-align:left;min-height:44px">Is my data secure? <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg></button><div class="faq-answer" style="overflow:hidden;max-height:0;padding:0"><p style="color:var(--muted);line-height:1.7">256-bit encryption at rest, TLS 1.3 in transit. SOC 2 compliance coming Q3 2026.</p></div></div>
+  </div>
+</div>
+
+<footer class="landing-footer" style="background:var(--surface);border-top:1px solid var(--divider);padding:var(--s12) var(--s6)">
+  <div style="max-width:1200px;margin:0 auto;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:var(--s8)">
+    <div><div style="display:flex;align-items:center;gap:var(--s2);margin-bottom:var(--s2)"><svg width="24" height="24" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#10b981"/><path d="M20 5L14 16h5l-7 11h2l8-13h-5l6-9z" fill="#fff"/></svg><span style="font-weight:600">AI Finance Ops</span></div><p style="font-size:var(--fs-sm);color:var(--muted);max-width:280px">AI-powered financial copilot for SaaS founders.</p></div>
+    <div><h4 style="font-size:var(--fs-sm);font-weight:600;margin-bottom:var(--s4)">Product</h4><a href="#" style="display:block;font-size:var(--fs-sm);color:var(--muted);margin-bottom:var(--s2);min-height:40px;display:flex;align-items:center">Features</a><a href="#" style="display:block;font-size:var(--fs-sm);color:var(--muted);margin-bottom:var(--s2);min-height:40px;display:flex;align-items:center">Pricing</a></div>
+    <div><h4 style="font-size:var(--fs-sm);font-weight:600;margin-bottom:var(--s4)">Resources</h4><a href="#" style="display:block;font-size:var(--fs-sm);color:var(--muted);margin-bottom:var(--s2);min-height:40px;display:flex;align-items:center">Docs</a><a href="#" style="display:block;font-size:var(--fs-sm);color:var(--muted);margin-bottom:var(--s2);min-height:40px;display:flex;align-items:center">API</a></div>
+    <div><h4 style="font-size:var(--fs-sm);font-weight:600;margin-bottom:var(--s4)">Company</h4><a href="#" style="display:block;font-size:var(--fs-sm);color:var(--muted);margin-bottom:var(--s2);min-height:40px;display:flex;align-items:center">About</a><a href="#" style="display:block;font-size:var(--fs-sm);color:var(--muted);margin-bottom:var(--s2);min-height:40px;display:flex;align-items:center">Contact</a></div>
+  </div>
+  <div style="max-width:1200px;margin:var(--s8) auto 0;padding-top:var(--s6);border-top:1px solid var(--divider);display:flex;align-items:center;justify-content:space-between;font-size:var(--fs-xs);color:var(--muted)"><span>© 2026 AI Finance Ops</span><div style="display:flex;gap:var(--s4)"><a href="#">Privacy</a><a href="#">Terms</a></div></div>
+</footer>
+</section>
+`);
+
+// ── SIGN IN ──
+append(`
+<section id="signin" class="page">
+  <div class="auth-page" style="display:flex;align-items:center;justify-content:center;min-height:100vh;padding:var(--s4)">
+    <div class="auth-card" style="max-width:420px;width:100%">
+      <div style="display:flex;align-items:center;justify-content:center;gap:var(--s3);margin-bottom:var(--s6)">
+        <svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#10b981"/><path d="M20 5L14 16h5l-7 11h2l8-13h-5l6-9z" fill="#fff"/></svg>
+        <span style="font-size:var(--fs-xl);font-weight:700">AI Finance Ops</span>
+      </div>
+      <h1 style="font-size:var(--fs-xl);font-weight:700;text-align:center;margin-bottom:4px">Welcome back</h1>
+      <p style="font-size:var(--fs-sm);color:var(--muted);text-align:center;margin-bottom:var(--s6)">Sign in to your account.</p>
+      <form onsubmit="handleSignIn(event)">
+        <div class="form-group"><label>Email</label><input type="email" id="si-email" placeholder="you@company.com" required></div>
+        <div class="form-group"><label>Password</label><input type="password" id="si-pw" placeholder="Enter password" required></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--s5)">
+          <label class="toggle" style="gap:8px;min-height:auto"><input type="checkbox" checked><div class="toggle-track"></div><span style="font-size:var(--fs-xs)">Remember me</span></label>
+          <a href="#" style="font-size:var(--fs-xs);color:var(--primary)">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%">Sign in →</button>
+      </form>
+      <p style="text-align:center;font-size:var(--fs-sm);color:var(--muted);margin-top:var(--s6)">Don't have an account? <a href="#signup" onclick="navigate('#signup')" style="color:var(--primary);font-weight:500">Start free</a></p>
+    </div>
+  </div>
+</section>
+`);
+
+// ── SIGN UP ──
+append(`
+<section id="signup" class="page">
+  <div class="auth-page" style="display:flex;align-items:center;justify-content:center;min-height:100vh;padding:var(--s4)">
+    <div class="auth-card" style="max-width:420px;width:100%">
+      <div style="display:flex;align-items:center;justify-content:center;gap:var(--s3);margin-bottom:var(--s6)">
+        <svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#10b981"/><path d="M20 5L14 16h5l-7 11h2l8-13h-5l6-9z" fill="#fff"/></svg>
+        <span style="font-size:var(--fs-xl);font-weight:700">AI Finance Ops</span>
+      </div>
+      <h1 style="font-size:var(--fs-xl);font-weight:700;text-align:center;margin-bottom:4px">Create your account</h1>
+      <p style="font-size:var(--fs-sm);color:var(--muted);text-align:center;margin-bottom:var(--s6)">14-day free trial. No credit card.</p>
+      <form onsubmit="handleSignUp(event)">
+        <div class="form-group"><label>Full name</label><input type="text" id="su-name" placeholder="John Doe" required></div>
+        <div class="form-group"><label>Email</label><input type="email" id="su-email" placeholder="you@company.com" required></div>
+        <div class="form-group"><label>Password</label><input type="password" id="su-pw" placeholder="Create password" required oninput="checkPw(this.value)"><div class="pw-strength" style="display:flex;gap:4px;margin-top:var(--s2)"><span style="height:4px;flex:1;border-radius:2px;background:var(--surface-2)"></span><span style="height:4px;flex:1;border-radius:2px;background:var(--surface-2)"></span><span style="height:4px;flex:1;border-radius:2px;background:var(--surface-2)"></span><span style="height:4px;flex:1;border-radius:2px;background:var(--surface-2)"></span></div></div>
+        <div class="form-group"><label>Confirm password</label><input type="password" id="su-confirm" placeholder="Confirm password" required></div>
+        <div class="form-group"><label class="toggle"><input type="checkbox"><div class="toggle-track"></div><span style="font-size:var(--fs-sm)">I agree to the <a href="#" style="color:var(--primary)">Terms</a></span></label></div>
+        <button type="submit" class="btn btn-primary" style="width:100%">Create account →</button>
+      </form>
+      <p style="text-align:center;font-size:var(--fs-sm);color:var(--muted);margin-top:var(--s6)">Already have an account? <a href="#signin" onclick="navigate('#signin')" style="color:var(--primary);font-weight:500">Sign in</a></p>
+    </div>
+  </div>
+</section>
+`);
+
+// ── ONBOARDING ──
+append(`
+<section id="onboarding" class="page">
+  <div style="display:flex;align-items:center;justify-content:center;min-height:100vh;padding:var(--s4)">
+    <div style="max-width:560px;width:100%">
+      <div style="display:flex;align-items:center;justify-content:center;gap:var(--s3);margin-bottom:var(--s6)"><svg width="28" height="28" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#10b981"/><path d="M20 5L14 16h5l-7 11h2l8-13h-5l6-9z" fill="#fff"/></svg><span style="font-size:var(--fs-xl);font-weight:700">AI Finance Ops</span></div>
+      <div class="card">
+        <div style="display:flex;align-items:center;justify-content:center;margin-bottom:var(--s6)">
+          <div class="ob-step active" data-step="1" style="display:flex;align-items:center;gap:var(--s2)"><span style="width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:var(--fs-xs);background:var(--primary);color:#fff">1</span><span style="font-size:var(--fs-xs);font-weight:500">Business</span></div>
+          <span style="width:40px;height:2px;background:var(--border);margin:0 var(--s2)"></span>
+          <div class="ob-step" data-step="2" style="display:flex;align-items:center;gap:var(--s2)"><span style="width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:var(--fs-xs);border:2px solid var(--border);color:var(--faint)">2</span><span style="font-size:var(--fs-xs);color:var(--muted)">Connect</span></div>
+          <span style="width:40px;height:2px;background:var(--border);margin:0 var(--s2)"></span>
+          <div class="ob-step" data-step="3" style="display:flex;align-items:center;gap:var(--s2)"><span style="width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:var(--fs-xs);border:2px solid var(--border);color:var(--faint)">3</span><span style="font-size:var(--fs-xs);color:var(--muted)">Done!</span></div>
+        </div>
+        <div id="ob-1"><h2 style="font-size:var(--fs-xl);font-weight:600;margin-bottom:var(--s5)">Tell us about your business</h2><div class="form-group"><label>Company name</label><input type="text" id="ob-company" placeholder="Your SaaS Inc."></div><div class="form-group"><label>Monthly Revenue</label><select id="ob-revenue"><option value="">Select...</option><option value="<1K"><$1K</option><option value="1K-10K">$1K-$10K</option><option value="10K-50K">$10K-$50K</option><option value="50K+">$50K+</option></select></div><div class="form-group"><label>Business model</label><select id="ob-model"><option value="">Select...</option><option>SaaS</option><option>Marketplace</option><option>Agency</option><option>Other</option></select></div><button class="btn btn-primary" style="width:100%;margin-top:var(--s3)" onclick="onboardingNext()">Continue →</button></div>
+        <div id="ob-2" style="display:none"><h2 style="font-size:var(--fs-xl);font-weight:600;margin-bottom:var(--s5)">Connect your tools</h2><div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s3)" id="int-grid"><div class="int-card" onclick="toggleInt(this)" style="border:1px solid var(--border);border-radius:12px;padding:var(--s4);cursor:pointer;display:flex;align-items:center;gap:var(--s3)"><span style="width:32px;height:32px;border-radius:6px;background:#635bff;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;flex-shrink:0">S</span><span style="flex:1;font-weight:500">Stripe</span></div><div class="int-card" onclick="toggleInt(this)" style="border:1px solid var(--border);border-radius:12px;padding:var(--s4);cursor:pointer;display:flex;align-items:center;gap:var(--s3)"><span style="width:32px;height:32px;border-radius:6px;background:#f50057;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;flex-shrink:0">P</span><span style="flex:1;font-weight:500">Paddle</span></div><div class="int-card" onclick="toggleInt(this)" style="border:1px solid var(--border);border-radius:12px;padding:var(--s4);cursor:pointer;display:flex;align-items:center;gap:var(--s3)"><span style="width:32px;height:32px;border-radius:6px;background:#2ca01c;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;flex-shrink:0">Q</span><span style="flex:1;font-weight:500">QuickBooks</span></div><div class="int-card" onclick="toggleInt(this)" style="border:1px solid var(--border);border-radius:12px;padding:var(--s4);cursor:pointer;display:flex;align-items:center;gap:var(--s3)"><span style="width:32px;height:32px;border-radius:6px;background:#13b5ea;display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;flex-shrink:0">X</span><span style="flex:1;font-weight:500">Xero</span></div></div><p id="ob-int-err" style="font-size:var(--fs-xs);color:var(--err);display:none;margin-top:var(--s2)">Select at least one integration.</p><div style="display:flex;gap:var(--s3);margin-top:var(--s5)"><button class="btn btn-ghost" onclick="onboardingPrev()" style="flex:1">Back</button><button class="btn btn-primary" onclick="onboardingNext()" style="flex:1">Continue →</button></div></div>
+        <div id="ob-3" style="display:none;text-align:center"><div style="font-size:64px;margin-bottom:var(--s4)">🎉</div><h2 style="font-size:var(--fs-xl);font-weight:600;margin-bottom:var(--s2)">You're all set!</h2><p style="color:var(--muted);margin-bottom:var(--s6)">Your account is ready.</p><a href="#dashboard" class="btn btn-primary" onclick="navigate('#dashboard')" style="width:100%">Go to dashboard →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+`);
+
+// ── APP SHELL ──
+append(`
+<div id="app-shell" style="display:none" class="app-wrapper">
+<aside class="sidebar">
+  <div class="sidebar-brand" style="display:flex;align-items:center;gap:var(--s3);padding:var(--s5) var(--s4);border-bottom:1px solid var(--divider)">
+    <svg width="24" height="24" viewBox="0 0 32 32"><rect width="32" height="32" rx="8" fill="#10b981"/><path d="M20 5L14 16h5l-7 11h2l8-13h-5l6-9z" fill="#fff"/></svg>
+    <span style="font-weight:600">AI Finance Ops</span>
+  </div>
+  <nav class="sidebar-nav">
+    <a href="#dashboard" onclick="navigate('#dashboard')" class="active" data-route="dashboard"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Overview</a>
+    <a href="#ai-chat" onclick="navigate('#ai-chat')" data-route="ai-chat"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8V4m0 0L8 8m4-4l4 4M4 16a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-4l-4 4-4-4H4z"/><circle cx="9" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="15" cy="12" r="1"/></svg>AI Copilot</a>
+    <a href="#invoices" onclick="navigate('#invoices')" data-route="invoices"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Invoices</a>
+    <a href="#analytics" onclick="navigate('#analytics')" data-route="analytics"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>Analytics</a>
+    <a href="#settings" onclick="navigate('#settings')" data-route="settings"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</a>
+  </nav>
+  <div class="sidebar-bottom" style="padding:var(--s3);border-top:1px solid var(--divider)">
+    <div style="display:flex;align-items:center;gap:var(--s3);padding:var(--s2) var(--s3)">
+      <div style="width:36px;height:36px;border-radius:50%;background:var(--highlight);color:var(--primary);display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;flex-shrink:0">JD</div>
+      <div style="flex:1;min-width:0"><p style="font-size:var(--fs-xs);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">john@saas.co</p><span style="font-size:10px;color:var(--faint)">Pro Plan</span></div>
+      <button onclick="signOut()" style="color:var(--faint);padding:8px;border-radius:8px;min-height:44px;display:flex;align-items:center" aria-label="Sign out"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" x2="9" y1="12" y2="12"/></svg></button>
+    </div>
+  </div>
+</aside>
+
+<div class="main-content">
+<div class="top-bar" style="background:var(--surface);border-bottom:1px solid var(--divider);position:sticky;top:0;z-index:40">
+  <div style="background:rgba(245,158,11,.1);border-bottom:1px solid var(--divider);padding:6px 24px;display:flex;align-items:center;justify-content:space-between;font-size:var(--fs-xs)">
+    <div style="display:flex;align-items:center;gap:var(--s2)"><span>Day 9 of 14</span><div style="flex:1;min-width:120px;max-width:200px;height:6px;background:var(--surface-2);border-radius:3px;overflow:hidden"><div style="height:100%;width:64%;background:var(--warn);border-radius:3px"></div></div><span>5 days left</span></div>
+    <a href="#settings" class="btn btn-sm btn-primary" onclick="navigate('#settings')">Upgrade</a>
+  </div>
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:var(--s3) var(--s6)">
+    <div><h2 style="font-size:var(--fs-lg);font-weight:600" id="greeting"></h2><p style="font-size:var(--fs-xs);color:var(--muted)" id="date-display"></p></div>
+    <div style="display:flex;align-items:center;gap:var(--s3)">
+      <a href="#invoices" class="btn btn-primary btn-sm" onclick="navigate('#invoices')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>New Invoice</a>
+      <button style="position:relative;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:var(--muted)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg><span style="position:absolute;top:6px;right:6px;width:18px;height:18px;border-radius:50%;background:var(--err);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center">2</span></button>
+      <button onclick="toggleTheme()" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:var(--muted)" aria-label="Toggle theme"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+    </div>
+  </div>
+</div>
+
+<div class="page-content">
+<div id="dashboard" class="page active page-dashboard">
+<div class="kpi-grid">
+  <div class="card kpi-card"><p class="lbl" style="font-size:var(--fs-xs);color:var(--muted);text-transform:uppercase">MRR</p><p class="val tnum">$0</p><div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px"><span class="kpi-trend up">↑ +12.4%</span><svg width="80" height="32" viewBox="0 0 80 32"><polyline fill="none" stroke="#10b981" stroke-width="2" points="0,28 13,20 26,22 40,14 53,10 66,12 80,6"/></svg></div></div>
+  <div class="card kpi-card"><p class="lbl">ARR</p><p class="val tnum">$0</p><div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px"><span class="kpi-trend up">↑ +12.4%</span><svg width="80" height="32" viewBox="0 0 80 32"><polyline fill="none" stroke="#3b82f6" stroke-width="2" points="0,28 13,20 26,22 40,14 53,10 66,12 80,6"/></svg></div></div>
+  <div class="card kpi-card"><p class="lbl">Churn Rate</p><p class="val tnum">0%</p><div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px"><span class="kpi-trend up">↓ -0.2%</span><svg width="80" height="32" viewBox="0 0 80 32"><polyline fill="none" stroke="#f59e0b" stroke-width="2" points="0,6 13,8 26,14 40,12 53,16 66,20 80,28"/></svg></div></div>
+  <div class="card kpi-card"><p class="lbl">LTV</p><p class="val tnum">$0</p><div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px"><span class="kpi-trend up">↑ +8.1%</span><svg width="80" height="32" viewBox="0 0 80 32"><polyline fill="none" stroke="#8b5cf6" stroke-width="2" points="0,24 13,20 26,18 40,14 53,10 66,8 80,4"/></svg></div></div>
+</div>
+
+<div class="pmf-card" style="background:rgba(16,185,129,.06);border:1px solid rgba(16,185,129,.15);border-radius:16px;padding:var(--s5);display:flex;align-items:center;justify-content:space-between;gap:var(--s4);margin-bottom:var(--s6);flex-wrap:wrap">
+  <div style="display:flex;align-items:center;gap:var(--s4)"><div style="width:44px;height:44px;border-radius:50%;background:var(--highlight);color:var(--primary);display:flex;align-items:center;justify-content:center"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></div><div><h3 style="font-size:var(--fs-base);font-weight:600;color:var(--primary)">PMF Status: Strong ✅</h3><p style="font-size:var(--fs-xs);color:var(--muted)">You're retaining users well.</p></div></div>
+  <div style="display:flex;gap:var(--s3)"><div style="background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:4px 12px;text-align:center;min-width:100px"><p style="font-weight:600;color:var(--primary)" class="tnum">72%</p><p style="font-size:10px;color:var(--faint)">Month-1</p></div><div style="background:var(--surface-2);border:1px solid var(--border);border-radius:999px;padding:4px 12px;text-align:center;min-width:100px"><p style="font-weight:600;color:var(--primary)" class="tnum">48%</p><p style="font-size:10px;color:var(--faint)">Month-3</p></div></div>
+</div>
+
+<div class="dash-grid">
+<div class="dash-left">
+<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--s4)"><p class="card-title" style="font-weight:600;font-size:var(--fs-sm)">Revenue Growth</p><span style="font-size:10px;padding:2px 10px;border-radius:999px;background:var(--highlight);color:var(--primary)">Last 6 months</span></div><div class="chart-container"><canvas id="revenue-chart"></canvas></div></div>
+<div class="card"><div style="display:grid;grid-template-columns:2fr 3fr;gap:var(--s4)"><div><p style="font-size:var(--fs-xs);color:var(--muted)">Total Invoices</p><p style="font-size:var(--fs-3xl);font-weight:700;color:var(--primary)" class="tnum">5</p></div><div style="display:flex;flex-direction:column;gap:var(--s3)"><div style="display:flex;justify-content:space-between"><span style="font-size:var(--fs-xs);color:var(--muted)">Paid</span><span style="font-weight:600;color:var(--primary)">2</span></div><div style="display:flex;justify-content:space-between"><span style="font-size:var(--fs-xs);color:var(--muted)">Outstanding</span><span style="font-weight:600;color:var(--warn)">$453</span></div></div></div><div style="display:flex;justify-content:flex-end;margin-top:var(--s2)"><a href="#invoices" onclick="navigate('#invoices')" style="font-size:var(--fs-xs);color:var(--primary);font-weight:500">View all →</a></div></div>
+</div>
+<div class="dash-right">
+<div class="card"><p style="font-weight:600;font-size:var(--fs-sm);margin-bottom:var(--s3)">Recent Activity</p>
+  <div class="activity-feed">
+    <div class="activity-item" style="display:flex;align-items:flex-start;gap:var(--s3);padding:var(--s3) 0;border-bottom:1px solid var(--divider)"><span style="width:8px;height:8px;border-radius:50%;background:var(--primary);margin-top:6px;flex-shrink:0"></span><div><p style="font-size:var(--fs-sm)">New subscription — Pro Plan</p><span style="font-size:var(--fs-xs);color:var(--faint)">2 min ago</span></div></div>
+    <div class="activity-item" style="display:flex;align-items:flex-start;gap:var(--s3);padding:var(--s3) 0;border-bottom:1px solid var(--divider)"><span style="width:8px;height:8px;border-radius:50%;background:var(--primary);margin-top:6px;flex-shrink:0"></span><div><p style="font-size:var(--fs-sm)">Invoice #004 marked as paid</p><span style="font-size:var(--fs-xs);color:var(--faint)">1 hr ago</span></div></div>
+    <div class="activity-item" style="display:flex;align-items:flex-start;gap:var(--s3);padding:var(--s3) 0;border-bottom:1px solid var(--divider)"><span style="width:8px;height:8px;border-radius:50%;background:var(--err);margin-top:6px;flex-shrink:0"></span><div><p style="font-size:var(--fs-sm)">1 user cancelled subscription</p><span style="font-size:var(--fs-xs);color:var(--faint)">3 hrs ago</span></div></div>
+    <div class="activity-item" style="display:flex;align-items:flex-start;gap:var(--s3);padding:var(--s3) 0;border-bottom:1px solid var(--divider)"><span style="width:8px;height:8px;border-radius:50%;background:var(--blue);margin-top:6px;flex-shrink:0"></span><div><p style="font-size:var(--fs-sm)">Invoice #005 sent to client</p><span style="font-size:var(--fs-xs);color:var(--faint)">Yesterday</span></div></div>
+    <div class="activity-item" style="display:flex;align-items:flex-start;gap:var(--s3);padding:var(--s3) 0"><span style="width:8px;height:8px;border-radius:50%;background:var(--warn);margin-top:6px;flex-shrink:0"></span><div><p style="font-size:var(--fs-sm)">Plan upgrade — Starter → Pro</p><span style="font-size:var(--fs-xs);color:var(--faint)">2 days ago</span></div></div>
+  </div>
+  <div style="text-align:center;margin-top:var(--s3)"><a href="#" style="font-size:var(--fs-xs);color:var(--primary);font-weight:500">View all activity →</a></div>
+</div>
+</div></div></div>
+
+<div id="invoices" class="page page-dashboard">
+<div class="page-header"><div><h1>Invoices</h1><p>Manage your invoices.</p></div><button class="btn btn-primary" onclick="openModal()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/><path d="M12 5v14"/></svg>New Invoice</button></div>
+<div style="display:flex;align-items:center;gap:var(--s3);flex-wrap:wrap;margin-bottom:var(--s4)">
+  <input type="text" id="inv-search" placeholder="Search invoices..." oninput="filterInvoices()" style="background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-size:var(--fs-sm);min-height:44px;width:220px;max-width:100%;outline:none">
+  <button class="btn btn-sm btn-primary" data-f="all" onclick="setFilter('all',this)">All</button>
+  <button class="btn btn-sm btn-ghost" data-f="paid" onclick="setFilter('paid',this)">Paid</button>
+  <button class="btn btn-sm btn-ghost" data-f="pending" onclick="setFilter('pending',this)">Pending</button>
+  <button class="btn btn-sm btn-ghost" data-f="overdue" onclick="setFilter('overdue',this)">Overdue</button>
+  <button class="btn btn-sm btn-ghost" onclick="exportCSV()">Export CSV</button>
+</div>
+<div class="table-container"><table><thead><tr><th onclick="sortInv('id')">#</th><th onclick="sortInv('client')">Client</th><th onclick="sortInv('amount')">Amount</th><th onclick="sortInv('status')">Status</th><th onclick="sortInv('date')">Date</th><th>Actions</th></tr></thead><tbody id="inv-body"></tbody></table></div>
+<div id="inv-empty" class="empty-state" style="display:none"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><h3>No invoices found</h3><p>Try adjusting your filters.</p></div>
+</div>
+
+<div id="ai-chat" class="page page-dashboard">
+<div class="chat-wrapper" style="display:flex;flex-direction:column;height:calc(100vh - 180px)">
+  <div class="chat-header" style="display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--divider);padding:var(--s3) 0;margin-bottom:var(--s4)">
+    <div style="display:flex;align-items:center;gap:var(--s3)">
+      <div style="width:36px;height:36px;border-radius:10px;background:var(--highlight);color:var(--primary);display:flex;align-items:center;justify-content:center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8V4m0 0L8 8m4-4l4 4M4 16a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-4l-4 4-4-4H4z"/><circle cx="9" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="15" cy="12" r="1"/></svg></div>
+      <div><p style="font-weight:600;font-size:var(--fs-sm)">AI Copilot</p><span style="font-size:10px;color:var(--muted)">Ask anything about your finances</span></div>
+    </div>
+    <button onclick="toggleChatFullscreen()" style="width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:8px;color:var(--muted);min-height:44px" aria-label="Toggle fullscreen"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg></button>
+  </div>
+  <div id="chat-messages" class="chat-messages" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:var(--s4);padding-bottom:var(--s4)">
+    <div id="chat-empty" class="chat-empty" style="display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;text-align:center">
+      <div style="width:56px;height:56px;border-radius:16px;background:var(--highlight);color:var(--primary);display:flex;align-items:center;justify-content:center;margin-bottom:var(--s4)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+      <h3 style="font-weight:600;margin-bottom:var(--s1)">Hi, I'm your AI Copilot</h3>
+      <p style="font-size:var(--fs-sm);color:var(--muted);max-width:360px;margin-bottom:var(--s6)">Ask me about MRR, churn, cohorts, invoices, or anything about your SaaS finances.</p>
+      <div class="suggestions" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s2);width:100%;max-width:480px">
+        <button class="suggestion-chip" onclick="setChatInput('What is my current MRR trend?')" style="display:flex;align-items:center;gap:var(--s2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:var(--fs-xs);color:var(--muted);background:var(--surface);min-height:44px;text-align:left"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>What is my current MRR trend?</button>
+        <button class="suggestion-chip" onclick="setChatInput('Which customers are at risk of churning?')" style="display:flex;align-items:center;gap:var(--s2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:var(--fs-xs);color:var(--muted);background:var(--surface);min-height:44px;text-align:left"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8V4m0 0L8 8m4-4l4 4M4 16a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-4l-4 4-4-4H4z"/></svg>Which customers are at risk of churning?</button>
+        <button class="suggestion-chip" onclick="setChatInput('Show me my cohort retention analysis')" style="display:flex;align-items:center;gap:var(--s2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:var(--fs-xs);color:var(--muted);background:var(--surface);min-height:44px;text-align:left"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Show me my cohort retention analysis</button>
+        <button class="suggestion-chip" onclick="setChatInput('How can I improve my PMF score?')" style="display:flex;align-items:center;gap:var(--s2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:var(--fs-xs);color:var(--muted);background:var(--surface);min-height:44px;text-align:left"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>How can I improve my PMF score?</button>
+      </div>
+    </div>
+    <div id="chat-list"></div>
+  </div>
+  <div class="chat-input-bar" style="border-top:1px solid var(--divider);padding:var(--s3) 0">
+    <div style="display:flex;gap:var(--s2);max-width:640px">
+      <input type="text" id="chat-input" placeholder="Ask about your finances..." onkeydown="chatKeyDown(event)" dir="auto" style="flex:1;background:var(--surface-2);border:1px solid var(--border);border-radius:10px;padding:10px 14px;font-size:var(--fs-sm);min-height:44px;outline:none">
+      <button onclick="sendChatMessage()" id="chat-send-btn" disabled style="width:44px;height:44px;display:flex;align-items:center;justify-content:center;border-radius:10px;background:var(--primary);color:#fff;opacity:.4" aria-label="Send"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" x2="11" y1="2" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+    </div>
+    <p style="font-size:10px;color:var(--faint);text-align:center;margin-top:var(--s2)">Responses are simulated. Connect your data for live insights.</p>
+  </div>
+</div>
+</div>
+
+<div id="analytics" class="page page-dashboard">
+<div class="page-header"><div><h1>Analytics</h1><p>Deep dive into your metrics.</p></div></div>
+<div class="kpi-grid">
+  <div class="card"><p class="lbl">MRR</p><p class="val tnum">$72,600</p><span class="kpi-trend up">↑ 12.4%</span></div>
+  <div class="card"><p class="lbl">ARR</p><p class="val tnum">$871,200</p><span class="kpi-trend up">↑ 12.4%</span></div>
+  <div class="card"><p class="lbl">Churn</p><p class="val tnum">0.80%</p><span class="kpi-trend up">↓ 0.2%</span></div>
+  <div class="card"><p class="lbl">LTV</p><p class="val tnum">$92,000</p><span class="kpi-trend up">↑ 8.1%</span></div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s5)">
+  <div class="card"><p style="font-weight:600;margin-bottom:var(--s3)">MRR Growth</p><div class="chart-container chart-container-sm" style="height:200px"><canvas id="mrr-chart"></canvas></div></div>
+  <div class="card"><p style="font-weight:600;margin-bottom:var(--s3)">Churn Rate</p><div class="chart-container-sm" style="height:200px"><canvas id="churn-chart"></canvas></div></div>
+  <div class="card"><p style="font-weight:600;margin-bottom:var(--s3)">New vs Churned</p><div class="chart-container-sm" style="height:200px"><canvas id="users-chart"></canvas></div></div>
+  <div class="card"><p style="font-weight:600;margin-bottom:var(--s3)">Revenue by Plan</p><div class="chart-container-sm" style="height:200px"><canvas id="plan-chart"></canvas></div></div>
+</div>
+<div class="card" style="margin-top:var(--s5)"><p style="font-weight:600;margin-bottom:var(--s4)">Cohort Retention</p><div class="table-container"><table><thead><tr><th>Cohort</th><th>Size</th><th>M+0</th><th>M+1</th><th>M+2</th><th>M+3</th><th>M+4</th><th>M+5</th></tr></thead>
+<tbody>
+<tr><td>Jan 2026</td><td>24</td><td style="background:rgba(16,185,129,.2);color:var(--primary);font-weight:600">100%</td><td style="background:rgba(16,185,129,.2);color:var(--primary);font-weight:600">72%</td><td style="background:rgba(16,185,129,.15);color:var(--primary)">61%</td><td style="background:rgba(245,158,11,.15);color:var(--warn)">58%</td><td style="background:rgba(245,158,11,.12);color:var(--warn)">45%</td><td style="background:rgba(239,68,68,.12);color:var(--err)">38%</td></tr>
+<tr><td>Feb 2026</td><td>31</td><td style="background:rgba(16,185,129,.2);color:var(--primary);font-weight:600">100%</td><td style="background:rgba(16,185,129,.2);color:var(--primary);font-weight:600">68%</td><td style="background:rgba(16,185,129,.15);color:var(--primary)">55%</td><td style="background:rgba(245,158,11,.12);color:var(--warn)">48%</td><td style="color:var(--faint)">—</td><td style="color:var(--faint)">—</td></tr>
+<tr><td>Mar 2026</td><td>18</td><td style="background:rgba(16,185,129,.2);color:var(--primary);font-weight:600">100%</td><td style="background:rgba(16,185,129,.2);color:var(--primary);font-weight:600">75%</td><td style="color:var(--faint)">—</td><td style="color:var(--faint)">—</td><td style="color:var(--faint)">—</td><td style="color:var(--faint)">—</td></tr>
+</tbody></table></div></div>
+</div>
+
+<div id="settings" class="page page-dashboard">
+<div class="page-header"><div><h1>Settings</h1><p>Manage your preferences.</p></div></div>
+<div style="display:flex;gap:0;border-bottom:1px solid var(--divider);margin-bottom:var(--s6);overflow-x:auto">
+  <button class="st active" data-tab="profile" onclick="switchTab('profile',this)" style="padding:var(--s3) var(--s4);font-size:var(--fs-sm);font-weight:500;color:var(--primary);border-bottom:2px solid var(--primary);white-space:nowrap;min-height:44px">Profile</button>
+  <button class="st" data-tab="billing" onclick="switchTab('billing',this)" style="padding:var(--s3) var(--s4);font-size:var(--fs-sm);font-weight:500;color:var(--muted);white-space:nowrap;min-height:44px">Billing</button>
+  <button class="st" data-tab="notifications" onclick="switchTab('notifications',this)" style="padding:var(--s3) var(--s4);font-size:var(--fs-sm);font-weight:500;color:var(--muted);white-space:nowrap;min-height:44px">Notifications</button>
+  <button class="st" data-tab="api" onclick="switchTab('api',this)" style="padding:var(--s3) var(--s4);font-size:var(--fs-sm);font-weight:500;color:var(--muted);white-space:nowrap;min-height:44px">API</button>
+</div>
+<div class="ss active" id="ss-profile"><div class="card"><div style="display:flex;align-items:center;gap:var(--s4);margin-bottom:var(--s6)"><div style="width:64px;height:64px;border-radius:50%;background:var(--highlight);color:var(--primary);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:600">JD</div><div><p style="font-weight:500">John Doe</p><p style="font-size:var(--fs-xs);color:var(--muted)">john@saas.co</p></div></div><div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)"><div class="form-group"><label>Full name</label><input type="text" value="John Doe"></div><div class="form-group"><label>Email</label><input type="email" value="john@saas.co"></div></div><div style="display:flex;justify-content:space-between;margin-top:var(--s4)"><button class="btn btn-primary">Save</button><button class="btn btn-danger" onclick="if(confirm('Delete account?')){}">Delete</button></div></div></div>
+<div class="ss" id="ss-billing"><div class="card"><p style="font-weight:600;margin-bottom:var(--s4)">Current Plan</p><div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--s3)"><div><p style="font-size:var(--fs-lg);font-weight:600">Pro Plan</p><p style="color:var(--muted);font-size:var(--fs-sm)">$149/mo · Next: June 17, 2026</p><p style="color:var(--muted);font-size:var(--fs-xs)">Visa ending 4242</p></div><div style="display:flex;gap:var(--s3)"><button class="btn btn-primary btn-sm">Upgrade</button><button class="btn btn-ghost btn-sm">Cancel</button></div></div></div></div>
+<div class="ss" id="ss-notifications"><div class="card"><p style="font-weight:600;margin-bottom:var(--s4)">Notification Preferences</p>
+  <div style="display:flex;flex-direction:column;gap:var(--s4)"><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><span class="toggle-label">New invoice paid</span></label><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><span class="toggle-label">Subscription cancelled</span></label><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><span class="toggle-label">Trial ending reminder</span></label><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><span class="toggle-label">Weekly MRR report</span></label><label class="toggle"><input type="checkbox" checked><div class="toggle-track"></div><span class="toggle-label">Churn alert</span></label></div></div></div>
+<div class="ss" id="ss-api"><div class="card"><p style="font-weight:600;margin-bottom:var(--s4)">API Keys</p><div style="display:flex;align-items:center;gap:var(--s3);background:var(--surface-2);border:1px solid var(--border);border-radius:8px;padding:var(--s3)"><code style="flex:1;font-size:var(--fs-sm)">sk_live_••••••••••••••</code><button class="btn btn-sm btn-ghost" onclick="alert('Copied!')">Copy</button><button class="btn btn-sm btn-ghost" onclick="alert('Regenerated!')">Regenerate</button></div></div></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+`);
+
+// ── MOBILE TABS ──
+append(`
+<nav class="mobile-tabs">
+  <a href="#dashboard" onclick="navigate('dashboard')" class="active"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>Home</a>
+  <a href="#ai-chat" onclick="navigate('ai-chat')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8V4m0 0L8 8m4-4l4 4M4 16a2 2 0 01-2-2V6a2 2 0 012-2h16a2 2 0 012 2v8a2 2 0 01-2 2h-4l-4 4-4-4H4z"/><circle cx="9" cy="12" r="1"/><circle cx="12" cy="12" r="1"/><circle cx="15" cy="12" r="1"/></svg>AI Chat</a>
+  <a href="#invoices" onclick="navigate('invoices')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Invoices</a>
+  <a href="#analytics" onclick="navigate('analytics')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>Analytics</a>
+  <a href="#settings" onclick="navigate('settings')"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</a>
+</nav>
+`);
+
+// ── NEW INVOICE MODAL ──
+append(`
+<div id="inv-modal" class="modal-overlay" style="display:none">
+  <div class="modal">
+    <div class="modal-header"><h2>New Invoice</h2><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label>Client name</label><input type="text" id="inv-client" placeholder="Client name"></div>
+      <div class="form-group"><label>Email</label><input type="email" id="inv-email" placeholder="client@company.com"></div>
+      <div class="form-row" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s4)"><div class="form-group"><label>Amount ($)</label><input type="number" id="inv-amount" placeholder="0.00"></div><div class="form-group"><label>Due date</label><input type="date" id="inv-due"></div></div>
+      <div class="form-group"><label>Description</label><textarea id="inv-desc" placeholder="Invoice description" style="min-height:80px;resize:vertical"></textarea></div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal()">Cancel</button><button class="btn btn-primary" onclick="saveInvoice()">Send Invoice</button></div>
+  </div>
+</div>
+`);
+
+// ── JAVASCRIPT ──
+append(`
+<script>
+// ─── DATA ───
+const invoicesData = [
+  {id:'#001',client:'Acme Corp',amount:1200,status:'paid',date:'2026-05-01',due:'2026-05-15'},
+  {id:'#002',client:'TechFlow Inc',amount:3500,status:'paid',date:'2026-05-03',due:'2026-05-17'},
+  {id:'#003',client:'StartupXYZ',amount:800,status:'pending',date:'2026-05-10',due:'2026-05-24'},
+  {id:'#004',client:'GrowthLab',amount:2100,status:'overdue',date:'2026-04-28',due:'2026-05-12'},
+  {id:'#005',client:'DataPulse',amount:950,status:'pending',date:'2026-05-14',due:'2026-05-28'},
+  {id:'#006',client:'CloudBase',amount:4200,status:'paid',date:'2026-04-20',due:'2026-05-04'},
+  {id:'#007',client:'NovaSaaS',amount:1750,status:'pending',date:'2026-05-16',due:'2026-05-30'},
+  {id:'#008',client:'PixelForge',amount:600,status:'overdue',date:'2026-04-15',due:'2026-04-29'},
+];
+let currentFilter = 'all';
+let currentSearch = '';
+let sortKey = null;
+let sortAsc = true;
+let obStep = 1;
+
+function renderInvoices() {
+  const tbody = document.getElementById('inv-body');
+  const empty = document.getElementById('inv-empty');
+  let filtered = invoicesData.filter(inv => {
+    if (currentFilter !== 'all' && inv.status !== currentFilter) return false;
+    if (currentSearch && !inv.client.toLowerCase().includes(currentSearch.toLowerCase()) && !inv.id.includes(currentSearch)) return false;
+    return true;
+  });
+  if (sortKey) {
+    filtered.sort((a,b) => {
+      let va = a[sortKey], vb = b[sortKey];
+      if (typeof va === 'string') va = va.toLowerCase();
+      if (typeof vb === 'string') vb = vb.toLowerCase();
+      if (va < vb) return sortAsc ? -1 : 1;
+      if (va > vb) return sortAsc ? 1 : -1;
+      return 0;
+    });
+  }
+  if (!filtered.length) {
+    tbody.innerHTML = '';
+    empty.style.display = 'flex';
+    return;
+  }
+  empty.style.display = 'none';
+  tbody.innerHTML = filtered.map(inv => \`<tr><td>\${inv.id}</td><td>\${inv.client}</td><td>$\${inv.amount.toLocaleString()}</td><td><span class="status-badge \${inv.status}">\${inv.status}</span></td><td>\${inv.date}</td><td><button class="btn btn-sm btn-ghost" onclick="alert('View invoice \${inv.id}')">View</button></td></tr>\`).join('');
+}
+
+function filterInvoices() {
+  currentSearch = document.getElementById('inv-search').value;
+  renderInvoices();
+}
+
+function setFilter(f, btn) {
+  currentFilter = f;
+  document.querySelectorAll('[data-f]').forEach(b => b.className = 'btn btn-sm btn-ghost');
+  btn.className = 'btn btn-sm btn-primary';
+  renderInvoices();
+}
+
+function sortInv(key) {
+  if (sortKey === key) sortAsc = !sortAsc;
+  else { sortKey = key; sortAsc = true; }
+  renderInvoices();
+}
+
+function exportCSV() {
+  const h = 'ID,Client,Amount,Status,Date\n';
+  const rows = invoicesData.map(i => \`\${i.id},\${i.client},\${i.amount},\${i.status},\${i.date}\`).join('\\n');
+  const blob = new Blob([h+rows], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'invoices.csv';
+  a.click();
+}
+
+function openModal() {
+  document.getElementById('inv-modal').style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('inv-modal').style.display = 'none';
+  document.body.style.overflow = '';
+}
+function saveInvoice() {
+  alert('Invoice sent!');
+  closeModal();
+}
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+// ─── NAVIGATION ───
+function navigate(hash) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const target = document.querySelector(hash);
+  if (target) target.classList.add('active');
+
+  const isLanding = hash === '#landing' || hash === '';
+  document.getElementById('landing-nav').style.display = isLanding ? '' : 'none';
+  document.getElementById('announcement-bar').style.display = isLanding ? '' : 'none';
+  document.getElementById('app-shell').style.display = isLanding ? 'none' : '';
+
+  document.querySelectorAll('.sidebar-nav a').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll('.mobile-tabs a').forEach(a => a.classList.remove('active'));
+  const route = hash.replace('#','');
+  const navLink = document.querySelector(\`.sidebar-nav a[data-route="\${route}"]\`);
+  const mobLink = document.querySelector(\`.mobile-tabs a[href="#\${route}"]\`);
+  if (navLink) navLink.classList.add('active');
+  if (mobLink) mobLink.classList.add('active');
+
+  if (hash === '#dashboard') {
+    initDashboard();
+  }
+  if (hash === '#analytics') {
+    setTimeout(initAnalyticsCharts, 100);
+  }
+  if (hash === '#invoices') {
+    renderInvoices();
+  }
+  if (hash === '#ai-chat') {
+    document.getElementById('chat-input')?.focus();
+  }
+
+  window.location.hash = hash;
+  if (!isLanding) document.querySelector('.page-content')?.scrollTo(0,0);
+}
+
+// ─── THEME ───
+function toggleTheme() {
+  const html = document.documentElement;
+  html.dataset.theme = html.dataset.theme === 'light' ? 'dark' : 'light';
+}
+
+// ─── ANNOUNCEMENT ───
+function dismissAnnouncement() {
+  document.getElementById('announcement-bar').style.display = 'none';
+}
+
+// ─── MOBILE MENU ───
+function toggleMobileMenu() {
+  document.querySelector('.landing-nav').classList.toggle('mobile-menu-open');
+}
+
+// ─── FAQ ───
+function toggleFaq(btn) {
+  const item = btn.closest('.faq-item');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+  if (!isOpen) item.classList.add('open');
+}
+
+// ─── PRICING ───
+let pricingMode = 'monthly';
+function setPricing(mode) {
+  pricingMode = mode;
+  document.getElementById('pm-btn').className = mode === 'monthly' ? 'btn btn-primary btn-sm' : 'btn btn-ghost btn-sm';
+  document.getElementById('pa-btn').className = mode === 'annual' ? 'btn btn-primary btn-sm' : 'btn btn-ghost btn-sm';
+  if (mode === 'annual') {
+    document.getElementById('price-starter').innerHTML = '$39<span style="font-size:var(--fs-base);font-weight:400;color:var(--muted)">/mo</span>';
+    document.getElementById('price-pro').innerHTML = '$119<span style="font-size:var(--fs-base);font-weight:400;color:var(--muted)">/mo</span>';
+  } else {
+    document.getElementById('price-starter').innerHTML = '$49<span style="font-size:var(--fs-base);font-weight:400;color:var(--muted)">/mo</span>';
+    document.getElementById('price-pro').innerHTML = '$149<span style="font-size:var(--fs-base);font-weight:400;color:var(--muted)">/mo</span>';
+  }
+}
+
+// ─── AUTH ───
+function handleSignIn(e) {
+  e.preventDefault();
+  navigate('#dashboard');
+}
+function handleSignUp(e) {
+  e.preventDefault();
+  navigate('#onboarding');
+}
+
+// ─── PASSWORD STRENGTH ───
+function checkPw(v) {
+  const bars = document.querySelectorAll('.pw-strength span');
+  bars.forEach(b => b.className = '');
+  if (!v) return;
+  let score = 0;
+  if (v.length >= 8) score++;
+  if (/[a-z]/.test(v) && /[A-Z]/.test(v)) score++;
+  if (/[0-9]/.test(v)) score++;
+  if (/[^a-zA-Z0-9]/.test(v)) score++;
+  const levels = ['','weak','medium','strong','strong'];
+  const colors = ['','var(--err)','var(--warn)','var(--primary)','var(--primary)'];
+  for (let i = 0; i < score; i++) {
+    bars[i].className = 'active ' + levels[score];
+    bars[i].style.background = colors[score];
+  }
+}
+
+// ─── ONBOARDING ───
+function onboardingNext() {
+  if (obStep === 1) {
+    document.getElementById('ob-1').style.display = 'none';
+    document.getElementById('ob-2').style.display = 'block';
+    document.querySelector('.ob-step[data-step="1"]').classList.remove('active');
+    document.querySelector('.ob-step[data-step="1"]').classList.add('completed');
+    document.querySelector('.ob-step[data-step="2"]').classList.add('active');
+    obStep = 2;
+  } else if (obStep === 2) {
+    const selected = document.querySelectorAll('.int-card.selected');
+    if (!selected.length) {
+      document.getElementById('ob-int-err').style.display = 'block';
+      return;
+    }
+    document.getElementById('ob-int-err').style.display = 'none';
+    document.getElementById('ob-2').style.display = 'none';
+    document.getElementById('ob-3').style.display = 'block';
+    document.querySelector('.ob-step[data-step="2"]').classList.remove('active');
+    document.querySelector('.ob-step[data-step="2"]').classList.add('completed');
+    document.querySelector('.ob-step[data-step="3"]').classList.add('active');
+    obStep = 3;
+    fireConfetti();
+  }
+}
+function onboardingPrev() {
+  if (obStep === 2) {
+    document.getElementById('ob-2').style.display = 'none';
+    document.getElementById('ob-1').style.display = 'block';
+    document.querySelector('.ob-step[data-step="2"]').classList.remove('active');
+    document.querySelector('.ob-step[data-step="1"]').classList.add('active');
+    obStep = 1;
+  }
+}
+function toggleInt(el) {
+  el.classList.toggle('selected');
+  document.getElementById('ob-int-err').style.display = 'none';
+}
+
+// ─── CONFETTI ───
+let confettiActive = false;
+function fireConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const colors = ['#10b981','#3b82f6','#f59e0b','#ef4444','#8b5cf6','#ec4899'];
+  const pieces = [];
+  for (let i = 0; i < 150; i++) {
+    pieces.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      w: 6 + Math.random() * 6,
+      h: 4 + Math.random() * 4,
+      color: colors[Math.floor(Math.random() * colors.length)],
+      vx: (Math.random() - 0.5) * 4,
+      vy: 2 + Math.random() * 3,
+      rot: Math.random() * 360,
+      rv: (Math.random() - 0.5) * 10,
+    });
+  }
+  let frame = 0;
+  confettiActive = true;
+  function draw() {
+    if (!confettiActive || frame > 120) { confettiActive = false; return; }
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.rot += p.rv;
+      if (p.y > canvas.height) p.y = -20;
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot * Math.PI / 180);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+      ctx.restore();
+    });
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+// ─── SETTINGS TABS ───
+function switchTab(tab, btn) {
+  document.querySelectorAll('.st').forEach(b => {
+    b.style.color = 'var(--muted)';
+    b.style.borderBottomColor = 'transparent';
+  });
+  btn.style.color = 'var(--primary)';
+  btn.style.borderBottomColor = 'var(--primary)';
+  document.querySelectorAll('.ss').forEach(s => s.classList.remove('active'));
+  document.getElementById('ss-' + tab).classList.add('active');
+}
+
+// ─── KPI COUNTERS ───
+function animateCounter(el, target, suffix) {
+  suffix = suffix || '';
+  let current = 0;
+  const step = Math.max(1, Math.floor(target / 40));
+  const interval = setInterval(() => {
+    current += step;
+    if (current >= target) { current = target; clearInterval(interval); }
+    el.textContent = (typeof target === 'number' && target > 1000) ? '$' + current.toLocaleString() + suffix : current + suffix;
+  }, 30);
+}
+
+// ─── DASHBOARD INIT ───
+let dashboardInitialized = false;
+function initDashboard() {
+  if (dashboardInitialized) return;
+
+  // KPI counters
+  animateCounter(document.getElementById('kpi-mrr')?.querySelector('.val') || document.querySelector('.kpi-card:nth-child(1) .val'), 72600);
+  
+  // Set greeting & date
+  const h = new Date().getHours();
+  const greet = h < 12 ? 'Good morning' : h < 17 ? 'Good afternoon' : 'Good evening';
+  document.getElementById('greeting').textContent = greet + ', John 👋';
+  document.getElementById('date-display').textContent = new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) + ' · Week ' + Math.ceil((new Date() - new Date(new Date().getFullYear(),0,1)) / 604800000);
+
+  dashboardInitialized = true;
+
+  // Revenue chart
+  setTimeout(() => {
+    const ctx = document.getElementById('revenue-chart');
+    if (!ctx) return;
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Dec','Jan','Feb','Mar','Apr','May'],
+        datasets: [{
+          data: [41200, 48900, 55600, 61300, 68100, 72600],
+          borderColor: '#10b981',
+          backgroundColor: 'rgba(16,185,129,.1)',
+          fill: true,
+          tension: .4,
+          pointRadius: 4,
+          pointBackgroundColor: '#10b981',
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: '#475569' } },
+          y: { grid: { color: 'rgba(30,42,61,.5)' }, ticks: { color: '#475569', callback: v => '$' + (v/1000).toFixed(0) + 'K' } }
+        }
+      }
+    });
+  }, 50);
+}
+
+let analyticsInitialized = false;
+function initAnalyticsCharts() {
+  if (analyticsInitialized) return;
+  analyticsInitialized = true;
+  const chartOpts = { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#94a3b8' } } } };
+  new Chart(document.getElementById('mrr-chart'), { type: 'line', data: { labels: ['Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun'], datasets: [{ data: [32000,35800,38900,41200,44500,48900,52300,55600,58900,61300,65800,72600], borderColor: '#10b981', tension: .4 }] }, options: chartOpts });
+  new Chart(document.getElementById('churn-chart'), { type: 'bar', data: { labels: ['Jul','Aug','Sep','Oct','Nov','Dec','Jan','Feb','Mar','Apr','May','Jun'], datasets: [{ data: [6.2,5.8,5.1,4.8,4.5,3.9,3.5,3.2,2.8,2.5,2.0,0.8], backgroundColor: '#ef4444' }] }, options: chartOpts });
+  new Chart(document.getElementById('users-chart'), { type: 'bar', data: { labels: ['Jan','Feb','Mar','Apr','May','Jun'], datasets: [{ label: 'New', data: [12,15,10,18,22,14], backgroundColor: '#10b981' }, { label: 'Churned', data: [3,4,2,5,3,2], backgroundColor: '#ef4444' }] }, options: chartOpts });
+  new Chart(document.getElementById('plan-chart'), { type: 'doughnut', data: { labels: ['Starter','Pro','Enterprise'], datasets: [{ data: [35,55,10], backgroundColor: ['#3b82f6','#10b981','#8b5cf6'] }] }, options: chartOpts });
+}
+
+// ─── SIGN OUT ───
+function signOut() { navigate('#landing'); }
+
+// ─── AI CHAT ───
+let chatLoading = false;
+const chatResponses = {
+  mrr: 'Based on your data, your **MRR is $72,600** — up 12.4% month-over-month. ARR stands at **$871,200**. Growth is driven by 5 new Pro subscriptions this month.',
+  churn: 'I\'ve identified **3 at-risk accounts**:\n\n1. **StartupXYZ** — Critical (87% risk). No login in 14 days.\n2. **TechFlow Inc** — Watch (55% risk). Usage dropped 40%.\n3. **GrowthLab** — Watch (48% risk). Payment failed.\n\nWould you like me to draft retention emails?',
+  cohort: 'Your **cohort retention**:\n\n| Cohort | Month-1 | Month-3 |\n|--------|---------|--------|\n| Jan 2026 | 72% | 48% |\n| Feb 2026 | 68% | 38% |\n| Mar 2026 | 75% | — |\n\nMonth-1 retention of **72%** is above the SaaS benchmark of 60%.',
+  pmf: 'Your **PMF Status: Strong ✅** (score: 72/100). Key drivers:\n- Strong Month-1 retention (72%)\n- Low churn rate (0.8%)\n- Healthy expansion revenue\n\nFocus on improving Month-3 retention (48%) to push higher.',
+  revenue: 'Last month: **$72,600** total revenue.\n- New business: $18,400 (12 customers)\n- Expansion: $5,200\n- Churned: -$3,800 (3 cancellations)\n- Net new: $19,800',
+  invoices: 'You have **3 overdue invoices** totaling **$1,400**:\n\n1. GrowthLab — $2,100 (overdue 5d)\n2. PixelForge — $600 (overdue 18d)\n3. StartupXYZ — $800 (due in 7d)\n\nI can auto-send payment reminders if you\'d like.',
+  default: 'Great question! I can help with **MRR/ARR tracking**, **churn prediction**, **cohort analysis**, **PMF scoring**, and **invoice management**. Could you be more specific?'
+};
+function getChatResponse(q) {
+  const l = q.toLowerCase();
+  if (l.includes('mrr')||(l.includes('revenue')&&(l.includes('month')||l.includes('current')))) return {r:chatResponses.mrr};
+  if (l.includes('churn')||l.includes('risk')||l.includes('at-risk')) return {r:chatResponses.churn};
+  if (l.includes('cohort')||l.includes('retention')) return {r:chatResponses.cohort};
+  if (l.includes('pmf')||l.includes('product-market')||l.includes('market fit')) return {r:chatResponses.pmf};
+  if (l.includes('revenue')||l.includes('last month')) return {r:chatResponses.revenue};
+  if (l.includes('invoice')||l.includes('overdue')||l.includes('payment')||l.includes('outstanding')) return {r:chatResponses.invoices};
+  return {r:chatResponses.default};
+}
+function addChatMessage(role, content) {
+  const list = document.getElementById('chat-list');
+  const empty = document.getElementById('chat-empty');
+  empty.style.display = 'none';
+  const d = document.createElement('div');
+  d.style.cssText = 'display:flex;'+(role==='user'?'justify-content:flex-end;':'');
+  d.innerHTML = '<div style="max-width:80%;padding:10px 16px;border-radius:16px;font-size:var(--fs-sm);line-height:1.6;'+(role==='user'?'background:var(--primary);color:#fff;border-bottom-right-radius:4px':'background:var(--surface-2);color:var(--text);border-bottom-left-radius:4px')+'">'+content.replace(/\n/g,'<br>').replace(/\*\*(.*?)\*\*/g,'<strong>$1</strong>')+'</div>';
+  list.appendChild(d);
+  list.scrollTop = list.scrollHeight;
+}
+function setChatInput(t) {
+  document.getElementById('chat-input').value = t;
+  document.getElementById('chat-input').focus();
+  document.getElementById('chat-send-btn').disabled = false;
+  document.getElementById('chat-send-btn').style.opacity = '1';
+}
+function sendChatMessage() {
+  const inp = document.getElementById('chat-input');
+  const t = inp.value.trim();
+  if (!t || chatLoading) return;
+  inp.value = '';
+  document.getElementById('chat-send-btn').disabled = true;
+  document.getElementById('chat-send-btn').style.opacity = '.4';
+  addChatMessage('user', t);
+  chatLoading = true;
+  const typing = document.createElement('div');
+  typing.id = 'chat-typing';
+  typing.style.cssText = 'display:flex;';
+  typing.innerHTML = '<div style="max-width:80%;padding:12px 16px;border-radius:16px;background:var(--surface-2);border-bottom-left-radius:4px;display:flex;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:var(--primary);animation:chatBounce 1s infinite"></span><span style="width:8px;height:8px;border-radius:50%;background:var(--primary);animation:chatBounce 1s infinite;animation-delay:.15s"></span><span style="width:8px;height:8px;border-radius:50%;background:var(--primary);animation:chatBounce 1s infinite;animation-delay:.3s"></span></div>';
+  document.getElementById('chat-list').appendChild(typing);
+  document.getElementById('chat-list').scrollTop = document.getElementById('chat-list').scrollHeight;
+  setTimeout(() => {
+    const el = document.getElementById('chat-typing');
+    if (el) el.remove();
+    const res = getChatResponse(t);
+    addChatMessage('assistant', res.r);
+    chatLoading = false;
+  }, 800);
+}
+function chatKeyDown(e) {
+  if (e.key === 'Enter') { e.preventDefault(); sendChatMessage(); }
+  const inp = document.getElementById('chat-input');
+  document.getElementById('chat-send-btn').disabled = !inp.value.trim();
+  document.getElementById('chat-send-btn').style.opacity = inp.value.trim() ? '1' : '.4';
+}
+function toggleChatFullscreen() {
+  const w = document.querySelector('.chat-wrapper');
+  if (w.style.position === 'fixed') {
+    w.style.cssText = 'display:flex;flex-direction:column;height:calc(100vh - 180px)';
+  } else {
+    w.style.cssText = 'position:fixed;inset:0;z-index:100;background:var(--bg);padding:var(--s4);display:flex;flex-direction:column;height:100vh';
+  }
+}
+
+// ─── COUNT UP ON SCROLL ───
+function countUpMetrics() {
+  document.querySelectorAll('[data-count]').forEach(el => {
+    const target = parseFloat(el.dataset.count);
+    const isDecimal = target % 1 !== 0;
+    const suffix = el.dataset.count > 50 ? '+' : '';
+    let current = 0;
+    const step = target / 40;
+    const interval = setInterval(() => {
+      current += step;
+      if (current >= target) { current = target; clearInterval(interval); }
+      el.textContent = isDecimal ? current.toFixed(1) + suffix : Math.floor(current) + suffix;
+    }, 30);
+  });
+}
+
+// ─── HERO CANVAS ───
+function initHeroCanvas() {
+  const canvas = document.getElementById('hero-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const particles = [];
+  for (let i = 0; i < 60; i++) {
+    particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, r: 1 + Math.random() * 1.5, vx: (Math.random() - .5) * .3, vy: (Math.random() - .5) * .3 });
+  }
+  function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(p => {
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0) p.x = canvas.width; if (p.x > canvas.width) p.x = 0;
+      if (p.y < 0) p.y = canvas.height; if (p.y > canvas.height) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(16,185,129,.2)';
+      ctx.fill();
+    });
+    requestAnimationFrame(drawParticles);
+  }
+  drawParticles();
+}
+
+// ─── INIT ───
+document.addEventListener('DOMContentLoaded', () => {
+  initHeroCanvas();
+  renderInvoices();
+
+  // Handle initial hash
+  const hash = window.location.hash || '#landing';
+  navigate(hash);
+
+  // Intersection observer for metrics count-up
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { countUpMetrics(); observer.disconnect(); } });
+  });
+  const metricsBar = document.querySelector('.metrics-bar');
+  if (metricsBar) observer.observe(metricsBar);
+});
+</script>
+</body>
+</html>
+`);
+
+console.log('Final size:', fs.statSync(path).size, 'bytes');

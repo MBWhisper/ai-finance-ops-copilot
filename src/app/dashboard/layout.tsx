@@ -5,6 +5,8 @@ import { NotificationBell } from '@/components/risk/NotificationBell'
 import { ensureUserRecord } from '@/lib/auth/ensure-user'
 import { getUserSubscription } from '@/lib/subscription'
 import { logger } from '@/lib/logger'
+import dynamic from 'next/dynamic'
+const CopilotChat = dynamic(() => import('@/components/copilot/CopilotChat').then(m => m.CopilotChat), { ssr: false })
 
 export default async function DashboardLayout({
   children,
@@ -64,6 +66,7 @@ export default async function DashboardLayout({
           {children}
         </div>
       </main>
+      <CopilotChat />
     </div>
   )
 }
