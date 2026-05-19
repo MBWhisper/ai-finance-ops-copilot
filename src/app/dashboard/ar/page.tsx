@@ -10,7 +10,6 @@ import { InvoiceDetailDrawer } from '@/components/ar/invoice-detail-drawer'
 import { CreateInvoiceModal } from '@/components/ar/create-invoice-modal'
 import { formatCents, computeInvoiceStats, computeAging, computeOverdueStatus, filterInvoices, sortInvoices, canSendReminder } from '@/lib/invoice-utils'
 import { fetchInvoices, updateInvoiceStatus, incrementRemindersSent } from '@/lib/invoices-live'
-import { sendInvoicePaidEmail, sendOverdueEmail } from '@/lib/email'
 import type { Invoice, InvoiceStatus } from '@/lib/invoice-types'
 import type { PlanId } from '@/lib/subscription'
 
@@ -93,15 +92,6 @@ export default function ARPage() {
   async function handleMarkPaid(id: string) {
     try {
       await updateInvoiceStatus(id, 'paid')
-      const inv = invoices.find(i => i.id === id)
-      if (inv) {
-        sendInvoicePaidEmail({
-          customerEmail: inv.customerEmail,
-          customerName: inv.customerName,
-          amountCents: inv.amountCents,
-          invoiceNumber: inv.id,
-        })
-      }
       setInvoices(prev => prev.map(i =>
         i.id === id ? { ...i, status: 'paid' as const, paidAt: new Date().toISOString() } : i
       ))
@@ -114,19 +104,6 @@ export default function ARPage() {
   async function handleSendReminder(id: string) {
     try {
       await incrementRemindersSent(id)
-      const inv = invoices.find(i => i.id === id)
-      if (inv) {
-        const dueDate = new Date(inv.dueDate)
-        const daysOverdue = Math.floor((Date.now() - dueDate.getTime()) / (1000 * 60 * 60 * 24))
-        sendOverdueEmail({
-          customerEmail: inv.customerEmail,
-          customerName: inv.customerName,
-          amountCents: inv.amountCents,
-          invoiceNumber: inv.id,
-          dueDate: inv.dueDate,
-          daysOverdue: Math.max(0, daysOverdue),
-        })
-      }
       setInvoices(prev => prev.map(i => {
         if (i.id !== id) return i
         const sentAt = new Date().toISOString()
