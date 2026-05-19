@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Navbar } from "@/components/layout/Navbar";
 import "./globals.css";
 
 const inter = Inter({
@@ -57,7 +56,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${inter.className}`}>
-        <Navbar />
         {children}
         <SpeedInsights />
         <Script id="web-vitals" strategy="afterInteractive">
