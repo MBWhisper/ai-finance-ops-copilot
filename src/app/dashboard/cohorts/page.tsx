@@ -1,12 +1,13 @@
 "use client"
 
-import { useState, useMemo, useRef } from "react"
+import { useState, useMemo, useEffect } from "react"
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from "recharts"
 import {
-  BarChart3, Users, X, Send, Download, ChevronRight,
+  BarChart3, Users, X, Send, Download,
 } from "lucide-react"
+import { createClient } from '@/lib/supabase/browser'
 import { cn } from "@/lib/utils"
 import {
   calculateCohorts, getRetentionColor, INDUSTRY_BENCHMARKS,
@@ -17,31 +18,6 @@ import type { RetentionCellColor } from "@/lib/cohort-engine"
 function formatCents(cents: number): string {
   return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(cents / 100)
 }
-
-const mockSubscriptions: StripeSubscription[] = [
-  { id: "s1", userId: "u1", status: "active", mrrCents: 29900, createdAt: "2026-01-10T00:00:00Z" },
-  { id: "s2", userId: "u2", status: "active", mrrCents: 14900, createdAt: "2026-01-15T00:00:00Z" },
-  { id: "s3", userId: "u3", status: "active", mrrCents: 49900, createdAt: "2026-01-20T00:00:00Z" },
-  { id: "s4", userId: "u4", status: "canceled", mrrCents: 9900, createdAt: "2026-01-22T00:00:00Z", canceledAt: "2026-03-01T00:00:00Z" },
-  { id: "s5", userId: "u5", status: "active", mrrCents: 19900, createdAt: "2026-01-25T00:00:00Z" },
-  { id: "s6", userId: "u6", status: "active", mrrCents: 39900, createdAt: "2026-01-28T00:00:00Z" },
-  { id: "s7", userId: "u7", status: "active", mrrCents: 24900, createdAt: "2026-02-05T00:00:00Z" },
-  { id: "s8", userId: "u8", status: "active", mrrCents: 34900, createdAt: "2026-02-10T00:00:00Z" },
-  { id: "s9", userId: "u9", status: "active", mrrCents: 15900, createdAt: "2026-02-15T00:00:00Z" },
-  { id: "s10", userId: "u10", status: "canceled", mrrCents: 29900, createdAt: "2026-02-18T00:00:00Z", canceledAt: "2026-04-01T00:00:00Z" },
-  { id: "s11", userId: "u11", status: "active", mrrCents: 44900, createdAt: "2026-02-20T00:00:00Z" },
-  { id: "s12", userId: "u12", status: "active", mrrCents: 12900, createdAt: "2026-03-01T00:00:00Z" },
-  { id: "s13", userId: "u13", status: "active", mrrCents: 59900, createdAt: "2026-03-05T00:00:00Z" },
-  { id: "s14", userId: "u14", status: "active", mrrCents: 27900, createdAt: "2026-03-10T00:00:00Z" },
-  { id: "s15", userId: "u15", status: "active", mrrCents: 18900, createdAt: "2026-03-15T00:00:00Z" },
-  { id: "s16", userId: "u16", status: "active", mrrCents: 35900, createdAt: "2026-03-20T00:00:00Z" },
-  { id: "s17", userId: "u17", status: "active", mrrCents: 21900, createdAt: "2026-04-01T00:00:00Z" },
-  { id: "s18", userId: "u18", status: "active", mrrCents: 41900, createdAt: "2026-04-05T00:00:00Z" },
-  { id: "s19", userId: "u19", status: "active", mrrCents: 16900, createdAt: "2026-04-10T00:00:00Z" },
-  { id: "s20", userId: "u20", status: "active", mrrCents: 31900, createdAt: "2026-04-15T00:00:00Z" },
-  { id: "s21", userId: "u21", status: "active", mrrCents: 25900, createdAt: "2026-05-01T00:00:00Z" },
-  { id: "s22", userId: "u22", status: "active", mrrCents: 38900, createdAt: "2026-05-05T00:00:00Z" },
-]
 
 function CohortCell({
   retention, monthIndex, cohortDate, color, isFuture,
@@ -106,7 +82,21 @@ function ChartTooltip({ active, payload, label }: any) {
   )
 }
 
+function mapDbSubToStripeSub(row: any): StripeSubscription {
+  return {
+    id: row.id,
+    userId: row.user_id,
+    status: row.status === 'canceled' || row.status === 'past_due' ? 'canceled' : row.status,
+    mrrCents: row.mrr_cents ?? 0,
+    createdAt: row.created_at,
+    canceledAt: row.ends_at ?? null,
+  }
+}
+
 export default function CohortsPage() {
+  const [subscriptions, setSubscriptions] = useState<StripeSubscription[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState('')
   const [drilldown, setDrilldown] = useState<{
     cohortDate: string
     monthIndex: number
@@ -114,7 +104,31 @@ export default function CohortsPage() {
     color: string
   } | null>(null)
 
-  const result = useMemo(() => calculateCohorts(mockSubscriptions), [])
+  async function loadData() {
+    setLoading(true)
+    setError('')
+    try {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) { window.location.href = '/login'; return }
+
+      const { data, error: err } = await supabase
+        .from('subscriptions')
+        .select('*')
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false })
+
+      if (err) throw err
+      setSubscriptions((data ?? []).map(mapDbSubToStripeSub))
+    } catch (e: any) {
+      setError(e.message)
+    }
+    setLoading(false)
+  }
+
+  useEffect(() => { loadData() }, [])
+
+  const result = useMemo(() => calculateCohorts(subscriptions), [subscriptions])
   const { cohorts, overallMonth1, overallMonth3, maxMonths } = result
 
   const chartData = useMemo(() => {
@@ -171,6 +185,53 @@ export default function CohortsPage() {
       ? "Retention needs improvement. Focus on engagement."
       : "Significant product-market fit work needed."
 
+  if (loading) {
+    return (
+      <div className="space-y-6">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="flex items-center gap-2 text-2xl font-bold tracking-tight text-gray-900">
+              <BarChart3 className="h-6 w-6 text-blue-600" />
+              Cohort Analysis
+            </h1>
+            <p className="mt-1 text-sm text-gray-500">Track how well you retain customers over time.</p>
+          </div>
+        </div>
+        <div className="flex items-center justify-center py-16">
+          <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent" />
+        </div>
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div className="space-y-6">
+        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="flex items-center gap-2 text-2xl font-bold tracking-tight text-gray-900">
+              <BarChart3 className="h-6 w-6 text-blue-600" />
+              Cohort Analysis
+            </h1>
+            <p className="mt-1 text-sm text-gray-500">Track how well you retain customers over time.</p>
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-center py-16">
+          <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mb-4">
+            <svg className="w-6 h-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <p className="text-sm text-red-600 font-medium mb-1">Failed to load cohort data</p>
+          <p className="text-xs text-gray-400 mb-4 max-w-sm text-center">{error}</p>
+          <button onClick={loadData} className="inline-flex items-center px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+            Retry
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="space-y-6">
       {/* Header */}
@@ -182,57 +243,61 @@ export default function CohortsPage() {
           </h1>
           <p className="mt-1 text-sm text-gray-500">Track how well you retain customers over time.</p>
         </div>
-        <button
-          onClick={exportCSV}
-          className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors min-touch-target"
-        >
-          <Download className="h-4 w-4" />
-          Export CSV
-        </button>
+        {cohorts.length > 0 && (
+          <button
+            onClick={exportCSV}
+            className="inline-flex items-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors min-touch-target"
+          >
+            <Download className="h-4 w-4" />
+            Export CSV
+          </button>
+        )}
       </div>
 
       {/* PMF Health Card */}
-      <div className={cn(
-        "rounded-xl border p-5 shadow-sm",
-        pmfStatus === "strong" ? "border-emerald-200 bg-emerald-50" :
-        pmfStatus === "at-risk" ? "border-amber-200 bg-amber-50" :
-        "border-red-200 bg-red-50"
-      )}>
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className={cn(
-              "text-lg font-semibold",
-              pmfStatus === "strong" ? "text-emerald-800" :
-              pmfStatus === "at-risk" ? "text-amber-800" : "text-red-800"
-            )}>
-              {pmfLabel} {pmfEmoji}
-            </p>
-            <p className={cn(
-              "mt-1 text-sm",
-              pmfStatus === "strong" ? "text-emerald-600" :
-              pmfStatus === "at-risk" ? "text-amber-600" : "text-red-600"
-            )}>{pmfDesc}</p>
-          </div>
-          <div className="flex gap-4">
-            <div className="text-center">
+      {subscriptions.length > 0 && (
+        <div className={cn(
+          "rounded-xl border p-5 shadow-sm",
+          pmfStatus === "strong" ? "border-emerald-200 bg-emerald-50" :
+          pmfStatus === "at-risk" ? "border-amber-200 bg-amber-50" :
+          "border-red-200 bg-red-50"
+        )}>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div>
               <p className={cn(
-                "text-2xl font-bold",
-                pmfStatus === "strong" ? "text-emerald-700" : "text-amber-700"
-              )}>{overallMonth1}%</p>
-              <p className="text-xs text-gray-500">Month-1 Retention</p>
-              <p className="text-[10px] text-gray-400">Benchmark: {INDUSTRY_BENCHMARKS.month1}%</p>
+                "text-lg font-semibold",
+                pmfStatus === "strong" ? "text-emerald-800" :
+                pmfStatus === "at-risk" ? "text-amber-800" : "text-red-800"
+              )}>
+                {pmfLabel} {pmfEmoji}
+              </p>
+              <p className={cn(
+                "mt-1 text-sm",
+                pmfStatus === "strong" ? "text-emerald-600" :
+                pmfStatus === "at-risk" ? "text-amber-600" : "text-red-600"
+              )}>{pmfDesc}</p>
             </div>
-            <div className="text-center">
-              <p className={cn(
-                "text-2xl font-bold",
-                pmfStatus === "strong" ? "text-emerald-700" : "text-amber-700"
-              )}>{overallMonth3}%</p>
-              <p className="text-xs text-gray-500">Month-3 Retention</p>
-              <p className="text-[10px] text-gray-400">Benchmark: {INDUSTRY_BENCHMARKS.month3}%</p>
+            <div className="flex gap-4">
+              <div className="text-center">
+                <p className={cn(
+                  "text-2xl font-bold",
+                  pmfStatus === "strong" ? "text-emerald-700" : "text-amber-700"
+                )}>{overallMonth1}%</p>
+                <p className="text-xs text-gray-500">Month-1 Retention</p>
+                <p className="text-[10px] text-gray-400">Benchmark: {INDUSTRY_BENCHMARKS.month1}%</p>
+              </div>
+              <div className="text-center">
+                <p className={cn(
+                  "text-2xl font-bold",
+                  pmfStatus === "strong" ? "text-emerald-700" : "text-amber-700"
+                )}>{overallMonth3}%</p>
+                <p className="text-xs text-gray-500">Month-3 Retention</p>
+                <p className="text-[10px] text-gray-400">Benchmark: {INDUSTRY_BENCHMARKS.month3}%</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Color Legend */}
       <div className="flex items-center gap-4 text-xs text-gray-500">
@@ -385,11 +450,10 @@ export default function CohortsPage() {
               </button>
             </div>
             <div className="flex-1 overflow-y-auto p-4 scroll-container-touch">
-              {mockSubscriptions
+              {subscriptions
                 .filter((s) => {
                   const cohort = cohorts.find((c) => c.cohortDate === drilldown.cohortDate)
                   if (!cohort) return false
-                  // Show subscriptions from this cohort that were still active at monthIndex
                   const subCohortDate = new Date(s.createdAt)
                   const cDate = new Date(drilldown.cohortDate + "-01")
                   const diffMonths = (subCohortDate.getFullYear() - cDate.getFullYear()) * 12 + subCohortDate.getMonth() - cDate.getMonth()
@@ -419,7 +483,7 @@ export default function CohortsPage() {
                     </button>
                   </div>
                 ))}
-              {mockSubscriptions.filter((s) => {
+              {subscriptions.filter((s) => {
                 const cohort = cohorts.find((c) => c.cohortDate === drilldown.cohortDate)
                 if (!cohort) return false
                 const subCohortDate = new Date(s.createdAt)
@@ -458,7 +522,7 @@ export default function CohortsPage() {
               </button>
             </div>
             <div className="flex-1 overflow-y-auto p-4 scroll-container-touch">
-              {mockSubscriptions
+              {subscriptions
                 .filter((s) => {
                   const subCohortDate = new Date(s.createdAt)
                   const cDate = new Date(drilldown.cohortDate + "-01")

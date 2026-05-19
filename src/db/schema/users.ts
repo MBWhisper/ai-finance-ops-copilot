@@ -1,4 +1,4 @@
-import { pgTable, uuid, text, date, timestamp, boolean } from "drizzle-orm/pg-core";
+import { pgTable, uuid, text, date, timestamp, boolean, jsonb } from "drizzle-orm/pg-core";
 
 export const users = pgTable("users", {
   id: uuid("id").primaryKey().defaultRandom(),
@@ -9,6 +9,7 @@ export const users = pgTable("users", {
   trialEndsAt: date("trial_ends_at"),
   planExpiresAt: timestamp("plan_expires_at"),
   onboardingCompleted: boolean("onboarding_completed").default(false),
+  settings: jsonb("settings").default({}).notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

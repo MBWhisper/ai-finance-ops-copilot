@@ -1,3 +1,4 @@
+import 'server-only';
 import { Resend } from "resend";
 
 function getClient(): Resend {
@@ -7,7 +8,7 @@ function getClient(): Resend {
 }
 
 function getFrom(): string {
-  return process.env.RESEND_FROM_EMAIL ?? "noreply@ai-finance-ops.com";
+  return process.env.RESEND_FROM_EMAIL ?? "noreply@aifinanceops.app";
 }
 
 interface UserInfo {

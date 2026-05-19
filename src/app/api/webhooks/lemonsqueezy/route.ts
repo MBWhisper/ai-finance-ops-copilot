@@ -4,6 +4,7 @@ import { db } from '@/db';
 import { users } from '@/db/schema';
 import { upsertSubscription } from '@/db/queries/subscriptions';
 import { getPlanByVariantId } from '@/lib/plans';
+import { sendSubscriptionEventEmail } from '@/lib/email';
 import { eq } from 'drizzle-orm';
 
 type LemonSqueezyEvent =
@@ -92,6 +93,8 @@ export async function POST(req: NextRequest) {
         });
 
         await db.update(users).set({ plan: planSlug }).where(eq(users.email, userEmail));
+
+        sendSubscriptionEventEmail({ email: userEmail }, status === 'active' ? 'subscription_active' : 'trial_ending');
         break;
       }
 
@@ -111,6 +114,8 @@ export async function POST(req: NextRequest) {
         });
 
         await db.update(users).set({ plan: 'free' }).where(eq(users.email, userEmail));
+
+        sendSubscriptionEventEmail({ email: userEmail }, 'subscription_canceled');
         break;
       }
 
@@ -128,6 +133,8 @@ export async function POST(req: NextRequest) {
         });
 
         await db.update(users).set({ plan: 'free' }).where(eq(users.email, userEmail));
+
+        sendSubscriptionEventEmail({ email: userEmail }, 'payment_failed');
         break;
       }
 

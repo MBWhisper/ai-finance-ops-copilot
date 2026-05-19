@@ -6,10 +6,11 @@ import { KPICGrid } from '@/components/dashboard/kpi-grid'
 import { PlanGate } from '@/components/plan-gate'
 import { getUserSubscription } from '@/lib/subscription'
 import { getLatestMetrics, getMetricsHistory } from '@/db/queries/metrics'
-import { getInvoiceStats } from '@/db/queries/invoices'
+import { getInvoiceStats, getAllInvoices } from '@/db/queries/invoices'
 import { getStripeAccount } from '@/db/queries/stripe-accounts'
 import { formatCurrency } from '@/lib/utils'
-import Link from 'next/link'
+import { OverviewExecutiveSummary } from '@/components/analytics/overview-executive-summary'
+import { OverviewAttentionSection } from '@/components/analytics/overview-attention-section'
 
 const MrrHistoryChart = dynamic(
   () => import('@/components/dashboard/mrr-history-chart').then(m => ({ default: m.MrrHistoryChart })),
@@ -34,11 +35,12 @@ export default async function OverviewPage({
 
   const subscription = await getUserSubscription(user.id)
 
-  const [latestMetrics, metricsHistory, invoiceStats, stripeAccount] = await Promise.all([
+  const [latestMetrics, metricsHistory, invoiceStats, stripeAccount, allInvoices] = await Promise.all([
     getLatestMetrics(user.id),
     getMetricsHistory(user.id, 90),
     getInvoiceStats(user.id),
     getStripeAccount(user.id),
+    getAllInvoices(user.id),
   ])
 
   const hasStripe = !!stripeAccount
@@ -54,7 +56,7 @@ export default async function OverviewPage({
     : undefined
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-5">
       <TrialBanner
         trialEndsAt={profile?.trial_ends_at ?? null}
         plan={profile?.plan ?? 'starter'}
@@ -64,35 +66,41 @@ export default async function OverviewPage({
 
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Dashboard</h1>
-          <p className="mt-1 text-gray-500">
+          <h1 className="text-2xl font-bold text-gray-900">Dashboard</h1>
+          <p className="text-sm text-gray-500 mt-0.5">
             Welcome back{user.email ? `, ${user.email}` : ''}
           </p>
         </div>
-        {!hasStripe && (
-          <Link
-            href="/dashboard/settings"
-            className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
-          >
-            Connect Stripe
-          </Link>
-        )}
+        <div className="flex items-center gap-3">
+          {hasStripe && (
+            <p className="text-[11px] text-gray-400 hidden sm:block">
+              Data refreshed {new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
+            </p>
+          )}
+          {!hasStripe && (
+            <a
+              href="/dashboard/settings"
+              className="inline-flex items-center gap-1.5 h-10 px-4 rounded-lg bg-blue-600 text-sm font-medium text-white hover:bg-blue-700"
+            >
+              Connect Stripe
+            </a>
+          )}
+        </div>
       </div>
 
       {!hasStripe ? (
         <>
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-2 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {(['MRR', 'ARR', 'Churn Rate', 'LTV'] as const).map((label) => (
-              <div key={label} className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+              <div key={label} className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
                 <p className="text-sm font-medium text-gray-500">{label}</p>
-                <p className="mt-1 text-3xl font-bold text-gray-900">
+                <p className="mt-1 text-2xl font-bold text-gray-900">
                   {label === 'Churn Rate' ? '0%' : '$0'}
                 </p>
                 <p className="mt-1 text-xs text-gray-400">Connect Stripe to track</p>
               </div>
             ))}
           </div>
-
           <div className="rounded-xl border-2 border-dashed border-gray-200 bg-white p-12 text-center">
             <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-50">
               <svg className="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,17 +111,18 @@ export default async function OverviewPage({
             <p className="mx-auto max-w-sm text-sm text-gray-500">
               Connect your Stripe account in Settings to automatically import invoices and track MRR, ARR, and churn.
             </p>
-            <Link
+            <a
               href="/dashboard/settings"
               className="mt-4 inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
             >
               Go to Settings
-            </Link>
+            </a>
           </div>
         </>
       ) : (
         <>
-          <KPICGrid metrics={metricResult} changes={changes} />
+          {/* Executive summary: KPIs + cash flow snapshot */}
+          <OverviewExecutiveSummary metrics={metricResult} changes={changes} metricsHistory={metricsHistory} />
 
           {/* PMF Status Card */}
           <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 shadow-sm">
@@ -135,32 +144,17 @@ export default async function OverviewPage({
             </div>
           </div>
 
-          {/* Invoice stats row */}
+          {/* AR / Collections snapshot + attention section */}
           <PlanGate requiredPlan="starter" currentPlan={subscription.plan} feature="Invoice tracking">
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-              <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-                <p className="text-sm font-medium text-gray-500">Total Invoices</p>
-                <p className="mt-1 text-3xl font-bold text-gray-900">{invoiceStats.total}</p>
-              </div>
-              <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-                <p className="text-sm font-medium text-gray-500">Paid</p>
-                <p className="mt-1 text-3xl font-bold text-green-600">{invoiceStats.paid}</p>
-              </div>
-              <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-                <p className="text-sm font-medium text-gray-500">Outstanding</p>
-                <p className="mt-1 text-3xl font-bold text-amber-600">
-                  {formatCurrency(
-                    invoiceStats.totalAmountCents -
-                      invoiceStats.paid * (invoiceStats.totalAmountCents / (invoiceStats.total || 1))
-                  )}
-                </p>
-              </div>
-            </div>
+            <OverviewAttentionSection
+              invoices={allInvoices}
+              metricsHistory={metricsHistory}
+            />
           </PlanGate>
 
           {/* MRR History Chart */}
           <PlanGate requiredPlan="pro" currentPlan={subscription.plan} feature="MRR History Chart">
-            <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
+            <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
               <MrrHistoryChart data={metricsHistory} />
             </div>
           </PlanGate>

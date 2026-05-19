@@ -48,10 +48,85 @@ export default function OnboardingSteps() {
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) return
 
-    await supabase
-      .from("users")
-      .update({ onboarding_completed: true })
-      .eq("id", user.id)
+    const userId = user.id
+
+    // Persist MRR as initial metrics_daily record
+    const mrrValue = parseInt(mrr, 10)
+    if (mrrValue > 0) {
+      try {
+        const today = new Date().toISOString().split('T')[0]
+        const { data: existing } = await supabase
+          .from("metrics_daily")
+          .select("id")
+          .eq("user_id", userId)
+          .eq("date", today)
+          .maybeSingle()
+
+        if (!existing) {
+          await supabase.from("metrics_daily").insert({
+            user_id: userId,
+            date: today,
+            mrr_cents: mrrValue * 100,
+            arr_cents: mrrValue * 1200,
+            churn_rate: 0,
+            ltv_cents: mrrValue * 100 * 12,
+          })
+        }
+      } catch {
+        // Silently skip MRR seed if it fails
+      }
+    }
+
+    // Persist first customer as an invoice record
+    if (customerName.trim() && customerAmount) {
+      try {
+        const amtCents = Math.round(parseFloat(customerAmount) * 100)
+        const dueDate = customerDueDate || new Date(Date.now() + 30 * 86400000).toISOString().split('T')[0]
+        await supabase.from("invoices").insert({
+          user_id: userId,
+          customer_email: `${customerName.trim().toLowerCase().replace(/\s+/g, '.')}@onboarded.com`,
+          amount_cents: amtCents,
+          due_date: dueDate,
+          status: "sent",
+          reminders_sent: 0,
+        })
+      } catch {
+        // Silently skip first customer seed
+      }
+    }
+
+    // Persist workspace name to settings
+    try {
+      const { data: profile } = await supabase
+        .from("users")
+        .select("settings")
+        .eq("id", userId)
+        .single()
+
+      const currentSettings = ((profile as any)?.settings ?? {}) as Record<string, any>
+      if (customerName.trim()) {
+        currentSettings.workspace = {
+          ...(currentSettings.workspace ?? {}),
+          companyName: customerName.trim(),
+        }
+      }
+      currentSettings.onboardingSnapshot = {
+        mrrCents: mrrValue * 100,
+        currency,
+        completedAt: new Date().toISOString(),
+      }
+
+      await supabase
+        .from("users")
+        .update({ settings: currentSettings, onboarding_completed: true })
+        .eq("id", userId)
+    } catch {
+      // Fallback: just mark onboarding complete
+      await supabase
+        .from("users")
+        .update({ onboarding_completed: true })
+        .eq("id", userId)
+    }
 
     router.push("/dashboard/overview?welcome=true")
   }

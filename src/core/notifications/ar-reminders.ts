@@ -1,3 +1,4 @@
+import 'server-only';
 import { Resend } from "resend";
 import { db } from "@/db";
 import { invoices } from "@/db/schema";
@@ -15,7 +16,7 @@ function getResendClient(): Resend {
 }
 
 function getFromEmail(): string {
-  return process.env.RESEND_FROM_EMAIL ?? "noreply@ai-finance-ops.com";
+  return process.env.RESEND_FROM_EMAIL ?? "noreply@aifinanceops.app";
 }
 
 export async function sendArReminders(): Promise<number> {
