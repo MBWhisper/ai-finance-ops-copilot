@@ -65,15 +65,19 @@ export async function handleSubscriptionEvent(userId: string, event: Stripe.Even
 export async function handleInvoiceEvent(userId: string, event: Stripe.Event) {
   const inv = event.data.object as Stripe.Invoice;
 
-  const statusMap: Record<string, string> = {
-    paid: "paid",
-    draft: "draft",
-    open: "sent",
-    uncollectible: "overdue",
-    void: "overdue",
-  };
-
-  const invoiceStatus = inv.status ? (statusMap[inv.status] ?? "sent") : "draft";
+  let invoiceStatus: string;
+  if (event.type === 'invoice.payment_failed') {
+    invoiceStatus = 'overdue';
+  } else {
+    const statusMap: Record<string, string> = {
+      paid: "paid",
+      draft: "draft",
+      open: "sent",
+      uncollectible: "overdue",
+      void: "overdue",
+    };
+    invoiceStatus = inv.status ? (statusMap[inv.status] ?? "sent") : "draft";
+  }
 
   await db
     .insert(invoices)

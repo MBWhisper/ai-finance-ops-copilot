@@ -25,6 +25,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
   }
 
+  logger.info({ event: event.type }, 'Stripe webhook received');
+
   const subscriptionEvents = [
     "customer.subscription.created",
     "customer.subscription.updated",
