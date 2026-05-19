@@ -91,8 +91,7 @@ export default function ARPage() {
   }, [])
 
   function handleView(invoice: Invoice) {
-    setSelectedInvoice(invoice)
-    setDrawerOpen(true)
+    window.open(`/api/invoices/${invoice.id}/pdf`, '_blank')
   }
 
   async function handleMarkPaid(id: string) {
