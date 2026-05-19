@@ -36,14 +36,14 @@ export default function ARPage() {
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) { window.location.href = '/login'; return }
 
-      const { data: sub } = await supabase
+      const { data: subRows } = await supabase
         .from('subscriptions')
         .select('plan, status')
         .eq('user_id', user.id)
         .in('status', ['active', 'on_trial'])
         .order('created_at', { ascending: false })
         .limit(1)
-        .maybeSingle()
+      const sub = subRows?.[0] ?? null
       setPlan((sub?.plan as PlanId) ?? 'free')
 
       const liveInvoices = await fetchInvoices(user.id)
