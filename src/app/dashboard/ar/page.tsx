@@ -25,6 +25,12 @@ export default function ARPage() {
   const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null)
   const [drawerOpen, setDrawerOpen] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
+  const [toast, setToast] = useState<{ message: string; type: 'success' | 'error' } | null>(null)
+
+  const showToast = useCallback((message: string, type: 'success' | 'error' = 'success') => {
+    setToast({ message, type })
+    setTimeout(() => setToast(null), 3000)
+  }, [])
 
   // Load data
   const loadData = useCallback(async () => {
@@ -95,6 +101,7 @@ export default function ARPage() {
       setInvoices(prev => prev.map(i =>
         i.id === id ? { ...i, status: 'paid' as const, paidAt: new Date().toISOString() } : i
       ))
+      showToast('Marked as paid')
     } catch (e: any) {
       setError(e.message)
     }
@@ -117,6 +124,7 @@ export default function ARPage() {
         }
       }))
       setSelectedInvoice(prev => prev?.id === id ? { ...prev!, remindersSent: prev!.remindersSent + 1 } : prev)
+      showToast('Reminder sent')
     } catch (e: any) {
       setError(e.message)
     }
@@ -302,26 +310,29 @@ export default function ARPage() {
                           {agingBucket(inv)}
                         </td>
                         <td className="px-4 py-3 whitespace-nowrap">
-                          <div className="flex items-center gap-1">
+                          <div className="flex items-center gap-1 min-w-max">
                             <button
                               onClick={() => handleView(inv)}
-                              className="h-8 px-2.5 rounded-md text-xs font-medium text-gray-600 hover:bg-gray-100 transition-colors"
+                              className="inline-flex items-center gap-1 h-8 px-3 rounded-md text-xs font-medium text-gray-600 hover:bg-gray-100 transition-colors whitespace-nowrap"
                             >
+                              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
                               View
                             </button>
                             {effStatus !== 'paid' && effStatus !== 'draft' && (
                               <button
                                 onClick={() => handleMarkPaid(inv.id)}
-                                className="h-8 px-2.5 rounded-md text-xs font-medium text-green-700 hover:bg-green-50 transition-colors"
+                                className="inline-flex items-center gap-1 h-8 px-3 rounded-md text-xs font-medium text-green-700 hover:bg-green-50 transition-colors whitespace-nowrap"
                               >
-                                Paid
+                                <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                Mark Paid
                               </button>
                             )}
                             {canRemind && (
                               <button
                                 onClick={() => handleSendReminder(inv.id)}
-                                className="h-8 px-2.5 rounded-md text-xs font-medium text-amber-700 hover:bg-amber-50 transition-colors"
+                                className="inline-flex items-center gap-1 h-8 px-3 rounded-md text-xs font-medium text-amber-700 hover:bg-amber-50 transition-colors whitespace-nowrap"
                               >
+                                <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
                                 Remind
                               </button>
                             )}
@@ -353,6 +364,20 @@ export default function ARPage() {
         onClose={() => setModalOpen(false)}
         onCreated={handleInvoiceCreated}
       />
+
+      {/* Toast */}
+      {toast && (
+        <div className={`fixed bottom-6 right-6 z-[60] flex items-center gap-2 px-4 py-3 rounded-lg shadow-lg border text-sm font-medium transition-all ${
+          toast.type === 'success' ? 'bg-green-50 border-green-200 text-green-800' : 'bg-red-50 border-red-200 text-red-800'
+        }`}>
+          {toast.type === 'success' ? (
+            <svg className="h-4 w-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+          ) : (
+            <svg className="h-4 w-4 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          )}
+          {toast.message}
+        </div>
+      )}
     </div>
   )
 }
