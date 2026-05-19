@@ -3,6 +3,8 @@ export interface DemoMetrics {
   arrCents: number
   churnRate: number
   ltvCents: number
+  activeCustomers: number
+  runwayMonths: number
 }
 
 export interface DemoMetricsHistory {
@@ -15,6 +17,7 @@ export interface DemoMetricsHistory {
 
 export interface DemoInvoice {
   id: string
+  customerName: string
   customerEmail: string
   amountCents: number
   dueDate: string
@@ -32,10 +35,12 @@ export interface DemoForecast {
 
 export function getDemoMetrics(): DemoMetrics {
   return {
-    mrrCents: 4580000,
-    arrCents: 54960000,
-    churnRate: 3.2,
+    mrrCents: 2450000,
+    arrCents: 29400000,
+    churnRate: 2.1,
     ltvCents: 1780000,
+    activeCustomers: 142,
+    runwayMonths: 18,
   }
 }
 
@@ -64,18 +69,14 @@ export function getDemoMetricsHistory(days = 90): DemoMetricsHistory[] {
 }
 
 export function getDemoInvoices(): DemoInvoice[] {
-  const statuses: DemoInvoice["status"][] = ["paid", "paid", "paid", "sent", "overdue", "paid", "draft", "sent", "paid", "overdue"]
-  return Array.from({ length: 10 }, (_, i) => {
-    const date = new Date()
-    date.setDate(date.getDate() + i * 15 - 30)
-    return {
-      id: `demo_inv_${i + 1}`,
-      customerEmail: `customer${i + 1}@example.com`,
-      amountCents: Math.round((5000 + Math.random() * 45000) / 100) * 100,
-      dueDate: date.toISOString().split("T")[0],
-      status: statuses[i % statuses.length],
-    }
-  })
+  const now = new Date()
+  return [
+    { id: 'demo_inv_1', customerName: 'Acme Corp', customerEmail: 'billing@acmecorp.com', amountCents: 420000, dueDate: new Date(now.getTime() - 5 * 86400000).toISOString().split('T')[0], status: 'paid' },
+    { id: 'demo_inv_2', customerName: 'Globex Inc', customerEmail: 'ap@globex.io', amountCents: 150000, dueDate: new Date(now.getTime() + 10 * 86400000).toISOString().split('T')[0], status: 'sent' },
+    { id: 'demo_inv_3', customerName: 'Initech', customerEmail: 'finance@initech.com', amountCents: 780000, dueDate: new Date(now.getTime() - 12 * 86400000).toISOString().split('T')[0], status: 'overdue' },
+    { id: 'demo_inv_4', customerName: 'Umbrella Co', customerEmail: 'treasury@umbrella.co', amountCents: 250000, dueDate: new Date(now.getTime() - 2 * 86400000).toISOString().split('T')[0], status: 'paid' },
+    { id: 'demo_inv_5', customerName: 'Stark Industries', customerEmail: 'invoices@stark.com', amountCents: 995000, dueDate: new Date(now.getTime() + 14 * 86400000).toISOString().split('T')[0], status: 'draft' },
+  ]
 }
 
 export function getDemoInvoiceStats() {

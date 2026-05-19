@@ -24,6 +24,11 @@ export default function DemoCashflowPage() {
 
   return (
     <div className="space-y-6">
+      <div className="rounded-lg bg-blue-50 border border-blue-200 px-4 py-3 text-sm text-blue-800 flex items-center gap-2">
+        <span>📊</span>
+        <span>This is a live demo — <Link href="/register" className="font-semibold underline">Sign up free</Link> to connect your data.</span>
+      </div>
+
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">Cash Flow Forecast</h1>

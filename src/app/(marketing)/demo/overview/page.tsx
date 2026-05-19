@@ -20,6 +20,11 @@ export default function DemoOverviewPage() {
 
   return (
     <div className="space-y-6">
+      <div className="rounded-lg bg-blue-50 border border-blue-200 px-4 py-3 text-sm text-blue-800 flex items-center gap-2">
+        <span>📊</span>
+        <span>This is a live demo — <Link href="/register" className="font-semibold underline">Sign up free</Link> to connect your data.</span>
+      </div>
+
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-gray-900">Demo Dashboard</h1>
@@ -37,15 +42,15 @@ export default function DemoOverviewPage() {
 
       <div className="grid gap-4 md:grid-cols-3">
         <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <p className="text-sm font-medium text-gray-500">Total Invoices</p>
-          <p className="mt-1 text-3xl font-bold text-gray-900">{invoiceStats.total}</p>
+          <p className="text-sm font-medium text-gray-500">Active Customers</p>
+          <p className="mt-1 text-3xl font-bold text-gray-900">{metrics.activeCustomers}</p>
         </div>
         <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <p className="text-sm font-medium text-gray-500">Paid</p>
-          <p className="mt-1 text-3xl font-bold text-green-600">{invoiceStats.paid}</p>
+          <p className="text-sm font-medium text-gray-500">Runway</p>
+          <p className="mt-1 text-3xl font-bold text-gray-900">{metrics.runwayMonths} months</p>
         </div>
         <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
-          <p className="text-sm font-medium text-gray-500">Outstanding</p>
+          <p className="text-sm font-medium text-gray-500">Outstanding AR</p>
           <p className="mt-1 text-3xl font-bold text-amber-600">
             {formatCurrency(
               invoiceStats.totalAmountCents -
