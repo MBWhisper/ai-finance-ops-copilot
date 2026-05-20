@@ -34,16 +34,31 @@ You can help with:
 - LTV and unit economics
 - Financial forecasting and runway calculations`
 
-  const stream = await openai.chat.completions.create({
-    model: 'gpt-4o-mini',
-    messages: [
-      { role: 'system', content: systemPrompt },
-      { role: 'user', content: message }
-    ],
-    stream: true,
-    max_tokens: 400,
-    temperature: 0.7,
-  })
+  let stream
+  try {
+    stream = await openai.chat.completions.create({
+      model: 'gpt-4o-mini',
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: message }
+      ],
+      stream: true,
+      max_tokens: 400,
+      temperature: 0.7,
+    })
+  } catch (err: unknown) {
+    const status = (err as { status?: number })?.status
+    if (status === 429) {
+      return new Response(
+        JSON.stringify({ error: 'AI service is temporarily unavailable due to high demand. Please try again shortly.' }),
+        { status: 503, headers: { 'Content-Type': 'application/json' } }
+      )
+    }
+    return new Response(
+      JSON.stringify({ error: 'An unexpected error occurred. Please try again.' }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
+    )
+  }
 
   const encoder = new TextEncoder()
 
@@ -52,7 +67,9 @@ You can help with:
       for await (const chunk of stream) {
         const text = chunk.choices?.[0]?.delta?.content || ''
         if (text) {
-          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text })}\n\n`))
+          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text })}
+
+`))
         }
       }
       controller.enqueue(encoder.encode('data: [DONE]\n\n'))
