@@ -1,28 +1,25 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
+import { Ratelimit } from '@upstash/ratelimit'
+import { Redis } from '@upstash/redis'
+
+const ratelimit = new Ratelimit({
+  redis: Redis.fromEnv(),
+  limiter: Ratelimit.slidingWindow(20, '1 h'),
+  prefix: 'copilot',
+})
 
 export async function middleware(request: NextRequest) {
-  // Rate limiting for copilot API
+  // Rate limiting for copilot API (distributed, works across all edge nodes)
   if (request.nextUrl.pathname === '/api/copilot') {
-    const ip = request.headers.get('x-forwarded-for') ?? 'anonymous'
-    const now = Date.now()
-    const windowMs = 60 * 60 * 1000
-    const maxRequests = 20
+    const ip = request.headers.get('x-forwarded-for')?.split(',')[0].trim() ?? 'anonymous'
+    const { success } = await ratelimit.limit(ip)
 
-    const rateLimitMap = globalThis.__rateLimitMap || new Map<string, { count: number; resetAt: number }>()
-    globalThis.__rateLimitMap = rateLimitMap
-
-    const record = rateLimitMap.get(ip)
-
-    if (!record || now > record.resetAt) {
-      rateLimitMap.set(ip, { count: 1, resetAt: now + windowMs })
-    } else if (record.count >= maxRequests) {
+    if (!success) {
       return NextResponse.json(
         { error: 'Rate limit exceeded. Try again in 1 hour.' },
         { status: 429 }
       )
-    } else {
-      record.count++
     }
   }
 
