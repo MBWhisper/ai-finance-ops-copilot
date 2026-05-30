@@ -14,15 +14,18 @@ export default function CashflowPage() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [plan, setPlan] = useState<PlanId>('free')
+  const [isDemo, setIsDemo] = useState(false)
 
   const loadData = useCallback(async () => {
     setLoading(true)
     setError('')
+    setIsDemo(false)
     try {
       const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
       if (!user) {
-        window.location.href = '/login'
+        setIsDemo(true)
+        setLoading(false)
         return
       }
 
@@ -52,7 +55,7 @@ export default function CashflowPage() {
 
       if (data) {
         setForecasts(
-          data.map((r: any) => ({
+          data.map((r) => ({
             date: r.forecast_date,
             amountCents: r.amount_cents,
             type: r.type as 'revenue' | 'expense' | 'net',
@@ -64,8 +67,8 @@ export default function CashflowPage() {
           }))
         )
       }
-    } catch (e: any) {
-      setError(e?.message || e?.error_description || 'Failed to load forecast')
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Failed to load forecast')
     }
     setLoading(false)
   }, [period])
@@ -84,11 +87,22 @@ export default function CashflowPage() {
         <PeriodSelector selectedPeriod={period} onPeriodChange={setPeriod} />
       </div>
 
+      {isDemo && (
+        <div className="rounded-xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-700">
+          📊 This is a live demo —{' '}
+          <a href="/register" className="font-semibold underline underline-offset-2">
+            Sign up free to connect your data
+          </a>
+        </div>
+      )}
+
       <PlanGate requiredPlan="pro" currentPlan={plan} feature="Cash flow forecast">
         <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
           {loading ? (
-            <div className="flex h-96 items-center justify-center">
-              <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent" />
+            <div className="space-y-3 h-96 p-2">
+              <div className="h-6 w-1/3 rounded-lg bg-gray-100 animate-pulse" />
+              <div className="h-64 w-full rounded-xl bg-gray-100 animate-pulse" />
+              <div className="h-4 w-1/4 rounded bg-gray-100 animate-pulse" />
             </div>
           ) : error ? (
             <div className="flex flex-col items-center justify-center h-96">
@@ -121,19 +135,19 @@ export default function CashflowPage() {
           <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
             <p className="text-sm font-medium text-gray-500">P50 (Expected)</p>
             <p className="mt-1 text-lg font-semibold text-emerald-600">
-              ~{forecasts.length > 0 ? `$${(forecasts[forecasts.length - 1].bands.p50 / 100).toFixed(0)}` : '—'}
+              ~{isDemo ? '$42,800' : forecasts.length > 0 ? `$${(forecasts[forecasts.length - 1].bands.p50 / 100).toFixed(0)}` : '—'}
             </p>
           </div>
           <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
             <p className="text-sm font-medium text-gray-500">P80 (Moderate)</p>
             <p className="mt-1 text-lg font-semibold text-amber-600">
-              ~{forecasts.length > 0 ? `$${(forecasts[forecasts.length - 1].bands.p80 / 100).toFixed(0)}` : '—'}
+              ~{isDemo ? '$38,100' : forecasts.length > 0 ? `$${(forecasts[forecasts.length - 1].bands.p80 / 100).toFixed(0)}` : '—'}
             </p>
           </div>
           <div className="rounded-xl border border-gray-200 bg-white p-6 shadow-sm">
             <p className="text-sm font-medium text-gray-500">P95 (Conservative)</p>
             <p className="mt-1 text-lg font-semibold text-red-600">
-              ~{forecasts.length > 0 ? `$${(forecasts[forecasts.length - 1].bands.p95 / 100).toFixed(0)}` : '—'}
+              ~{isDemo ? '$31,500' : forecasts.length > 0 ? `$${(forecasts[forecasts.length - 1].bands.p95 / 100).toFixed(0)}` : '—'}
             </p>
           </div>
         </div>

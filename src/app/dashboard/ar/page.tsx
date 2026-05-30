@@ -53,8 +53,8 @@ export default function ARPage() {
 
       const liveInvoices = await fetchInvoices(user.id)
       setInvoices(liveInvoices)
-    } catch (e: any) {
-      setError(e?.message || e?.error_description || 'Failed to load invoices')
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Failed to load invoices')
     }
     setLoading(false)
   }, [])
@@ -101,8 +101,8 @@ export default function ARPage() {
         i.id === id ? { ...i, status: 'paid' as const, paidAt: new Date().toISOString() } : i
       ))
       showToast('Marked as paid')
-    } catch (e: any) {
-      setError(e.message)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Failed')
     }
     setDrawerOpen(false)
   }
@@ -124,8 +124,8 @@ export default function ARPage() {
       }))
       setSelectedInvoice(prev => prev?.id === id ? { ...prev!, remindersSent: prev!.remindersSent + 1 } : prev)
       showToast('Reminder sent')
-    } catch (e: any) {
-      setError(e.message)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Failed')
     }
   }
 
@@ -225,18 +225,18 @@ export default function ARPage() {
               <p className="text-xs text-gray-400 mt-1">Try reloading or check your connection.</p>
             </div>
           ) : invoices.length === 0 ? (
-            <div className="p-12 text-center">
+            <div className="p-6 sm:p-12 text-center">
               <svg className="mx-auto h-10 w-10 text-gray-300 mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>
               </svg>
               <p className="text-sm font-medium text-gray-900">No invoices yet</p>
               <p className="text-xs text-gray-500 mt-1">Create your first invoice to get started.</p>
-              <button onClick={handleCreateInvoice} className="mt-4 inline-flex items-center gap-1.5 h-9 px-4 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700">
+              <button onClick={handleCreateInvoice} className="mt-4 inline-flex items-center gap-1.5 h-10 min-w-[44px] px-4 rounded-lg bg-blue-600 text-white text-sm font-medium hover:bg-blue-700">
                 Create Invoice
               </button>
             </div>
           ) : filtered.length === 0 ? (
-            <div className="p-12 text-center">
+            <div className="p-6 sm:p-12 text-center">
               <svg className="mx-auto h-10 w-10 text-gray-300 mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                 <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
               </svg>
@@ -247,101 +247,106 @@ export default function ARPage() {
               </button>
             </div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-gray-100 bg-gray-50">
-                    {[
-                      { key: 'id', label: 'Invoice #' },
-                      { key: 'customerName', label: 'Customer' },
-                      { key: 'amountCents', label: 'Amount' },
-                      { key: 'issueDate', label: 'Issue Date' },
-                      { key: 'dueDate', label: 'Due Date' },
-                      { key: 'status', label: 'Status' },
-                    ].map(col => (
-                      <th
-                        key={col.key}
-                        onClick={() => handleSort(col.key as keyof Invoice)}
-                        className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700 select-none whitespace-nowrap"
-                      >
-                        {col.label}{sortArrow(col.key as keyof Invoice)}
-                      </th>
-                    ))}
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Reminders</th>
-                    <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Aging</th>
-                    <th className="px-4 py-3" />
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                  {filtered.map(inv => {
-                    const effStatus = computeOverdueStatus(inv)
-                    const canRemind = canSendReminder(inv)
-                    return (
-                      <tr key={inv.id} className="hover:bg-gray-50 transition-colors">
-                        <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{inv.id}</td>
-                        <td className="px-4 py-3 whitespace-nowrap">
-                          <div>
-                            <p className="text-gray-900">{inv.customerName}</p>
-                            <p className="text-xs text-gray-400">{inv.customerEmail}</p>
-                          </div>
-                        </td>
-                        <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{formatCents(inv.amountCents)}</td>
-                        <td className="px-4 py-3 text-gray-600 whitespace-nowrap">
-                          {new Date(inv.issueDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                        </td>
-                        <td className="px-4 py-3 whitespace-nowrap">
-                          <span className={effStatus === 'overdue' ? 'text-red-600 font-medium' : 'text-gray-600'}>
-                            {new Date(inv.dueDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
-                          </span>
-                        </td>
-                        <td className="px-4 py-3 whitespace-nowrap">
-                          <InvoiceStatusBadge status={effStatus} />
-                        </td>
-                        <td className="px-4 py-3 text-gray-500 whitespace-nowrap">
-                          <span className="text-xs">{inv.remindersSent}/3</span>
-                          {inv.reminders.length > 0 && (
-                            <span className="ml-1 text-[10px] text-gray-400">
-                              (last {new Date(inv.reminders[inv.reminders.length - 1].sentAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })})
+            <div className="-mx-3 sm:-mx-0 overflow-x-auto">
+              <div className="min-w-[650px]">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-gray-100 bg-gray-50">
+                      {[
+                        { key: 'id', label: 'Invoice #' },
+                        { key: 'customerName', label: 'Customer' },
+                        { key: 'amountCents', label: 'Amount' },
+                        { key: 'issueDate', label: 'Issue Date' },
+                        { key: 'dueDate', label: 'Due Date' },
+                        { key: 'status', label: 'Status' },
+                      ].map(col => (
+                        <th
+                          key={col.key}
+                          onClick={() => handleSort(col.key as keyof Invoice)}
+                          className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:text-gray-700 select-none whitespace-nowrap"
+                        >
+                          {col.label}{sortArrow(col.key as keyof Invoice)}
+                        </th>
+                      ))}
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Reminders</th>
+                      <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap">Aging</th>
+                      <th className="px-4 py-3" />
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    {filtered.map(inv => {
+                      const effStatus = computeOverdueStatus(inv)
+                      const canRemind = canSendReminder(inv)
+                      return (
+                        <tr key={inv.id} className="hover:bg-gray-50 transition-colors">
+                          <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{inv.id}</td>
+                          <td className="px-4 py-3 whitespace-nowrap">
+                            <div>
+                              <p className="text-gray-900">{inv.customerName}</p>
+                              <p className="text-xs text-gray-400">{inv.customerEmail}</p>
+                            </div>
+                          </td>
+                          <td className="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{formatCents(inv.amountCents)}</td>
+                          <td className="px-4 py-3 text-gray-600 whitespace-nowrap">
+                            {new Date(inv.issueDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                          </td>
+                          <td className="px-4 py-3 whitespace-nowrap">
+                            <span className={effStatus === 'overdue' ? 'text-red-600 font-medium' : 'text-gray-600'}>
+                              {new Date(inv.dueDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                             </span>
-                          )}
-                        </td>
-                        <td className={`px-4 py-3 whitespace-nowrap text-xs font-medium ${agingColor(inv)}`}>
-                          {agingBucket(inv)}
-                        </td>
-                        <td className="px-4 py-3 whitespace-nowrap">
-                          <div className="flex items-center gap-1 min-w-max">
-                            <button
-                              onClick={() => handleView(inv)}
-                              className="inline-flex items-center gap-1 h-8 px-3 rounded-md text-xs font-medium text-gray-600 hover:bg-gray-100 transition-colors whitespace-nowrap"
-                            >
-                              <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-                              View
-                            </button>
-                            {effStatus !== 'paid' && effStatus !== 'draft' && (
-                              <button
-                                onClick={() => handleMarkPaid(inv.id)}
-                                className="inline-flex items-center gap-1 h-8 px-3 rounded-md text-xs font-medium text-green-700 hover:bg-green-50 transition-colors whitespace-nowrap"
-                              >
-                                <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
-                                Mark Paid
-                              </button>
+                          </td>
+                          <td className="px-4 py-3 whitespace-nowrap">
+                            <InvoiceStatusBadge status={effStatus} />
+                          </td>
+                          <td className="px-4 py-3 text-gray-500 whitespace-nowrap">
+                            <span className="text-xs">{inv.remindersSent}/3</span>
+                            {inv.reminders.length > 0 && (
+                              <span className="ml-1 text-[10px] text-gray-400">
+                                (last {new Date(inv.reminders[inv.reminders.length - 1].sentAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })})
+                              </span>
                             )}
-                            {canRemind && (
+                          </td>
+                          <td className={`px-4 py-3 whitespace-nowrap text-xs font-medium ${agingColor(inv)}`}>
+                            {agingBucket(inv)}
+                          </td>
+                          <td className="px-4 py-3 whitespace-nowrap">
+                            <div className="flex items-center gap-1 min-w-max">
                               <button
-                                onClick={() => handleSendReminder(inv.id)}
-                                className="inline-flex items-center gap-1 h-8 px-3 rounded-md text-xs font-medium text-amber-700 hover:bg-amber-50 transition-colors whitespace-nowrap"
+                                onClick={() => handleView(inv)}
+                                className="inline-flex items-center gap-1 h-8 min-w-[44px] px-3 rounded-md text-xs font-medium text-gray-600 hover:bg-gray-100 transition-colors whitespace-nowrap"
+                                aria-label="View invoice"
                               >
-                                <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
-                                Remind
+                                <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path strokeLinecap="round" strokeLinejoin="round" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
+                                View
                               </button>
-                            )}
-                          </div>
-                        </td>
-                      </tr>
-                    )
-                  })}
-                </tbody>
-              </table>
+                              {effStatus !== 'paid' && effStatus !== 'draft' && (
+                                <button
+                                  onClick={() => handleMarkPaid(inv.id)}
+                                  className="inline-flex items-center gap-1 h-8 min-w-[44px] px-3 rounded-md text-xs font-medium text-green-700 hover:bg-green-50 transition-colors whitespace-nowrap"
+                                  aria-label="Mark as paid"
+                                >
+                                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7"/></svg>
+                                  Mark Paid
+                                </button>
+                              )}
+                              {canRemind && (
+                                <button
+                                  onClick={() => handleSendReminder(inv.id)}
+                                  className="inline-flex items-center gap-1 h-8 min-w-[44px] px-3 rounded-md text-xs font-medium text-amber-700 hover:bg-amber-50 transition-colors whitespace-nowrap"
+                                  aria-label="Send reminder"
+                                >
+                                  <svg className="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"><path strokeLinecap="round" strokeLinejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>
+                                  Remind
+                                </button>
+                              )}
+                            </div>
+                          </td>
+                        </tr>
+                      )
+                    })}
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
         </div>
@@ -366,7 +371,7 @@ export default function ARPage() {
 
       {/* Toast */}
       {toast && (
-        <div className={`fixed bottom-6 right-6 z-[60] flex items-center gap-2 px-4 py-3 rounded-lg shadow-lg border text-sm font-medium transition-all ${
+        <div className={`fixed bottom-20 sm:bottom-6 right-6 z-[60] flex items-center gap-2 px-4 py-3 rounded-lg shadow-lg border text-sm font-medium transition-all ${
           toast.type === 'success' ? 'bg-green-50 border-green-200 text-green-800' : 'bg-red-50 border-red-200 text-red-800'
         }`}>
           {toast.type === 'success' ? (

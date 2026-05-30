@@ -70,20 +70,21 @@ export default function SettingsPage() {
         setUser(u)
         setProfileName(u.user_metadata?.name ?? u.email?.split('@')[0] ?? '')
 
-        // Profile and settings from users table
-        const { data: profile } = await supabase.from('users').select('name, settings').eq('id', u.id).single()
+        // Profile and settings from profiles table
+        const { data: profile } = await supabase.from('profiles').select('name, settings').eq('id', u.id).single()
         if (profile?.name) setProfileName(profile.name)
 
         // Restore workspace settings from DB
-        const ws = ((profile?.settings as Record<string, any>)?.workspace) ?? {}
-        if (ws.companyName) setCompany(ws.companyName)
-        if (ws.billingEmail) setBillingEmail(ws.billingEmail)
-        if (ws.financeContact) setFinanceContact(ws.financeContact)
-        if (ws.defaultCurrency) setDefaultCurrency(ws.defaultCurrency)
-        if (ws.invoicePrefix) setInvoicePrefix(ws.invoicePrefix)
+        const settingsData = (profile?.settings as Record<string, unknown>) ?? {}
+        const ws = (settingsData?.workspace as Record<string, unknown>) ?? {}
+        if (ws.companyName) setCompany(ws.companyName as string)
+        if (ws.billingEmail) setBillingEmail(ws.billingEmail as string)
+        if (ws.financeContact) setFinanceContact(ws.financeContact as string)
+        if (ws.defaultCurrency) setDefaultCurrency(ws.defaultCurrency as string)
+        if (ws.invoicePrefix) setInvoicePrefix(ws.invoicePrefix as string)
 
         // Restore notification preferences from DB
-        const nf = ((profile?.settings as Record<string, any>)?.notifications) ?? {}
+        const nf = (settingsData?.notifications as Record<string, unknown>) ?? {}
         if (typeof nf.overdueAlerts === 'boolean') setNotifOverdue(nf.overdueAlerts)
         if (typeof nf.paymentReceived === 'boolean') setNotifPayment(nf.paymentReceived)
         if (typeof nf.weeklySummary === 'boolean') setNotifWeekly(nf.weeklySummary)

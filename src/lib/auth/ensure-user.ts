@@ -32,7 +32,7 @@ export async function ensureUserRecord(
   })
 
   const { data: existing, error: selectError } = await admin
-    .from('users')
+    .from('profiles')
     .select('*')
     .eq('id', userId)
     .single()
@@ -49,7 +49,7 @@ export async function ensureUserRecord(
   trialEndDate.setDate(trialEndDate.getDate() + 14)
 
   const { data: created, error: insertError } = await admin
-    .from('users')
+    .from('profiles')
     .insert({
       id: userId,
       email,
@@ -64,7 +64,7 @@ export async function ensureUserRecord(
   if (insertError) {
     if (insertError.code === '23505') {
       const { data: retryData } = await admin
-        .from('users')
+        .from('profiles')
         .select('*')
         .eq('id', userId)
         .single()

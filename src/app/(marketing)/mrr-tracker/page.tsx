@@ -4,15 +4,14 @@ import { OptimizedImage } from "@/components/OptimizedImage"
 import { Check, TrendingUp, TrendingDown, BarChart3, AlertTriangle } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Free MRR Tracker for SaaS Founders (2026)",
-  description:
-    "Track your Monthly Recurring Revenue automatically with AI. No spreadsheets, no manual work. Built for solo SaaS founders.",
+  title: 'Free MRR Tracker for SaaS — AI Finance Ops',
+  description: 'Track your Monthly Recurring Revenue for free. No spreadsheets needed.',
+  alternates: { canonical: 'https://aifinanceops.app/mrr-tracker' },
   openGraph: {
-    title: "Free MRR Tracker for SaaS Founders (2026)",
-    description:
-      "Track your Monthly Recurring Revenue automatically with AI. No spreadsheets, no manual work. Built for solo SaaS founders.",
-    url: "https://www.aifinanceops.app/mrr-tracker",
-    siteName: "AI Finance Ops",
+    title: 'Free MRR Tracker for SaaS — AI Finance Ops',
+    description: 'Track your Monthly Recurring Revenue for free. No spreadsheets needed.',
+    url: 'https://aifinanceops.app/mrr-tracker',
+    siteName: 'AI Finance Ops',
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "AI Finance Ops MRR Tracker" }],
     type: "website",
     locale: "en_US",

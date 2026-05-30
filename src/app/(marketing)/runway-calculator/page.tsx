@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "Runway Calculator for SaaS Startups — Free Tool",
     description:
       "Calculate your SaaS runway instantly. See how many months until you run out of cash — and what to do about it.",
-    url: "https://www.aifinanceops.app/runway-calculator",
+    url: "https://aifinanceops.app/runway-calculator",
     siteName: "AI Finance Ops",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "AI Finance Ops Runway Calculator" }],
     type: "website",

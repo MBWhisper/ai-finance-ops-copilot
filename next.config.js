@@ -52,6 +52,8 @@ const nextConfig = {
     optimizePackageImports: [
       'lucide-react',
       'date-fns',
+      'recharts',
+      'framer-motion',
     ],
   },
 

@@ -5,7 +5,7 @@ export const metadata = {
     title: "What is MRR? The SaaS Founder's Complete Guide | AI Finance Ops",
   description:
     "Learn what Monthly Recurring Revenue is, how to calculate it correctly, and the 3 mistakes that give founders a false picture of their SaaS growth.",
-  alternates: { canonical: 'https://www.aifinanceops.app/blog/what-is-mrr' },
+  alternates: { canonical: 'https://aifinanceops.app/blog/what-is-mrr' },
 }
 
 export default function WhatIsMrrPage() {

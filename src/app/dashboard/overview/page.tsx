@@ -2,19 +2,23 @@ import { createClient } from '@/lib/supabase/server'
 import { redirect } from 'next/navigation'
 import dynamic from 'next/dynamic'
 import { TrialBanner } from '@/components/dashboard/trial-banner'
-import { KPICGrid } from '@/components/dashboard/kpi-grid'
 import { PlanGate } from '@/components/plan-gate'
 import { getUserSubscription } from '@/lib/subscription'
 import { getLatestMetrics, getMetricsHistory } from '@/db/queries/metrics'
 import { getInvoiceStats, getAllInvoices } from '@/db/queries/invoices'
 import { getStripeAccount } from '@/db/queries/stripe-accounts'
-import { formatCurrency } from '@/lib/utils'
 import { OverviewExecutiveSummary } from '@/components/analytics/overview-executive-summary'
 import { OverviewAttentionSection } from '@/components/analytics/overview-attention-section'
 
+export const revalidate = 60
+
 const MrrHistoryChart = dynamic(
   () => import('@/components/dashboard/mrr-history-chart').then(m => ({ default: m.MrrHistoryChart })),
-  { ssr: true, loading: () => <div className="h-64 animate-pulse rounded-lg bg-gray-200" /> }
+  {
+    ssr: true,
+    // ✅ Fix CLS: نفس الـ height التي سيشغلها الـ chart الفعلي
+    loading: () => <div className="h-64 w-full rounded-lg bg-gray-200" />,
+  }
 )
 
 export default async function OverviewPage({
@@ -27,8 +31,9 @@ export default async function OverviewPage({
   if (!session) redirect('/login')
   const user = session.user
 
+  // ✅ Fix error: 'profiles' بدلاً من 'users'
   const { data: profile } = await supabase
-    .from('users')
+    .from('profiles')
     .select('trial_ends_at, plan')
     .eq('id', user.id)
     .single()
@@ -55,14 +60,26 @@ export default async function OverviewPage({
       }
     : undefined
 
+  // ✅ Fix CLS: احسب trialDaysLeft هنا في server بدلاً من client
+  const trialEndsAt = profile?.trial_ends_at ?? null
+  const trialDaysLeft = trialEndsAt
+    ? Math.ceil((new Date(trialEndsAt).getTime() - Date.now()) / 86_400_000)
+    : null
+  const showBanner = trialDaysLeft !== null && trialDaysLeft <= 7 && (profile?.plan ?? 'starter') !== 'pro'
+
   return (
     <div className="space-y-5">
-      <TrialBanner
-        trialEndsAt={profile?.trial_ends_at ?? null}
-        plan={profile?.plan ?? 'starter'}
-        createdAt={user.created_at}
-        showWelcome={searchParams.welcome === 'true'}
-      />
+      {/* ✅ Fix CLS: min-h ثابتة دائماً حتى لو banner مخفي */}
+      <div className="min-h-[56px]">
+        {showBanner && (
+          <TrialBanner
+            trialEndsAt={trialEndsAt}
+            plan={profile?.plan ?? 'starter'}
+            createdAt={user.created_at}
+            showWelcome={searchParams.welcome === 'true'}
+          />
+        )}
+      </div>
 
       <div className="flex items-center justify-between">
         <div>
@@ -74,7 +91,8 @@ export default async function OverviewPage({
         <div className="flex items-center gap-3">
           {hasStripe && (
             <p className="text-[11px] text-gray-400 hidden sm:block">
-              Data refreshed {new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
+              Data refreshed{' '}
+              {new Date().toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
             </p>
           )}
           {!hasStripe && (
@@ -90,9 +108,13 @@ export default async function OverviewPage({
 
       {!hasStripe ? (
         <>
+          {/* ✅ Fix CLS: حجم ثابت للـ KPI grid قبل data */}
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
             {(['MRR', 'ARR', 'Churn Rate', 'LTV'] as const).map((label) => (
-              <div key={label} className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+              <div
+                key={label}
+                className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm min-h-[100px]"
+              >
                 <p className="text-sm font-medium text-gray-500">{label}</p>
                 <p className="mt-1 text-2xl font-bold text-gray-900">
                   {label === 'Churn Rate' ? '0%' : '$0'}
@@ -102,29 +124,32 @@ export default async function OverviewPage({
             ))}
           </div>
           <div className="rounded-xl border-2 border-dashed border-gray-200 bg-white p-12 text-center">
-            <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-blue-50">
-              <svg className="h-6 w-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50">
+              <svg className="h-7 w-7 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
             </div>
-            <h3 className="mb-2 text-lg font-semibold text-gray-900">Get Started</h3>
+            <h3 className="mb-2 text-xl font-semibold text-gray-900">Your dashboard is ready &mdash; just waiting for data</h3>
             <p className="mx-auto max-w-sm text-sm text-gray-500">
-              Connect your Stripe account in Settings to automatically import invoices and track MRR, ARR, and churn.
+              Connect Stripe to see your MRR, churn, and runway in real time.
             </p>
             <a
               href="/dashboard/settings"
-              className="mt-4 inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+              className="mt-6 inline-flex items-center rounded-lg bg-emerald-600 px-6 py-3 text-sm font-semibold text-white hover:bg-emerald-700"
             >
-              Go to Settings
+              Connect Stripe
             </a>
+            <p className="mt-2 text-xs text-gray-400">Takes less than 60 seconds</p>
           </div>
         </>
       ) : (
         <>
-          {/* Executive summary: KPIs + cash flow snapshot */}
-          <OverviewExecutiveSummary metrics={metricResult} changes={changes} metricsHistory={metricsHistory} />
+          <OverviewExecutiveSummary
+            metrics={metricResult}
+            changes={changes}
+            metricsHistory={metricsHistory}
+          />
 
-          {/* PMF Status Card */}
           <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 shadow-sm">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div>
@@ -144,7 +169,6 @@ export default async function OverviewPage({
             </div>
           </div>
 
-          {/* AR / Collections snapshot + attention section */}
           <PlanGate requiredPlan="starter" currentPlan={subscription.plan} feature="Invoice tracking">
             <OverviewAttentionSection
               invoices={allInvoices}
@@ -152,9 +176,9 @@ export default async function OverviewPage({
             />
           </PlanGate>
 
-          {/* MRR History Chart */}
           <PlanGate requiredPlan="pro" currentPlan={subscription.plan} feature="MRR History Chart">
-            <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+            {/* ✅ Fix CLS: wrapper بنفس الـ height الثابتة */}
+            <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm min-h-[304px]">
               <MrrHistoryChart data={metricsHistory} />
             </div>
           </PlanGate>

@@ -1,6 +1,7 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useEffect, useMemo } from "react"
+import { createClient } from "@/lib/supabase/browser"
 import { AlertTriangle, TrendingDown, Users, DollarSign, Calendar, Send } from "lucide-react"
 import { RiskBadge } from "@/components/risk/RiskBadge"
 import { cn } from "@/lib/utils"
@@ -51,8 +52,51 @@ const filterOptions = ["All", "Critical", "At Risk", "Watch"] as const
 
 export default function WarningsPage() {
   const [activeFilter, setActiveFilter] = useState<string>("All")
-  const customers = useMemo(() => getDemoCustomers(), [])
-  const alerts = useMemo(() => getDemoRevenueAlerts(), [])
+  const [customers, setCustomers] = useState<DemoCustomer[]>([])
+  const [alerts, setAlerts] = useState<DemoAlert[]>([])
+  const [isDemo, setIsDemo] = useState(false)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function load() {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+
+      if (!user) {
+        setIsDemo(true)
+        setCustomers(getDemoCustomers())
+        setAlerts(getDemoRevenueAlerts())
+        setLoading(false)
+        return
+      }
+
+      const { data: subs } = await supabase
+        .from('stripe_subscriptions')
+        .select('id, user_id, status, mrr_cents, created_at, canceled_at')
+        .eq('user_id', user.id)
+
+      if (subs && subs.length > 0) {
+        setCustomers(subs.map((s, i: number) => ({
+          id: s.id,
+          name: `Customer ${i + 1}`,
+          email: `customer${i + 1}@example.com`,
+          mrrCents: s.mrr_cents,
+          riskScore: s.status === 'canceled' ? 85 : 20,
+          riskLevel: s.status === 'canceled' ? 'critical' as const : 'safe' as const,
+          daysToRenewal: 30,
+          topFactor: s.status === 'canceled' ? 'Subscription canceled' : 'None',
+          recommendation: s.status === 'canceled' ? 'Reach out to win back this customer.' : 'No action needed.',
+        })))
+        setAlerts([])
+      } else {
+        setIsDemo(true)
+        setCustomers(getDemoCustomers())
+        setAlerts(getDemoRevenueAlerts())
+      }
+      setLoading(false)
+    }
+    load()
+  }, [])
 
   const filtered = useMemo(() => {
     if (activeFilter === "All") return customers
@@ -85,7 +129,25 @@ export default function WarningsPage() {
         )}
       </div>
 
-      {/* Revenue Health Alerts */}
+      {loading && (
+        <div className="space-y-3">
+          {[1,2,3].map(i => (
+            <div key={i} className="h-16 w-full rounded-xl bg-gray-100 animate-pulse" />
+          ))}
+        </div>
+      )}
+
+      {isDemo && (
+        <div className="rounded-xl border border-blue-200 bg-blue-50 px-4 py-3 text-sm text-blue-700">
+          📊 This is a live demo —{' '}
+          <a href="/register" className="font-semibold underline underline-offset-2">
+            Sign up free to connect your data
+          </a>
+        </div>
+      )}
+
+      {!loading && (
+      <>
       <div className="grid gap-3 sm:grid-cols-2">
         {alerts.map((alert) => (
           <div
@@ -116,7 +178,10 @@ export default function WarningsPage() {
           </div>
         ))}
       </div>
+      </>)}
 
+      {!loading && (
+        <>
       {/* PMF Status Banner */}
       <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 shadow-sm">
         <div className="flex items-center gap-3">
@@ -160,8 +225,9 @@ export default function WarningsPage() {
       )}
 
       {/* Desktop Table */}
-      <div className="hidden sm:block rounded-xl border border-gray-200 bg-white shadow-sm overflow-hidden">
-        <table className="w-full">
+      <div className="hidden sm:block rounded-xl border border-gray-200 bg-white shadow-sm overflow-x-auto">
+        <div className="min-w-[600px]">
+          <table className="w-full">
           <thead>
             <tr className="border-b border-gray-100 bg-gray-50">
               <th className="px-4 py-3 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">Customer</th>
@@ -196,6 +262,7 @@ export default function WarningsPage() {
                   <a
                     href={`mailto:${c.email}?subject=We%20noticed%20something`}
                     className="inline-flex items-center gap-1.5 rounded-lg bg-blue-600 px-3 py-2 text-xs font-medium text-white hover:bg-blue-700 transition-colors min-touch-target"
+                    aria-label={`Send email to ${c.name}`}
                   >
                     <Send className="h-3.5 w-3.5" />
                     Send Email
@@ -205,6 +272,7 @@ export default function WarningsPage() {
             ))}
           </tbody>
         </table>
+        </div>
       </div>
 
       {/* Mobile Cards */}
@@ -237,6 +305,8 @@ export default function WarningsPage() {
           </div>
         ))}
       </div>
+        </>
+      )}
     </div>
   )
 }

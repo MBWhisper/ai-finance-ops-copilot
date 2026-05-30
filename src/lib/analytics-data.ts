@@ -125,7 +125,9 @@ export function computeRunway(cashFlow: CashFlowPoint[], cashOnHandOverrideCents
   const avgBurn = cashFlow.length > 0
     ? cashFlow.reduce((s, m) => s + Math.abs(Math.min(m.netCents, 0)), 0) / cashFlow.length
     : 0
-  const cashOnHandCents = cashOnHandOverrideCents ?? 12000000
+  // Estimate cash on hand from cumulative net if not provided
+  const cumulativeNet = cashFlow.reduce((s, m) => s + m.netCents, 0)
+  const cashOnHandCents = cashOnHandOverrideCents ?? Math.max(cumulativeNet * 3, 12000000)
   const monthlyBurnCents = Math.max(avgBurn, 1)
   return {
     monthlyBurnCents,

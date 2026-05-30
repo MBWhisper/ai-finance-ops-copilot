@@ -47,6 +47,7 @@ export default function AboutPage() {
             className="relative rounded-2xl w-full aspect-[4/5] object-cover shadow-2xl"
             width={600}
             height={750}
+            sizes="(max-width: 768px) 100vw, 50vw"
           />
           <div className="absolute -bottom-4 -right-4 bg-gray-900 border border-gray-800 rounded-xl px-4 py-3 shadow-lg flex items-center gap-2">
             <span className="h-2 w-2 rounded-full bg-emerald-500 shadow-lg shadow-emerald-500/50" />

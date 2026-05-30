@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "Automate SaaS Reporting — AI Finance Ops",
     description:
       "Automate your SaaS financial reporting. Get MRR, churn, cash flow, and KPI reports generated automatically.",
-    url: "https://www.aifinanceops.app/automate-reporting",
+    url: "https://aifinanceops.app/automate-reporting",
     siteName: "AI Finance Ops",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Automate SaaS Reporting with AI Finance Ops" }],
     type: "website",

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "Free Cash Flow Tracker for SaaS — AI Finance Ops",
     description:
       "Track your SaaS cash flow automatically. See 30-day and 90-day forecasts. No spreadsheets required.",
-    url: "https://www.aifinanceops.app/cash-flow-tracker",
+    url: "https://aifinanceops.app/cash-flow-tracker",
     siteName: "AI Finance Ops",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "AI Finance Ops Cash Flow Tracker" }],
     type: "website",

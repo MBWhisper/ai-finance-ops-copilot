@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { OptimizedImage } from "@/components/OptimizedImage"
-import { Calculator, Users, TrendingDown, AlertTriangle, Check } from "lucide-react"
+import { Users, Check } from "lucide-react"
 
 export const metadata: Metadata = {
   title: "Churn Rate Calculator for SaaS Startups — Free Tool",
@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     title: "Churn Rate Calculator for SaaS Startups — Free Tool",
     description:
       "Calculate your monthly and annual churn rate instantly. Understand what churn means for your SaaS growth.",
-    url: "https://www.aifinanceops.app/churn-calculator",
+    url: "https://aifinanceops.app/churn-calculator",
     siteName: "AI Finance Ops",
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "AI Finance Ops Churn Calculator" }],
     type: "website",

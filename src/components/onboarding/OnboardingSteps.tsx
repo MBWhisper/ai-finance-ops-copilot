@@ -29,7 +29,7 @@ export default function OnboardingSteps() {
         return
       }
       const { data: profile } = await supabase
-        .from("users")
+        .from("profiles")
         .select("onboarding_completed")
         .eq("id", user.id)
         .single()
@@ -98,12 +98,12 @@ export default function OnboardingSteps() {
     // Persist workspace name to settings
     try {
       const { data: profile } = await supabase
-        .from("users")
+        .from("profiles")
         .select("settings")
         .eq("id", userId)
         .single()
 
-      const currentSettings = ((profile as any)?.settings ?? {}) as Record<string, any>
+      const currentSettings = (profile?.settings ?? {}) as Record<string, unknown>
       if (customerName.trim()) {
         currentSettings.workspace = {
           ...(currentSettings.workspace ?? {}),
@@ -117,13 +117,13 @@ export default function OnboardingSteps() {
       }
 
       await supabase
-        .from("users")
+        .from("profiles")
         .update({ settings: currentSettings, onboarding_completed: true })
         .eq("id", userId)
     } catch {
       // Fallback: just mark onboarding complete
       await supabase
-        .from("users")
+        .from("profiles")
         .update({ onboarding_completed: true })
         .eq("id", userId)
     }
@@ -144,6 +144,11 @@ export default function OnboardingSteps() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-950 px-4">
       <div className="w-full max-w-lg">
+        {/* Time estimate + skip reminder */}
+        <p className="mb-6 text-center text-sm text-gray-500">
+          Takes 2 minutes &middot; You can skip and come back
+        </p>
+
         {/* Progress bar */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-2">
@@ -181,12 +186,22 @@ export default function OnboardingSteps() {
           </div>
         </div>
 
+        {/* Skip link — متاح في جميع الخطوات */}
+        <div className="flex justify-end mb-4">
+          <a
+            href="/dashboard/overview"
+            className="text-sm text-gray-500 hover:text-gray-300 underline underline-offset-2 transition-colors"
+          >
+            Skip for now
+          </a>
+        </div>
+
         {/* Step 1: MRR */}
         {step === 1 && (
           <div className="rounded-2xl border border-gray-800 bg-gray-900 p-8">
             <h2 className="text-2xl font-bold text-white">What&apos;s your current MRR?</h2>
             <p className="mt-2 text-sm text-gray-400">
-              This helps us benchmark your growth. We&apos;ll never share this data.
+              Connect Stripe to see your live MRR in seconds &mdash; or enter it manually to get started.
             </p>
             <div className="mt-6 flex gap-3">
               <select
@@ -268,22 +283,24 @@ export default function OnboardingSteps() {
                 </select>
               </div>
             </div>
-            <div className="mt-6 flex gap-3">
-              <Button
-                variant="outline"
-                onClick={completeOnboarding}
-                disabled={loading}
-                className="flex-1 border-gray-700 text-gray-300 hover:border-gray-500"
-              >
-                Skip for now
-              </Button>
+            <div className="mt-6 flex flex-col gap-3">
               <Button
                 onClick={completeOnboarding}
                 disabled={loading || !customerName}
-                className="flex-1 bg-emerald-500 hover:bg-emerald-400 text-white"
+                className="w-full bg-emerald-500 hover:bg-emerald-400 text-white"
+                size="lg"
               >
                 Add Customer <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
+              <div className="flex justify-center">
+                <button
+                  onClick={completeOnboarding}
+                  disabled={loading}
+                  className="text-sm text-gray-500 hover:text-gray-300 underline underline-offset-2 transition-colors"
+                >
+                  Skip for now
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -306,7 +323,7 @@ export default function OnboardingSteps() {
               className="mt-8 w-full bg-emerald-500 hover:bg-emerald-400 text-white"
               size="lg"
             >
-              {loading ? "Setting up..." : "Go to Dashboard \u2192"}
+              {loading ? "Setting up..." : "Go to dashboard \u2192"}
             </Button>
           </div>
         )}

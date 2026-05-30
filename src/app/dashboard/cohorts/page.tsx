@@ -9,9 +9,11 @@ import {
 } from "lucide-react"
 import { createClient } from '@/lib/supabase/browser'
 import { cn } from "@/lib/utils"
+import type { TooltipProps } from 'recharts'
+import type { ValueType, NameType } from 'recharts/types/component/DefaultTooltipContent'
 import {
   calculateCohorts, getRetentionColor, INDUSTRY_BENCHMARKS,
-  type StripeSubscription, type CohortMonth,
+  type StripeSubscription,
 } from "@/lib/cohort-engine"
 import type { RetentionCellColor } from "@/lib/cohort-engine"
 
@@ -68,29 +70,18 @@ function CohortCell({
   )
 }
 
-function ChartTooltip({ active, payload, label }: any) {
+function ChartTooltip({ active, payload, label }: TooltipProps<ValueType, NameType>) {
   if (!active || !payload?.length) return null
   return (
     <div className="rounded-lg border border-gray-200 bg-white px-3 py-2 shadow-lg">
       <p className="text-xs font-medium text-gray-900 mb-1">Month {label}</p>
-      {payload.map((entry: any) => (
+      {payload.map((entry) => (
         <p key={entry.name} className="text-xs" style={{ color: entry.color }}>
           {entry.name}: {entry.value}%
         </p>
       ))}
     </div>
   )
-}
-
-function mapDbSubToStripeSub(row: any): StripeSubscription {
-  return {
-    id: row.id,
-    userId: row.user_id,
-    status: row.status === 'canceled' || row.status === 'past_due' ? 'canceled' : row.status,
-    mrrCents: row.mrr_cents ?? 0,
-    createdAt: row.created_at,
-    canceledAt: row.ends_at ?? null,
-  }
 }
 
 export default function CohortsPage() {
@@ -104,29 +95,70 @@ export default function CohortsPage() {
     color: string
   } | null>(null)
 
-  async function loadData() {
-    setLoading(true)
-    setError('')
-    try {
+  const FALLBACK_SUBS: StripeSubscription[] = [
+    { id: 'mock_1', userId: 'mock', status: 'active', mrrCents: 290000, createdAt: '2025-10-01T00:00:00Z', canceledAt: null },
+    { id: 'mock_2', userId: 'mock', status: 'active', mrrCents: 150000, createdAt: '2025-11-15T00:00:00Z', canceledAt: null },
+    { id: 'mock_3', userId: 'mock', status: 'canceled', mrrCents: 99000, createdAt: '2025-08-01T00:00:00Z', canceledAt: '2026-01-01T00:00:00Z' },
+    { id: 'mock_4', userId: 'mock', status: 'active', mrrCents: 420000, createdAt: '2025-12-01T00:00:00Z', canceledAt: null },
+    { id: 'mock_5', userId: 'mock', status: 'active', mrrCents: 75000, createdAt: '2026-01-10T00:00:00Z', canceledAt: null },
+    { id: 'mock_6', userId: 'mock', status: 'canceled', mrrCents: 200000, createdAt: '2025-06-15T00:00:00Z', canceledAt: '2025-09-01T00:00:00Z' },
+    { id: 'mock_7', userId: 'mock', status: 'active', mrrCents: 310000, createdAt: '2026-02-05T00:00:00Z', canceledAt: null },
+    { id: 'mock_8', userId: 'mock', status: 'active', mrrCents: 180000, createdAt: '2025-09-20T00:00:00Z', canceledAt: null },
+  ]
+
+  useEffect(() => {
+    async function load() {
+      setLoading(true)
       const supabase = createClient()
       const { data: { user } } = await supabase.auth.getUser()
-      if (!user) { window.location.href = '/login'; return }
 
-      const { data, error: err } = await supabase
-        .from('subscriptions')
-        .select('*')
+      if (!user) {
+        setLoading(false)
+        return
+      }
+
+      const { data } = await supabase
+        .from('stripe_subscriptions')
+        .select('id, user_id, status, mrr_cents, created_at, canceled_at')
         .eq('user_id', user.id)
-        .order('created_at', { ascending: false })
+        .order('created_at', { ascending: true })
 
-      if (err) throw err
-      setSubscriptions((data ?? []).map(mapDbSubToStripeSub))
-    } catch (e: any) {
-      setError(e.message)
+      if (data && data.length > 0) {
+        setSubscriptions(
+          data.map((r): StripeSubscription => ({
+            id: r.id,
+            userId: r.user_id,
+            status: r.status as 'active' | 'canceled',
+            mrrCents: r.mrr_cents,
+            createdAt: r.created_at,
+            canceledAt: r.canceled_at ?? undefined,
+          }))
+        )
+      }
+      setLoading(false)
     }
-    setLoading(false)
-  }
+    load()
+  }, [])
 
-  useEffect(() => { loadData() }, [])
+  // Task 1: Listen for drilldown custom event from CohortCell
+  useEffect(() => {
+    const handler = (e: Event) => {
+      const { cohortDate, monthIndex, retention, color } = (e as CustomEvent).detail
+      setDrilldown({ cohortDate, monthIndex, retention, color })
+    }
+    window.addEventListener('open-drilldown', handler)
+    return () => window.removeEventListener('open-drilldown', handler)
+  }, [])
+
+  // Task 2: Media query for desktop vs mobile breakpoint
+  const [isDesktop, setIsDesktop] = useState(false)
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 640px)')
+    setIsDesktop(mq.matches)
+    const handler = (e: MediaQueryListEvent) => setIsDesktop(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
 
   const result = useMemo(() => calculateCohorts(subscriptions), [subscriptions])
   const { cohorts, overallMonth1, overallMonth3, maxMonths } = result
@@ -197,8 +229,29 @@ export default function CohortsPage() {
             <p className="mt-1 text-sm text-gray-500">Track how well you retain customers over time.</p>
           </div>
         </div>
-        <div className="flex items-center justify-center py-16">
-          <div className="h-8 w-8 animate-spin rounded-full border-4 border-blue-600 border-t-transparent" />
+        <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b border-gray-100 bg-gray-50">
+                <th className="px-3 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 min-w-[100px]">Cohort</th>
+                <th className="px-3 py-2.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-500 min-w-[60px]">Size</th>
+                {Array.from({ length: 6 }, (_, i) => (
+                  <th key={i} className="px-3 py-2.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-500 min-w-[52px]">M+{i}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-100">
+              {Array.from({ length: 3 }, (_, row) => (
+                <tr key={row}>
+                  <td className="px-3 py-2.5"><div className="h-4 w-24 bg-gray-200 rounded animate-pulse" /></td>
+                  <td className="px-3 py-2.5"><div className="h-4 w-8 bg-gray-200 rounded animate-pulse mx-auto" /></td>
+                  {Array.from({ length: 6 }, (_, cell) => (
+                    <td key={cell} className="px-3 py-2.5"><div className="h-8 w-[52px] bg-gray-100 rounded animate-pulse mx-auto" /></td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     )
@@ -224,7 +277,7 @@ export default function CohortsPage() {
           </div>
           <p className="text-sm text-red-600 font-medium mb-1">Failed to load cohort data</p>
           <p className="text-xs text-gray-400 mb-4 max-w-sm text-center">{error}</p>
-          <button onClick={loadData} className="inline-flex items-center px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+          <button onClick={() => window.location.reload()} className="inline-flex items-center px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
             Retry
           </button>
         </div>
@@ -315,63 +368,63 @@ export default function CohortsPage() {
         </span>
       </div>
 
-      {/* Cohort Table - Desktop & Mobile */}
-      {cohorts.length === 0 ? (
-        <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 py-16">
-          <Users className="h-12 w-12 text-gray-300" />
-          <p className="mt-4 text-lg font-semibold text-gray-900">No subscription data yet</p>
-          <p className="mt-1 text-sm text-gray-500">Connect Stripe to see your real cohorts.</p>
-        </div>
-      ) : (
-        <>
-          <div className="overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm scroll-container-touch">
-            <div className="relative">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-gray-100 bg-gray-50">
-                    <th className="sticky left-0 z-10 bg-gray-50 px-3 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 min-w-[100px]">
-                      Cohort
-                    </th>
-                    <th className="px-3 py-2.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-500 min-w-[60px]">
-                      Size
-                    </th>
-                    {Array.from({ length: maxMonths }, (_, i) => (
-                      <th key={i} className="px-3 py-2.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-500 min-w-[52px]">
-                        M+{i}
-                      </th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-gray-100">
-                  {cohorts.map((c) => (
-                    <tr key={c.cohortDate} className="hover:bg-gray-50/50 transition-colors">
-                      <td className="sticky left-0 z-10 bg-white px-3 py-2.5 text-sm font-medium text-gray-900 min-w-[100px]">
-                        {c.cohortDate}
-                      </td>
-                      <td className="px-3 py-2.5 text-center text-sm font-medium text-gray-700 min-w-[60px]">
-                        {c.cohortSize}
-                      </td>
-                      {Array.from({ length: maxMonths }, (_, i) => {
-                        const retention = c.retentionByMonth[i]
-                        const isFuture = retention === undefined
-                        const color = isFuture ? "empty" : getRetentionColor(retention!)
-                        return (
-                          <CohortCell
-                            key={i}
-                            retention={isFuture ? null : retention!}
-                            monthIndex={i}
-                            cohortDate={c.cohortDate}
-                            color={color}
-                            isFuture={isFuture}
-                          />
-                        )
-                      })}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+        {/* Cohort Table - Desktop & Mobile */}
+        {cohorts.length === 0 ? (
+          <div className="flex flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-200 p-6 sm:p-16">
+            <Users className="h-10 w-10 sm:h-12 sm:w-12 text-gray-300" />
+            <p className="mt-4 text-base sm:text-lg font-semibold text-gray-900">No subscription data yet</p>
+            <p className="mt-1 text-sm text-gray-500">Connect Stripe to see your real cohorts.</p>
           </div>
+        ) : (
+          <>
+            <div className="-mx-3 sm:-mx-0 overflow-x-auto rounded-xl border border-gray-200 bg-white shadow-sm scroll-container-touch">
+              <div className="min-w-[600px]">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-gray-100 bg-gray-50">
+                      <th className="sticky left-0 z-10 bg-gray-50 px-3 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-gray-500 min-w-[100px]">
+                        Cohort
+                      </th>
+                      <th className="px-3 py-2.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-500 min-w-[60px]">
+                        Size
+                      </th>
+                      {Array.from({ length: maxMonths }, (_, i) => (
+                        <th key={i} className="px-3 py-2.5 text-center text-xs font-semibold uppercase tracking-wider text-gray-500 min-w-[52px]">
+                          M+{i}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    {cohorts.map((c) => (
+                      <tr key={c.cohortDate} className="hover:bg-gray-50/50 transition-colors">
+                        <td className="sticky left-0 z-10 bg-white px-3 py-2.5 text-sm font-medium text-gray-900 min-w-[100px]">
+                          {c.cohortDate}
+                        </td>
+                        <td className="px-3 py-2.5 text-center text-sm font-medium text-gray-700 min-w-[60px]">
+                          {c.cohortSize}
+                        </td>
+                        {Array.from({ length: maxMonths }, (_, i) => {
+                          const retention = c.retentionByMonth[i]
+                          const isFuture = retention === undefined
+                          const color = isFuture ? "empty" : getRetentionColor(retention!)
+                          return (
+                            <CohortCell
+                              key={i}
+                              retention={isFuture ? null : retention!}
+                              monthIndex={i}
+                              cohortDate={c.cohortDate}
+                              color={color}
+                              isFuture={isFuture}
+                            />
+                          )
+                        })}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
 
           {/* Retention Curve Chart */}
           <div className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
@@ -427,17 +480,12 @@ export default function CohortsPage() {
       )}
 
       {/* Customer Drill-Down Drawer (Desktop) */}
-      <div
-        className={cn(
-          "fixed inset-y-0 right-0 z-50 w-full sm:w-96 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out",
-          drilldown ? "translate-x-0" : "translate-x-full"
-        )}
-      >
-        {drilldown && (
+      {isDesktop && drilldown && (
+        <div className="fixed inset-y-0 right-0 z-50 w-96 bg-white shadow-2xl" role="dialog" aria-labelledby="drilldown-title">
           <div className="flex h-full flex-col">
             <div className="flex items-center justify-between border-b px-4 py-3">
               <div>
-                <h3 className="text-sm font-semibold text-gray-900">Cohort Details</h3>
+                <h3 className="text-sm font-semibold text-gray-900" id="drilldown-title">Cohort Details</h3>
                 <p className="text-xs text-gray-500">
                   {drilldown.cohortDate} · M+{drilldown.monthIndex} · {drilldown.retention}% retention
                 </p>
@@ -445,6 +493,7 @@ export default function CohortsPage() {
               <button
                 onClick={() => setDrilldown(null)}
                 className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-colors min-touch-target"
+                aria-label="Close drill-down"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -494,22 +543,16 @@ export default function CohortsPage() {
               )}
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Mobile Bottom Sheet */}
-      <div
-        className={cn(
-          "fixed inset-x-0 bottom-0 z-50 bg-white rounded-t-2xl shadow-2xl transform transition-transform duration-300 ease-in-out",
-          drilldown ? "translate-y-0" : "translate-y-full"
-        )}
-        style={{ height: "70vh" }}
-      >
-        {drilldown && (
+      {!isDesktop && drilldown && (
+        <div className="fixed inset-x-0 bottom-0 z-50 bg-white rounded-t-2xl shadow-2xl pb-safe" style={{ height: "70vh" }}>
           <div className="flex h-full flex-col">
             <div className="flex items-center justify-between border-b px-4 py-3">
               <div>
-                <h3 className="text-sm font-semibold text-gray-900">Cohort Details</h3>
+                <h3 className="text-sm font-semibold text-gray-900" id="drilldown-title">Cohort Details</h3>
                 <p className="text-xs text-gray-500">
                   {drilldown.cohortDate} · M+{drilldown.monthIndex}
                 </p>
@@ -517,11 +560,12 @@ export default function CohortsPage() {
               <button
                 onClick={() => setDrilldown(null)}
                 className="flex h-9 w-9 items-center justify-center rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-colors min-touch-target"
+                aria-label="Close drill-down"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
-            <div className="flex-1 overflow-y-auto p-4 scroll-container-touch">
+            <div className="flex-1 overflow-y-auto p-4 scroll-container-touch" role="dialog" aria-labelledby="drilldown-title">
               {subscriptions
                 .filter((s) => {
                   const subCohortDate = new Date(s.createdAt)
@@ -554,8 +598,8 @@ export default function CohortsPage() {
                 ))}
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Overlay for drill-down */}
       {drilldown && (

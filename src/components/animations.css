@@ -1,4 +1,4 @@
-/* Floating particles animation */
+/* Floating particles — composited (transform + opacity only) */
 @keyframes float {
   0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
   33% { transform: translateY(-30px) rotate(120deg); opacity: 0.6; }
@@ -10,20 +10,20 @@
   66% { transform: translateY(-35px) rotate(-180deg); opacity: 0.3; }
 }
 
-/* Pulsing glow */
+/* Pulsing glow — opacity instead of box-shadow to avoid paint */
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px rgba(16, 185, 129, 0.3); }
-  50% { box-shadow: 0 0 40px rgba(16, 185, 129, 0.6); }
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.8; }
 }
 
-/* Gradient text animation */
+/* Gradient text animation — paint-triggering but minimal area */
 @keyframes gradient-shift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
-/* Staggered fade-in */
+/* Staggered fade-in — composited */
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
@@ -33,22 +33,10 @@
   to { opacity: 1; }
 }
 
-/* Counter animation - just CSS trick, actual counting via JS */
-@keyframes count-pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-}
-
-/* Testimonial slide */
+/* Testimonial slide — composited */
 @keyframes slide-in-right {
   from { opacity: 0; transform: translateX(40px); }
   to { opacity: 1; transform: translateX(0); }
-}
-
-/* Shimmer for CTA */
-@keyframes shimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
 }
 
 .animate-float { animation: float 6s ease-in-out infinite; }
@@ -62,7 +50,7 @@
   animation: gradient-shift 4s ease infinite;
 }
 
-/* Scroll reveal — initial hidden state */
+/* Scroll reveal — composited */
 .reveal {
   opacity: 0;
   transform: translateY(30px);
@@ -76,3 +64,23 @@
 .reveal-delay-2 { transition-delay: 0.2s; }
 .reveal-delay-3 { transition-delay: 0.3s; }
 .reveal-delay-4 { transition-delay: 0.4s; }
+
+/* Respect user motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-float-delayed,
+  .animate-pulse-glow,
+  .animate-gradient-shift,
+  .animate-slide-in-right {
+    animation: none !important;
+  }
+  .animate-fade-up,
+  .animate-fade-in {
+    animation: fade-in 0.3s ease-out forwards !important;
+  }
+  .reveal {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

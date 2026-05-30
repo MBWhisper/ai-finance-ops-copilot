@@ -6,7 +6,7 @@ export const metadata = {
     title: "How to Build a 90-Day Cash Flow Forecast for Your SaaS | AI Finance Ops",
   description:
     "A step-by-step guide to building P50/P80/P95 confidence-band forecasts — and why spreadsheets always fail at this.",
-  alternates: { canonical: 'https://www.aifinanceops.app/blog/90-day-cash-flow-forecast' },
+  alternates: { canonical: 'https://aifinanceops.app/blog/90-day-cash-flow-forecast' },
 }
 
 export default function CashFlowForecastPage() {

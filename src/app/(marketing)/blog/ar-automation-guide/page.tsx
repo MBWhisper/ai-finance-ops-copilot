@@ -6,7 +6,7 @@ export const metadata = {
     title: "The Founder's Guide to Accounts Receivable Automation | AI Finance Ops",
   description:
     "Stop chasing unpaid invoices manually. Learn how to set up automated AR reminders that recover revenue on autopilot.",
-  alternates: { canonical: 'https://www.aifinanceops.app/blog/ar-automation-guide' },
+  alternates: { canonical: 'https://aifinanceops.app/blog/ar-automation-guide' },
 }
 
 export default function ArAutomationGuidePage() {

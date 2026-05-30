@@ -5,9 +5,66 @@ export const metadata = {
   title: "Blog | AI Finance Ops",
   description:
     "SaaS finance tips, MRR guides, and cash flow strategies for early-stage founders.",
+  alternates: { canonical: "https://aifinanceops.app/blog" },
 }
 
 const posts = [
+  {
+    title: "How Many Months of Runway Do You Actually Have? (SaaS Founder's Guide)",
+    date: "May 22, 2026",
+    tag: "Runway",
+    excerpt:
+      "Most founders overestimate their runway. Learn the correct formula, what burn rate to use, and how to model different scenarios before it's too late.",
+    href: "/blog/how-many-months-of-runway-do-i-have",
+  },
+  {
+    title: "How to Calculate Your SaaS MRR Correctly (Most Founders Get This Wrong)",
+    date: "May 21, 2026",
+    tag: "MRR",
+    excerpt:
+      "Most SaaS founders miscalculate MRR. Learn the correct formula, the 3 most common mistakes, and how to automate it with Stripe.",
+    href: "/blog/how-to-calculate-saas-mrr",
+  },
+  {
+    title: "The 7 SaaS Financial Metrics Every Founder Must Track in 2026",
+    date: "May 25, 2026",
+    tag: "SaaS Metrics",
+    excerpt:
+      "MRR, ARR, churn, LTV, CAC, burn rate, runway — a complete guide to the financial metrics that matter most for SaaS growth and fundraising.",
+    href: "/blog/saas-financial-metrics",
+  },
+  {
+    title: "5 Baremetrics Alternatives for Early-Stage SaaS Founders in 2026",
+    date: "May 24, 2026",
+    tag: "Tools",
+    excerpt:
+      "Baremetrics is powerful but expensive. Here are the best alternatives for founders who want MRR tracking, churn analysis, and forecasting without the price tag.",
+    href: "/blog/baremetrics-alternative-2026",
+  },
+  {
+    title: "ARR vs MRR: What's the Difference and Which One Should You Track?",
+    date: "May 23, 2026",
+    tag: "Finance Basics",
+    excerpt:
+      "ARR and MRR are not the same. This guide explains the key differences, when to use each metric, and how investors interpret them.",
+    href: "/blog/arr-vs-mrr-difference",
+  },
+  {
+    title: "Startup Runway: How to Calculate It and Make It Last Longer",
+    date: "May 22, 2026",
+    tag: "Cash Flow",
+    excerpt:
+      "Your runway is your lifeline. Learn how to calculate startup runway correctly, avoid common mistakes, and extend it without raising more money.",
+    href: "/blog/startup-runway-calculator",
+  },
+  {
+    title: "SaaS Churn Rate: What's a Good Benchmark and How to Reduce It",
+    date: "May 21, 2026",
+    tag: "Churn",
+    excerpt:
+      "Learn what churn rate benchmarks look like for early-stage SaaS, how to calculate monthly vs annual churn, and 7 proven tactics to reduce it.",
+    href: "/blog/saas-churn-rate-guide",
+  },
   {
     title: "What is MRR and Why Every SaaS Founder Should Track It Daily",
     date: "May 10, 2026",

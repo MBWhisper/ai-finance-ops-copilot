@@ -6,3 +6,4 @@ export { cashflowForecasts } from "./cashflow-forecasts";
 export { invoices } from "./invoices";
 export { events } from "./events";
 export { notifications } from "./notifications";
+export { cancellationFeedback } from "./cancellation-feedback";

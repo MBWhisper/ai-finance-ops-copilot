@@ -1,58 +1,59 @@
 "use client"
 
-import { ScrollReveal, AnimatedCounter } from "@/components/landing-interactive"
-import { Check, BarChart3, TrendingUp, Receipt, ArrowRight } from "lucide-react"
+import { ScrollReveal, TestimonialCarousel, FaqAccordion } from "@/components/landing-interactive"
+import { Check } from "lucide-react"
 import Link from "next/link"
 
 export function SocialProofSection() {
   return (
-    <section className="border-t border-gray-800 px-6 py-16">
-      <div className="mx-auto max-w-6xl">
+    <section className="border-t border-gray-800 px-6 py-12">
+      <div className="mx-auto max-w-3xl">
         <ScrollReveal>
-          <p className="mb-10 text-center text-sm font-medium uppercase tracking-widest text-gray-500">
-            Trusted by 200+ SaaS founders
-          </p>
+          <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm text-gray-500">
+            <span className="flex items-center gap-2">
+              <Check className="h-4 w-4 text-emerald-500" />
+              5 min setup
+            </span>
+            <span className="flex items-center gap-2">
+              <Check className="h-4 w-4 text-emerald-500" />
+              Real-time data
+            </span>
+            <span className="flex items-center gap-2">
+              <Check className="h-4 w-4 text-emerald-500" />
+              Free to start
+            </span>
+          </div>
         </ScrollReveal>
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4 mb-12">
-          <AnimatedCounter target={200} suffix="+" label="Active founders" />
-          <AnimatedCounter target={12} suffix="M+" label="MRR tracked" />
-          <AnimatedCounter target={98} suffix="%" label="Would recommend" />
-          <AnimatedCounter target={47} suffix="K" label="Invoices processed" />
-        </div>
       </div>
     </section>
   )
 }
 
 export function ProblemSection() {
-  const cards = [
-    { emoji: "😰", bg: "bg-red-500/10", title: "I don't know if I can make payroll next month", desc: "Cash runway is a guessing game. You have revenue coming in but no clear picture of when the money runs out." },
-    { emoji: "📊", bg: "bg-amber-500/10", title: "My spreadsheet is always 2 weeks behind", desc: "Manual data entry is error-prone and stale. By the time you update your models, the numbers have already changed." },
-    { emoji: "🎯", bg: "bg-purple-500/10", title: "I have no idea what my real MRR is", desc: "Between refunds, upgrades, downgrades, and failed payments — calculating real MRR requires more than just adding up invoices." },
-  ]
-
   return (
     <section className="border-t border-gray-800 px-6 py-24">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-4xl">
         <ScrollReveal>
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white">Sound familiar?</h2>
-            <p className="mt-4 text-lg text-gray-400">The struggles every SaaS founder knows too well.</p>
+          <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-10 md:p-14 text-center">
+            <p className="text-xl text-gray-300 leading-relaxed">
+              You&apos;re building a SaaS. You shouldn&apos;t be rebuilding your revenue report every month.
+            </p>
+            <div className="mt-8 space-y-4 text-left max-w-2xl mx-auto">
+              <div className="flex items-start gap-4 rounded-lg border border-gray-800 bg-gray-900/50 p-5">
+                <span className="text-xl shrink-0 mt-0.5">📊</span>
+                <p className="text-gray-400 text-sm"><strong className="text-gray-200">ChartMogul</strong> is built for enterprise.</p>
+              </div>
+              <div className="flex items-start gap-4 rounded-lg border border-gray-800 bg-gray-900/50 p-5">
+                <span className="text-xl shrink-0 mt-0.5">💰</span>
+                <p className="text-gray-400 text-sm"><strong className="text-gray-200">Baremetrics</strong> costs more than your first paying customer.</p>
+              </div>
+              <div className="flex items-start gap-4 rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-5">
+                <span className="text-xl shrink-0 mt-0.5">✅</span>
+                <p className="text-emerald-300 text-sm"><strong className="text-emerald-200">aifinanceops</strong> gives you everything you need — and nothing you don&apos;t.</p>
+              </div>
+            </div>
           </div>
         </ScrollReveal>
-        <div className="grid gap-8 md:grid-cols-3">
-          {cards.map((card, i) => (
-            <ScrollReveal key={card.title} delay={i * 100}>
-              <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-8 hover:border-gray-700 transition-colors group">
-                <div className={`mb-4 flex h-12 w-12 items-center justify-center rounded-xl ${card.bg} group-hover:scale-110 transition-transform`}>
-                  <span className="text-2xl">{card.emoji}</span>
-                </div>
-                <h3 className="mb-3 text-lg font-semibold text-white">{card.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{card.desc}</p>
-              </div>
-            </ScrollReveal>
-          ))}
-        </div>
       </div>
     </section>
   )
@@ -60,33 +61,133 @@ export function ProblemSection() {
 
 export function FeaturesSection() {
   const features = [
-    { icon: BarChart3, color: "text-emerald-400", bg: "bg-emerald-500/10", title: "MRR & KPI Dashboard", desc: "Real-time MRR, ARR, churn rate, and LTV — automatically calculated from your billing data. No manual entry required." },
-    { icon: TrendingUp, color: "text-blue-400", bg: "bg-blue-500/10", title: "Cash Flow Forecast P50/P80/P95", desc: "30/60/90 day projections with confidence bands. Know your best, expected, and worst case runway scenarios." },
-    { icon: Receipt, color: "text-amber-400", bg: "bg-amber-500/10", title: "Accounts Receivable + Smart Reminders", desc: "Track overdue invoices, send automated payment reminders, and reduce DSO with AI-powered AR management." },
+    { label: "MRR & ARR", desc: "updated in real-time" },
+    { label: "Churn tracking", desc: "know before it&apos;s too late" },
+    { label: "90-day cash flow forecast", desc: "plan with confidence" },
+    { label: "AI revenue insights", desc: "not just data, but direction" },
+    { label: "5-minute setup", desc: "connect Stripe and you&apos;re done" },
   ]
 
   return (
     <section id="features" className="border-t border-gray-800 px-6 py-24">
-      <div className="mx-auto max-w-6xl">
+      <div className="mx-auto max-w-4xl">
         <ScrollReveal>
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white">Built for SaaS founders who need answers now</h2>
-            <p className="mt-4 text-lg text-gray-400">Everything you need to understand your financial health at a glance.</p>
+            <h2 className="text-4xl font-bold text-white">Everything you need. Nothing you don&apos;t.</h2>
+            <p className="mt-4 text-lg text-gray-400">No enterprise bloat. Just the metrics that keep your SaaS alive.</p>
           </div>
         </ScrollReveal>
-        <div className="grid gap-8 md:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 max-w-2xl mx-auto">
           {features.map((feat, i) => (
-            <ScrollReveal key={feat.title} delay={i * 100}>
-              <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-8 hover:border-gray-700 transition-colors group">
-                <div className={`mb-5 flex h-14 w-14 items-center justify-center rounded-xl ${feat.bg} group-hover:scale-110 transition-transform`}>
-                  <feat.icon className={`h-7 w-7 ${feat.color}`} />
+            <ScrollReveal key={feat.label} delay={i * 100}>
+              <div className="flex items-center gap-4 rounded-xl border border-gray-800 bg-gray-900/50 p-5 hover:border-gray-700 transition-colors">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10">
+                  <Check className="h-4 w-4 text-emerald-400" />
                 </div>
-                <h3 className="mb-3 text-lg font-semibold text-white">{feat.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{feat.desc}</p>
+                <div>
+                  <span className="text-sm font-semibold text-white">{feat.label}</span>
+                  <span className="text-sm text-gray-400"> — {feat.desc}</span>
+                </div>
               </div>
             </ScrollReveal>
           ))}
         </div>
+      </div>
+    </section>
+  )
+}
+
+export function ComparisonTableSection() {
+  const rows = [
+    { label: "Price", values: ["From $29", "From $79", "From $199"] },
+    { label: "Free Plan", values: ["✅", "❌", "❌"] },
+    { label: "AI Forecasting", values: ["✅", "❌", "❌"] },
+    { label: "Setup time", values: ["5 minutes", "30 minutes", "2+ hours"] },
+    { label: "Built for", values: ["Founders", "SMB teams", "Enterprise"] },
+  ]
+
+  return (
+    <section className="border-t border-gray-800 px-6 py-24">
+      <div className="mx-auto max-w-4xl">
+        <ScrollReveal>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold text-white">Compare your options</h2>
+            <p className="mt-4 text-lg text-gray-400">Honest pricing. No hidden complexity.</p>
+          </div>
+        </ScrollReveal>
+        <ScrollReveal>
+          <div className="overflow-x-auto">
+            <table className="w-full text-left">
+              <thead>
+                <tr className="border-b border-gray-800">
+                  <th className="pb-4 pr-4 text-sm font-semibold text-gray-500" />
+                  <th className="pb-4 px-4 text-sm font-semibold text-emerald-400">aifinanceops</th>
+                  <th className="pb-4 px-4 text-sm font-semibold text-gray-400">Baremetrics</th>
+                  <th className="pb-4 px-4 text-sm font-semibold text-gray-400">ChartMogul</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row) => (
+                  <tr key={row.label} className="border-b border-gray-800/50">
+                    <td className="py-4 pr-4 text-sm text-gray-500 font-medium">{row.label}</td>
+                    {row.values.map((v, i) => (
+                      <td
+                        key={i}
+                        className={`py-4 px-4 text-sm ${i === 0 ? "text-emerald-300 font-medium" : "text-gray-400"}`}
+                      >
+                        {v}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  )
+}
+
+export function ReassuranceSection() {
+  return (
+    <section className="border-t border-gray-800 px-6 py-24">
+      <div className="mx-auto max-w-4xl">
+        <ScrollReveal>
+          <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-10 md:p-14">
+            <h2 className="text-2xl font-bold text-white mb-2">Built for early-stage SaaS, not enterprises</h2>
+            <p className="text-gray-400 mb-10">No sales calls. No implementation teams. No BS.</p>
+            <div className="grid gap-8 md:grid-cols-3">
+              <div className="flex gap-4">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10">
+                  <svg className="h-4 w-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-white mb-1">Stripe-native setup</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">Connect your Stripe account and we handle the rest. No CSV exports, no manual mapping.</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10">
+                  <svg className="h-4 w-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-white mb-1">No accounting degree required</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">We translate GAAP into plain English. If you understand MRR and burn, you understand this dashboard.</p>
+                </div>
+              </div>
+              <div className="flex gap-4">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10">
+                  <svg className="h-4 w-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                </div>
+                <div>
+                  <h3 className="text-sm font-semibold text-white mb-1">Built by a founder, in public</h3>
+                  <p className="text-sm text-gray-500 leading-relaxed">No VC pressure, no enterprise roadmap. Just a fellow founder solving a real cash flow problem.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   )
@@ -159,7 +260,7 @@ export function TestimonialsSection() {
           </div>
         </ScrollReveal>
         <ScrollReveal>
-          <div id="testimonial-carousel" />
+          <TestimonialCarousel />
         </ScrollReveal>
       </div>
     </section>
@@ -175,6 +276,9 @@ export function FAQSection() {
             <h2 className="text-4xl font-bold text-white">Frequently asked questions</h2>
             <p className="mt-4 text-lg text-gray-400">Everything you need to know.</p>
           </div>
+        </ScrollReveal>
+        <ScrollReveal>
+          <FaqAccordion />
         </ScrollReveal>
       </div>
     </section>

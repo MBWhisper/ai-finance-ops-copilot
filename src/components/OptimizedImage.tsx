@@ -8,11 +8,14 @@ interface OptimizedImageProps {
   priority?: boolean
   className?: string
   fill?: boolean
+  sizes?: string
 }
 
 export function OptimizedImage({
-  src, alt, width, height, priority = false, className, fill,
+  src, alt, width, height, priority = false, className, fill, sizes,
 }: OptimizedImageProps) {
+  const resolvedSizes = sizes ?? "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+
   if (fill) {
     return (
       <Image
@@ -23,7 +26,7 @@ export function OptimizedImage({
         loading={priority ? 'eager' : 'lazy'}
         decoding="async"
         className={className}
-        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+        sizes={resolvedSizes}
       />
     )
   }
@@ -38,7 +41,7 @@ export function OptimizedImage({
       loading={priority ? 'eager' : 'lazy'}
       decoding="async"
       className={className}
-      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+      sizes={resolvedSizes}
     />
   )
 }

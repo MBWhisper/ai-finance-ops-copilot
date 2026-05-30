@@ -1,18 +1,38 @@
 "use client"
 
-import { useEffect, useState, useCallback } from "react"
+import { useEffect, useState, useCallback, useRef } from "react"
 import { ChevronDown, ChevronUp, ArrowUp, Star, Quote } from "lucide-react"
 
-/* ─── Scroll Reveal ─── */
+/* ─── Shared IntersectionObserver for all ScrollReveal instances ─── */
+let sharedObserver: IntersectionObserver | null = null
+const observedCallbacks = new WeakMap<Element, () => void>()
+
+function getSharedObserver(): IntersectionObserver {
+  if (!sharedObserver) {
+    sharedObserver = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const cb = observedCallbacks.get(entry.target)
+            cb?.()
+            sharedObserver?.unobserve(entry.target)
+            observedCallbacks.delete(entry.target)
+          }
+        }
+      },
+      { threshold: 0.1 }
+    )
+  }
+  return sharedObserver
+}
+
+/* ─── Scroll Reveal (single shared observer) ─── */
 export function ScrollReveal({ children, className = "", delay = 0 }: { children: React.ReactNode; className?: string; delay?: number }) {
   const [visible, setVisible] = useState(false)
   const ref = useCallback((node: HTMLDivElement | null) => {
     if (!node) return
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) { setVisible(true); observer.disconnect() } },
-      { threshold: 0.1 }
-    )
-    observer.observe(node)
+    observedCallbacks.set(node, () => setVisible(true))
+    getSharedObserver().observe(node)
   }, [])
 
   return (
@@ -24,12 +44,9 @@ export function ScrollReveal({ children, className = "", delay = 0 }: { children
 
 /* ─── FAQ Accordion ─── */
 const faqs = [
-  { q: "What data sources do you support?", a: "We currently support Stripe and Lemon Squeezy. More integrations coming soon." },
-  { q: "How is my data secured?", a: "Your API keys are encrypted at rest using AES-256-GCM. All data is transmitted over TLS. We never store raw credit card numbers or sensitive financial data." },
-  { q: "Can I cancel anytime?", a: "Yes. No long-term contracts. Cancel at any time from your billing settings. Your data remains accessible for the remainder of your billing period." },
-  { q: "Is there a free trial?", a: "Yes, every plan comes with a 14-day free trial. No credit card required." },
-  { q: "Can I try it without signing up?", a: "Yes! Check out our live demo to see the dashboard in action without creating an account." },
-  { q: "What happens if I exceed my plan limits?", a: "We'll notify you and show an upgrade prompt. You can upgrade or downgrade your plan at any time." },
+  { q: "Do I need a credit card to start?", a: "No. Free plan is completely free, no card required." },
+  { q: "Which payment processors do you support?", a: "Currently Stripe, with more integrations coming soon." },
+  { q: "How is this different from Baremetrics?", a: "aifinanceops is built for solo founders and early-stage teams — simpler, cheaper, and powered by AI forecasting that Baremetrics doesn't offer." },
 ]
 
 export function FaqAccordion() {
@@ -58,22 +75,24 @@ export function FaqAccordion() {
 }
 
 /* ─── Testimonial Carousel ─── */
+// TODO: replace with real testimonials
 const testimonials = [
-  { quote: "Cash flow clarity in 5 minutes instead of 5 hours. This is the first tool I open every morning.", name: "Alex Chen", role: "Founder, DataPulse.io" },
-  { quote: "The 90-day forecast with P95 bands saved us from a cash crisis. We extended our runway by 3 months.", name: "Sarah Mitchell", role: "CEO, SaaSGrid" },
-  { quote: "I finally know my real MRR. No more spreadsheet math. I should have started using this years ago.", name: "Marcus Johnson", role: "Co-Founder, FlowStack" },
-  { quote: "We reduced DSO from 45 to 18 days in the first month using the automated AR reminders.", name: "Priya Patel", role: "COO, CloudVault" },
-  { quote: "The forecasting accuracy shocked our board. We raised our Series A with these projections.", name: "David Kim", role: "CEO, LogiScale" },
+  { quote: "aifinanceops saved me 10+ hours a month on financial reporting. The AI forecasts are eerily accurate.", name: "[Customer name]", role: "Founder of [SaaS name]" },
+  { quote: "I tried Baremetrics, but it was overkill for my stage. aifinanceops gives me exactly what I need.", name: "[Customer name]", role: "Founder of [SaaS name]" },
 ]
 
 export function TestimonialCarousel() {
   const [active, setActive] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
+  const timerRef = useRef<ReturnType<typeof setInterval>>()
 
   useEffect(() => {
-    if (isPaused) return
-    const timer = setInterval(() => setActive((a) => (a + 1) % testimonials.length), 4000)
-    return () => clearInterval(timer)
+    if (isPaused) {
+      if (timerRef.current) clearInterval(timerRef.current)
+      return
+    }
+    timerRef.current = setInterval(() => setActive((a) => (a + 1) % testimonials.length), 4000)
+    return () => { if (timerRef.current) clearInterval(timerRef.current) }
   }, [isPaused])
 
   const t = testimonials[active]
@@ -94,7 +113,6 @@ export function TestimonialCarousel() {
         <p className="text-xs text-gray-500">{t.role}</p>
       </div>
 
-      {/* Dots */}
       <div className="flex justify-center gap-2 mt-8">
         {testimonials.map((_, i) => (
           <button
@@ -168,17 +186,21 @@ export function BackToTop() {
   )
 }
 
-/* ─── Live Visitor Counter ─── */
+/* ─── Live Visitor Counter (client-only random to avoid hydration mismatch) ─── */
 export function LiveVisitorBadge() {
-  const [count] = useState(() => Math.floor(Math.random() * 30) + 18)
+  const [count, setCount] = useState<number | null>(null)
+
+  useEffect(() => {
+    setCount(Math.floor(Math.random() * 30) + 18)
+  }, [])
 
   return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-4 py-1.5 text-xs text-emerald-400">
-      <span className="relative flex h-2 w-2">
+    <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-4 py-1.5 text-xs text-emerald-400 min-w-[200px] justify-center">
+      <span className="relative flex h-2 w-2 shrink-0">
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
         <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
       </span>
-      {count} people are viewing this page
+      <span suppressHydrationWarning>{count ?? 0} people are viewing this page</span>
     </div>
   )
 }

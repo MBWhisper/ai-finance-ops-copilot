@@ -1,0 +1,142 @@
+---
+title: "How to Calculate Your SaaS MRR Correctly (Most Founders Get This Wrong)"
+description: "Most SaaS founders miscalculate MRR. Learn the correct formula, the 3 most common mistakes, and how to automate it with Stripe."
+date: "2026-05-21"
+author: "AI Finance Ops"
+tags: ["mrr", "saas-metrics", "finance-basics"]
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop"
+slug: how-to-calculate-saas-mrr
+published: true
+---
+
+A founder I know walked into a Zoom call with a seed-stage investor. He had his numbers ready — $18k MRR, growing 12% month over month. The conversation went well. Then the investor asked to see the Stripe dashboard.
+
+The real MRR? $11,200.
+
+He had been counting one-time setup fees and annual plans paid in full as "recurring revenue." The investor noticed immediately. The term sheet never came.
+
+This mistake is more common than you think. Most early-stage founders overstate their MRR because they use the wrong formula — or no formula at all. And when you pitch investors, make hiring decisions, or plan your burn, an inflated MRR number can do real damage.
+
+Here's how to get it right.
+
+## What MRR Actually Is
+
+Monthly Recurring Revenue measures the predictable, recurring revenue your SaaS generates each month from subscriptions. It's the closest thing to a pulse check for your business.
+
+The key word is **recurring**. If a customer pays you once, it's not MRR. If they might not pay next month, it's not MRR.
+
+Here's what belongs in MRR:
+- Monthly subscription fees from active customers
+- Recurring add-ons or seat-based charges
+- Recurring usage fees that happen every month
+
+Here's what does NOT belong:
+- One-time setup or onboarding fees
+- Annual plans counted as a single month's revenue
+- Professional services or consulting
+- Refunds or chargebacks
+- Gift card or credit purchases
+
+The most common mistake is treating total revenue as MRR. Total revenue includes everything. MRR is a subset — and it's the subset that matters for forecasting, valuation, and runway planning.
+
+## The Correct MRR Formula
+
+MRR is simple at its core, but there are several variations you need to track separately.
+
+### Basic MRR
+
+```
+MRR = Active Subscribers × Average Revenue Per User (ARPU)
+```
+
+If you have 150 customers each paying $99/month:
+
+`150 × $99 = $14,850 MRR`
+
+That's your starting point. But it's not the full picture.
+
+### Net New MRR
+
+This is what most founders really want to know. Net New MRR accounts for growth and churn:
+
+| Scenario | Amount |
+|---|---|
+| New customers this month | +$3,500 |
+| Expansion (upgrades, add-ons) | +$1,200 |
+| Churned (cancellations) | -$2,100 |
+| Contraction (downgrades) | -$400 |
+| **Net New MRR** | **+$2,200** |
+
+### A Worked Example
+
+Let's say you have three customers:
+
+**Customer A:** Starter plan, $29/month
+**Customer B:** Growth plan, $99/month (upgraded from $49 this month)
+**Customer C:** Enterprise plan, $499/month (churned on day 15)
+
+| Metric | Calculation | Value |
+|---|---|---|
+| Starting MRR | $29 + $49 + $499 | $577 |
+| Expansion MRR | $99 - $49 (Customer B upgrade) | +$50 |
+| Churned MRR | $499 (Customer C) | -$499 |
+| Ending MRR | $29 + $99 | $128 |
+| Net New MRR | -$499 + $50 | -$449 |
+
+If you had only looked at total revenue, you might have missed the churn entirely until next month's bank deposit arrived short.
+
+## 3 Common MRR Calculation Mistakes
+
+### 1. Including One-Time Fees
+
+A customer pays a $500 setup fee and a $99 monthly subscription. Your dashboard shows $599 from that customer. If you count that as MRR, you're overstating by 500%.
+
+**Fix:** Strip out all non-recurring line items before calculating MRR. If it happens once, it doesn't count.
+
+### 2. Counting Annual Plans as a Single Month
+
+A customer pays $1,188 upfront for a $99/month annual plan. Your Stripe dashboard shows $1,188 in revenue for that month. If you report that as MRR, you've added $1,089 of phantom revenue.
+
+**Fix:** Divide annual payments by 12. That $1,188 payment represents $99/month in MRR for the next 12 months. The cash hit your bank account, yes — but your recurring revenue didn't spike.
+
+### 3. Ignoring Mid-Month Churn
+
+A customer cancels on day 3 of a 30-day month. You'd already counted them in your MRR at the start of the month. If you don't subtract them until the following month, your MRR is inflated for the current period.
+
+**Fix:** Track MRR daily, or at minimum use a weighted average. A customer who cancels on day 3 should count for 3/30 of the month, not a full month.
+
+## Why Spreadsheets Fail at This
+
+Spreadsheets are where MRR goes to die. Not because the math is hard — it's not — but because spreadsheets don't handle recurring data well.
+
+Every problem with spreadsheet-based MRR tracking comes back to the same root cause: **manual processes don't scale.**
+
+- **Stale data.** Your MRR number is only as current as your last data entry. If you update your sheet weekly, your MRR is already 5–7 days behind by the time you see it.
+- **Silent formula errors.** A single misplaced cell reference or accidentally deleted row can quietly change your MRR by thousands. You won't notice until someone asks a hard question.
+- **No audit trail.** When a number changes, you can't see who changed it, when, or why. Good luck explaining that to an investor or your co-founder.
+- **Hours of busywork.** Importing Stripe data, categorizing transactions, checking for refunds — this is work you should do once, not every month.
+
+The real cost isn't spreadsheet errors. It's the time you could have spent on product and customers.
+
+## How to See Your True MRR Automatically
+
+You don't need to build a custom dashboard or hire a data analyst. If you have a Stripe account, your true MRR is already in your data — you just need the right tool to extract it.
+
+**AI Finance Ops** connects to your Stripe account and automatically calculates:
+
+- **New MRR** from new subscribers
+- **Churned MRR** from cancellations and failed payments
+- **Expansion MRR** from upgrades and add-ons
+- **Net New MRR** — the number that actually matters
+
+All in real time, with no manual entry, no spreadsheets, and no guesswork. Your dashboard shows you exactly what your MRR is right now, not what it was last week.
+
+[Try our free MRR calculator →](/calculators/mrr)
+
+## Stop Guessing Your MRR
+
+If you're not sure your MRR is accurate right now, you're not alone. Most founders discover a discrepancy the first time they run a proper calculation. The good news is it takes minutes to fix.
+
+Connect Stripe, see your real numbers, and make decisions based on data you can trust.
+
+[Start free — no credit card required](/register)

@@ -1,21 +1,34 @@
 'use client'
 
-import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
+import { useMemo } from 'react'
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Line } from 'recharts'
 import type { CashFlowPoint } from '@/lib/analytics-data'
 
 function fmtCents(c: number): string {
-  if (c >= 10000000) return `$${(c / 10000000).toFixed(1)}M`
-  return `$${(c / 100000).toFixed(0)}K`
+  const abs = Math.abs(c)
+  if (abs >= 10000000) return `${c < 0 ? '-' : ''}$${(abs / 10000000).toFixed(1)}M`
+  if (abs >= 100000) return `${c < 0 ? '-' : ''}$${(abs / 100000).toFixed(1)}K`
+  if (abs >= 100) return `${c < 0 ? '-' : ''}$${(abs / 100).toFixed(0)}`
+  return '$0'
 }
 
 export function RunwayChart({ data }: { data: CashFlowPoint[] }) {
-  if (!data.length) {
-    return <div className="flex h-48 items-center justify-center text-sm text-gray-400">No data</div>
+  const chartData = useMemo(() => {
+    let balance = 0
+    return data.map((d) => {
+      balance += d.netCents
+      return { ...d, balanceCents: balance }
+    })
+  }, [data])
+
+  if (!chartData.length) {
+    return <div className="flex h-48 items-center justify-center text-sm text-gray-400">No cash flow data</div>
   }
+
   return (
     <div className="w-full h-52">
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={data} margin={{ top: 4, right: 4, bottom: 0, left: -8 }}>
+        <AreaChart data={chartData} margin={{ top: 4, right: 4, bottom: 0, left: -8 }}>
           <defs>
             <linearGradient id="inflowFill" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#10b981" stopOpacity={0.12} />
@@ -48,6 +61,7 @@ export function RunwayChart({ data }: { data: CashFlowPoint[] }) {
           />
           <Area type="monotone" dataKey="inflowCents" name="Inflow" stroke="#10b981" strokeWidth={2} fill="url(#inflowFill)" dot={false} />
           <Area type="monotone" dataKey="outflowCents" name="Outflow" stroke="#ef4444" strokeWidth={2} fill="url(#outflowFill)" dot={false} />
+          <Line type="monotone" dataKey="balanceCents" name="Cumulative" stroke="#6366f1" strokeWidth={2} dot={false} strokeDasharray="4 2" />
         </AreaChart>
       </ResponsiveContainer>
     </div>

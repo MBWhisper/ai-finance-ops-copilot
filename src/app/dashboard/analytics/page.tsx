@@ -21,7 +21,7 @@ export default function AnalyticsPage() {
   const [period, setPeriod] = useState<30 | 60 | 90>(90)
   const [invoices, setInvoices] = useState<Invoice[]>([])
   const [metricsHistory, setMetricsHistory] = useState<{ date: string; mrrCents: number; arrCents: number; churnRate: number; ltvCents: number }[]>([])
-  const [subscriptions, setSubscriptions] = useState<any[]>([])
+  const [subscriptions, setSubscriptions] = useState<{ created_at: string; status: string; mrr_cents: number }[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null)
@@ -46,7 +46,7 @@ export default function AnalyticsPage() {
 
       if (invData) setInvoices(invData.map(mapDbInvoiceToFrontend))
       if (metricData) {
-        setMetricsHistory(metricData.map((r: any) => ({
+        setMetricsHistory(metricData.map((r) => ({
           date: r.date,
           mrrCents: r.mrr_cents,
           arrCents: r.arr_cents,
@@ -56,8 +56,8 @@ export default function AnalyticsPage() {
       }
       if (subData) setSubscriptions(subData)
       setLastUpdated(new Date())
-    } catch (e: any) {
-      setError(e.message)
+    } catch (e) {
+      setError(e instanceof Error ? e.message : 'Failed')
     }
     setLoading(false)
   }
@@ -82,13 +82,13 @@ export default function AnalyticsPage() {
     const month1Ago = new Date(now.getTime() - 30 * 86400000)
     const month3Ago = new Date(now.getTime() - 90 * 86400000)
 
-    const startedMonth1 = subscriptions.filter((s: any) => new Date(s.created_at) <= month1Ago)
-    const startedMonth3 = subscriptions.filter((s: any) => new Date(s.created_at) <= month3Ago)
+    const startedMonth1 = subscriptions.filter((s) => new Date(s.created_at) <= month1Ago)
+    const startedMonth3 = subscriptions.filter((s) => new Date(s.created_at) <= month3Ago)
 
-    const retainedMonth1 = startedMonth1.filter((s: any) =>
+    const retainedMonth1 = startedMonth1.filter((s) =>
       s.status === 'active' || s.status === 'trialing'
     )
-    const retainedMonth3 = startedMonth3.filter((s: any) =>
+    const retainedMonth3 = startedMonth3.filter((s) =>
       s.status === 'active' || s.status === 'trialing'
     )
 
@@ -209,11 +209,11 @@ export default function AnalyticsPage() {
               </div>
             </div>
             <div className="grid gap-4 lg:grid-cols-2">
-              <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+              <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm min-h-[256px]">
                 <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">MRR Trend</h3>
                 <MrrTrendChart data={mrrTrend} height={200} />
               </div>
-              <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+              <div className="rounded-xl border border-gray-200 bg-white p-5 shadow-sm min-h-[256px]">
                 <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Revenue Composition</h3>
                 <RevenueCompositionChart data={revenueBreakdown} />
               </div>
