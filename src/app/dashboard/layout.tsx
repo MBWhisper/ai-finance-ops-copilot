@@ -46,7 +46,7 @@ export default async function DashboardLayout({
         Tablet (768px+): sidebar is 64px icon-only, so md:ml-16
         Desktop (1024px+): sidebar expands to 240px on hover, so lg:ml-60
       */}
-      <main className="flex-1 min-w-0 md:ml-16 lg:ml-60 overflow-x-hidden pb-16 md:pb-0">
+      <main className="flex-1 min-w-0 md:ml-16 lg:ml-60 overflow-x-hidden pb-24 md:pb-0">
         {/* Top bar with notification bell */}
         <div className="sticky-safari top-0 z-30 flex items-center justify-end gap-3 border-b bg-white/95 backdrop-blur-safari px-4 py-2 sm:px-6 lg:px-8">
           <NotificationBell unreadCount={0} />

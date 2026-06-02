@@ -102,7 +102,7 @@ export function Navbar() {
 
             <Link
               href="/register"
-              className="group inline-flex items-center gap-1.5 rounded-full bg-emerald-500 px-4 sm:px-5 py-2 text-sm font-semibold text-white hover:bg-emerald-400 transition-all shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40"
+              className="group inline-flex items-center gap-1.5 rounded-full bg-emerald-600 px-4 sm:px-5 py-2 text-sm font-semibold text-white hover:bg-emerald-500 transition-all shadow-lg shadow-emerald-600/20 hover:shadow-emerald-600/40"
             >
               Start free
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
@@ -182,7 +182,7 @@ export function Navbar() {
           <Link
             href="/register"
             onClick={() => setMobileOpen(false)}
-            className="block w-full text-center py-3 text-sm font-semibold text-white bg-emerald-500 hover:bg-emerald-400 rounded-xl transition-all shadow-lg shadow-emerald-500/20"
+            className="block w-full text-center py-3 text-sm font-semibold text-white bg-emerald-600 hover:bg-emerald-500 rounded-xl transition-all shadow-lg shadow-emerald-600/20"
           >
             Start free trial &rarr;
           </Link>

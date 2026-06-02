@@ -1,0 +1,23 @@
+{
+  "mcpServers": {
+    "github.com/microsoft/playwright-mcp": {
+      "type": "stdio",
+      "command": "npx",
+      "timeout": 30,
+      "args": ["-y", "@playwright/mcp@latest"],
+      "disabled": false,
+      "autoApprove": []
+    },
+    "testsprite": {
+      "type": "stdio",
+      "command": "npx",
+      "timeout": 60,
+      "args": ["-y", "@testsprite/mcp-server@latest"],
+      "env": {
+        "TESTSPRITE_API_KEY": "sk-user-gXnyFQL6xCbo5U_Q5FMbrd_cBulYn9BbxiRMIhd7H4dAVFHFWVtHpJkww_Rg9Zykf-SMRj70qUkB_nbTYVNHhv7yaDbra_0fF4RooK1MLqgE0Sz-_-fyozcD_JMcvmfLf18"
+      },
+      "disabled": false,
+      "autoApprove": []
+    }
+  }
+}

@@ -7,6 +7,8 @@ import { getUserSubscription } from '@/lib/subscription'
 import { getLatestMetrics, getMetricsHistory } from '@/db/queries/metrics'
 import { getInvoiceStats, getAllInvoices } from '@/db/queries/invoices'
 import { getStripeAccount } from '@/db/queries/stripe-accounts'
+import { getLemonSqueezyAccount, getLemonSqueezyDashboardData } from '@/db/queries/lemon-squeezy'
+import { getPayPalAccount, getPayPalDashboardData } from '@/db/queries/paypal'
 import { OverviewExecutiveSummary } from '@/components/analytics/overview-executive-summary'
 import { OverviewAttentionSection } from '@/components/analytics/overview-attention-section'
 
@@ -16,9 +18,18 @@ const MrrHistoryChart = dynamic(
   () => import('@/components/dashboard/mrr-history-chart').then(m => ({ default: m.MrrHistoryChart })),
   {
     ssr: true,
-    // ✅ Fix CLS: نفس الـ height التي سيشغلها الـ chart الفعلي
     loading: () => <div className="h-64 w-full rounded-lg bg-gray-200" />,
   }
+)
+
+const LemonKpiGrid = dynamic(
+  () => import('@/components/dashboard/lemon-kpi-grid').then(m => ({ default: m.LemonKpiGrid })),
+  { ssr: true, loading: () => <div className="h-12" /> }
+)
+
+const PayPalKpiGrid = dynamic(
+  () => import('@/components/dashboard/paypal-kpi-grid').then(m => ({ default: m.PayPalKpiGrid })),
+  { ssr: true, loading: () => <div className="h-12" /> }
 )
 
 export default async function OverviewPage({
@@ -40,15 +51,21 @@ export default async function OverviewPage({
 
   const subscription = await getUserSubscription(user.id)
 
-  const [latestMetrics, metricsHistory, invoiceStats, stripeAccount, allInvoices] = await Promise.all([
+  const [latestMetrics, metricsHistory, invoiceStats, stripeAccount, allInvoices, lsAccount, lsDashboardData, ppAccount, ppDashboardData] = await Promise.all([
     getLatestMetrics(user.id),
     getMetricsHistory(user.id, 90),
     getInvoiceStats(user.id),
     getStripeAccount(user.id),
     getAllInvoices(user.id),
+    getLemonSqueezyAccount(user.id),
+    getLemonSqueezyDashboardData(user.id).catch(() => null),
+    getPayPalAccount(user.id),
+    getPayPalDashboardData(user.id).catch(() => null),
   ])
 
   const hasStripe = !!stripeAccount
+  const hasLemonSqueezy = !!lsAccount
+  const hasPayPal = !!ppAccount
   const metricResult = latestMetrics ?? { mrrCents: 0, arrCents: 0, churnRate: 0, ltvCents: 0 }
   const prevPeriod = metricsHistory.length > 30 ? metricsHistory[30] : null
   const changes = prevPeriod
@@ -183,6 +200,22 @@ export default async function OverviewPage({
             </div>
           </PlanGate>
         </>
+      )}
+
+      {hasLemonSqueezy && (
+        <LemonKpiGrid
+          data={lsDashboardData}
+          loading={false}
+          error={null}
+        />
+      )}
+
+      {hasPayPal && (
+        <PayPalKpiGrid
+          data={ppDashboardData}
+          loading={false}
+          error={null}
+        />
       )}
     </div>
   )

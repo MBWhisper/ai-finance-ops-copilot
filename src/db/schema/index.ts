@@ -7,3 +7,19 @@ export { invoices } from "./invoices";
 export { events } from "./events";
 export { notifications } from "./notifications";
 export { cancellationFeedback } from "./cancellation-feedback";
+export {
+  lemonSqueezyAccounts,
+  lemonSqueezyOrders,
+  lemonSqueezySubscriptions,
+  lemonSqueezyCustomers,
+} from "./lemon-squeezy";
+export {
+  paypalAccounts,
+  paypalTransactions,
+  paypalInvoices,
+  paypalSubscriptions,
+} from "./paypal";
+export {
+  plaidAccounts,
+  plaidTransactions,
+} from "./plaid";

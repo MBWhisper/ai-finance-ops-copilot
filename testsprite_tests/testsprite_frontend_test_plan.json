@@ -1,0 +1,1636 @@
+[
+  {
+    "id": "TC001",
+    "title": "Log in to access the dashboard",
+    "description": "A returning user can enter valid credentials and reach the authenticated dashboard after signing in.",
+    "category": "User Authentication",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user is redirected into the authenticated dashboard"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify dashboard content is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC002",
+    "title": "Review dashboard overview KPIs after login",
+    "description": "This test verifies that a returning user can log in and view the consolidated dashboard overview metrics after authentication.",
+    "category": "Dashboard Overview",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/overview"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify dashboard KPI cards are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify consolidated revenue data is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC003",
+    "title": "View dashboard overview after login",
+    "description": "Verifies that a returning user can log in and land on the dashboard overview with consolidated KPI data visible.",
+    "category": "Dashboard Overview",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/overview"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the dashboard overview is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify consolidated KPI data is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC004",
+    "title": "Open dashboard overview after signing in",
+    "description": "An authenticated user can land on the overview page and review consolidated KPI summaries and PayPal balance information.",
+    "category": "Dashboard Overview",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the overview navigation link"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify KPI summary data is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify PayPal balance data is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC005",
+    "title": "Create an account from the public signup flow",
+    "description": "This test verifies that a visitor can complete signup from the public site and land inside the authenticated dashboard afterward.",
+    "category": "Authentication",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /signup"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the registration form with valid user details"
+      },
+      {
+        "type": "action",
+        "description": "Submit the signup form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the authenticated dashboard is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC006",
+    "title": "Start signup from the marketing site",
+    "description": "A visitor can move from the homepage to sign up and reach the authenticated area after creating an account.",
+    "category": "User Authentication",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Click the signup link"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with a new valid email address"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with a valid password"
+      },
+      {
+        "type": "action",
+        "description": "Submit the registration form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user is redirected into the authenticated dashboard"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify dashboard content is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC007",
+    "title": "Connect and disconnect integrations",
+    "description": "Verifies that an authenticated user can manage supported integrations from the integrations settings tab.",
+    "category": "Settings & Integrations",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/settings"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the Integrations tab"
+      },
+      {
+        "type": "action",
+        "description": "Connect a supported bank or payment integration"
+      },
+      {
+        "type": "action",
+        "description": "Disconnect the connected integration"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the integration connection state is shown"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the integration can be disconnected from settings"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC008",
+    "title": "Access settings and manage integrations from the dashboard",
+    "description": "An authenticated user can open settings, review integrations, and verify the integration management area is available.",
+    "category": "Dashboard Settings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the settings navigation link"
+      },
+      {
+        "type": "action",
+        "description": "Open the integrations tab"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify integration management controls are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify connected provider sections are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC009",
+    "title": "Connect PayPal Business from settings",
+    "description": "This test verifies that a user can enter PayPal Business credentials, connect the account, and see PayPal marked as connected in settings.",
+    "category": "PayPal Business Integration",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/settings"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the PayPal Client ID field with a valid value"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the PayPal Secret field with a valid value"
+      },
+      {
+        "type": "action",
+        "description": "Select Sandbox or Live mode"
+      },
+      {
+        "type": "action",
+        "description": "Test the PayPal connection and connect the account"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify PayPal is shown as connected in settings"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC010",
+    "title": "View dashboard loading states before data appears",
+    "description": "An authenticated user can see loading indicators on the overview page while financial data is still being prepared.",
+    "category": "Dashboard Overview",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the overview navigation link"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a dashboard loading state is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify financial KPI sections are shown after loading completes"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC011",
+    "title": "Review dashboard revenue and payment summaries",
+    "description": "Verifies that an authenticated user can view revenue and payment summary widgets on the dashboard overview.",
+    "category": "Dashboard Overview",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/overview"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify revenue summary data is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify payment balance or provider summary data is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC012",
+    "title": "Connect a bank account from settings",
+    "description": "This test verifies that a user can open the bank connection flow, complete the connection process, and see the linked bank reflected in settings.",
+    "category": "Plaid Bank Integration",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/settings"
+      },
+      {
+        "type": "action",
+        "description": "Open the bank connection flow"
+      },
+      {
+        "type": "action",
+        "description": "Select a financial institution"
+      },
+      {
+        "type": "action",
+        "description": "Enter valid bank credentials"
+      },
+      {
+        "type": "action",
+        "description": "Authorize account access"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the connected bank is shown in settings"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC013",
+    "title": "See updated dashboard data after a webhook-driven refresh",
+    "description": "An authenticated user can return to the dashboard after a provider event and see refreshed financial data reflected in the UI.",
+    "category": "Webhook-Driven Data Updates",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the overview navigation link"
+      },
+      {
+        "type": "action",
+        "description": "Open the analytics or cash flow view"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify refreshed financial data is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated provider data is reflected across dashboard sections"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC014",
+    "title": "Retry a dashboard section after an in-page error",
+    "description": "An authenticated user can retry a failed overview section and see the KPI data update afterward.",
+    "category": "Dashboard Overview",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the overview navigation link"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an error state is visible in a dashboard section"
+      },
+      {
+        "type": "action",
+        "description": "Click the retry control for the failed section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify KPI data is displayed in that section"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC015",
+    "title": "Sign up and reach the authenticated app",
+    "description": "Verifies that a visitor can sign up successfully and enter the authenticated dashboard experience.",
+    "category": "Signup",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /signup"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the signup form with valid new user details"
+      },
+      {
+        "type": "action",
+        "description": "Submit the signup form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user is taken into the authenticated dashboard"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify dashboard content is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC016",
+    "title": "Sync PayPal data and see refreshed dashboard metrics",
+    "description": "This test verifies that triggering a PayPal sync updates the connected account data and the dashboard reflects refreshed PayPal metrics afterward.",
+    "category": "PayPal Business Integration",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/settings"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the PayPal Client ID field with a valid value"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the PayPal Secret field with a valid value"
+      },
+      {
+        "type": "action",
+        "description": "Select Sandbox or Live mode"
+      },
+      {
+        "type": "action",
+        "description": "Test the PayPal connection and connect the account"
+      },
+      {
+        "type": "action",
+        "description": "Trigger a PayPal sync"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/overview"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify refreshed PayPal financial metrics are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC017",
+    "title": "Switch between analytics views and review provider data",
+    "description": "An authenticated user can move across analytics tabs and inspect the different provider views on the analytics page.",
+    "category": "Dashboard Analytics",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the analytics navigation link"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the Core analytics tab"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the Lemon Squeezy analytics tab"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the PayPal analytics tab"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify provider-specific analytics content is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify analytics charts or tables are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC018",
+    "title": "View cash flow summaries across providers",
+    "description": "An authenticated user can open cash flow and inspect the revenue and provider cash flow sections.",
+    "category": "Dashboard Cash Flow",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the cash flow navigation link"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify MRR cash flow data is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify provider cash flow data is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC019",
+    "title": "Review core analytics charts",
+    "description": "Verifies that an authenticated user can open the core analytics view and see the key revenue and performance charts.",
+    "category": "Analytics Dashboard",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/analytics"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the core analytics charts are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify revenue and transaction performance data are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC020",
+    "title": "Switch between analytics tabs and inspect PayPal data",
+    "description": "This test verifies that an authenticated user can switch analytics tabs and view PayPal-specific charts and tables.",
+    "category": "Analytics Dashboard",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/analytics"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the Core analytics tab"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the Lemon Squeezy analytics tab"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the PayPal analytics tab"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify PayPal analytics charts are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify PayPal analytics tables are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC021",
+    "title": "Review PayPal analytics tables and charts",
+    "description": "An authenticated user can open the PayPal analytics view and inspect its transactional and chart-based reporting.",
+    "category": "Dashboard Analytics",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the analytics navigation link"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the PayPal analytics tab"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a PayPal analytics chart is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a PayPal analytics table is displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC022",
+    "title": "Review cash flow metrics",
+    "description": "Verifies that an authenticated user can open cash flow and see monthly recurring revenue, lifetime net revenue, and provider cash flow data.",
+    "category": "Cash Flow",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/cashflow"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify monthly recurring revenue data is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify lifetime net revenue and provider cash flow data are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC023",
+    "title": "Update profile or workspace settings",
+    "description": "An authenticated user can change profile or workspace details in settings and see the saved state reflected in the UI.",
+    "category": "Dashboard Settings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the settings navigation link"
+      },
+      {
+        "type": "action",
+        "description": "Open the profile or workspace tab"
+      },
+      {
+        "type": "action",
+        "description": "Change a profile or workspace field to a valid new value"
+      },
+      {
+        "type": "action",
+        "description": "Save the changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated settings are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a save confirmation is visible"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC024",
+    "title": "Review cash flow views across providers",
+    "description": "This test verifies that an authenticated user can open the cash flow area and review cash flow sections for the supported providers.",
+    "category": "Cash Flow",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/cashflow"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify MRR cash flow data is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify provider cash flow sections are displayed"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC025",
+    "title": "Switch between analytics tabs",
+    "description": "Verifies that an authenticated user can switch between Core, Lemon Squeezy, and PayPal analytics views and see each tab's content.",
+    "category": "Analytics Dashboard",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/analytics"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the Lemon Squeezy analytics tab"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the PayPal analytics tab"
+      },
+      {
+        "type": "action",
+        "description": "Switch back to the Core analytics tab"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify all three analytics views are available"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify each tab shows its own analytics content"
+      }
+    ],
+    "priority": "High"
+  },
+  {
+    "id": "TC026",
+    "title": "Review PayPal analytics transactions and invoices",
+    "description": "Verifies that an authenticated user can open PayPal analytics and review transaction and invoice data.",
+    "category": "Analytics Dashboard",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/analytics"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the PayPal analytics tab"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify PayPal transaction data is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify invoice data is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC027",
+    "title": "Paginate through PayPal transactions in analytics",
+    "description": "This test verifies that an authenticated user can page through PayPal transactions and continue reviewing results across multiple pages.",
+    "category": "Analytics Dashboard",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/analytics"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the PayPal analytics tab"
+      },
+      {
+        "type": "action",
+        "description": "Go to the next page of transactions"
+      },
+      {
+        "type": "action",
+        "description": "Go to the previous page of transactions"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify PayPal transaction rows are displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify transaction pagination controls are available"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC028",
+    "title": "Update profile information",
+    "description": "Verifies that an authenticated user can change profile settings and save the updated profile details.",
+    "category": "Settings & Integrations",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/settings"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the Profile tab"
+      },
+      {
+        "type": "action",
+        "description": "Update the profile name"
+      },
+      {
+        "type": "action",
+        "description": "Save the profile changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated profile information is shown"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the changes are saved successfully"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC029",
+    "title": "Update workspace details",
+    "description": "Verifies that an authenticated user can update workspace company details and billing email from settings.",
+    "category": "Settings & Integrations",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/settings"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the Workspace tab"
+      },
+      {
+        "type": "action",
+        "description": "Update the workspace company details"
+      },
+      {
+        "type": "action",
+        "description": "Update the billing email"
+      },
+      {
+        "type": "action",
+        "description": "Save the workspace changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated workspace details are shown"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the changes are saved successfully"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC030",
+    "title": "Browse PayPal analytics pagination",
+    "description": "Verifies that an authenticated user can move through multiple pages of PayPal transactions in analytics.",
+    "category": "Analytics Dashboard",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/analytics"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the PayPal analytics tab"
+      },
+      {
+        "type": "action",
+        "description": "Go to the next page of the transactions table"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a different page of transaction data is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the transactions table remains visible"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC031",
+    "title": "Disconnect a linked PayPal account",
+    "description": "This test verifies that a connected PayPal account can be disconnected from settings and is no longer shown as linked.",
+    "category": "PayPal Business Integration",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/settings"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the PayPal Client ID field with a valid value"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the PayPal Secret field with a valid value"
+      },
+      {
+        "type": "action",
+        "description": "Select Sandbox or Live mode"
+      },
+      {
+        "type": "action",
+        "description": "Test the PayPal connection and connect the account"
+      },
+      {
+        "type": "action",
+        "description": "Disconnect the PayPal account"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the PayPal connection is removed from settings"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC032",
+    "title": "Browse the homepage hero and supporting sections",
+    "description": "A visitor can review the homepage hero, social proof, features, testimonials, and pricing information on the marketing site.",
+    "category": "Marketing Homepage",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the hero section is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the logos section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a social proof logos section is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the features section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the features section is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the testimonials section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the testimonials section is displayed"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to the pricing comparison section"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a pricing comparison table is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC033",
+    "title": "Disconnect a linked bank account",
+    "description": "This test verifies that a connected bank account can be disconnected from settings and is no longer shown as linked.",
+    "category": "Plaid Bank Integration",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/settings"
+      },
+      {
+        "type": "action",
+        "description": "Open the bank connection flow"
+      },
+      {
+        "type": "action",
+        "description": "Select a financial institution"
+      },
+      {
+        "type": "action",
+        "description": "Enter valid bank credentials"
+      },
+      {
+        "type": "action",
+        "description": "Authorize account access"
+      },
+      {
+        "type": "action",
+        "description": "Disconnect the bank account"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the bank connection is removed from settings"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC034",
+    "title": "Manage notification preferences",
+    "description": "Verifies that an authenticated user can toggle notification preferences and save them in settings.",
+    "category": "Settings & Integrations",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/settings"
+      },
+      {
+        "type": "action",
+        "description": "Switch to the Notifications tab"
+      },
+      {
+        "type": "action",
+        "description": "Toggle a notification preference"
+      },
+      {
+        "type": "action",
+        "description": "Save the notification changes"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the updated notification preference is shown"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the changes are saved successfully"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC035",
+    "title": "Review pricing before signup",
+    "description": "Verifies that a visitor can open the pricing page and inspect the available plan information before registering.",
+    "category": "Pricing",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /pricing"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify pricing plan information is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify checkout or signup conversion options are displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC036",
+    "title": "Browse the marketing homepage and pricing path",
+    "description": "This test verifies that a visitor can browse the marketing homepage, review pricing information, and reach the signup page from the public site.",
+    "category": "Marketing Homepage",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to view the features and testimonials sections"
+      },
+      {
+        "type": "action",
+        "description": "Scroll to view the pricing table"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to view pricing"
+      },
+      {
+        "type": "action",
+        "description": "Click the link to start signup"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the pricing information is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the signup page is displayed"
+      }
+    ],
+    "priority": "Medium"
+  },
+  {
+    "id": "TC037",
+    "title": "Disconnect a connected provider from settings",
+    "description": "An authenticated user can disconnect an integration from settings and see it removed from the connected state.",
+    "category": "Dashboard Settings",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with {{LOGIN_USER}}"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Click the settings navigation link"
+      },
+      {
+        "type": "action",
+        "description": "Open the integrations tab"
+      },
+      {
+        "type": "action",
+        "description": "Disconnect one connected provider using the UI"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the provider is shown as disconnected"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the integration management controls remain available"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC038",
+    "title": "Explore marketing homepage content",
+    "description": "Verifies that a visitor can browse the marketing homepage and review the main value proposition and supporting sections.",
+    "category": "Marketing Homepage",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the homepage hero content is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify feature, testimonial, and pricing information are displayed"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC039",
+    "title": "Reject invalid login credentials",
+    "description": "This test verifies that an unauthenticated visitor who submits invalid credentials remains on the login page and sees a validation problem.",
+    "category": "Authentication",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with invalid values"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a login validation error is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the login page remains visible"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC040",
+    "title": "Show login validation for invalid credentials",
+    "description": "A user entering invalid credentials sees an authentication error and remains on the login page.",
+    "category": "User Authentication",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the email field with a fake email address"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the password field with an invalid password"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify an authentication error message is displayed"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the login form remains visible"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC041",
+    "title": "Handle invalid login input",
+    "description": "Verifies that invalid login credentials are rejected and the user remains on the login form.",
+    "category": "Authentication",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with invalid values"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify a login validation error is visible"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the user remains on the login screen"
+      }
+    ],
+    "priority": "Low"
+  },
+  {
+    "id": "TC042",
+    "title": "Cancel the bank connection flow without linking an account",
+    "description": "This test verifies that canceling the Plaid connection flow returns the user to settings without creating a linked bank account.",
+    "category": "Plaid Bank Integration",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to /login"
+      },
+      {
+        "type": "action",
+        "description": "Fill in the login credentials with {{LOGIN_USER}} and {{LOGIN_PASSWORD}}"
+      },
+      {
+        "type": "action",
+        "description": "Submit the login form"
+      },
+      {
+        "type": "action",
+        "description": "Navigate to /dashboard/settings"
+      },
+      {
+        "type": "action",
+        "description": "Open the bank connection flow"
+      },
+      {
+        "type": "action",
+        "description": "Cancel the bank connection flow"
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no bank account is connected in settings"
+      }
+    ],
+    "priority": "Low"
+  }
+]

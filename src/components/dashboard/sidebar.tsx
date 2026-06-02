@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import {
   LayoutDashboard, TrendingUp, Receipt, Settings, CreditCard,
   Menu, X, LogOut, Bell, AlertTriangle, BarChart3, Bot, Activity,
+  Ellipsis,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { createClient } from "@/lib/supabase/browser"
@@ -31,20 +32,35 @@ export function Sidebar({ userEmail, plan, unreadAlerts = 0 }: { userEmail: stri
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const [hovered, setHovered] = useState(false)
+  const [moreOpen, setMoreOpen] = useState(false)
 
-  useEffect(() => { setOpen(false) }, [pathname])
+  const primaryMobileItems: NavItem[] = [
+    { label: "Overview", href: "/dashboard/overview", icon: LayoutDashboard },
+    { label: "Analytics", href: "/dashboard/analytics", icon: Activity },
+    { label: "Cash", href: "/dashboard/cashflow", icon: TrendingUp },
+    { label: "Alerts", href: "/dashboard/warnings", icon: AlertTriangle },
+  ]
+
+  const secondaryMobileItems: NavItem[] = [
+    { label: "AR / Invoices", href: "/dashboard/ar", icon: Receipt },
+    { label: "Cohorts", href: "/dashboard/cohorts", icon: BarChart3 },
+    { label: "Billing", href: "/dashboard/settings/billing", icon: CreditCard },
+    { label: "Settings", href: "/dashboard/settings", icon: Settings },
+  ]
+
+  useEffect(() => { setOpen(false); setMoreOpen(false) }, [pathname])
 
   useEffect(() => {
-    if (!open) return
-    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false) }
+    if (!open && !moreOpen) return
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") { setOpen(false); setMoreOpen(false) } }
     window.addEventListener("keydown", handler)
     return () => window.removeEventListener("keydown", handler)
-  }, [open])
+  }, [open, moreOpen])
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : ""
+    document.body.style.overflow = open || moreOpen ? "hidden" : ""
     return () => { document.body.style.overflow = "" }
-  }, [open])
+  }, [open, moreOpen])
 
   async function handleLogout() {
     const supabase = createClient()
@@ -162,24 +178,74 @@ export function Sidebar({ userEmail, plan, unreadAlerts = 0 }: { userEmail: stri
   return (
     <>
       {/* ─── MOBILE: Bottom tab bar (< md: 768px) ─── */}
-      <nav className="fixed bottom-0 left-0 right-0 z-50 flex md:hidden bg-white border-t bottom-tab-safe shadow-[0_-2px_10px_rgba(0,0,0,0.05)]">
-        {navItems.map((item) => {
+      <nav className="fixed bottom-0 left-0 right-0 z-40 flex md:hidden bg-white border-t"
+           style={{ paddingBottom: 'max(0px, env(safe-area-inset-bottom))' }}>
+        {primaryMobileItems.map((item) => {
           const active = isActive(item.href)
           return (
             <Link
               key={item.href}
               href={item.href}
-              className={cn(
-                "flex flex-1 flex-col items-center justify-center gap-0.5 py-2 text-[10px] font-medium transition-colors min-touch-target",
-                active ? "text-emerald-600" : "text-gray-400 hover:text-gray-600"
-              )}
+              className="flex flex-1 flex-col items-center justify-center gap-0.5 py-1.5 min-touch-target transition-colors"
             >
               <item.icon className={cn("h-5 w-5", active ? "text-emerald-600" : "text-gray-400")} />
-              <span className="truncate max-w-[60px] text-center leading-tight">{item.label}</span>
+              <span className={cn("text-[10px] leading-tight font-medium", active ? "text-emerald-600" : "text-gray-400")}>
+                {item.label}
+              </span>
             </Link>
           )
         })}
+        {/* More button */}
+        <button
+          onClick={() => setMoreOpen(true)}
+          className="flex flex-1 flex-col items-center justify-center gap-0.5 py-1.5 min-touch-target transition-colors text-gray-400"
+          aria-label="More menu"
+        >
+          <Ellipsis className="h-5 w-5" />
+          <span className="text-[10px] leading-tight font-medium">More</span>
+        </button>
       </nav>
+
+      {/* ─── MOBILE: More bottom sheet ─── */}
+      {moreOpen && (
+        <div className="fixed inset-0 z-50 md:hidden">
+          <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setMoreOpen(false)} />
+          <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-2xl animate-slide-up"
+               style={{ paddingBottom: 'max(0px, env(safe-area-inset-bottom))' }}>
+            <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100">
+              <span className="text-sm font-semibold text-gray-900">More</span>
+              <button
+                onClick={() => setMoreOpen(false)}
+                className="h-9 w-9 flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+                aria-label="Close menu"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <div className="p-2 space-y-0.5">
+              {secondaryMobileItems.map((item) => {
+                const active = isActive(item.href)
+                return (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={() => setMoreOpen(false)}
+                    className={cn(
+                      "flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-colors",
+                      active
+                        ? "bg-emerald-50 text-emerald-700"
+                        : "text-gray-700 hover:bg-gray-50 active:bg-gray-100"
+                    )}
+                  >
+                    <item.icon className={cn("h-5 w-5", active ? "text-emerald-600" : "text-gray-400")} />
+                    <span>{item.label}</span>
+                  </Link>
+                )
+              })}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ─── HAMBURGER (mobile only) ─── */}
       <button

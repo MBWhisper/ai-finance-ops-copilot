@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import CookieBanner from "@/components/CookieBanner";
 import "./globals.css";
@@ -60,9 +61,11 @@ export default function RootLayout({
         <Script
           id="cookieyes"
           src="https://cdn-cookieyes.com/client_data/114f1c65c7803024b24a9b80/script.js"
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
           type="text/javascript"
         />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://images.unsplash.com" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         {process.env.NEXT_PUBLIC_SUPABASE_URL && (
@@ -105,6 +108,7 @@ export default function RootLayout({
       <body className={`${inter.variable} ${inter.className}`}>
         {children}
         <CookieBanner />
+        <Analytics />
         <SpeedInsights />
       </body>
     </html>

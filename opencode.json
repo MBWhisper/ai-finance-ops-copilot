@@ -5,6 +5,14 @@
       "type": "remote",
       "url": "https://mcp.vercel.com",
       "enabled": true
+    },
+    "TestSprite": {
+      "type": "local",
+      "command": ["npx", "-y", "@testsprite/testsprite-mcp@latest"],
+      "enabled": true,
+      "env": {
+        "TESTSPrITE_API_KEY": "sk-user-nCTLaXZNgFYf5Sos_NAg4A3wdPufO17YK7VM8ysgUOJUVO9kVTYsd9Wbf-v8j193gpWOl2e50Px4x7git2mdoORast8pH1fEvraCkuXHFJCOw-HptJZvHet6NyWJmRrP09A"
+      }
     }
   }
 }

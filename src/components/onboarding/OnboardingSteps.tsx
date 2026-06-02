@@ -203,11 +203,11 @@ export default function OnboardingSteps() {
             <p className="mt-2 text-sm text-gray-400">
               Connect Stripe to see your live MRR in seconds &mdash; or enter it manually to get started.
             </p>
-            <div className="mt-6 flex gap-3">
+            <div className="mt-6 flex flex-col sm:flex-row gap-3">
               <select
                 value={currency}
                 onChange={(e) => setCurrency(e.target.value)}
-                className="rounded-lg border border-gray-700 bg-gray-800 px-3 py-3 text-sm text-white focus:border-emerald-500 focus:outline-none"
+                className="w-full sm:w-auto rounded-lg border border-gray-700 bg-gray-800 px-3 py-3 text-sm text-white focus:border-emerald-500 focus:outline-none"
               >
                 {["USD", "EUR", "GBP", "MAD"].map((c) => (
                   <option key={c} value={c}>{c}</option>
@@ -218,7 +218,7 @@ export default function OnboardingSteps() {
                 placeholder="12000"
                 value={mrr}
                 onChange={(e) => setMrr(e.target.value)}
-                className="flex-1 rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none"
+                className="w-full flex-1 rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none"
               />
             </div>
             <Button

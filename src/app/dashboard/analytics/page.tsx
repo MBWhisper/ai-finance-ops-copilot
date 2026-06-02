@@ -8,6 +8,8 @@ import { RevenueCompositionChart } from '@/components/analytics/revenue-composit
 import { AgingBarChart } from '@/components/analytics/aging-bar-chart'
 import { RunwayChart } from '@/components/analytics/runway-chart'
 import { CohortRetentionGrid } from '@/components/analytics/cohort-retention-grid'
+import { LemonAnalytics } from '@/components/analytics/lemon-analytics'
+import { PayPalAnalytics } from '@/components/analytics/paypal-analytics'
 import {
   computeMRRTrend, computeRevenueBreakdown, computeRetentionSummary,
   computeCashFlow, computeRunway, computeCollectionHealth,
@@ -17,7 +19,10 @@ import { computeInvoiceStats, computeAging } from '@/lib/invoice-utils'
 import { mapDbInvoiceToFrontend } from '@/lib/invoices-live'
 import type { Invoice } from '@/lib/invoice-types'
 
+type TabId = 'core' | 'lemonsqueezy' | 'paypal'
+
 export default function AnalyticsPage() {
+  const [activeTab, setActiveTab] = useState<TabId>('core')
   const [period, setPeriod] = useState<30 | 60 | 90>(90)
   const [invoices, setInvoices] = useState<Invoice[]>([])
   const [metricsHistory, setMetricsHistory] = useState<{ date: string; mrrCents: number; arrCents: number; churnRate: number; ltvCents: number }[]>([])
@@ -159,27 +164,62 @@ export default function AnalyticsPage() {
           <p className="text-sm text-gray-500 mt-0.5">Deep analysis of your SaaS financial data.</p>
         </div>
         <div className="flex items-center gap-3">
-          {lastUpdated && (
+          {lastUpdated && activeTab === 'core' && (
             <p className="text-[11px] text-gray-400 hidden sm:block">
               Updated {lastUpdated.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}
             </p>
           )}
-          <div className="flex rounded-lg border border-gray-200 bg-gray-50 p-0.5">
-          {([30, 60, 90] as const).map(p => (
-            <button
-              key={p}
-              onClick={() => setPeriod(p)}
-              className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
-                period === p ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
-              }`}
-            >
-              {p}d
-            </button>
-          ))}
-        </div>
+          {activeTab === 'core' && (
+            <div className="flex rounded-lg border border-gray-200 bg-gray-50 p-0.5">
+            {([30, 60, 90] as const).map(p => (
+              <button
+                key={p}
+                onClick={() => setPeriod(p)}
+                className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                  period === p ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+                }`}
+              >
+                {p}d
+              </button>
+            ))}
+          </div>
+          )}
         </div>
       </div>
 
+      {/* Tab bar */}
+      <div className="flex gap-1 rounded-lg border border-gray-200 bg-gray-50 p-0.5 w-fit">
+        <button
+          onClick={() => setActiveTab('core')}
+          className={`px-4 py-1.5 text-xs font-medium rounded-md transition-colors ${
+            activeTab === 'core' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+          }`}
+        >
+          Core Analytics
+        </button>
+        <button
+          onClick={() => setActiveTab('lemonsqueezy')}
+          className={`px-4 py-1.5 text-xs font-medium rounded-md transition-colors ${
+            activeTab === 'lemonsqueezy' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+          }`}
+        >
+          🍋 Lemon Squeezy
+        </button>
+        <button
+          onClick={() => setActiveTab('paypal')}
+          className={`px-4 py-1.5 text-xs font-medium rounded-md transition-colors ${
+            activeTab === 'paypal' ? 'bg-white text-gray-900 shadow-sm' : 'text-gray-500 hover:text-gray-700'
+          }`}
+        >
+          <span className="inline-flex items-center gap-1">
+            <svg className="h-3 w-3" viewBox="0 0 24 24" fill="#003087"><path d="M20.067 8.478c.493.526.746 1.255.746 2.188 0 2.625-1.588 4.068-3.979 4.068h-1.416l-.925 3.894H12.89l.924-3.894h.738c1.875 0 2.813-.937 3.214-2.516.357-1.416.179-3.74-1.696-3.74h-2.5l-1.116 4.688H9.86l1.116-4.688H7.64l-1.116 4.688H3.964l1.116-4.688H.559l.372-1.563h4.52l.893-3.75H2.011l.372-1.563h6.25c.894 0 1.563.223 2.055.669.492.446.738 1.116.738 2.011 0 .894-.246 1.696-.738 2.409-.492.713-1.117 1.07-1.875 1.07h-.67l.892-3.75h-.625l-1.116 4.688h1.563z" /></svg>
+            PayPal
+          </span>
+        </button>
+      </div>
+
+      {activeTab === 'core' && (
+      <>
       {/* A. Revenue Analytics */}
       <section>
         <h2 className="text-sm font-semibold text-gray-900 mb-3 flex items-center gap-2">
@@ -422,6 +462,16 @@ export default function AnalyticsPage() {
           )}
         </div>
       </section>
+      </>
+      )}
+
+      {activeTab === 'lemonsqueezy' && (
+        <LemonAnalytics />
+      )}
+
+      {activeTab === 'paypal' && (
+        <PayPalAnalytics />
+      )}
     </div>
   )
 }

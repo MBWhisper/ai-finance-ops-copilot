@@ -1,0 +1,17 @@
+{
+  "status": "init",
+  "scope": "codebase",
+  "type": "frontend",
+  "localEndpoint": "http://localhost:3000/",
+  "serverPort": 51868,
+  "executionArgs": {
+    "projectName": "ai-finance-ops-copilot",
+    "projectPath": "D:\\ai finance ops copilot",
+    "testIds": [],
+    "additionalInstruction": "Skip tests that require real banking/PayPal credentials. Focus on UI rendering, navigation, marketing pages, auth pages, and dashboard page structure. Test that pages load without errors.",
+    "serverMode": "production",
+    "envs": {
+      "API_KEY": "sk-user-nCTLaXZNgFYf5Sos_NAg4A3wdPufO17YK7VM8ysgUOJUVO9kVTYsd9Wbf-v8j193gpWOl2e50Px4x7git2mdoORast8pH1fEvraCkuXHFJCOw-HptJZvHet6NyWJmRrP09A"
+    }
+  }
+}

@@ -65,7 +65,7 @@ export default function RegisterPage() {
       password,
       options: {
         data: { name },
-        emailRedirectTo: `${window.location.origin}/auth/callback?next=/onboarding`,
+        emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL || window.location.origin}/auth/callback?next=/dashboard/overview`,
       },
     })
 
@@ -91,7 +91,7 @@ export default function RegisterPage() {
       // eslint-disable-next-line no-console
       console.log("[AUTH_REGISTER_REDIRECT]", { destination: "/onboarding", via: "session" })
       setSuccess(true)
-      setTimeout(() => router.push("/onboarding"), 600)
+      setTimeout(() => router.push("/dashboard/overview"), 600)
       return
     }
 
@@ -109,7 +109,7 @@ export default function RegisterPage() {
     const { error: resendError } = await supabase.auth.resend({
       type: "signup",
       email: confirmEmail,
-      options: { emailRedirectTo: `${window.location.origin}/auth/callback?next=/onboarding` },
+      options: { emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL || window.location.origin}/auth/callback?next=/dashboard/overview` },
     })
     if (resendError) {
       // eslint-disable-next-line no-console
@@ -130,7 +130,7 @@ export default function RegisterPage() {
 
     const { error: magicErr } = await supabase.auth.signInWithOtp({
       email: magicEmail,
-      options: { emailRedirectTo: `${window.location.origin}/auth/callback?next=/onboarding` },
+      options: { emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL || window.location.origin}/auth/callback?next=/dashboard/overview` },
     })
 
     if (magicErr) {
@@ -256,7 +256,7 @@ export default function RegisterPage() {
       </div>
 
       <div className="flex-1 flex items-center justify-center px-4 sm:px-6 py-24 lg:py-0 min-h-screen lg:min-h-0">
-        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="w-full max-w-sm">
+        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }} className="w-full max-w-full sm:max-w-sm">
           <div className="flex justify-center mb-8"><Link href="/"><Logo size={36} /></Link></div>
           <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }} className="text-center mb-8">
             <h1 className="text-2xl font-bold text-white">Create your account</h1>

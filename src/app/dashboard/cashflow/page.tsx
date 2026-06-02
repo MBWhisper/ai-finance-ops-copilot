@@ -5,6 +5,8 @@ import { createClient } from '@/lib/supabase/browser'
 import { ForecastChart } from '@/components/cashflow/forecast-chart'
 import { PeriodSelector } from '@/components/cashflow/period-selector'
 import { PlanGate } from '@/components/plan-gate'
+import { LsCashflowSection } from '@/components/cashflow/ls-cashflow-section'
+import { PayPalCashflowSection } from '@/components/cashflow/paypal-cashflow-section'
 import type { PlanId } from '@/lib/subscription'
 import type { ForecastDay } from '@/core/forecast/types'
 
@@ -152,6 +154,9 @@ export default function CashflowPage() {
           </div>
         </div>
       </PlanGate>
+
+      <LsCashflowSection />
+      <PayPalCashflowSection />
     </div>
   )
 }

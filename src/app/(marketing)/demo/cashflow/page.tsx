@@ -29,16 +29,16 @@ export default function DemoCashflowPage() {
         <span>This is a live demo — <Link href="/register" className="font-semibold underline">Sign up free</Link> to connect your data.</span>
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">Cash Flow Forecast</h1>
-          <p className="mt-1 text-gray-500">Demo data — projected revenue and expenses.</p>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">Cash Flow Forecast</h1>
+          <p className="mt-1 text-gray-500">Demo data &mdash; projected revenue and expenses.</p>
         </div>
         <Link
           href="/register"
-          className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+          className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 shrink-0"
         >
-          Sign Up — It&apos;s Free
+          Sign Up &mdash; It&apos;s Free
         </Link>
       </div>
 

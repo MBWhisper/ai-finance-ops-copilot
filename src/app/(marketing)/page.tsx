@@ -17,11 +17,15 @@ import { LiveVisitorBadge } from "@/components/landing-interactive"
 import { BackToTop } from "@/components/landing-interactive"
 import { HeroCanvas } from "@/components/ui/hero-canvas"
 
+const PhoneMockupPreview = dynamic(() => import("@/components/marketing/PhoneMockupPreview").then(m => ({ default: m.PhoneMockupPreview })), { ssr: true })
+const NewsletterSignup = dynamic(() => import("@/components/marketing/NewsletterSignup").then(m => ({ default: m.NewsletterSignup })), { ssr: true })
+const MRRCalculator = dynamic(() => import("@/components/marketing/MRRCalculator").then(m => ({ default: m.MRRCalculator })), { ssr: true })
 const SocialProofSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.SocialProofSection })), { ssr: true })
 const ReassuranceSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.ReassuranceSection })), { ssr: true })
 const ProblemSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.ProblemSection })), { ssr: true })
 const FeaturesSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.FeaturesSection })), { ssr: true })
 const ComparisonTableSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.ComparisonTableSection })), { ssr: true })
+const StatsSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.StatsSection })), { ssr: true })
 const PricingSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.PricingSection })), { ssr: true })
 const TestimonialsSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.TestimonialsSection })), { ssr: true })
 const FAQSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.FAQSection })), { ssr: true })
@@ -47,6 +51,57 @@ export default function LandingPage() {
           })
         }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Do I need a credit card to start?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. Free plan is completely free, no card required."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Which payment processors do you support?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Currently Stripe, with more integrations including LemonSqueezy and PayPal coming soon."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How is this different from Baremetrics?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "AI Finance Ops is built for solo founders and early-stage teams — simpler, cheaper, and powered by AI forecasting that Baremetrics doesn't offer."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What metrics can I track?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "MRR, ARR, churn rate, LTV, cash flow forecasts, and more — all updated in real-time from your billing integrations."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How long does setup take?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "About 5 minutes. Connect your Stripe account and your dashboard is live immediately."
+                }
+              }
+            ]
+          })
+        }}
+      />
       <main>
         {/* ─── HERO ─── (static, critical for LCP) */}
         <section className="relative overflow-hidden px-6 py-24 sm:py-32 lg:px-8">
@@ -66,37 +121,29 @@ export default function LandingPage() {
                 <LiveVisitorBadge />
               </div>
             </ScrollReveal>
-            <ScrollReveal delay={100}>
-              <h1 className="text-5xl font-bold tracking-tight text-white sm:text-7xl bg-gradient-to-r from-white via-emerald-300 to-white bg-clip-text text-transparent animate-gradient-shift">
-                SaaS Metrics for Founders Who Are Done With Spreadsheets
-              </h1>
-            </ScrollReveal>
-            <ScrollReveal delay={200}>
-              <p className="mt-6 text-xl leading-8 text-gray-400 max-w-2xl mx-auto">
-                Real-time MRR, ARR, churn &amp; cash flow forecasting &mdash; powered by AI. No setup complexity. No $200/month bills.
-              </p>
-            </ScrollReveal>
-            <ScrollReveal delay={300}>
-              <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link
-                  href="/register"
-                  className="inline-flex items-center rounded-lg bg-emerald-500 px-8 py-4 text-base font-semibold text-white hover:bg-emerald-400 transition-all animate-pulse-glow"
-                >
-                  Start Free &mdash; No Credit Card Needed
-                </Link>
-                <Link
-                  href="/demo"
-                  className="inline-flex items-center rounded-lg border border-gray-700 px-8 py-4 text-base font-semibold text-gray-300 hover:border-gray-500 hover:text-white transition-colors"
-                >
-                  Watch product tour
-                </Link>
-              </div>
-            </ScrollReveal>
-            <ScrollReveal delay={400}>
-              <p className="mt-4 text-sm text-gray-500">
-                Trusted by solo founders and early-stage SaaS teams
-              </p>
-            </ScrollReveal>
+            <h1 className="text-5xl font-bold tracking-tight text-white sm:text-7xl bg-gradient-to-r from-white via-emerald-300 to-white bg-clip-text text-transparent animate-gradient-shift">
+              SaaS Metrics for Founders Who Are Done With Spreadsheets
+            </h1>
+            <p className="mt-6 text-xl leading-8 text-gray-400 max-w-2xl mx-auto">
+              Real-time MRR, ARR, churn &amp; cash flow forecasting &mdash; powered by AI. No setup complexity. No $200/month bills.
+            </p>
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link
+                href="/register"
+                className="inline-flex items-center rounded-lg bg-emerald-600 px-8 py-4 text-base font-semibold text-white hover:bg-emerald-500 transition-all animate-pulse-glow"
+              >
+                Start Free &mdash; No Credit Card Needed
+              </Link>
+              <Link
+                href="/demo"
+                className="inline-flex items-center rounded-lg border border-gray-700 px-8 py-4 text-base font-semibold text-gray-300 hover:border-gray-500 hover:text-white transition-colors"
+              >
+                Watch product tour
+              </Link>
+            </div>
+            <p className="mt-4 text-sm text-gray-400">
+              Trusted by solo founders and early-stage SaaS teams
+            </p>
           </div>
         </section>
 
@@ -143,12 +190,12 @@ export default function LandingPage() {
                     </div>
                   </div>
                   <h3 className="text-xl font-bold text-white text-center">Mo</h3>
-                  <p className="text-sm text-gray-500 text-center">System Architect & SaaS Builder</p>
+                  <p className="text-sm text-gray-400 text-center">System Architect & SaaS Builder</p>
                   <p className="text-xs text-gray-400 text-center mt-1">📍 Agadir, Morocco 🇲🇦</p>
                   <div className="flex gap-3 mt-4">
-                    <a href="https://www.linkedin.com/in/mo-systemarchitect" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-emerald-400 transition-colors text-sm">💼 LinkedIn</a>
-                    <a href="https://www.youtube.com/@AIKnowlidgi" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-emerald-400 transition-colors text-sm">▶️ YouTube</a>
-                    <a href="https://twitter.com/MbtechE80106" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-emerald-400 transition-colors text-sm">🐦 X</a>
+                    <a href="https://www.linkedin.com/in/mo-systemarchitect" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-emerald-400 transition-colors text-sm">💼 LinkedIn</a>
+                    <a href="https://www.youtube.com/@AIKnowlidgi" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-emerald-400 transition-colors text-sm">▶️ YouTube</a>
+                    <a href="https://twitter.com/MbtechE80106" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-emerald-400 transition-colors text-sm">🐦 X</a>
                   </div>
                 </div>
               </ScrollReveal>
@@ -171,12 +218,12 @@ export default function LandingPage() {
                     financial clarity without the spreadsheet chaos.</strong> No CFO required. No accounting degree.
                     Just a clean dashboard that tells you what you need to know.
                   </p>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-gray-400">
                     Today, AI Finance Ops helps 200+ founders track their MRR, forecast runway, and
-                    automate AR \u2014 completely bootstrapped and built in public.
+                    automate AR — completely bootstrapped and built in public.
                   </p>
                   <div className="flex items-center gap-3 pt-2">
-                    <span className="text-xs text-gray-500">Follow the journey:</span>
+                    <span className="text-xs text-gray-400">Follow the journey:</span>
                     <a href="https://www.linkedin.com/in/mo-systemarchitect" target="_blank" rel="noopener noreferrer" className="text-xs text-emerald-400 hover:text-emerald-300 transition-colors">LinkedIn</a>
                     <span className="text-gray-700">·</span>
                     <a href="https://www.youtube.com/@AIKnowlidgi" target="_blank" rel="noopener noreferrer" className="text-xs text-emerald-400 hover:text-emerald-300 transition-colors">YouTube</a>
@@ -194,6 +241,18 @@ export default function LandingPage() {
         </Suspense>
 
         <div className="content-visibility-section">
+          <Suspense fallback={<div className="h-96 animate-pulse bg-gray-900/50" />}>
+            <MRRCalculator />
+          </Suspense>
+        </div>
+
+        <div className="content-visibility-section">
+          <Suspense fallback={<div className="h-32 animate-pulse bg-gray-900/50" />}>
+            <StatsSection />
+          </Suspense>
+        </div>
+
+        <div className="content-visibility-section">
           <Suspense fallback={<div className="h-48 animate-pulse bg-gray-900/50" />}>
             <ComparisonTableSection />
           </Suspense>
@@ -203,50 +262,9 @@ export default function LandingPage() {
           <ReassuranceSection />
         </Suspense>
 
-        {/* ─── DEMO SCREENSHOT ─── */}
-        <section className="border-t border-gray-800 px-6 py-24">
-          <div className="mx-auto max-w-5xl">
-            <ScrollReveal>
-              <div className="rounded-2xl border border-gray-700 bg-gray-900 p-2 shadow-2xl hover:border-gray-600 transition-colors">
-                <div className="rounded-xl border border-gray-700 bg-gray-800 p-8">
-                  <div className="flex items-center gap-3 mb-8">
-                    <div className="flex gap-2">
-                      <div className="h-3 w-3 rounded-full bg-red-500" />
-                      <div className="h-3 w-3 rounded-full bg-amber-500" />
-                      <div className="h-3 w-3 rounded-full bg-emerald-500" />
-                    </div>
-                    <div className="ml-4 flex items-center gap-4">
-                      <div className="h-3 w-24 rounded bg-gray-700" />
-                      <div className="h-3 w-20 rounded bg-gray-700" />
-                      <div className="h-3 w-16 rounded bg-gray-700" />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-                    {["MRR", "ARR", "Churn Rate", "LTV"].map((label) => (
-                      <div key={label} className="rounded-lg border border-gray-700 bg-gray-800/50 p-4">
-                        <div className="h-3 w-16 rounded bg-gray-700 mb-3" />
-                        <div className="h-8 w-24 rounded bg-gray-700" />
-                      </div>
-                    ))}
-                  </div>
-                  <div className="rounded-lg border border-gray-700 bg-gray-800/50 p-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="h-3 w-32 rounded bg-gray-700" />
-                      <div className="flex gap-2">
-                        <div className="h-3 w-10 rounded bg-gray-700" />
-                        <div className="h-3 w-10 rounded bg-gray-700" />
-                        <div className="h-3 w-10 rounded bg-gray-700" />
-                      </div>
-                    </div>
-                    <div className="h-48 w-full rounded-lg bg-gray-700/50 flex items-center justify-center">
-                      <span className="text-gray-500 text-sm">Dashboard Preview \u2014 90-Day Forecast Chart</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
+        <Suspense fallback={<div className="h-96 animate-pulse bg-gray-900/50" />}>
+          <PhoneMockupPreview />
+        </Suspense>
 
         <Suspense fallback={<div className="h-96 animate-pulse bg-gray-900/50" />}>
           <PricingSection />
@@ -258,6 +276,10 @@ export default function LandingPage() {
 
         <Suspense fallback={<div className="h-48 animate-pulse bg-gray-900/50" />}>
           <FAQSection />
+        </Suspense>
+
+        <Suspense fallback={<div className="h-48 animate-pulse bg-gray-900/50" />}>
+          <NewsletterSignup />
         </Suspense>
 
         {/* ─── CTA ─── */}
@@ -277,7 +299,7 @@ export default function LandingPage() {
                     <p className="text-sm text-gray-300 leading-relaxed italic">
                       &ldquo;I built AI Finance Ops after missing a churn spike because my spreadsheet was wrong.&rdquo;
                     </p>
-                    <p className="text-xs text-gray-500 mt-2">\u2014 Mo, Founder of AI Finance Ops</p>
+                    <p className="text-xs text-gray-400 mt-2">\u2014 Mo, Founder of AI Finance Ops</p>
                   </div>
                 </div>
               </div>
@@ -288,7 +310,7 @@ export default function LandingPage() {
                 Every day without clear metrics is a decision made in the dark. Get your MRR dashboard live in 5 minutes.
               </p>
               <Link href="/register" className="mt-10 inline-flex">
-                <span className="group inline-flex items-center gap-2 rounded-lg bg-emerald-500 px-10 py-4 text-lg font-semibold text-white hover:bg-emerald-400 transition-all animate-pulse-glow shadow-xl shadow-emerald-500/25">
+                <span className="group inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-10 py-4 text-lg font-semibold text-white hover:bg-emerald-500 transition-all animate-pulse-glow shadow-xl shadow-emerald-600/25">
                   Start Free Today <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </Link>
@@ -306,10 +328,10 @@ export default function LandingPage() {
                 <Logo size={28} />
                 <span className="text-sm font-bold text-white">AI Finance Ops</span>
               </div>
-              <p className="text-sm text-gray-500 leading-relaxed mb-4">
+              <p className="text-sm text-gray-400 leading-relaxed mb-4">
                 SaaS financial intelligence for early-stage founders.
               </p>
-              <p className="text-xs text-gray-500">&copy; 2026 AI Finance Ops. All rights reserved.</p>
+              <p className="text-xs text-gray-400">&copy; 2026 AI Finance Ops. All rights reserved.</p>
             </div>
             <div>
               <h3 className="text-sm font-semibold text-white mb-4">Product</h3>
@@ -341,7 +363,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="mt-12 border-t border-gray-800 pt-8">
-            <p className="text-xs text-gray-500 mb-3">Featured on</p>
+            <p className="text-xs text-gray-400 mb-3">Featured on</p>
             <a
               href="https://www.producthunt.com/posts/ai-finance-ops"
               target="_blank"
@@ -349,18 +371,33 @@ export default function LandingPage() {
               className="inline-block"
             >
               <img
-                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=000000&theme=dark"
+                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=ai-finance-ops&theme=dark"
                 alt="AI Finance Ops - Featured on Product Hunt"
-                width="250"
-                height="54"
+                width={250}
+                height={54}
+                loading="lazy"
+                decoding="async"
+                style={{ width: '250px', height: '54px' }}
+                onError={(e) => {
+                  const target = e.currentTarget
+                  target.style.display = 'none'
+                  const fallback = target.nextElementSibling
+                  if (fallback) (fallback as HTMLElement).style.display = 'flex'
+                }}
               />
+              <span
+                style={{ display: 'none' }}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-orange-500/30 bg-orange-500/10 text-orange-400 text-sm font-medium"
+              >
+                🔶 Featured on Product Hunt
+              </span>
             </a>
           </div>
           <div className="mt-8 border-t border-gray-800 pt-8">
-            <p className="text-xs text-gray-500 mb-3">Recommended tools:</p>
+            <p className="text-xs text-gray-400 mb-3">Recommended tools:</p>
             <div className="flex flex-wrap gap-4 text-xs">
-              <a href="https://go.fiverr.com/visit/?bta=870194&brand=fiverraffiliates" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-300 transition-colors">Fiverr Affiliates</a>
-              <a href="https://www.binance.com/register?ref=782089850" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-300 transition-colors">Binance</a>
+              <a href="https://go.fiverr.com/visit/?bta=870194&brand=fiverraffiliates" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-200 transition-colors">Fiverr Affiliates</a>
+              <a href="https://www.binance.com/register?ref=782089850" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-gray-200 transition-colors">Binance</a>
             </div>
           </div>
         </div>

@@ -128,7 +128,7 @@ export function TestimonialCarousel() {
 }
 
 /* ─── Animated Counter ─── */
-export function AnimatedCounter({ target, suffix = "", label }: { target: number; suffix?: string; label: string }) {
+export function AnimatedCounter({ target, suffix = "", prefix = "", label }: { target: number; suffix?: string; prefix?: string; label: string }) {
   const [count, setCount] = useState(0)
   const [visible, setVisible] = useState(false)
   const ref = useCallback((node: HTMLDivElement | null) => {
@@ -156,9 +156,9 @@ export function AnimatedCounter({ target, suffix = "", label }: { target: number
   return (
     <div ref={ref} className="text-center">
       <div className="text-4xl font-bold text-emerald-400 mb-2">
-        {count.toLocaleString()}{suffix}
+        {prefix}{count.toLocaleString()}{suffix}
       </div>
-      <p className="text-gray-500 text-sm">{label}</p>
+      <p className="text-gray-400 text-sm">{label}</p>
     </div>
   )
 }
@@ -178,7 +178,7 @@ export function BackToTop() {
   return (
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-      className="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500 text-white shadow-lg shadow-emerald-500/25 hover:bg-emerald-400 transition-all animate-fade-in"
+      className="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-600 text-white shadow-lg shadow-emerald-600/25 hover:bg-emerald-500 transition-all animate-fade-in"
       aria-label="Back to top"
     >
       <ArrowUp className="h-5 w-5" />

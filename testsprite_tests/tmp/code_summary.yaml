@@ -1,0 +1,319 @@
+version: "2"
+type: frontend
+tech_stack:
+  - TypeScript
+  - Next.js 14 (App Router)
+  - React 18
+  - Tailwind CSS
+  - shadcn/ui (Radix primitives + CVA)
+  - Framer Motion
+  - Recharts
+  - Supabase (Auth + Database)
+  - Drizzle ORM
+  - PostgreSQL
+  - Stripe
+  - Lemon Squeezy
+  - PayPal
+  - Plaid
+  - Resend (Email)
+  - Sentry
+  - Upstash (Redis + Rate Limit)
+  - OpenAI
+  - Pino (Logging)
+routes:
+  - path: /
+    file: src/app/(marketing)/page.tsx
+    auth_required: false
+    description: Marketing homepage with hero, stats, features, testimonials, pricing, comparison table
+  - path: /pricing
+    file: src/app/(marketing)/pricing/page.tsx
+    auth_required: false
+    description: Pricing page with Lemon Squeezy checkout
+  - path: /features
+    file: src/app/(marketing)/features/page.tsx
+    auth_required: false
+    description: Features page
+  - path: /login
+    file: src/app/(auth)/login/page.tsx
+    auth_required: false
+    description: User login with Supabase Auth
+  - path: /signup
+    file: src/app/(auth)/signup/page.tsx
+    auth_required: false
+    description: User registration
+  - path: /auth/callback
+    file: src/app/(auth)/auth/callback/route.ts
+    auth_required: false
+    description: Supabase Auth callback handler
+  - path: /dashboard/overview
+    file: src/app/dashboard/overview/page.tsx
+    auth_required: true
+    description: Dashboard home with KPI grids (Stripe, LS, PayPal)
+  - path: /dashboard/analytics
+    file: src/app/dashboard/analytics/page.tsx
+    auth_required: true
+    description: Analytics with Core, Lemon Squeezy, PayPal tabs (charts, donuts, tables)
+  - path: /dashboard/cashflow
+    file: src/app/dashboard/cashflow/page.tsx
+    auth_required: true
+    description: Cash flow with Stripe MRR, LS cashflow, PayPal cashflow sections
+  - path: /dashboard/settings
+    file: src/app/dashboard/settings/page.tsx
+    auth_required: true
+    description: Settings with Profile, Workspace, Notifications, Security, Integrations tabs
+  - path: /dashboard/billing
+    file: src/app/dashboard/billing/page.tsx
+    auth_required: true
+    description: Billing and subscription management
+  - path: /api/plaid/create-link-token
+    file: src/app/api/plaid/create-link-token/route.ts
+    auth_required: true
+    description: POST - Create Plaid Link token
+  - path: /api/plaid/exchange-token
+    file: src/app/api/plaid/exchange-token/route.ts
+    auth_required: true
+    description: POST - Exchange Plaid public token for access token
+  - path: /api/plaid/transactions
+    file: src/app/api/plaid/transactions/route.ts
+    auth_required: true
+    description: GET - Fetch Plaid transactions
+  - path: /api/plaid/balance
+    file: src/app/api/plaid/balance/route.ts
+    auth_required: true
+    description: GET - Fetch Plaid account balances
+  - path: /api/plaid/disconnect
+    file: src/app/api/plaid/disconnect/route.ts
+    auth_required: true
+    description: POST - Disconnect Plaid account
+  - path: /api/paypal/validate
+    file: src/app/api/paypal/validate/route.ts
+    auth_required: true
+    description: POST - Validate and store PayPal credentials
+  - path: /api/paypal/dashboard
+    file: src/app/api/paypal/dashboard/route.ts
+    auth_required: true
+    description: GET - PayPal dashboard KPI data
+  - path: /api/paypal/sync
+    file: src/app/api/paypal/sync/route.ts
+    auth_required: true
+    description: POST - Sync PayPal transactions
+  - path: /api/paypal/analytics
+    file: src/app/api/paypal/analytics/route.ts
+    auth_required: true
+    description: GET - PayPal analytics data
+  - path: /api/paypal/cashflow
+    file: src/app/api/paypal/cashflow/route.ts
+    auth_required: true
+    description: GET - PayPal cashflow data
+  - path: /api/paypal/disconnect
+    file: src/app/api/paypal/disconnect/route.ts
+    auth_required: true
+    description: DELETE - Disconnect PayPal account
+  - path: /api/webhooks/paypal
+    file: src/app/api/webhooks/paypal/route.ts
+    auth_required: false
+    description: POST - PayPal webhook event handler
+  - path: /api/webhooks/lemonsqueezy
+    file: src/app/api/webhooks/lemonsqueezy/route.ts
+    auth_required: false
+    description: POST - Lemon Squeezy webhook handler
+features:
+  - name: Marketing Homepage
+    description: Public landing page with hero, animated stats, features grid, testimonials, pricing table
+    files:
+      - src/app/(marketing)/page.tsx
+      - src/components/home/sections.tsx
+      - src/components/landing-interactive.tsx
+    entry_route: /
+    user_interactions:
+      - View hero section with animated counters
+      - Scroll through "As Seen On" logos bar
+      - Browse features section
+      - Read customer testimonials grid
+      - View pricing comparison table
+    auth_required: false
+  - name: User Authentication
+    description: Sign up, log in, and session management via Supabase Auth
+    files:
+      - src/app/(auth)/login/page.tsx
+      - src/app/(auth)/signup/page.tsx
+      - src/app/auth/callback/route.ts
+      - src/lib/supabase/browser.ts
+      - src/lib/supabase/server.ts
+    entry_route: /login
+    user_interactions:
+      - Navigate to /login page
+      - Enter email and password
+      - Click Sign In button
+      - Redirect to dashboard on success
+      - See error message on invalid credentials
+    api_calls:
+      - method: POST
+        endpoint: /auth/v1/token (Supabase)
+    auth_required: false
+  - name: Dashboard Overview
+    description: Main dashboard with KPI grids for Stripe, Lemon Squeezy, and PayPal
+    files:
+      - src/app/dashboard/overview/page.tsx
+      - src/components/dashboard/lemon-kpi-grid.tsx
+      - src/components/dashboard/paypal-kpi-grid.tsx
+    entry_route: /dashboard/overview
+    user_interactions:
+      - View revenue KPIs (MRR, Lifetime Revenue, Active Subscriptions)
+      - View PayPal balance and transaction stats
+      - See loading states while data fetches
+      - See error states with retry buttons
+    api_calls:
+      - method: GET
+        endpoint: /api/lemonsqueezy/dashboard
+      - method: GET
+        endpoint: /api/paypal/dashboard
+    auth_required: true
+  - name: Analytics Dashboard
+    description: Analytics with tabbed interface (Core, Lemon Squeezy, PayPal) showing charts and data tables
+    files:
+      - src/app/dashboard/analytics/page.tsx
+      - src/components/analytics/paypal-analytics.tsx
+    entry_route: /dashboard/analytics
+    user_interactions:
+      - Switch between Core, Lemon Squeezy, and PayPal tabs
+      - View revenue line chart (12 months)
+      - View transaction status donut chart
+      - View top payers bar chart
+      - Paginate through transactions table
+      - View invoices table
+    api_calls:
+      - method: GET
+        endpoint: /api/paypal/analytics
+    auth_required: true
+  - name: Cash Flow
+    description: Cash flow tracking with Stripe MRR, LS cashflow, and PayPal cashflow sections
+    files:
+      - src/app/dashboard/cashflow/page.tsx
+      - src/components/cashflow/paypal-cashflow-section.tsx
+    entry_route: /dashboard/cashflow
+    user_interactions:
+      - View monthly recurring revenue
+      - View lifetime net revenue
+      - View subscriptions MRR
+    api_calls:
+      - method: GET
+        endpoint: /api/paypal/cashflow
+    auth_required: true
+  - name: Settings & Integrations
+    description: User settings with profile, workspace, notifications, security, and integration management
+    files:
+      - src/app/dashboard/settings/page.tsx
+    entry_route: /dashboard/settings
+    user_interactions:
+      - Switch between Profile, Workspace, Notifications, Security, Integrations tabs
+      - Update profile name
+      - Configure workspace settings (company, billing email)
+      - Toggle notification preferences
+      - Connect/disconnect Stripe integration
+      - Connect/disconnect Lemon Squeezy integration
+      - Connect/disconnect PayPal Business integration
+      - Connect/disconnect Plaid Bank Connection integration
+    api_calls:
+      - method: POST
+        endpoint: /dashboard/settings/stripe
+      - method: POST
+        endpoint: /api/lemonsqueezy/validate
+      - method: POST
+        endpoint: /api/paypal/validate
+      - method: POST
+        endpoint: /api/plaid/create-link-token
+      - method: POST
+        endpoint: /api/plaid/exchange-token
+      - method: POST
+        endpoint: /api/plaid/disconnect
+    auth_required: true
+  - name: Plaid Bank Integration
+    description: Connect bank accounts via Plaid, sync transactions and balances
+    files:
+      - src/app/api/plaid/create-link-token/route.ts
+      - src/app/api/plaid/exchange-token/route.ts
+      - src/app/api/plaid/transactions/route.ts
+      - src/app/api/plaid/balance/route.ts
+      - src/app/api/plaid/disconnect/route.ts
+      - src/components/dashboard/plaid-link-button.tsx
+      - src/services/plaid.ts
+    entry_route: /dashboard/settings
+    user_interactions:
+      - Click "Connect Bank Account" button
+      - Open Plaid Link dialog
+      - Select financial institution
+      - Enter bank credentials
+      - Authorize account access
+      - View connected bank on settings page
+      - Disconnect bank account
+    api_calls:
+      - method: POST
+        endpoint: /api/plaid/create-link-token
+      - method: POST
+        endpoint: /api/plaid/exchange-token
+      - method: GET
+        endpoint: /api/plaid/transactions
+      - method: GET
+        endpoint: /api/plaid/balance
+      - method: POST
+        endpoint: /api/plaid/disconnect
+    auth_required: true
+  - name: PayPal Business Integration
+    description: Connect PayPal Business account, sync transactions and invoices
+    files:
+      - src/app/api/paypal/validate/route.ts
+      - src/app/api/paypal/dashboard/route.ts
+      - src/app/api/paypal/sync/route.ts
+      - src/app/api/paypal/analytics/route.ts
+      - src/app/api/paypal/cashflow/route.ts
+      - src/app/api/paypal/disconnect/route.ts
+      - src/services/paypal.ts
+      - src/services/paypalSync.ts
+    entry_route: /dashboard/settings
+    user_interactions:
+      - Enter PayPal Client ID and Secret
+      - Select Sandbox or Live mode
+      - Click Test Connection & Connect
+      - Click Sync Now
+      - Click Disconnect
+    api_calls:
+      - method: POST
+        endpoint: /api/paypal/validate
+      - method: GET
+        endpoint: /api/paypal/dashboard
+      - method: POST
+        endpoint: /api/paypal/sync
+      - method: GET
+        endpoint: /api/paypal/analytics
+      - method: GET
+        endpoint: /api/paypal/cashflow
+      - method: DELETE
+        endpoint: /api/paypal/disconnect
+    auth_required: true
+  - name: Webhooks
+    description: Handle incoming webhooks from PayPal and Lemon Squeezy
+    files:
+      - src/app/api/webhooks/paypal/route.ts
+      - src/app/api/webhooks/lemonsqueezy/route.ts
+    entry_route: /api/webhooks/paypal
+    user_interactions:
+      - Receive and process PayPal webhook events (PAYMENT.CAPTURE.COMPLETED, REFUNDED, DENIED)
+      - Process invoice and subscription events
+      - Receive and process Lemon Squeezy webhook events
+    api_calls:
+      - method: POST
+        endpoint: /api/webhooks/paypal
+      - method: POST
+        endpoint: /api/webhooks/lemonsqueezy
+    auth_required: false
+known_limitations:
+  - issue: Plaid, PayPal, LS, Stripe integrations require valid API keys - tests will fail without real credentials
+    location: src/services/
+    impact: API-dependent features cannot be tested end-to-end without provider credentials
+  - issue: Webhook endpoints require webhook secret verification - mock data won't pass validation
+    location: src/app/api/webhooks/
+    impact: Direct POST to webhook endpoints will be rejected without valid signature headers
+  - issue: Some dashboard pages depend on Supabase session for auth redirect
+    location: src/app/dashboard/
+    impact: Unauthenticated requests will 302 redirect to /login

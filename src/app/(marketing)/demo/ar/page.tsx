@@ -13,21 +13,21 @@ export default function DemoArPage() {
         <span>This is a live demo — <Link href="/register" className="font-semibold underline">Sign up free</Link> to connect your data.</span>
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight text-gray-900">AR / Invoices</h1>
+          <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900">AR / Invoices</h1>
           <p className="mt-1 text-gray-500">Demo data — sample invoices.</p>
         </div>
         <Link
           href="/register"
-          className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+          className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 shrink-0"
         >
           Sign Up — It&apos;s Free
         </Link>
       </div>
 
-      <div className="rounded-xl border border-gray-200 bg-white shadow-sm">
-        <table className="w-full">
+      <div className="rounded-xl border border-gray-200 bg-white shadow-sm overflow-x-auto">
+        <table className="w-full min-w-[500px]">
           <thead>
             <tr className="border-b border-gray-200">
               <th className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">Customer</th>

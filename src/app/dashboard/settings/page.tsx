@@ -5,7 +5,8 @@ import { createClient } from '@/lib/supabase/browser'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { ExternalLink, Check, User, Building2, Bell, Shield, Puzzle, Save, Loader2 } from 'lucide-react'
+import { ExternalLink, Check, User, Building2, Bell, Shield, Puzzle, Save, Loader2, RefreshCw, Copy, Trash2, Banknote } from 'lucide-react'
+import { PlaidLinkButton } from '@/components/dashboard/plaid-link-button'
 import { cn } from '@/lib/utils'
 import { updateProfile, updateWorkspaceSettings, updateNotificationSettings } from './actions'
 
@@ -56,6 +57,21 @@ export default function SettingsPage() {
   const [stripeConnected, setStripeConnected] = useState(false)
   const [stripeLastSync, setStripeLastSync] = useState<string | null>(null)
 
+  // Lemon Squeezy
+  const [lsConnected, setLsConnected] = useState(false)
+  const [lsStoreName, setLsStoreName] = useState('')
+  const [lsLastSync, setLsLastSync] = useState<string | null>(null)
+
+  // PayPal
+  const [ppConnected, setPpConnected] = useState(false)
+  const [ppMerchantEmail, setPpMerchantEmail] = useState('')
+  const [ppLastSync, setPpLastSync] = useState<string | null>(null)
+
+  // Plaid
+  const [plaidConnected, setPlaidConnected] = useState(false)
+  const [plaidInstitutionName, setPlaidInstitutionName] = useState('')
+  const [plaidLastSync, setPlaidLastSync] = useState<string | null>(null)
+
   const [wsSaved, setWsSaved] = useState(false)
   const [notifSaved, setNotifSaved] = useState(false)
 
@@ -97,6 +113,39 @@ export default function SettingsPage() {
           setStripeConnected(true)
           setStripeLastSync(sa.last_sync_at ?? null)
         }
+
+        // Lemon Squeezy account
+        try {
+          const lsRes = await fetch('/api/lemonsqueezy/dashboard')
+          const lsJson = await lsRes.json()
+          if (lsJson.connected) {
+            setLsConnected(true)
+            setLsStoreName(lsJson.storeName ?? 'Lemon Squeezy')
+            setLsLastSync(lsJson.data?.lastSyncAt ?? null)
+          }
+        } catch {} // LS not configured
+
+        // PayPal account
+        try {
+          const ppRes = await fetch('/api/paypal/dashboard')
+          const ppJson = await ppRes.json()
+          if (ppJson.isConnected) {
+            setPpConnected(true)
+            setPpMerchantEmail(ppJson.merchantEmail ?? 'PayPal')
+            setPpLastSync(ppJson.lastSyncedAt ?? null)
+          }
+        } catch {} // PayPal not configured
+
+        // Plaid account
+        try {
+          const plRes = await fetch('/api/plaid/balance')
+          const plJson = await plRes.json()
+          if (plRes.ok && plJson.accounts) {
+            setPlaidConnected(true)
+            setPlaidInstitutionName(plJson.institutionName ?? plJson.accounts[0]?.name ?? 'Bank')
+            setPlaidLastSync(new Date().toISOString())
+          }
+        } catch {} // Plaid not configured
 
         // Integrations
         setIntegrations([
@@ -153,12 +202,12 @@ export default function SettingsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Settings</h1>
         <p className="text-sm text-gray-500 mt-0.5">Manage your account, workspace, and preferences.</p>
       </div>
 
-      {/* Tabs */}
-      <div className="flex flex-wrap gap-1 border-b border-gray-200 pb-px">
+      {/* Tabs — horizontal scroll on mobile, wrap on desktop */}
+      <div className="overflow-x-auto overflow-y-hidden flex-nowrap sm:flex-wrap flex gap-1 border-b border-gray-200 pb-px scrollbar-none">
         {TABS.map(t => {
           const active = tab === t.id
           return (
@@ -166,7 +215,7 @@ export default function SettingsPage() {
               key={t.id}
               onClick={() => setTab(t.id)}
               className={cn(
-                "flex items-center gap-1.5 px-4 py-2.5 text-sm font-medium border-b-2 -mb-px transition-colors",
+                "shrink-0 flex items-center gap-1.5 px-3 sm:px-4 py-2.5 text-sm font-medium border-b-2 -mb-px transition-colors",
                 active ? 'border-blue-600 text-blue-700' : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
               )}
             >
@@ -405,9 +454,560 @@ export default function SettingsPage() {
                 )}
               </CardContent>
             </Card>
+
+            {/* Lemon Squeezy inline connect card */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <span className="text-lg">🍋</span>
+                  <div>
+                    <CardTitle>Lemon Squeezy</CardTitle>
+                    <CardDescription>
+                      Connect your Lemon Squeezy store to sync orders, subscriptions, and MRR.
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <LemonSqueezyCardInline
+                  connected={lsConnected}
+                  storeName={lsStoreName}
+                  lastSync={lsLastSync}
+                  onConnected={(name) => {
+                    setLsConnected(true)
+                    setLsStoreName(name)
+                    setLsLastSync(new Date().toISOString())
+                  }}
+                  onDisconnected={() => {
+                    setLsConnected(false)
+                    setLsStoreName('')
+                    setLsLastSync(null)
+                  }}
+                  onSync={() => setLsLastSync(new Date().toISOString())}
+                />
+              </CardContent>
+            </Card>
+
+            {/* PayPal inline connect card */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <svg className="h-5 w-5" viewBox="0 0 24 24" fill="#003087"><path d="M20.067 8.478c.493.526.746 1.255.746 2.188 0 2.625-1.588 4.068-3.979 4.068h-1.416l-.925 3.894H12.89l.924-3.894h.738c1.875 0 2.813-.937 3.214-2.516.357-1.416.179-3.74-1.696-3.74h-2.5l-1.116 4.688H9.86l1.116-4.688H7.64l-1.116 4.688H3.964l1.116-4.688H.559l.372-1.563h4.52l.893-3.75H2.011l.372-1.563h6.25c.894 0 1.563.223 2.055.669.492.446.738 1.116.738 2.011 0 .894-.246 1.696-.738 2.409-.492.713-1.117 1.07-1.875 1.07h-.67l.892-3.75h-.625l-1.116 4.688h1.563z" /></svg>
+                  <div>
+                    <CardTitle>PayPal Business</CardTitle>
+                    <CardDescription>
+                      Connect your PayPal Business account to sync transactions, invoices, and subscriptions.
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <PayPalCardInline
+                  connected={ppConnected}
+                  merchantEmail={ppMerchantEmail}
+                  lastSync={ppLastSync}
+                  onConnected={(email) => {
+                    setPpConnected(true)
+                    setPpMerchantEmail(email)
+                    setPpLastSync(new Date().toISOString())
+                  }}
+                  onDisconnected={() => {
+                    setPpConnected(false)
+                    setPpMerchantEmail('')
+                    setPpLastSync(null)
+                  }}
+                  onSync={() => setPpLastSync(new Date().toISOString())}
+                />
+              </CardContent>
+            </Card>
+
+            {/* Plaid inline connect card */}
+            <Card>
+              <CardHeader>
+                <div className="flex items-center gap-2">
+                  <svg className="h-5 w-5" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" stroke="#10B981" strokeWidth="2" /><path d="M8 12l2.5 2.5L16 9" stroke="#10B981" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                  <div>
+                    <CardTitle>Plaid Bank Connection</CardTitle>
+                    <CardDescription>
+                      Connect your bank accounts to sync transactions and balances.
+                    </CardDescription>
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent>
+                <PlaidCardInline
+                  connected={plaidConnected}
+                  institutionName={plaidInstitutionName}
+                  lastSync={plaidLastSync}
+                  onConnected={(name) => {
+                    setPlaidConnected(true)
+                    setPlaidInstitutionName(name)
+                    setPlaidLastSync(new Date().toISOString())
+                  }}
+                  onDisconnected={() => {
+                    setPlaidConnected(false)
+                    setPlaidInstitutionName('')
+                    setPlaidLastSync(null)
+                  }}
+                />
+              </CardContent>
+            </Card>
           </div>
         )}
       </div>
+    </div>
+  )
+}
+
+function LemonSqueezyCardInline({
+  connected,
+  storeName,
+  lastSync,
+  onConnected,
+  onDisconnected,
+  onSync,
+}: {
+  connected: boolean
+  storeName: string
+  lastSync: string | null
+  onConnected: (name: string) => void
+  onDisconnected: () => void
+  onSync: () => void
+}) {
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [message, setMessage] = useState('')
+  const [apiKey, setApiKey] = useState('')
+  const [syncing, setSyncing] = useState(false)
+
+  async function handleConnect(e: React.FormEvent) {
+    e.preventDefault()
+    if (!apiKey.trim()) return
+    setStatus('loading')
+    setMessage('')
+    try {
+      const res = await fetch('/api/lemonsqueezy/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ apiKey: apiKey.trim() }),
+      })
+      const json = await res.json()
+      if (!res.ok) {
+        throw new Error(json.error ?? 'Failed to connect')
+      }
+      setStatus('success')
+      setMessage(`Connected to ${json.storeName ?? 'Lemon Squeezy'}`)
+      onConnected(json.storeName ?? 'Lemon Squeezy')
+    } catch (err) {
+      setStatus('error')
+      setMessage(err instanceof Error ? err.message : 'Something went wrong')
+    }
+  }
+
+  async function handleSync() {
+    setSyncing(true)
+    try {
+      const res = await fetch('/api/lemonsqueezy/sync', { method: 'POST' })
+      if (!res.ok) {
+        const json = await res.json()
+        throw new Error(json.error ?? 'Sync failed')
+      }
+      onSync()
+    } catch (err) {
+      setMessage(err instanceof Error ? err.message : 'Sync failed')
+    }
+    setSyncing(false)
+  }
+
+  async function handleDisconnect() {
+    try {
+      const supabase = createClient()
+      const { data: { user } } = await supabase.auth.getUser()
+      if (user) {
+        await supabase.from('lemon_squeezy_accounts').delete().eq('user_id', user.id)
+        await supabase.from('lemon_squeezy_orders').delete().eq('user_id', user.id)
+        await supabase.from('lemon_squeezy_subscriptions').delete().eq('user_id', user.id)
+        await supabase.from('lemon_squeezy_customers').delete().eq('user_id', user.id)
+      }
+      onDisconnected()
+    } catch {}
+  }
+
+  const webhookUrl = `${process.env.NEXT_PUBLIC_APP_URL ?? 'https://aifinanceops.app'}/api/webhooks/lemonsqueezy`
+
+  if (connected) {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center gap-2 rounded-lg bg-green-50 px-4 py-3 text-sm text-green-700">
+          <Check className="h-4 w-4" />
+          Connected {storeName ? `(${storeName})` : ''}
+          {lastSync && <> · Last synced: {new Date(lastSync).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}</>}
+        </div>
+
+        <div className="rounded-lg border border-gray-200 p-4 space-y-2">
+          <p className="text-xs font-medium text-gray-500">Webhook URL</p>
+          <div className="flex items-center gap-2">
+            <code className="flex-1 rounded bg-gray-50 px-2 py-1.5 text-xs font-mono text-gray-700 truncate">
+              {webhookUrl}
+            </code>
+            <button
+              onClick={() => navigator.clipboard.writeText(webhookUrl)}
+              className="shrink-0 rounded-lg border border-gray-300 p-1.5 hover:bg-gray-50 transition-colors"
+              title="Copy webhook URL"
+            >
+              <Copy className="h-3.5 w-3.5 text-gray-500" />
+            </button>
+          </div>
+        </div>
+
+        <div className="flex gap-2">
+          <button
+            onClick={handleSync}
+            disabled={syncing}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50"
+          >
+            <RefreshCw className={`h-3.5 w-3.5 ${syncing ? 'animate-spin' : ''}`} />
+            {syncing ? 'Syncing...' : 'Sync Now'}
+          </button>
+          <button
+            onClick={handleDisconnect}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 transition-colors"
+          >
+            <Trash2 className="h-3.5 w-3.5" />
+            Disconnect
+          </button>
+        </div>
+
+        {message && (
+          <div className="rounded-lg bg-red-50 px-3 py-2 text-xs text-red-600">{message}</div>
+        )}
+      </div>
+    )
+  }
+
+  return (
+    <form onSubmit={handleConnect} className="space-y-4">
+      {status === 'success' && (
+        <div className="rounded-md bg-green-50 p-3 text-sm text-green-700">{message}</div>
+      )}
+      {status === 'error' && (
+        <div className="rounded-md bg-red-50 p-3 text-sm text-red-600">{message}</div>
+      )}
+      <div>
+        <label htmlFor="lsApiKey" className="mb-1 block text-sm font-medium text-gray-700">
+          Lemon Squeezy API Key
+        </label>
+        <input
+          id="lsApiKey"
+          type="password"
+          placeholder="your_api_key_here"
+          value={apiKey}
+          onChange={(e) => setApiKey(e.target.value)}
+          required
+          className="w-full rounded-lg border border-gray-300 px-3 py-2 font-mono text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+        />
+        <p className="mt-1 text-xs text-gray-500">
+          Find this in Lemon Squeezy → Settings → API
+        </p>
+      </div>
+      <div className="rounded-lg border border-gray-200 p-4 space-y-2">
+        <p className="text-xs font-medium text-gray-500">Webhook URL (configure in Lemon Squeezy)</p>
+        <code className="block rounded bg-gray-50 px-2 py-1.5 text-xs font-mono text-gray-700 break-all">
+          {webhookUrl}
+        </code>
+      </div>
+      <Button type="submit" disabled={status === 'loading' || !apiKey.trim()}>
+        {status === 'loading' ? <Loader2 className="h-4 w-4 animate-spin mr-1" /> : null}
+        {status === 'loading' ? 'Connecting...' : 'Connect'}
+      </Button>
+    </form>
+  )
+}
+
+function PayPalCardInline({
+  connected,
+  merchantEmail,
+  lastSync,
+  onConnected,
+  onDisconnected,
+  onSync,
+}: {
+  connected: boolean
+  merchantEmail: string
+  lastSync: string | null
+  onConnected: (email: string) => void
+  onDisconnected: () => void
+  onSync: () => void
+}) {
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
+  const [message, setMessage] = useState('')
+  const [clientId, setClientId] = useState('')
+  const [clientSecret, setClientSecret] = useState('')
+  const [mode, setMode] = useState<'sandbox' | 'live'>('sandbox')
+  const [syncing, setSyncing] = useState(false)
+
+  async function handleConnect(e: React.FormEvent) {
+    e.preventDefault()
+    if (!clientId.trim() || !clientSecret.trim()) return
+    setStatus('loading')
+    setMessage('')
+    try {
+      const res = await fetch('/api/paypal/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ clientId: clientId.trim(), clientSecret: clientSecret.trim(), mode }),
+      })
+      const json = await res.json()
+      if (!res.ok) {
+        throw new Error(json.error ?? 'Failed to connect')
+      }
+      setStatus('success')
+      setMessage(`Connected as ${json.merchantEmail}`)
+      onConnected(json.merchantEmail ?? 'PayPal')
+    } catch (err) {
+      setStatus('error')
+      setMessage(err instanceof Error ? err.message : 'Something went wrong')
+    }
+  }
+
+  async function handleSync() {
+    setSyncing(true)
+    try {
+      const res = await fetch('/api/paypal/sync', { method: 'POST' })
+      if (!res.ok) {
+        const json = await res.json()
+        throw new Error(json.error ?? 'Sync failed')
+      }
+      onSync()
+    } catch (err) {
+      setMessage(err instanceof Error ? err.message : 'Sync failed')
+    }
+    setSyncing(false)
+  }
+
+  async function handleDisconnect() {
+    try {
+      const res = await fetch('/api/paypal/disconnect', { method: 'DELETE' })
+      if (!res.ok) throw new Error('Failed')
+      onDisconnected()
+    } catch {}
+  }
+
+  const webhookUrl = `${process.env.NEXT_PUBLIC_APP_URL ?? 'https://aifinanceops.app'}/api/webhooks/paypal`
+
+  if (connected) {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center gap-2 rounded-lg bg-green-50 px-4 py-3 text-sm text-green-700">
+          <Check className="h-4 w-4" />
+          Connected {merchantEmail ? `(${merchantEmail})` : ''}
+          {lastSync && <> · Last synced: {new Date(lastSync).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}</>}
+        </div>
+
+        <div className="rounded-lg border border-gray-200 p-4 space-y-2">
+          <p className="text-xs font-medium text-gray-500">Webhook URL (configure in PayPal Developer Dashboard)</p>
+          <div className="flex items-center gap-2">
+            <code className="flex-1 rounded bg-gray-50 px-2 py-1.5 text-xs font-mono text-gray-700 truncate">
+              {webhookUrl}
+            </code>
+            <button
+              onClick={() => navigator.clipboard.writeText(webhookUrl)}
+              className="shrink-0 rounded-lg border border-gray-300 p-1.5 hover:bg-gray-50 transition-colors"
+              title="Copy webhook URL"
+            >
+              <Copy className="h-3.5 w-3.5 text-gray-500" />
+            </button>
+          </div>
+        </div>
+
+        <div className="flex gap-2">
+          <button
+            onClick={handleSync}
+            disabled={syncing}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50"
+          >
+            <RefreshCw className={`h-3.5 w-3.5 ${syncing ? 'animate-spin' : ''}`} />
+            {syncing ? 'Syncing...' : 'Sync Now'}
+          </button>
+          <button
+            onClick={handleDisconnect}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 transition-colors"
+          >
+            <Trash2 className="h-3.5 w-3.5" />
+            Disconnect
+          </button>
+        </div>
+
+        {message && (
+          <div className="rounded-lg bg-red-50 px-3 py-2 text-xs text-red-600">{message}</div>
+        )}
+      </div>
+    )
+  }
+
+  return (
+    <form onSubmit={handleConnect} className="space-y-4">
+      {status === 'success' && (
+        <div className="rounded-md bg-green-50 p-3 text-sm text-green-700">{message}</div>
+      )}
+      {status === 'error' && (
+        <div className="rounded-md bg-red-50 p-3 text-sm text-red-600">{message}</div>
+      )}
+      <div>
+        <label htmlFor="ppClientId" className="mb-1 block text-sm font-medium text-gray-700">
+          Client ID
+        </label>
+        <input
+          id="ppClientId"
+          type="text"
+          placeholder="your_paypal_client_id"
+          value={clientId}
+          onChange={(e) => setClientId(e.target.value)}
+          required
+          className="w-full rounded-lg border border-gray-300 px-3 py-2 font-mono text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+        />
+        <p className="mt-1 text-xs text-gray-500">
+          Find this in PayPal Developer Dashboard → REST API Apps
+        </p>
+      </div>
+      <div>
+        <label htmlFor="ppClientSecret" className="mb-1 block text-sm font-medium text-gray-700">
+          Client Secret
+        </label>
+        <input
+          id="ppClientSecret"
+          type="password"
+          placeholder="your_paypal_client_secret"
+          value={clientSecret}
+          onChange={(e) => setClientSecret(e.target.value)}
+          required
+          className="w-full rounded-lg border border-gray-300 px-3 py-2 font-mono text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+        />
+      </div>
+      <div>
+        <label className="mb-1 block text-sm font-medium text-gray-700">Mode</label>
+        <div className="flex gap-3">
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name="ppMode"
+              value="sandbox"
+              checked={mode === 'sandbox'}
+              onChange={() => setMode('sandbox')}
+              className="text-blue-600"
+            />
+            <span className="text-sm text-gray-700">Sandbox</span>
+          </label>
+          <label className="flex items-center gap-2 cursor-pointer">
+            <input
+              type="radio"
+              name="ppMode"
+              value="live"
+              checked={mode === 'live'}
+              onChange={() => setMode('live')}
+              className="text-blue-600"
+            />
+            <span className="text-sm text-gray-700">Live</span>
+          </label>
+        </div>
+      </div>
+      <div className="rounded-lg border border-gray-200 p-4 space-y-2">
+        <p className="text-xs font-medium text-gray-500">Webhook URL (configure in PayPal Developer Dashboard)</p>
+        <code className="block rounded bg-gray-50 px-2 py-1.5 text-xs font-mono text-gray-700 break-all">
+          {webhookUrl}
+        </code>
+      </div>
+      <Button type="submit" disabled={status === 'loading' || !clientId.trim() || !clientSecret.trim()}>
+        {status === 'loading' ? <Loader2 className="h-4 w-4 animate-spin mr-1" /> : null}
+        {status === 'loading' ? 'Connecting...' : 'Test Connection & Connect'}
+      </Button>
+    </form>
+  )
+}
+
+function PlaidCardInline({
+  connected,
+  institutionName,
+  lastSync,
+  onConnected,
+  onDisconnected,
+}: {
+  connected: boolean
+  institutionName: string
+  lastSync: string | null
+  onConnected: (name: string) => void
+  onDisconnected: () => void
+}) {
+  const [syncing, setSyncing] = useState(false)
+  const [message, setMessage] = useState('')
+
+  async function handlePlaidSuccess(publicToken: string, name?: string, _institutionId?: string) {
+    setSyncing(true)
+    setMessage('')
+    try {
+      const res = await fetch('/api/plaid/exchange-token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ publicToken, institutionName: name ?? 'Bank' }),
+      })
+      const json = await res.json()
+      if (!res.ok) throw new Error(json.error ?? 'Failed to connect')
+      onConnected(json.institutionName ?? name ?? 'Bank')
+    } catch (err) {
+      setMessage(err instanceof Error ? err.message : 'Failed to connect')
+    }
+    setSyncing(false)
+  }
+
+  async function handleDisconnect() {
+    setSyncing(true)
+    try {
+      const res = await fetch('/api/plaid/disconnect', { method: 'POST' })
+      if (!res.ok) throw new Error('Failed')
+      onDisconnected()
+    } catch {}
+    setSyncing(false)
+  }
+
+  if (connected) {
+    return (
+      <div className="space-y-4">
+        <div className="flex items-center gap-2 rounded-lg bg-green-50 px-4 py-3 text-sm text-green-700">
+          <Check className="h-4 w-4" />
+          Connected {institutionName ? `(${institutionName})` : ''}
+          {lastSync && <> · Last synced: {new Date(lastSync).toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' })}</>}
+        </div>
+        <div className="flex gap-2">
+          <button
+            onClick={handleDisconnect}
+            disabled={syncing}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-red-200 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50 transition-colors disabled:opacity-50"
+          >
+            {syncing ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Trash2 className="h-3.5 w-3.5" />}
+            {syncing ? 'Disconnecting...' : 'Disconnect'}
+          </button>
+        </div>
+        {message && (
+          <div className="rounded-lg bg-red-50 px-3 py-2 text-xs text-red-600">{message}</div>
+        )}
+      </div>
+    )
+  }
+
+  return (
+    <div className="space-y-4">
+      {message && (
+        <div className="rounded-md bg-red-50 p-3 text-sm text-red-600">{message}</div>
+      )}
+      <p className="text-sm text-gray-600">
+        Click the button below to securely connect your bank account via Plaid.
+        You will be redirected to your bank to sign in and authorize access.
+      </p>
+      <PlaidLinkButton
+        onSuccess={handlePlaidSuccess}
+        onError={(err) => setMessage(err.message)}
+        label="Connect Bank Account"
+        variant="default"
+      />
     </div>
   )
 }
