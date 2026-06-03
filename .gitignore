@@ -1,17 +1,58 @@
+# ── Dependencies ──────────────────────────────────────────
 node_modules/
+
+# ── Next.js ───────────────────────────────────────────────
 .next/
 out/
 dist/
+next-env.d.ts
+*.tsbuildinfo
+
+# ── Environment variables (NEVER commit these) ────────────
 .env
 .env.local
-*.tsbuildinfo
-next-env.d.ts
+.env.*.local
+.env.development
+.env.production
+.env.staging
+
+# ── Build & Output artefacts ──────────────────────────────
+output/
 coverage/
+build/
+
+# ── Local dev tooling & IDE configs ──────────────────────
+# Cursor AI
+.cursor/
+# VS Code (workspace-specific, not shared)
+.vscode/
+# Zed
+.zed/
+# Gemini CLI
+.gemini/
+# OpenCode
+opencode.json
+
+# ── MCP / AI agent settings (may contain API keys) ───────
+cline_mcp_settings.json
+# .mcp.json is intentionally committed (no secrets inside)
+
+# ── Drizzle ───────────────────────────────────────────────
 .drizzle/
+
+# ── Test artifacts ────────────────────────────────────────
+testsprite_tests/tmp/
+testsprite_tests/**/*.tmp
+
+# ── Misc ──────────────────────────────────────────────────
 cache/
 package-lock.backup.json
-
 .vercel
-.env*.local
+*.log
+*.swp
+.DS_Store
+Thumbs.db
 
-testsprite_tests\tmp\config.json
+# ── One-off generated files (not part of source) ─────────
+aifinanceops-dashboard.html
+build-html.js
