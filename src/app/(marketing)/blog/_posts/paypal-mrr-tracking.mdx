@@ -1,0 +1,93 @@
+---
+title: "PayPal MRR Tracking: How to Monitor Recurring Revenue from PayPal Subscriptions (2026)"
+description: "Learn how to track MRR, churn, and ARR from PayPal subscriptions automatically. The complete guide to PayPal recurring revenue analytics for SaaS founders."
+date: "2026-06-03"
+author: "AI Finance Ops"
+tags: ["paypal", "mrr", "recurring-revenue"]
+coverImage: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200&h=630&fit=crop"
+slug: paypal-mrr-tracking
+---
+
+Most SaaS analytics tools are built exclusively for Stripe. But a significant number of SaaS businesses — particularly those with international customers — accept PayPal subscriptions. Tracking MRR from PayPal is harder than it should be.
+
+This guide explains how to track MRR, ARR, churn, and cash flow from PayPal subscriptions accurately.
+
+## Why PayPal MRR Is Hard to Track
+
+Stripe has excellent built-in subscription analytics. PayPal doesn't. The PayPal dashboard shows transaction history, but calculating MRR from raw transactions requires manual work:
+
+- PayPal doesn't separate recurring revenue from one-time payments automatically
+- There's no built-in MRR, ARR, or churn tracking
+- Subscription plans span multiple product IDs and billing cycles
+- PayPal's reporting tools are designed for payments, not SaaS analytics
+
+## What You Need to Track PayPal MRR
+
+1. **Subscription identification** — separating recurring payments from one-time transactions
+2. **Billing cycle normalization** — converting quarterly and annual plans to monthly equivalents
+3. **Churn detection** — identifying when customers cancel or fail to renew
+4. **Movement tracking** — capturing new MRR, expansion, contraction, and churn separately
+5. **Historical backfill** — rebuilding your MRR history from PayPal transaction data
+
+## How to Calculate MRR from PayPal Subscriptions
+
+### Step 1: Export Your PayPal Transaction Data
+
+In PayPal Business: Activity → All Transactions → Filter by Subscription Payment → Export to CSV.
+
+### Step 2: Normalize Billing Cycles to Monthly
+
+| Billing Cycle | Calculation |
+|---|---|
+| Monthly | Full amount = MRR contribution |
+| Quarterly | Amount ÷ 3 = monthly MRR contribution |
+| Annual | Amount ÷ 12 = monthly MRR contribution |
+| Semi-annual | Amount ÷ 6 = monthly MRR contribution |
+
+### Step 3: Calculate Churn
+
+A subscription has churned when a customer cancels, a payment fails without retry, or a subscription expires without renewal.
+
+## Automated PayPal MRR Tracking with AI Finance Ops
+
+AI Finance Ops connects directly to your PayPal Business account and automates all of the above:
+
+1. [Create a free AI Finance Ops account](https://www.aifinanceops.app/register)
+2. Go to Settings → Integrations → Connect PayPal
+3. Authorize read-only access
+4. Your MRR dashboard populates instantly with 12+ months of history
+
+## PayPal vs Stripe for SaaS Analytics
+
+| Feature | PayPal | Stripe |
+|---|---|---|
+| Built-in MRR tracking | ❌ | ✅ Basic |
+| Built-in churn analysis | ❌ | ❌ |
+| Cash flow forecasting | ❌ | ❌ |
+| International coverage | ✅ Excellent | ✅ Good |
+
+Neither gives you a complete MRR dashboard out of the box. AI Finance Ops adds the analytics layer on top of both.
+
+## Common PayPal MRR Tracking Mistakes
+
+**Mistake 1: Including one-time PayPal payments in MRR.** Only subscription revenue counts.
+
+**Mistake 2: Not handling PayPal's IPN webhooks correctly.** If your integration misses cancellation or renewal events, your churn data will be wrong.
+
+**Mistake 3: Treating PayPal and Stripe separately.** If you accept both, combine them into a single MRR view. AI Finance Ops aggregates both automatically.
+
+## Frequently Asked Questions
+
+### Does PayPal have built-in MRR tracking?
+
+No. You need a third-party analytics tool like AI Finance Ops to track MRR from PayPal subscriptions.
+
+### Can I track both PayPal and Stripe in one MRR dashboard?
+
+Yes. AI Finance Ops aggregates data from both PayPal and Stripe into a single MRR dashboard.
+
+### Why is my PayPal churn higher than my Stripe churn?
+
+PayPal's retry logic for failed payments is less sophisticated than Stripe's. Failed payments more often result in churn rather than recovery.
+
+[Start tracking your PayPal MRR for free →](https://www.aifinanceops.app/register)
