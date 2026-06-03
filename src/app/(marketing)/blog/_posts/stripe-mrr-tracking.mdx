@@ -1,0 +1,152 @@
+---
+title: "Stripe MRR Tracking: How to Calculate Your Real Revenue from Stripe"
+description: "Stripe's built-in reporting doesn't show you accurate MRR. Here's how to calculate real MRR from your Stripe data, avoid the most common mistakes, and automate the whole process."
+date: "2026-06-01"
+author: "AI Finance Ops"
+tags: ["mrr", "stripe", "finance-basics"]
+coverImage: "https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=1200&h=630&fit=crop"
+slug: stripe-mrr-tracking
+---
+
+Stripe is the payment processor of choice for most SaaS businesses — but its built-in MRR calculation is notoriously unreliable for anything beyond the simplest subscription setups. If you have trials, discounts, paused subscriptions, annual plans, or multi-currency customers, Stripe's dashboard MRR is wrong.
+
+This guide explains why, shows you how to calculate accurate MRR from Stripe data, and walks through the best ways to automate it.
+
+## Why Stripe's Built-In MRR Is Misleading
+
+Stripe calculates MRR by summing the monthly value of all active subscriptions. In theory, that sounds right. In practice, several common scenarios break it:
+
+### Problem 1: Annual Plans Are Counted Wrong
+
+If a customer pays $1,200/year, Stripe's MRR dashboard shows $100/month (correctly dividing by 12). But Stripe doesn't always normalize correctly when you have mixed billing cycles, proration, or mid-cycle upgrades.
+
+### Problem 2: Trials Inflate the Number
+
+Stripe includes trialing subscriptions in MRR by default. A customer in a free trial hasn't paid you anything. Counting them as MRR overstates your revenue and makes churn calculations meaningless.
+
+### Problem 3: Discounts and Coupons Are Inconsistent
+
+If you apply a 50% discount for 3 months, Stripe may show full price MRR for some of that period, depending on how the coupon is structured. Your real MRR is what customers actually pay, not list price.
+
+### Problem 4: Paused Subscriptions
+
+Paused subscriptions stay in Stripe's system with a $0 current invoice. They may or may not appear in MRR depending on your Stripe version and settings.
+
+### Problem 5: Multi-Currency Confusion
+
+If you charge in USD, EUR, and GBP, Stripe converts to your settlement currency at the spot rate — but doesn't apply a consistent rate over time. Your reported MRR can fluctuate due to FX movements even if your actual customer base is unchanged.
+
+![Screenshot showing the difference between Stripe dashboard MRR and correctly calculated MRR](https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&h=450&fit=crop)
+
+## The Correct Way to Calculate MRR from Stripe
+
+Accurate MRR comes from **actual paid invoices**, not subscription records. Here's the methodology:
+
+### Step 1: Pull All Paid Invoices for the Period
+
+Use the Stripe API to pull all invoices with `status: paid` for the month. Don't use subscription objects — use invoices. This gives you actual cash collected, not projected recurring revenue.
+
+```
+GET /v1/invoices
+  ?status=paid
+  &created[gte]={start_of_month_unix}
+  &created[lte]={end_of_month_unix}
+  &expand[]=data.subscription
+```
+
+### Step 2: Normalize Annual Plans to Monthly
+
+For every invoice on an annual billing cycle, divide the amount by 12. For quarterly plans, divide by 3. Only count the monthly-equivalent value.
+
+```python
+for invoice in paid_invoices:
+    if invoice.subscription.plan.interval == 'year':
+        mrr_contribution = invoice.amount_paid / 12
+    elif invoice.subscription.plan.interval == 'month':
+        mrr_contribution = invoice.amount_paid
+    # Add to MRR total
+```
+
+### Step 3: Exclude Non-Recurring Items
+
+Remove one-time charges, setup fees, professional services invoices, and refunds. MRR should only include recurring subscription revenue.
+
+### Step 4: Apply a Consistent FX Rate
+
+If you have multi-currency customers, apply a single monthly exchange rate (the rate on the first day of the month) to all foreign currency amounts. This prevents FX volatility from distorting your MRR trend.
+
+### Step 5: Exclude Trials and Fully-Discounted Subscriptions
+
+Filter out invoices with `amount_paid == 0`. These are trials, 100% coupons, or internal test accounts. They should not be counted in MRR.
+
+## Calculating MRR Movement (The Hard Part)
+
+Once you have point-in-time MRR, you need to track *movements* to understand what's driving changes:
+
+| Movement Type | Definition | How to Calculate |
+|---|---|---|
+| **New MRR** | Revenue from brand new customers | MRR from customers whose subscription started this month |
+| **Expansion MRR** | Increased revenue from existing customers | This month's MRR from existing customers minus last month's MRR from same customers (if positive) |
+| **Contraction MRR** | Decreased revenue from existing customers | Same calculation as above (if negative) |
+| **Churned MRR** | Revenue from customers who cancelled | Last month's MRR from customers with no active subscription this month |
+| **Reactivation MRR** | Revenue from returning customers | MRR from customers who were churned last month but have an active subscription this month |
+
+Net New MRR = New MRR + Expansion MRR − Contraction MRR − Churned MRR + Reactivation MRR
+
+![Waterfall chart showing MRR movements: new, expansion, contraction, churn](https://images.unsplash.com/photo-1543286386-713bdd548da4?w=800&h=450&fit=crop)
+
+## Common Mistakes That Skew Your Stripe MRR
+
+### Mistake 1: Using Stripe's MRR Widget Directly
+
+Stripe's native MRR widget is a rough estimate. It's useful for a quick sanity check but not for investor reporting or operational decision-making.
+
+### Mistake 2: Counting Refunded Invoices
+
+A paid invoice that was later refunded should be subtracted from MRR. Many manual calculations miss partial refunds — customers who were partially refunded due to a downgrade mid-billing cycle.
+
+### Mistake 3: Double-Counting Proration
+
+When a customer upgrades mid-month, Stripe creates a prorated invoice for the difference. If you count both the original invoice and the proration invoice, you'll overstate MRR for that month.
+
+### Mistake 4: Ignoring Invoice Items
+
+Some Stripe implementations use Invoice Items (one-off charges added to a subscription invoice) for things like setup fees or overages. These need to be categorized correctly — recurring overages belong in MRR, one-time items don't.
+
+## How to Automate Stripe MRR Tracking
+
+Building this calculation manually in a spreadsheet works for 50 customers. At 200+ customers with upgrades, downgrades, trials, and different billing cycles, it becomes a part-time job.
+
+Your options:
+
+### Option 1: Build It in-House
+
+Connect to the Stripe API, build the pipeline described above, and store results in a database or data warehouse. Requires an engineer and ongoing maintenance as your Stripe setup evolves.
+
+### Option 2: Use a Spreadsheet Template
+
+For very early stage ($0–10K MRR), a Google Sheets template with Stripe export data can work. It breaks down at scale and requires manual updates, but it's free.
+
+### Option 3: Use Dedicated SaaS Analytics
+
+Tools like AI Finance Ops connect directly to your Stripe account and automatically calculate accurate MRR, expansion, contraction, churn, NRR, and LTV — updated daily. No engineering required, and the calculations account for all the edge cases described above.
+
+![AI Finance Ops MRR dashboard showing breakdown of new, expansion, contraction, and churned MRR](https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=450&fit=crop)
+
+## What Good Stripe MRR Tracking Looks Like
+
+Once you have accurate MRR tracking, you should be able to answer these questions instantly:
+
+- What was my MRR on the first day of any given month for the last 24 months?
+- Which customers drove the most expansion MRR this quarter?
+- What percentage of revenue came from annual vs monthly subscribers?
+- Which pricing tier has the highest average LTV?
+- What's my net MRR churn rate for the last 3 months?
+
+If you can't answer these from your current setup, you're flying blind on the metrics that matter most to your business and any future investors.
+
+## Start Tracking Accurate MRR Today
+
+AI Finance Ops connects to your Stripe account in under 2 minutes and starts calculating accurate MRR immediately. See your real MRR, expansion, contraction, and churn — broken down by customer, plan, and cohort.
+
+[Connect your Stripe account →](https://www.aifinanceops.app/register) — free 14-day trial, no credit card required.
