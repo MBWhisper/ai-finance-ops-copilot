@@ -61,64 +61,46 @@ export async function middleware(request: NextRequest) {
   const isDashboardPath  = pathname.startsWith('/dashboard')
   const isPublicPath     = publicPaths.some(p => pathname === p || pathname.startsWith(p + '/'))
 
-  // 1. غير مسجل → login (ما عدا المسارات العامة)
+  // 1. Not logged in → login (except public paths)
   if (!user && !isPublicPath && !isSetupPath && !isOnboardingPath) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
   }
 
-  // 2. غير مسجل يحاول onboarding → login
+  // 2. Not logged in trying onboarding → login
   if (!user && isOnboardingPath) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
   }
 
-  // 3. مسجل على login/register → dashboard مباشرة
+  // 3. Logged in on login/register → dashboard directly
   if (user && isAuthPage) {
     const url = request.nextUrl.clone()
     url.pathname = '/dashboard/overview'
     return NextResponse.redirect(url)
   }
 
-  // 4. مسجل على / → dashboard
+  // 4. Logged in on / → dashboard
   if (user && pathname === '/') {
     const url = request.nextUrl.clone()
     url.pathname = '/dashboard/overview'
     return NextResponse.redirect(url)
   }
 
-  // 5. مسجل على /setup → dashboard
+  // 5. Logged in on /setup → dashboard
   if (user && isSetupPath) {
     const url = request.nextUrl.clone()
     url.pathname = '/dashboard/overview'
     return NextResponse.redirect(url)
   }
 
-  // 6. تحقق من onboarding_completed للمستخدم المسجل
-  if (user) {
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('onboarding_completed')
-      .eq('id', user.id)
-      .single()
-
-    const hasCompleted = profile?.onboarding_completed ?? false
-
-    // مسجل + أكمل الـ onboarding + يحاول الدخول لـ /onboarding → dashboard
-    if (isOnboardingPath && hasCompleted) {
-      const url = request.nextUrl.clone()
-      url.pathname = '/dashboard/overview'
-      return NextResponse.redirect(url)
-    }
-
-    // مسجل + لم يكمل الـ onboarding + يحاول دخول dashboard → onboarding
-    if (isDashboardPath && !hasCompleted) {
-      const url = request.nextUrl.clone()
-      url.pathname = '/onboarding'
-      return NextResponse.redirect(url)
-    }
+  // 6. Logged in on /onboarding → redirect to dashboard (onboarding is skipped)
+  if (user && isOnboardingPath) {
+    const url = request.nextUrl.clone()
+    url.pathname = '/dashboard/overview'
+    return NextResponse.redirect(url)
   }
 
   return supabaseResponse
