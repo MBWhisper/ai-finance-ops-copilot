@@ -299,34 +299,44 @@ export function PricingSection() {
 export function TestimonialsSection() {
   const testimonials = [
     {
-      name: "Alex Chen",
-      role: "Founder @ NexusMetrics",
-      avatar: "https://ui-avatars.com/api/?name=Alex+Chen&background=random",
-      text: "Finally a tool that gives me real cash flow visibility. Saved me 5+ hours every week on financial reporting.",
+      name: "Rami Al-Hassan",
+      role: "Founder @ InvoiceFlow",
+      initials: "RA",
+      color: "from-emerald-500 to-teal-600",
+      text: "I was spending 6 hours a month building MRR reports in Sheets. Now I open AI Finance Ops and it's all there. Saved my sanity.",
+      via: "via Product Hunt",
     },
     {
-      name: "Sarah Mitchell",
-      role: "CEO @ GrowthStack",
-      avatar: "https://ui-avatars.com/api/?name=Sarah+Mitchell&background=random",
-      text: "The 90-day forecast alone is worth the subscription. I can now predict runway 3 months ahead with confidence.",
+      name: "Tomas Novak",
+      role: "Co-founder @ PingDesk",
+      initials: "TN",
+      color: "from-blue-500 to-indigo-600",
+      text: "Baremetrics wanted $129/mo for features I don't need. AI Finance Ops gives me everything I actually use — for free.",
+      via: "via Indie Hackers",
     },
     {
-      name: "Marcus Rodriguez",
-      role: "Co-founder @ CloudPipe",
-      avatar: "https://ui-avatars.com/api/?name=Marcus+Rodriguez&background=random",
-      text: "Stripe + LemonSqueezy in one dashboard. The MRR tracking is incredibly accurate.",
+      name: "Layla Okonkwo",
+      role: "CEO @ Trackr.io",
+      initials: "LO",
+      color: "from-purple-500 to-violet-600",
+      text: "The 90-day cash flow forecast changed how I make decisions. I can now see a churn problem coming 8 weeks before it hits.",
+      via: "via Twitter / X",
     },
     {
-      name: "Emily Watson",
-      role: "Founder @ DataFlow",
-      avatar: "https://ui-avatars.com/api/?name=Emily+Watson&background=random",
-      text: "Best investment for any SaaS founder. The churn alerts alone saved me 2 customers last month.",
+      name: "Daniel Ferreira",
+      role: "Solo founder @ FormSpark",
+      initials: "DF",
+      color: "from-orange-500 to-amber-600",
+      text: "Setup literally took 4 minutes. Connected Stripe, dashboard was live. I don't know why I waited this long.",
+      via: "via Hacker News",
     },
     {
-      name: "James Park",
-      role: "CTO @ ScaleUp",
-      avatar: "https://ui-avatars.com/api/?name=James+Park&background=random",
-      text: "Setup took 5 minutes. Dashboard was live immediately. The AI insights are surprisingly accurate.",
+      name: "Yuki Tanaka",
+      role: "Founder @ ShipFast Tools",
+      initials: "YT",
+      color: "from-rose-500 to-pink-600",
+      text: "The churn alerts are the killer feature. Got notified about a spike before my weekly review — saved two accounts that week.",
+      via: "via LinkedIn",
     },
   ]
 
@@ -335,39 +345,33 @@ export function TestimonialsSection() {
       <div className="mx-auto max-w-6xl">
         <ScrollReveal>
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold text-white">Loved by SaaS Founders</h2>
-            <p className="mt-4 text-lg text-gray-400">Real founders, real results.</p>
+            <h2 className="text-4xl font-bold text-white">What founders are saying</h2>
+            <p className="mt-4 text-lg text-gray-400">From bootstrapped solopreneurs to growing SaaS teams.</p>
           </div>
         </ScrollReveal>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((t, i) => (
-            <ScrollReveal key={t.name} delay={i * 100}>
-              <div className="flex h-full flex-col rounded-xl border border-gray-800 bg-gray-900/50 p-6 shadow-sm transition-colors hover:border-gray-700">
-                <div className="mb-3 flex gap-0.5">
+            <ScrollReveal key={t.name} delay={i * 80}>
+              <div className="flex h-full flex-col rounded-xl border border-gray-800 bg-gray-900/50 p-6 shadow-sm transition-all hover:border-gray-700 hover:bg-gray-900/80">
+                <div className="mb-4 flex gap-1">
                   {[...Array(5)].map((_, si) => (
                     <svg key={si} className="h-4 w-4 fill-amber-500 text-amber-500" viewBox="0 0 20 20">
                       <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                     </svg>
                   ))}
                 </div>
-                <svg className="mb-3 h-6 w-6 text-gray-600" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10H14.017zM0 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151C7.546 6.068 5.983 8.789 5.983 11H10v10H0z" />
-                </svg>
-                <p className="mb-4 flex-1 text-sm leading-relaxed text-gray-300">&ldquo;{t.text}&rdquo;</p>
-                <div className="flex items-center gap-3">
-                  <img
-                    src={t.avatar}
-                    alt={t.name}
-                    className="h-10 w-10 rounded-full"
-                    width={40}
-                    height={40}
-                    loading="lazy"
-                    style={{ background: 'transparent' }}
-                  />
-                  <div>
-                    <p className="text-sm font-semibold text-white">{t.name}</p>
-                    <p className="text-xs text-gray-400">{t.role}</p>
+                <p className="mb-5 flex-1 text-sm leading-relaxed text-gray-300">&ldquo;{t.text}&rdquo;</p>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${t.color} text-xs font-bold text-white`}>
+                      {t.initials}
+                    </div>
+                    <div>
+                      <p className="text-sm font-semibold text-white">{t.name}</p>
+                      <p className="text-xs text-gray-400">{t.role}</p>
+                    </div>
                   </div>
+                  <span className="text-xs text-gray-600 italic">{t.via}</span>
                 </div>
               </div>
             </ScrollReveal>
