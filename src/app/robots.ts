@@ -30,6 +30,5 @@ export default function robots(): MetadataRoute.Robots {
       },
     ],
     sitemap: 'https://aifinanceops.app/sitemap.xml',
-    host: 'https://aifinanceops.app',
   }
 }
