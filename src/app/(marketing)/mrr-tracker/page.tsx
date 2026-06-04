@@ -33,7 +33,7 @@ const faqSchema = {
       "name": "What is MRR (Monthly Recurring Revenue)?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "MRR stands for Monthly Recurring Revenue — the total predictable revenue your SaaS generates each month from active subscriptions. It is the single most important growth metric for subscription businesses. MRR = (Number of paying customers) × (Average revenue per customer per month)."
+        "text": "MRR stands for Monthly Recurring Revenue -- the total predictable revenue your SaaS generates each month from active subscriptions. It is the single most important growth metric for subscription businesses. MRR = (Number of paying customers) x (Average revenue per customer per month)."
       }
     },
     {
@@ -41,7 +41,7 @@ const faqSchema = {
       "name": "How do I calculate MRR for my SaaS?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "To calculate MRR: multiply the number of active paying customers by their average monthly subscription price. For annual plans, divide the annual contract value by 12 to get the monthly equivalent. Net New MRR = New MRR + Expansion MRR − Contraction MRR − Churned MRR. AI Finance Ops calculates all of this automatically by connecting directly to Stripe."
+        "text": "To calculate MRR: multiply the number of active paying customers by their average monthly subscription price. For annual plans, divide the annual contract value by 12 to get the monthly equivalent. Net New MRR = New MRR + Expansion MRR - Contraction MRR - Churned MRR. AI Finance Ops calculates all of this automatically by connecting directly to Stripe."
       }
     },
     {
@@ -49,7 +49,7 @@ const faqSchema = {
       "name": "What is the difference between MRR and ARR?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "MRR (Monthly Recurring Revenue) is the monthly snapshot of predictable revenue. ARR (Annual Recurring Revenue) is MRR × 12. MRR is used for tracking growth momentum month-by-month. ARR is typically used for investor reporting and enterprise contracts. For early-stage SaaS, MRR is the more actionable metric."
+        "text": "MRR (Monthly Recurring Revenue) is the monthly snapshot of predictable revenue. ARR (Annual Recurring Revenue) is MRR x 12. MRR is used for tracking growth momentum month-by-month. ARR is typically used for investor reporting and enterprise contracts."
       }
     },
     {
@@ -57,7 +57,7 @@ const faqSchema = {
       "name": "What are the components of MRR?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "MRR has 5 key components: (1) New MRR — revenue from brand new customers this month. (2) Expansion MRR — additional revenue from existing customers upgrading or buying add-ons. (3) Contraction MRR — revenue lost from customers downgrading. (4) Churned MRR — revenue lost from cancellations. (5) Reactivation MRR — revenue from previously churned customers resubscribing. Net New MRR = New + Expansion − Contraction − Churned + Reactivation."
+        "text": "MRR has 5 key components: (1) New MRR, (2) Expansion MRR, (3) Contraction MRR, (4) Churned MRR, (5) Reactivation MRR. Net New MRR = New + Expansion - Contraction - Churned + Reactivation."
       }
     },
     {
@@ -65,7 +65,7 @@ const faqSchema = {
       "name": "Is AI Finance Ops MRR tracker free?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. AI Finance Ops offers a free plan that includes MRR tracking with Stripe integration, a real-time dashboard, and basic churn alerts. No credit card required to start. Paid plans add advanced cohort analysis, investor reports, and multi-currency support."
+        "text": "Yes. AI Finance Ops offers a free plan that includes MRR tracking with Stripe integration, a real-time dashboard, and basic churn alerts. No credit card required to start."
       }
     },
     {
@@ -73,7 +73,7 @@ const faqSchema = {
       "name": "How does AI Finance Ops connect to Stripe?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "AI Finance Ops connects to Stripe via OAuth — you authorize read-only access in under 60 seconds. No API keys to copy, no manual configuration. Once connected, AI Finance Ops automatically pulls your subscription data and calculates MRR, churn rate, LTV, and all related metrics in real time."
+        "text": "AI Finance Ops connects to Stripe via OAuth -- you authorize read-only access in under 60 seconds. No API keys to copy. Once connected, it automatically pulls your subscription data and calculates MRR, churn rate, LTV, and all related metrics in real time."
       }
     }
   ]
@@ -90,22 +90,22 @@ const METRICS = [
 const REASONS = [
   { icon: AlertTriangle, title: "Manual updates waste hours", desc: "Copy-pasting from Stripe into spreadsheets takes 2-3 hours every week — time you could spend building" },
   { icon: AlertTriangle, title: "One wrong cell breaks everything", desc: "A single formula error silently corrupts months of MRR data without warning" },
-  { icon: AlertTriangle, title: "No real-time alerts", desc: "Spreadsheets can't notify you when churn spikes or your MRR growth stalls" },
+  { icon: AlertTriangle, title: "No real-time alerts", desc: "Spreadsheets cannot notify you when churn spikes or your MRR growth stalls" },
   { icon: AlertTriangle, title: "No investor-ready reports", desc: "Manually formatting MRR charts for investor updates takes hours every month" },
 ]
 
 const FAQS = [
   {
     q: "What is MRR (Monthly Recurring Revenue)?",
-    a: "MRR is the total predictable revenue your SaaS generates each month from active subscriptions. It is calculated as: Number of paying customers × Average revenue per customer per month. For annual plans, divide the annual contract value by 12."
+    a: "MRR is the total predictable revenue your SaaS generates each month from active subscriptions. It is calculated as: Number of paying customers x Average revenue per customer per month. For annual plans, divide the annual contract value by 12."
   },
   {
     q: "How do I calculate Net New MRR?",
     a: "Net New MRR = New MRR + Expansion MRR − Contraction MRR − Churned MRR + Reactivation MRR. AI Finance Ops calculates every component automatically by reading directly from your Stripe account."
   },
   {
-    q: "What's the difference between MRR and ARR?",
-    a: "MRR is your monthly recurring revenue snapshot. ARR = MRR × 12. Use MRR for tracking growth momentum. Use ARR for investor reporting and enterprise contracts."
+    q: "What is the difference between MRR and ARR?",
+    a: "MRR is your monthly recurring revenue snapshot. ARR = MRR x 12. Use MRR for tracking growth momentum. Use ARR for investor reporting and enterprise contracts."
   },
   {
     q: "Is the MRR tracker really free?",
@@ -174,12 +174,12 @@ export default function MrrTrackerPage() {
               It measures the total predictable revenue you generate every month from active subscriptions.
             </p>
             <p className="text-gray-400 leading-relaxed mb-4">
-              The basic formula: <strong className="text-white">MRR = Number of customers × Average monthly revenue per customer</strong>.
+              The basic formula: <strong className="text-white">MRR = Number of customers &times; Average monthly revenue per customer</strong>.
               For annual plans, divide the total contract value by 12 to get the monthly equivalent.
             </p>
             <p className="text-gray-400 leading-relaxed mb-8">
               But real MRR tracking goes deeper. You need to track each component — new, expansion, contraction,
-              and churned — to understand exactly what's driving growth or decline. Most founders track this
+              and churned — to understand exactly what is driving growth or decline. Most founders track this
               manually, which takes hours and introduces errors. AI Finance Ops automates all of it.
             </p>
             <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 font-mono text-sm">
@@ -226,7 +226,7 @@ export default function MrrTrackerPage() {
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">Why Spreadsheets Fail for MRR Tracking</h2>
               <p className="text-gray-400 leading-relaxed mb-8">
                 Spreadsheets seem like the easy option. But as your SaaS grows, they become the biggest
-                source of errors and wasted time. Here's why founders switch to dedicated MRR tracking:
+                source of errors and wasted time. Here is why founders switch to dedicated MRR tracking:
               </p>
               <div className="space-y-5">
                 {REASONS.map((r) => (

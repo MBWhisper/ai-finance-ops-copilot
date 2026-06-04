@@ -1,7 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { OptimizedImage } from "@/components/OptimizedImage"
-import { Calculator, Clock, TrendingUp, Check, ChevronDown, AlertTriangle } from "lucide-react"
+import { Calculator, Clock, TrendingUp, Check, ChevronDown } from "lucide-react"
 
 export const metadata: Metadata = {
   title: "Startup Runway Calculator — How Long Does Your Cash Last? (2026)",
@@ -36,7 +36,7 @@ const faqSchema = {
       "name": "How do you calculate startup runway?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Runway = Cash Balance ÷ Monthly Burn Rate. For example, if you have $120,000 in the bank and spend $10,000 per month (net burn), your runway is 12 months. Net burn = Total monthly expenses − Monthly revenue. AI Finance Ops calculates this automatically using real cash flow data from your bank and payment processor."
+        "text": "Runway = Cash Balance divided by Monthly Burn Rate. For example, if you have $120,000 in the bank and spend $10,000 per month (net burn), your runway is 12 months. Net burn = Total monthly expenses minus Monthly revenue."
       }
     },
     {
@@ -44,7 +44,7 @@ const faqSchema = {
       "name": "What is a good amount of runway for a startup?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "18-24 months of runway is the recommended target for venture-backed startups. This gives you enough time to reach key milestones and raise your next round without pressure. For bootstrapped SaaS, 6-12 months is common, with the goal of reaching profitability before runway runs out. You should start fundraising or cutting costs when runway drops below 6 months."
+        "text": "18-24 months of runway is the recommended target for venture-backed startups. For bootstrapped SaaS, 6-12 months is common. You should start fundraising or cutting costs when runway drops below 6 months."
       }
     },
     {
@@ -52,7 +52,7 @@ const faqSchema = {
       "name": "What is the difference between gross burn and net burn?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Gross burn is your total monthly cash expenditure before revenue. Net burn is gross burn minus your monthly revenue. For runway calculations, net burn is the relevant number because it accounts for the revenue you're generating. If your gross burn is $15,000 and your MRR is $5,000, your net burn is $10,000."
+        "text": "Gross burn is your total monthly cash expenditure before revenue. Net burn is gross burn minus your monthly revenue. If your gross burn is $15,000 and your MRR is $5,000, your net burn is $10,000."
       }
     },
     {
@@ -60,7 +60,7 @@ const faqSchema = {
       "name": "How can I extend my startup runway?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "You can extend runway by: (1) Reducing burn — cut non-essential SaaS subscriptions, renegotiate contracts, defer non-critical hires. (2) Increasing revenue — focus on expansion MRR from existing customers, reduce churn, raise prices for new customers. (3) Raising capital — start fundraising at 9-12 months of runway, not 3 months. AI Finance Ops shows you what-if scenarios so you can see exactly how each action extends your runway."
+        "text": "You can extend runway by reducing burn (cut non-essential SaaS tools, defer hires), increasing revenue (reduce churn, grow expansion MRR, raise prices), or raising capital. Start fundraising at 9-12 months of runway, not 3 months."
       }
     },
     {
@@ -68,7 +68,7 @@ const faqSchema = {
       "name": "When should I start worrying about runway?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Start taking action when you have 6 months of runway left. At 6 months: begin fundraising or cutting costs aggressively. At 3 months: this is a crisis — you need immediate action. AI Finance Ops sends automated alerts when your runway drops below configurable thresholds so you're never caught off guard."
+        "text": "Start taking action when you have 6 months of runway left. At 3 months it is a crisis. AI Finance Ops sends automated alerts when your runway drops below configurable thresholds so you are never caught off guard."
       }
     }
   ]
@@ -84,16 +84,16 @@ const FAQS = [
     a: "18-24 months for venture-backed startups — enough time to reach milestones and raise your next round. For bootstrapped SaaS, aim for 6-12 months with a clear path to profitability. Start cutting or fundraising when runway drops below 6 months."
   },
   {
-    q: "What's the difference between gross burn and net burn?",
+    q: "What is the difference between gross burn and net burn?",
     a: "Gross burn = total monthly expenses. Net burn = gross burn − monthly revenue. For runway, always use net burn. If your expenses are $15,000/month and your MRR is $5,000, your net burn is $10,000."
   },
   {
     q: "How can I extend my runway?",
-    a: "Cut non-essential spend (SaaS tools, deferred hires), focus on reducing churn and growing expansion MRR, or raise prices for new customers. AI Finance Ops shows what-if scenarios so you see exactly how each action extends runway."
+    a: "Cut non-essential spend, focus on reducing churn and growing expansion MRR, or raise prices for new customers. AI Finance Ops shows what-if scenarios so you see exactly how each action extends runway."
   },
   {
     q: "When should I start worrying about runway?",
-    a: "Act at 6 months — start fundraising or cutting costs. At 3 months, it's a crisis. AI Finance Ops sends alerts when runway drops below your threshold so you're never surprised."
+    a: "Act at 6 months — start fundraising or cutting costs. At 3 months, it is a crisis. AI Finance Ops sends alerts when runway drops below your threshold so you are never surprised."
   },
 ]
 
@@ -146,8 +146,8 @@ export default function RunwayCalculatorPage() {
               operate before running out of money — assuming your current revenue and spending stay constant.
             </p>
             <p className="text-gray-400 leading-relaxed mb-6">
-              The formula is simple: <strong className="text-white">Runway = Cash Balance ÷ Monthly Net Burn</strong>.
-              But most founders don't know their exact net burn because they're not tracking expenses and
+              The formula is simple: <strong className="text-white">Runway = Cash Balance &divide; Monthly Net Burn</strong>.
+              But most founders do not know their exact net burn because they are not tracking expenses and
               revenue together in one place.
             </p>
             <div className="grid md:grid-cols-2 gap-4 mb-8">
@@ -198,7 +198,7 @@ export default function RunwayCalculatorPage() {
               <h2 className="text-3xl font-bold text-white mb-6">Runway Thresholds — When to Act</h2>
               <p className="text-gray-400 leading-relaxed mb-8">
                 Most founders wait too long. By the time they realize their runway is dangerously short,
-                they have 2-3 months left — not enough time to raise or pivot. Here's when you should act:
+                they have 2-3 months left — not enough time to raise or pivot. Here is when you should act:
               </p>
               <div className="space-y-4">
                 {[
