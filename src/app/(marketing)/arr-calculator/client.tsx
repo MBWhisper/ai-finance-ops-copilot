@@ -95,7 +95,9 @@ export function ARRCalculatorClient() {
             ARR Milestone Tracker
           </h2>
           <p className="text-xs text-gray-500 mb-5">
-            {mrrGrowth > 0 ? `Based on your current ${mrrGrowth.toFixed(1)}% MoM growth rate:` : 'Enter last month\'s MRR to see milestone projections.'}
+            {mrrGrowth > 0
+              ? `Based on your current ${mrrGrowth.toFixed(1)}% MoM growth rate:`
+              : 'Enter last month’s MRR to see milestone projections.'}
           </p>
           <div className="space-y-3">
             {milestones.map(m => {
@@ -108,7 +110,7 @@ export function ARRCalculatorClient() {
                     <span className={`text-sm font-semibold ${reached ? 'text-emerald-400' : 'text-gray-300'}`}>{m.label}</span>
                   </div>
                   <span className="text-xs text-gray-500">
-                    {reached ? '✓ Reached' : months === null ? 'Enter growth rate' : `~${months} months`}
+                    {reached ? '\u2713 Reached' : months === null ? 'Enter growth rate' : `~${months} months`}
                   </span>
                 </div>
               )
@@ -117,17 +119,17 @@ export function ARRCalculatorClient() {
         </div>
 
         <div className="rounded-xl border border-gray-800 bg-gray-900/30 p-6 mb-10">
-          <h2 className="text-sm font-bold text-white mb-3">ARR vs MRR: What\'s the difference?</h2>
+          <h2 className="text-sm font-bold text-white mb-3">ARR vs MRR: What&apos;s the difference?</h2>
           <div className="space-y-2 text-sm text-gray-400">
             <p><strong className="text-gray-200">MRR</strong> = Monthly Recurring Revenue. Your recurring revenue in a single month.</p>
-            <p><strong className="text-gray-200">ARR</strong> = MRR × 12. Your recurring revenue annualized. Useful for benchmarking and fundraising.</p>
-            <p><strong className="text-gray-200">Note:</strong> ARR is not the same as annual revenue — it\'s a forward-looking metric based on your current run rate.</p>
+            <p><strong className="text-gray-200">ARR</strong> = MRR &times; 12. Your recurring revenue annualized. Useful for benchmarking and fundraising.</p>
+            <p><strong className="text-gray-200">Note:</strong> ARR is not the same as annual revenue &mdash; it&apos;s a forward-looking metric based on your current run rate.</p>
           </div>
         </div>
 
         <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-8 text-center">
           <h3 className="text-xl font-bold text-white mb-2">Track ARR automatically</h3>
-          <p className="text-gray-400 mb-6 text-sm">AI Finance Ops connects to Stripe and tracks your MRR, ARR, and growth rate in real-time — with milestone alerts.</p>
+          <p className="text-gray-400 mb-6 text-sm">AI Finance Ops connects to Stripe and tracks your MRR, ARR, and growth rate in real-time &mdash; with milestone alerts.</p>
           <Link href="/register" className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-6 py-3 text-sm font-semibold text-white hover:bg-emerald-500 transition-all">
             Start Free <ArrowRight className="h-4 w-4" />
           </Link>
