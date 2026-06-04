@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const TWO_PI = Math.PI * 2
 const PHI = 1.6180339887
@@ -86,8 +86,17 @@ function hexToRgb(hex: string): [number, number, number] {
 
 export function HeroCanvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  // Defer canvas start until after LCP paint
+  const [active, setActive] = useState(false)
 
   useEffect(() => {
+    // Wait for browser to be idle so we don't compete with LCP
+    const id = setTimeout(() => setActive(true), 300)
+    return () => clearTimeout(id)
+  }, [])
+
+  useEffect(() => {
+    if (!active) return
     const canvas = canvasRef.current!
     const ctx = canvas.getContext("2d")!
 
@@ -109,7 +118,8 @@ export function HeroCanvas() {
 
     const w = canvas.width
     const h = canvas.height
-    const count = w > 1400 ? 1000 : w < 768 ? 400 : 800
+    // Reduced particle count: mobile 200, tablet 500, desktop 700
+    const count = w > 1400 ? 700 : w < 768 ? 200 : 500
     const trailAlpha = w < 768 ? 30 : 18
 
     for (let i = 0; i < count; i++) {
@@ -122,6 +132,10 @@ export function HeroCanvas() {
     }
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (reducedMotion) {
+      window.removeEventListener("resize", resize)
+      return
+    }
 
     const cold: [number, number, number] = [15, 25, 80]
     const mid: [number, number, number] = [1, 105, 111]
@@ -181,9 +195,7 @@ export function HeroCanvas() {
 
     function frame() {
       draw()
-      if (!reducedMotion) {
-        animId = requestAnimationFrame(frame)
-      }
+      animId = requestAnimationFrame(frame)
     }
 
     animId = requestAnimationFrame(frame)
@@ -192,7 +204,7 @@ export function HeroCanvas() {
       cancelAnimationFrame(animId)
       window.removeEventListener("resize", resize)
     }
-  }, [])
+  }, [active])
 
   return (
     <canvas

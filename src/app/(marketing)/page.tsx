@@ -13,23 +13,36 @@ import dynamic from "next/dynamic"
 import { Suspense } from "react"
 import "@/components/animations.css"
 import { ScrollReveal } from "@/components/landing-interactive"
-import { LiveVisitorBadge } from "@/components/landing-interactive"
 import { BackToTop } from "@/components/landing-interactive"
-import { HeroCanvas } from "@/components/ui/hero-canvas"
 import { ProductHuntBadge } from "@/components/marketing/ProductHuntBadge"
 
-const PhoneMockupPreview = dynamic(() => import("@/components/marketing/PhoneMockupPreview").then(m => ({ default: m.PhoneMockupPreview })), { ssr: true })
-const NewsletterSignup = dynamic(() => import("@/components/marketing/NewsletterSignup").then(m => ({ default: m.NewsletterSignup })), { ssr: true })
-const MRRCalculator = dynamic(() => import("@/components/marketing/MRRCalculator").then(m => ({ default: m.MRRCalculator })), { ssr: true })
-const SocialProofSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.SocialProofSection })), { ssr: true })
-const ReassuranceSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.ReassuranceSection })), { ssr: true })
-const ProblemSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.ProblemSection })), { ssr: true })
+// HeroCanvas: ssr:false so it never blocks server render or LCP
+const HeroCanvas = dynamic(
+  () => import("@/components/ui/hero-canvas").then(m => ({ default: m.HeroCanvas })),
+  { ssr: false }
+)
+
+// LiveVisitorBadge: client-only random number, ssr:false avoids hydration mismatch cost
+const LiveVisitorBadge = dynamic(
+  () => import("@/components/landing-interactive").then(m => ({ default: m.LiveVisitorBadge })),
+  { ssr: false }
+)
+
+// Above-fold sections: keep ssr:true so they render in initial HTML
 const FeaturesSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.FeaturesSection })), { ssr: true })
-const ComparisonTableSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.ComparisonTableSection })), { ssr: true })
-const StatsSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.StatsSection })), { ssr: true })
-const PricingSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.PricingSection })), { ssr: true })
-const TestimonialsSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.TestimonialsSection })), { ssr: true })
-const FAQSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.FAQSection })), { ssr: true })
+const ReassuranceSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.ReassuranceSection })), { ssr: true })
+
+// Below-fold sections: ssr:false so their JS is excluded from initial payload
+const PhoneMockupPreview = dynamic(() => import("@/components/marketing/PhoneMockupPreview").then(m => ({ default: m.PhoneMockupPreview })), { ssr: false })
+const NewsletterSignup = dynamic(() => import("@/components/marketing/NewsletterSignup").then(m => ({ default: m.NewsletterSignup })), { ssr: false })
+const MRRCalculator = dynamic(() => import("@/components/marketing/MRRCalculator").then(m => ({ default: m.MRRCalculator })), { ssr: false })
+const SocialProofSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.SocialProofSection })), { ssr: false })
+const ProblemSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.ProblemSection })), { ssr: false })
+const ComparisonTableSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.ComparisonTableSection })), { ssr: false })
+const StatsSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.StatsSection })), { ssr: false })
+const PricingSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.PricingSection })), { ssr: false })
+const TestimonialsSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.TestimonialsSection })), { ssr: false })
+const FAQSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.FAQSection })), { ssr: false })
 
 export default function LandingPage() {
   return (
@@ -113,6 +126,7 @@ export default function LandingPage() {
             <div className="absolute top-[30%] right-[15%] h-6 w-6 rounded-full bg-emerald-500/15 blur-sm animate-float-delayed" />
             <div className="absolute bottom-[25%] left-[20%] h-3 w-3 rounded-full bg-emerald-400/20 blur-sm animate-float" style={{ animationDelay: "2s" }} />
             <div className="absolute top-[20%] right-[30%] h-5 w-5 rounded-full bg-blue-400/10 blur-sm animate-float-delayed" style={{ animationDelay: "1s" }} />
+            {/* HeroCanvas loads client-side only after LCP */}
             <HeroCanvas />
           </div>
 
