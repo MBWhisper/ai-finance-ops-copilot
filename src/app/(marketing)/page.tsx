@@ -344,26 +344,48 @@ export default function LandingPage() {
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-white mb-4">Company</h3>
+              <h3 className="text-sm font-semibold text-white mb-4">Free Tools</h3>
               <ul className="space-y-3">
-                <li><Link href="/about" className="text-sm text-gray-400 hover:text-white transition-colors">About</Link></li>
-                <li><a href="mailto:hello@aifinanceops.app" className="text-sm text-gray-400 hover:text-white transition-colors">Contact</a></li>
-                <li><a href="https://www.linkedin.com/in/mo-systemarchitect" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">LinkedIn</a></li>
-                <li><a href="https://twitter.com/MbtechE80106" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">Twitter / X</a></li>
+                <li><Link href="/mrr-tracker" className="text-sm text-gray-400 hover:text-white transition-colors">MRR Tracker</Link></li>
+                <li><Link href="/arr-calculator" className="text-sm text-gray-400 hover:text-white transition-colors">ARR Calculator</Link></li>
+                <li><Link href="/churn-rate-calculator" className="text-sm text-gray-400 hover:text-white transition-colors">Churn Rate Calculator</Link></li>
+                <li><Link href="/ltv-calculator" className="text-sm text-gray-400 hover:text-white transition-colors">LTV Calculator</Link></li>
+                <li><Link href="/runway-calculator" className="text-sm text-gray-400 hover:text-white transition-colors">Runway Calculator</Link></li>
+                <li><Link href="/cash-flow-tracker" className="text-sm text-gray-400 hover:text-white transition-colors">Cash Flow Tracker</Link></li>
               </ul>
             </div>
             <div>
-              <h3 className="text-sm font-semibold text-white mb-4">Follow Mo</h3>
+              <h3 className="text-sm font-semibold text-white mb-4">Compare</h3>
               <ul className="space-y-3">
-                <li><a href="https://www.youtube.com/@AIKnowlidgi" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">▶ YouTube</a></li>
-                <li><a href="https://www.tiktok.com/@aiknowleedge" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">🎵 TikTok</a></li>
-                <li><a href="https://www.instagram.com/aiknowleedge" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">📸 Instagram</a></li>
-                <li><a href="https://www.facebook.com/opsssimoo" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">📘 Facebook</a></li>
-                <li><a href="https://web3-jobs-hazel.vercel.app" target="_blank" rel="noopener noreferrer" className="text-sm text-gray-400 hover:text-white transition-colors">🌐 Web3 Jobs</a></li>
+                <li><Link href="/vs-baremetrics" className="text-sm text-gray-400 hover:text-white transition-colors">vs Baremetrics</Link></li>
+                <li><Link href="/vs-chartmogul" className="text-sm text-gray-400 hover:text-white transition-colors">vs ChartMogul</Link></li>
+                <li><Link href="/vs-profitwell" className="text-sm text-gray-400 hover:text-white transition-colors">vs ProfitWell</Link></li>
+                <li><Link href="/vs-stripe-sigma" className="text-sm text-gray-400 hover:text-white transition-colors">vs Stripe Sigma</Link></li>
+                <li><Link href="/vs-recurly" className="text-sm text-gray-400 hover:text-white transition-colors">vs Recurly</Link></li>
               </ul>
             </div>
           </div>
-          <div className="mt-12 border-t border-gray-800 pt-8">
+          <div className="mt-12 pt-8 border-t border-gray-800 flex flex-wrap gap-6">
+            <div className="flex-1 min-w-[200px]">
+              <p className="text-xs text-gray-400 mb-3">Company</p>
+              <div className="flex flex-wrap gap-4">
+                <Link href="/about" className="text-xs text-gray-400 hover:text-white transition-colors">About</Link>
+                <a href="mailto:hello@aifinanceops.app" className="text-xs text-gray-400 hover:text-white transition-colors">Contact</a>
+                <Link href="/privacy" className="text-xs text-gray-400 hover:text-white transition-colors">Privacy</Link>
+                <a href="https://www.linkedin.com/in/mo-systemarchitect" target="_blank" rel="noopener noreferrer" className="text-xs text-gray-400 hover:text-white transition-colors">LinkedIn</a>
+                <a href="https://twitter.com/MbtechE80106" target="_blank" rel="noopener noreferrer" className="text-xs text-gray-400 hover:text-white transition-colors">Twitter / X</a>
+              </div>
+            </div>
+            <div>
+              <p className="text-xs text-gray-400 mb-3">Follow Mo</p>
+              <div className="flex flex-wrap gap-4">
+                <a href="https://www.youtube.com/@AIKnowlidgi" target="_blank" rel="noopener noreferrer" className="text-xs text-gray-400 hover:text-white transition-colors">▶ YouTube</a>
+                <a href="https://www.tiktok.com/@aiknowleedge" target="_blank" rel="noopener noreferrer" className="text-xs text-gray-400 hover:text-white transition-colors">🎵 TikTok</a>
+                <a href="https://www.instagram.com/aiknowleedge" target="_blank" rel="noopener noreferrer" className="text-xs text-gray-400 hover:text-white transition-colors">📸 Instagram</a>
+              </div>
+            </div>
+          </div>
+          <div className="mt-8 border-t border-gray-800 pt-8">
             <p className="text-xs text-gray-400 mb-3">Featured on</p>
             <ProductHuntBadge />
           </div>
