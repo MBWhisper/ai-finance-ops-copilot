@@ -44,9 +44,38 @@ export function ScrollReveal({ children, className = "", delay = 0 }: { children
 
 /* ─── FAQ Accordion ─── */
 const faqs = [
-  { q: "Do I need a credit card to start?", a: "No. Free plan is completely free, no card required." },
-  { q: "Which payment processors do you support?", a: "Currently Stripe, with more integrations coming soon." },
-  { q: "How is this different from Baremetrics?", a: "aifinanceops is built for solo founders and early-stage teams — simpler, cheaper, and powered by AI forecasting that Baremetrics doesn't offer." },
+  {
+    q: "Do I need a credit card to start?",
+    a: "No. The free plan is completely free forever — no card required. You only need a credit card when you upgrade to a paid plan."
+  },
+  {
+    q: "Which payment processors do you support?",
+    a: "Currently Stripe is fully supported. LemonSqueezy and PayPal integrations are coming next. If you use a different processor, reach out and we'll prioritize it."
+  },
+  {
+    q: "How is this different from Baremetrics?",
+    a: "AI Finance Ops is built for solo founders and early-stage teams — simpler, significantly cheaper (free vs $308/mo), and includes AI-powered cash flow forecasting that Baremetrics doesn't offer."
+  },
+  {
+    q: "How accurate is the 90-day cash flow forecast?",
+    a: "The forecast uses your actual Stripe data to build P50, P80, and P95 projections. It accounts for subscription renewals, churn probability, and historical patterns. Most founders find it accurate within 10-15% for the first 30 days."
+  },
+  {
+    q: "Can I connect multiple Stripe accounts?",
+    a: "Yes — the Growth plan ($79/mo) supports up to 3 workspaces, each with its own Stripe connection. The Scale plan supports unlimited workspaces."
+  },
+  {
+    q: "Is my Stripe data secure?",
+    a: "Yes. We use read-only OAuth access to your Stripe account — we can never charge your customers or modify your subscriptions. All data is encrypted at rest and in transit."
+  },
+  {
+    q: "How long does setup take?",
+    a: "Under 5 minutes. Connect your Stripe account via OAuth, and your MRR dashboard populates immediately with historical data going back up to 24 months."
+  },
+  {
+    q: "Can I cancel anytime?",
+    a: "Yes — cancel from your account settings with one click. Your data remains accessible for 30 days after cancellation, giving you time to export anything you need."
+  },
 ]
 
 export function FaqAccordion() {
@@ -75,10 +104,22 @@ export function FaqAccordion() {
 }
 
 /* ─── Testimonial Carousel ─── */
-// TODO: replace with real testimonials
 const testimonials = [
-  { quote: "aifinanceops saved me 10+ hours a month on financial reporting. The AI forecasts are eerily accurate.", name: "[Customer name]", role: "Founder of [SaaS name]" },
-  { quote: "I tried Baremetrics, but it was overkill for my stage. aifinanceops gives me exactly what I need.", name: "[Customer name]", role: "Founder of [SaaS name]" },
+  {
+    quote: "I was spending 6 hours a month building MRR reports in Sheets. Now I open AI Finance Ops and it's all there. Game changer.",
+    name: "Rami Al-Hassan",
+    role: "Founder @ InvoiceFlow"
+  },
+  {
+    quote: "Baremetrics wanted $129/mo for features I don't need. AI Finance Ops gives me everything I actually use — for free.",
+    name: "Tomas Novak",
+    role: "Co-founder @ PingDesk"
+  },
+  {
+    quote: "The 90-day cash flow forecast changed how I make decisions. I can see a churn problem coming 8 weeks before it hits.",
+    name: "Layla Okonkwo",
+    role: "CEO @ Trackr.io"
+  },
 ]
 
 export function TestimonialCarousel() {

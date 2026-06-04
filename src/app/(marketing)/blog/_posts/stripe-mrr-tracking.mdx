@@ -46,11 +46,11 @@ Accurate MRR comes from **actual paid invoices**, not subscription records. Here
 
 Use the Stripe API to pull all invoices with `status: paid` for the month. Don't use subscription objects — use invoices. This gives you actual cash collected, not projected recurring revenue.
 
-```
+```bash
 GET /v1/invoices
   ?status=paid
-  &created[gte]={start_of_month_unix}
-  &created[lte]={end_of_month_unix}
+  &created[gte]=START_OF_MONTH_UNIX
+  &created[lte]=END_OF_MONTH_UNIX
   &expand[]=data.subscription
 ```
 
@@ -81,15 +81,15 @@ Filter out invoices with `amount_paid == 0`. These are trials, 100% coupons, or 
 
 ## Calculating MRR Movement (The Hard Part)
 
-Once you have point-in-time MRR, you need to track *movements* to understand what's driving changes:
+Once you have point-in-time MRR, you need to track movements to understand what's driving changes:
 
 | Movement Type | Definition | How to Calculate |
 |---|---|---|
 | **New MRR** | Revenue from brand new customers | MRR from customers whose subscription started this month |
-| **Expansion MRR** | Increased revenue from existing customers | This month's MRR from existing customers minus last month's MRR from same customers (if positive) |
+| **Expansion MRR** | Increased revenue from existing customers | This month's MRR from existing customers minus last month's (if positive) |
 | **Contraction MRR** | Decreased revenue from existing customers | Same calculation as above (if negative) |
 | **Churned MRR** | Revenue from customers who cancelled | Last month's MRR from customers with no active subscription this month |
-| **Reactivation MRR** | Revenue from returning customers | MRR from customers who were churned last month but have an active subscription this month |
+| **Reactivation MRR** | Revenue from returning customers | MRR from customers who were churned last month but active this month |
 
 Net New MRR = New MRR + Expansion MRR - Contraction MRR - Churned MRR + Reactivation MRR
 
@@ -125,7 +125,7 @@ Connect to the Stripe API, build the pipeline described above, and store results
 
 ### Option 2: Use a Spreadsheet Template
 
-For very early stage ($0–10K MRR), a Google Sheets template with Stripe export data can work. It breaks down at scale and requires manual updates, but it's free.
+For very early stage ($0-10K MRR), a Google Sheets template with Stripe export data can work. It breaks down at scale and requires manual updates, but it's free.
 
 ### Option 3: Use Dedicated SaaS Analytics
 
@@ -149,4 +149,4 @@ If you can't answer these from your current setup, you're flying blind on the me
 
 AI Finance Ops connects to your Stripe account in under 2 minutes and starts calculating accurate MRR immediately. See your real MRR, expansion, contraction, and churn — broken down by customer, plan, and cohort.
 
-[Connect your Stripe account →](https://www.aifinanceops.app/register) — free 14-day trial, no credit card required.
+[Connect your Stripe account](https://www.aifinanceops.app/register) — free 14-day trial, no credit card required.
