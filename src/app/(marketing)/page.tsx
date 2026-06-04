@@ -16,6 +16,7 @@ import { ScrollReveal } from "@/components/landing-interactive"
 import { LiveVisitorBadge } from "@/components/landing-interactive"
 import { BackToTop } from "@/components/landing-interactive"
 import { HeroCanvas } from "@/components/ui/hero-canvas"
+import { ProductHuntBadge } from "@/components/marketing/ProductHuntBadge"
 
 const PhoneMockupPreview = dynamic(() => import("@/components/marketing/PhoneMockupPreview").then(m => ({ default: m.PhoneMockupPreview })), { ssr: true })
 const NewsletterSignup = dynamic(() => import("@/components/marketing/NewsletterSignup").then(m => ({ default: m.NewsletterSignup })), { ssr: true })
@@ -179,7 +180,7 @@ export default function LandingPage() {
                   <div className="relative mb-6">
                     <OptimizedImage
                       src="/founder.jpg"
-                      alt="Mo \u2014 Founder of AI Finance Ops"
+                      alt="Mo — Founder of AI Finance Ops"
                       className="h-48 w-48 rounded-2xl object-cover border border-emerald-500/10 shadow-lg"
                       width={192}
                       height={192}
@@ -228,7 +229,7 @@ export default function LandingPage() {
                     <span className="text-gray-700">·</span>
                     <a href="https://www.youtube.com/@AIKnowlidgi" target="_blank" rel="noopener noreferrer" className="text-xs text-emerald-400 hover:text-emerald-300 transition-colors">YouTube</a>
                     <span className="text-gray-700">·</span>
-                    <Link href="/about" className="text-xs text-emerald-400 hover:text-emerald-300 transition-colors">Full story \u2192</Link>
+                    <Link href="/about" className="text-xs text-emerald-400 hover:text-emerald-300 transition-colors">Full story →</Link>
                   </div>
                 </div>
               </ScrollReveal>
@@ -299,7 +300,7 @@ export default function LandingPage() {
                     <p className="text-sm text-gray-300 leading-relaxed italic">
                       &ldquo;I built AI Finance Ops after missing a churn spike because my spreadsheet was wrong.&rdquo;
                     </p>
-                    <p className="text-xs text-gray-400 mt-2">\u2014 Mo, Founder of AI Finance Ops</p>
+                    <p className="text-xs text-gray-400 mt-2">— Mo, Founder of AI Finance Ops</p>
                   </div>
                 </div>
               </div>
@@ -364,34 +365,7 @@ export default function LandingPage() {
           </div>
           <div className="mt-12 border-t border-gray-800 pt-8">
             <p className="text-xs text-gray-400 mb-3">Featured on</p>
-            <a
-              href="https://www.producthunt.com/posts/ai-finance-ops"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block"
-            >
-              <img
-                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=ai-finance-ops&theme=dark"
-                alt="AI Finance Ops - Featured on Product Hunt"
-                width={250}
-                height={54}
-                loading="lazy"
-                decoding="async"
-                style={{ width: '250px', height: '54px' }}
-                onError={(e) => {
-                  const target = e.currentTarget
-                  target.style.display = 'none'
-                  const fallback = target.nextElementSibling
-                  if (fallback) (fallback as HTMLElement).style.display = 'flex'
-                }}
-              />
-              <span
-                style={{ display: 'none' }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-orange-500/30 bg-orange-500/10 text-orange-400 text-sm font-medium"
-              >
-                🔶 Featured on Product Hunt
-              </span>
-            </a>
+            <ProductHuntBadge />
           </div>
           <div className="mt-8 border-t border-gray-800 pt-8">
             <p className="text-xs text-gray-400 mb-3">Recommended tools:</p>
