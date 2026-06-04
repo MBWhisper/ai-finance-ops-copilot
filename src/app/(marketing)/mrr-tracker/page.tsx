@@ -183,7 +183,7 @@ export default function MrrTrackerPage() {
               manually, which takes hours and introduces errors. AI Finance Ops automates all of it.
             </p>
             <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 font-mono text-sm">
-              <div className="text-emerald-400 mb-2">// Net New MRR formula</div>
+              <div className="text-emerald-400 mb-2 text-xs font-sans font-semibold uppercase tracking-widest">Net New MRR formula</div>
               <div className="text-gray-300">Net New MRR =</div>
               <div className="text-gray-300 ml-4">+ New MRR <span className="text-gray-500">(new customers)</span></div>
               <div className="text-gray-300 ml-4">+ Expansion MRR <span className="text-gray-500">(upgrades)</span></div>
