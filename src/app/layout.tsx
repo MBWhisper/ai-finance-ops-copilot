@@ -58,11 +58,23 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        <Script
-          id="cookieyes"
-          src="https://cdn-cookieyes.com/client_data/114f1c65c7803024b24a9b80/script.js"
-          strategy="afterInteractive"
-          type="text/javascript"
+        {/* Consent Mode v2 default — must fire before any GA/Ads tag */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('consent', 'default', {
+                'analytics_storage': 'denied',
+                'ad_storage': 'denied',
+                'ad_user_data': 'denied',
+                'ad_personalization': 'denied',
+                'functionality_storage': 'denied',
+                'personalization_storage': 'denied',
+                'wait_for_update': 500,
+              });
+            `,
+          }}
         />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -86,13 +98,6 @@ export default function RootLayout({
                 __html: `
                   window.dataLayer = window.dataLayer || [];
                   function gtag(){dataLayer.push(arguments);}
-                  gtag('consent', 'default', {
-                    'analytics_storage': 'denied',
-                    'ad_storage': 'denied',
-                    'ad_user_data': 'denied',
-                    'ad_personalization': 'denied',
-                    'wait_for_update': 500,
-                  });
                   gtag('js', new Date());
                   gtag('config', '${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}');
                 `,
