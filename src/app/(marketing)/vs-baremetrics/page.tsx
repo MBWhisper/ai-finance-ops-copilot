@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { ArrowRight } from "lucide-react"
+import { InternalLinks } from "@/components/InternalLinks"
 
 export const metadata: Metadata = {
   title: "Baremetrics Alternative 2026: AI Finance Ops vs Baremetrics",
@@ -116,7 +117,11 @@ export default function VsBaremetricsPage() {
                 AI Finance Ops vs Baremetrics
               </h1>
               <p className="mt-6 text-xl leading-8 text-gray-400 max-w-2xl mx-auto">
-                Baremetrics costs $308/month and has no AI features. AI Finance Ops gives early-stage SaaS founders MRR tracking, churn analysis, 90-day cash flow forecasting, and AI-powered insights — starting free.
+                Baremetrics costs $308/month and has no AI features. AI Finance Ops gives early-stage SaaS founders{" "}
+                <Link href="/mrr-tracker" className="text-emerald-400 hover:underline">MRR tracking</Link>,{" "}
+                <Link href="/churn-calculator" className="text-emerald-400 hover:underline">churn analysis</Link>,{" "}
+                <Link href="/cash-flow-tracker" className="text-emerald-400 hover:underline">90-day cash flow forecasting</Link>,
+                and AI-powered insights — starting free.
               </p>
               <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
                 <Link
@@ -188,6 +193,58 @@ export default function VsBaremetricsPage() {
             </div>
           </section>
 
+          {/* Free tools callout */}
+          <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-16">
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="text-2xl font-bold text-white mb-4">Try Our Free SaaS Finance Tools</h2>
+              <p className="text-gray-400 mb-8">
+                No account needed. Use our free calculators to check your metrics right now:
+              </p>
+              <div className="flex flex-wrap justify-center gap-3">
+                {[
+                  { href: "/churn-calculator",  label: "Churn Calculator" },
+                  { href: "/mrr-calculator",    label: "MRR Calculator" },
+                  { href: "/arr-calculator",    label: "ARR Calculator" },
+                  { href: "/runway-calculator", label: "Runway Calculator" },
+                  { href: "/ltv-calculator",    label: "LTV Calculator" },
+                  { href: "/cash-flow-tracker", label: "Cash Flow Tracker" },
+                ].map((tool) => (
+                  <Link
+                    key={tool.href}
+                    href={tool.href}
+                    className="rounded-full border border-gray-700 bg-gray-900 px-5 py-2 text-sm font-medium text-gray-300 hover:border-emerald-500/50 hover:text-emerald-400 transition-all"
+                  >
+                    {tool.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Also compare */}
+          <section className="border-t border-gray-800 px-6 py-16">
+            <div className="mx-auto max-w-3xl text-center">
+              <h2 className="text-2xl font-bold text-white mb-4">Also Compare</h2>
+              <p className="text-gray-400 mb-8">See how AI Finance Ops stacks up against other tools.</p>
+              <div className="flex flex-wrap justify-center gap-3">
+                {[
+                  { href: "/vs-chartmogul",   label: "vs ChartMogul" },
+                  { href: "/vs-profitwell",   label: "vs ProfitWell" },
+                  { href: "/vs-recurly",      label: "vs Recurly" },
+                  { href: "/vs-stripe-sigma", label: "vs Stripe Sigma" },
+                ].map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="rounded-full border border-gray-700 bg-gray-900 px-5 py-2 text-sm font-medium text-gray-300 hover:border-emerald-500/50 hover:text-emerald-400 transition-all"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+
           {/* FAQ */}
           <section className="border-t border-gray-800 px-6 py-24">
             <div className="mx-auto max-w-3xl">
@@ -217,6 +274,12 @@ export default function VsBaremetricsPage() {
               </Link>
             </div>
           </section>
+
+          {/* Internal Links */}
+          <InternalLinks
+            variant="blog"
+            title="Learn More About SaaS Finance"
+          />
         </main>
       </div>
     </>
