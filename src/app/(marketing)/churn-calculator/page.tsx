@@ -2,6 +2,7 @@ import type { Metadata } from "next"
 import Link from "next/link"
 import { OptimizedImage } from "@/components/OptimizedImage"
 import { Users, Check } from "lucide-react"
+import { InternalLinks } from "@/components/InternalLinks"
 
 export const metadata: Metadata = {
   title: "Churn Rate Calculator for SaaS Startups — Free Tool",
@@ -65,6 +66,13 @@ export default function ChurnCalculatorPage() {
           </h2>
           <p className="text-gray-400 leading-relaxed mb-4">
             Churn rate is the percentage of customers who cancel their subscription in a given period.
+            It is one of the most critical{" "}
+            <Link href="/blog/saas-financial-metrics" className="text-emerald-400 hover:underline">
+              SaaS financial metrics
+            </Link>{" "}
+            you need to track alongside{" "}
+            <Link href="/mrr-calculator" className="text-emerald-400 hover:underline">MRR</Link>{" "}and{" "}
+            <Link href="/ltv-calculator" className="text-emerald-400 hover:underline">LTV</Link>.
           </p>
           <div className="border border-gray-800 bg-gray-900/50 rounded-xl p-6 mb-6">
             <div className="text-sm font-mono text-emerald-400 mb-2">Formula</div>
@@ -104,7 +112,10 @@ export default function ChurnCalculatorPage() {
             ))}
           </div>
           <p className="text-center text-gray-400 mt-8 max-w-xl mx-auto">
-            At 5% monthly churn, you&apos;re losing half your business every year. That&apos;s why tracking churn is non-negotiable.
+            At 5% monthly churn, you&apos;re losing half your business every year.
+            Use our{" "}
+            <Link href="/runway-calculator" className="text-emerald-400 hover:underline">runway calculator</Link>{" "}
+            to see how churn affects your cash runway.
           </p>
         </div>
       </section>
@@ -118,6 +129,9 @@ export default function ChurnCalculatorPage() {
             </h2>
             <p className="text-gray-400 leading-relaxed mb-8">
               AI Finance Ops doesn&apos;t just calculate churn — it helps you prevent it.
+              It&apos;s a powerful{" "}
+              <Link href="/vs-baremetrics" className="text-emerald-400 hover:underline">Baremetrics alternative</Link>{" "}
+              built for modern SaaS teams.
             </p>
             <div className="space-y-4">
               {[
@@ -157,6 +171,14 @@ export default function ChurnCalculatorPage() {
           </div>
         </div>
       </section>
+
+      {/* Internal Links */}
+      <InternalLinks
+        variant="mixed"
+        exclude="/churn-calculator"
+        title="More Free SaaS Finance Tools"
+        limit={8}
+      />
     </div>
   )
 }

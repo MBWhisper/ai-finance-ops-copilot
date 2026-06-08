@@ -1,27 +1,25 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { OptimizedImage } from "@/components/OptimizedImage"
-import { DollarSign, TrendingUp, Calendar, Check } from "lucide-react"
+import { InternalLinks } from "@/components/InternalLinks"
+import { TrendingUp, BarChart2, AlertCircle, Check } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Free Cash Flow Tracker for SaaS — AI Finance Ops",
+  title: "SaaS Cash Flow Tracker — Free Tool | AI Finance Ops",
   description:
-    "Track your SaaS cash flow automatically. See 30-day and 90-day forecasts. No spreadsheets required.",
+    "Track and forecast SaaS cash flow in real time. Understand burn rate, runway, and 90-day cash projections without spreadsheets.",
   openGraph: {
-    title: "Free Cash Flow Tracker for SaaS — AI Finance Ops",
-    description:
-      "Track your SaaS cash flow automatically. See 30-day and 90-day forecasts. No spreadsheets required.",
+    title: "SaaS Cash Flow Tracker — Free Tool | AI Finance Ops",
+    description: "Track and forecast SaaS cash flow in real time. Understand burn rate, runway, and 90-day cash projections.",
     url: "https://aifinanceops.app/cash-flow-tracker",
     siteName: "AI Finance Ops",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "AI Finance Ops Cash Flow Tracker" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "SaaS Cash Flow Tracker" }],
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free Cash Flow Tracker for SaaS — AI Finance Ops",
-    description:
-      "Track your SaaS cash flow automatically. See 30-day and 90-day forecasts. No spreadsheets required.",
+    title: "SaaS Cash Flow Tracker — Free Tool | AI Finance Ops",
+    description: "Track and forecast SaaS cash flow in real time.",
     images: ["/og-image.png"],
   },
 }
@@ -36,79 +34,125 @@ export default function CashFlowTrackerPage() {
           Free Tool
         </div>
         <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-white mb-6">
-          Cash Flow Tracker<br />
-          <span className="text-emerald-400">for SaaS</span>
+          SaaS Cash Flow Tracker<br />
+          <span className="text-emerald-400">& 90-Day Forecast</span>
         </h1>
         <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-8">
-          Stop guessing your runway. AI Finance Ops automatically tracks your cash flow and forecasts
-          30 to 90 days ahead.
+          Stop guessing your cash position. Track inflows, outflows, and get a 90-day{" "}
+          <Link href="/blog/90-day-cash-flow-forecast" className="text-emerald-400 hover:underline">
+            SaaS cash flow projection
+          </Link>{" "}
+          — automatically.
         </p>
-        <Link
-          href="/register"
-          className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-8 py-3 text-base font-medium text-white hover:bg-emerald-400 transition-all shadow-lg shadow-emerald-500/25 hover:-translate-y-0.5"
-        >
-          Track cash flow — start free
-        </Link>
-        <OptimizedImage
-          src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1200&h=630&fit=crop"
-          alt="Cash flow forecast dashboard showing projected revenue and expenses"
-          className="w-full max-w-4xl mx-auto mt-12 rounded-xl aspect-video object-cover shadow-2xl"
-          width={1200}
-          height={630}
-        />
+        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <Link
+            href="/register"
+            className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-8 py-3 text-base font-medium text-white hover:bg-emerald-400 transition-all shadow-lg shadow-emerald-500/25 hover:-translate-y-0.5"
+          >
+            Start tracking free
+          </Link>
+          <Link
+            href="/runway-calculator"
+            className="inline-flex items-center gap-2 rounded-full border border-gray-700 px-8 py-3 text-base font-medium text-gray-300 hover:border-emerald-500/50 hover:text-white transition-all"
+          >
+            Try Runway Calculator →
+          </Link>
+        </div>
       </section>
 
-      {/* Key Features */}
+      {/* What is Cash Flow */}
       <section className="border-t border-gray-800 px-6 py-20">
-        <div className="mx-auto max-w-5xl">
-          <div className="grid md:grid-cols-3 gap-8">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            Why SaaS Cash Flow Tracking Matters
+          </h2>
+          <p className="text-gray-400 leading-relaxed mb-6">
+            Cash flow is the lifeblood of any SaaS business. Even profitable companies fail when they run out of cash.
+            Tracking it alongside your{" "}
+            <Link href="/mrr-tracker" className="text-emerald-400 hover:underline">MRR</Link>,{" "}
+            <Link href="/churn-calculator" className="text-emerald-400 hover:underline">churn rate</Link>, and{" "}
+            <Link href="/runway-calculator" className="text-emerald-400 hover:underline">runway</Link>{" "}
+            gives you the full financial picture.
+          </p>
+          <div className="grid sm:grid-cols-3 gap-4">
             {[
-              { icon: DollarSign, label: "Cash Balance", desc: "Know exactly how much cash you have right now." },
-              { icon: TrendingUp, label: "30-Day Forecast", desc: "See next month's inflow and outflow projections." },
-              { icon: Calendar, label: "90-Day Forecast", desc: "Plan ahead with P50, P80, and P95 scenarios." },
-            ].map((f) => (
-              <div
-                key={f.label}
-                className="border border-gray-800 bg-gray-900/50 rounded-xl p-6 text-center hover:border-gray-700 transition-colors"
-              >
-                <f.icon className="h-8 w-8 mx-auto mb-3 text-emerald-400" />
-                <div className="text-sm font-semibold text-white mb-1">{f.label}</div>
-                <div className="text-xs text-gray-500">{f.desc}</div>
+              { icon: TrendingUp, label: "Cash In",   desc: "Subscription revenue, one-time payments",  color: "text-emerald-400" },
+              { icon: BarChart2,  label: "Cash Out",  desc: "Payroll, infra, marketing, COGS",           color: "text-red-400" },
+              { icon: AlertCircle,label: "Net Flow",  desc: "The number that determines your runway",   color: "text-amber-400" },
+            ].map(({ icon: Icon, label, desc, color }) => (
+              <div key={label} className="border border-gray-800 bg-gray-900/50 rounded-xl p-5">
+                <Icon className={`h-6 w-6 ${color} mb-3`} />
+                <div className="text-sm font-semibold text-white mb-1">{label}</div>
+                <div className="text-xs text-gray-500">{desc}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Benefits */}
+      {/* Features */}
       <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-20">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 text-center">
-            Why Automate Cash Flow Tracking?
+        <div className="mx-auto max-w-5xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-12 text-center">
+            Everything You Need to Manage SaaS Cash Flow
           </h2>
-          <div className="space-y-4 max-w-lg mx-auto">
+          <div className="grid md:grid-cols-2 gap-8">
             {[
-              "Manual cash flow tracking takes hours every month",
-              "Spreadsheet errors can lead to bad business decisions",
-              "Without forecasts, you can't plan for slow months",
-              "AI Finance Ops updates your cash flow in real-time",
+              {
+                title: "Real-Time Cash Dashboard",
+                desc: "See exactly where your cash is going in real time. No more end-of-month surprises.",
+              },
+              {
+                title: "90-Day Forecast",
+                desc: "AI-powered projections based on your historical revenue and expense patterns.",
+              },
+              {
+                title: "Burn Rate Monitoring",
+                desc: "Track your monthly burn and get alerted when you're approaching dangerous territory.",
+              },
+              {
+                title: "Scenario Planning",
+                desc: "Model best-case, worst-case, and expected cash flow scenarios side by side.",
+              },
             ].map((f) => (
-              <div key={f} className="flex items-start gap-3">
+              <div key={f.title} className="flex gap-4">
                 <Check className="h-5 w-5 text-emerald-500 mt-0.5 shrink-0" />
-                <span className="text-sm text-gray-300">{f}</span>
+                <div>
+                  <div className="text-sm font-semibold text-white mb-1">{f.title}</div>
+                  <div className="text-sm text-gray-400">{f.desc}</div>
+                </div>
               </div>
             ))}
           </div>
-          <div className="text-center mt-12">
-            <Link
-              href="/register"
-              className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-8 py-3 text-base font-medium text-white hover:bg-emerald-400 transition-all shadow-lg shadow-emerald-500/25 hover:-translate-y-0.5"
-            >
-              Try AI Finance Ops free
-            </Link>
-          </div>
         </div>
       </section>
+
+      {/* CTA */}
+      <section className="border-t border-gray-800 px-6 py-20">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="text-3xl font-bold text-white mb-4">Know Your Cash Position. Always.</h2>
+          <p className="text-gray-400 mb-8">
+            Join hundreds of SaaS founders who use AI Finance Ops to track cash flow and avoid running out of runway.
+            A smarter{" "}
+            <Link href="/vs-baremetrics" className="text-emerald-400 hover:underline">Baremetrics alternative</Link>{" "}
+            built for finance ops.
+          </p>
+          <Link
+            href="/register"
+            className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-10 py-4 text-base font-semibold text-white hover:bg-emerald-400 transition-all shadow-lg shadow-emerald-500/25"
+          >
+            Start free — no credit card required
+          </Link>
+        </div>
+      </section>
+
+      {/* Internal Links */}
+      <InternalLinks
+        variant="mixed"
+        exclude="/cash-flow-tracker"
+        title="Related SaaS Finance Tools"
+        limit={8}
+      />
     </div>
   )
 }
