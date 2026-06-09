@@ -1,2 +1,6 @@
-// Re-export to trigger internal linking awareness — actual content unchanged
-export { default } from './overview-content'
+import { redirect } from 'next/navigation'
+
+// Redirect /dashboard/overview → /dashboard (default route)
+export default function OverviewPage() {
+  redirect('/dashboard')
+}
