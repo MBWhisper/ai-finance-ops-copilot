@@ -78,7 +78,7 @@ const AI_FEATURES = [
   },
   {
     title: 'Revenue scenario planning',
-    body: 'Model "What if churn drops by 2%?" or "What if I raise prices?" and see the forecast impact in seconds.',
+    body: 'Model scenarios like "What if churn drops by 2%?" and see the forecast impact in seconds.',
     badge: 'Scenario Builder',
   },
   {
@@ -89,21 +89,32 @@ const AI_FEATURES = [
 ]
 
 const PAIN_POINTS = [
-  { pain: 'Spending hours in spreadsheets', fix: 'Auto-synced dashboard in 60 seconds' },
-  { pain: 'No visibility into cash runway', fix: '90-day cash flow forecast (Growth)' },
-  { pain: 'Can\'t afford a CFO or analyst', fix: 'AI Copilot answers financial questions instantly' },
-  { pain: 'Churn creeps up without warning', fix: 'Real-time churn alerts before it's too late' },
+  {
+    pain: 'Spending hours in spreadsheets',
+    fix: 'Auto-synced dashboard in 60 seconds',
+  },
+  {
+    pain: 'No visibility into cash runway',
+    fix: '90-day cash flow forecast (Growth)',
+  },
+  {
+    pain: "Can't afford a CFO or analyst",
+    fix: 'AI Copilot answers financial questions instantly',
+  },
+  {
+    pain: 'Churn creeps up without warning',
+    fix: "Real-time churn alerts before it's too late",
+  },
 ]
 
 export default function AiFinanceBootstrappedPage() {
   return (
     <main className="min-h-screen bg-[#0f1117] text-white">
 
-      {/* ── HERO ── */}
+      {/* HERO */}
       <section className="relative overflow-hidden px-6 pt-24 pb-20 text-center">
         <div className="absolute inset-0 bg-gradient-to-b from-violet-950/40 to-transparent pointer-events-none" />
         <div className="relative mx-auto max-w-3xl">
-          {/* Promo Badge */}
           <span className="inline-flex items-center gap-2 rounded-full border border-violet-500/40 bg-violet-500/10 px-4 py-1.5 text-sm font-medium text-violet-400 mb-6">
             🎉 50% off first 3 months — Limited launch offer
           </span>
@@ -133,7 +144,7 @@ export default function AiFinanceBootstrappedPage() {
         </div>
       </section>
 
-      {/* ── PAIN → FIX ── */}
+      {/* PAIN TO FIX */}
       <section className="px-6 py-20 border-y border-white/10">
         <div className="mx-auto max-w-3xl">
           <h2 className="text-3xl font-bold text-center mb-12">Sound familiar?</h2>
@@ -153,7 +164,7 @@ export default function AiFinanceBootstrappedPage() {
         </div>
       </section>
 
-      {/* ── AI FEATURES ── */}
+      {/* AI FEATURES */}
       <section className="px-6 py-20">
         <div className="mx-auto max-w-5xl">
           <h2 className="text-3xl font-bold text-center mb-4">Your AI Copilot for SaaS Finance</h2>
@@ -177,11 +188,11 @@ export default function AiFinanceBootstrappedPage() {
         </div>
       </section>
 
-      {/* ── PRICING ── */}
+      {/* PRICING */}
       <section id="pricing" className="px-6 py-20 bg-white/[0.02]">
         <div className="mx-auto max-w-5xl">
           <h2 className="text-3xl font-bold text-center mb-4">Pricing built for bootstrappers</h2>
-          <p className="text-center text-gray-400 mb-14">Start free. Upgrade when you're ready.</p>
+          <p className="text-center text-gray-400 mb-14">Start free. Upgrade when you are ready.</p>
           <div className="grid sm:grid-cols-3 gap-6">
             {PLANS.map((plan) => (
               <div
@@ -193,7 +204,9 @@ export default function AiFinanceBootstrappedPage() {
                 }`}
               >
                 {plan.highlight && (
-                  <span className="text-xs font-semibold text-violet-400 uppercase tracking-widest mb-3">Best for Bootstrappers</span>
+                  <span className="text-xs font-semibold text-violet-400 uppercase tracking-widest mb-3">
+                    Best for Bootstrappers
+                  </span>
                 )}
                 <div className="text-xl font-bold mb-1">{plan.name}</div>
                 <div className="text-3xl font-bold">{plan.price}</div>
@@ -220,12 +233,13 @@ export default function AiFinanceBootstrappedPage() {
             ))}
           </div>
           <p className="text-center text-sm text-violet-400 font-medium mt-8">
-            🎉 50% off first 3 months — use code <code className="bg-white/10 px-2 py-0.5 rounded">LAUNCH50</code>
+            🎉 50% off first 3 months — use code{' '}
+            <code className="bg-white/10 px-2 py-0.5 rounded">LAUNCH50</code>
           </p>
         </div>
       </section>
 
-      {/* ── FINAL CTA ── */}
+      {/* FINAL CTA */}
       <section className="px-6 py-20 text-center">
         <div className="mx-auto max-w-xl">
           <h2 className="text-3xl font-bold mb-4">Ready to run your startup smarter?</h2>

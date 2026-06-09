@@ -24,27 +24,50 @@ const COMPARISON = [
 ]
 
 const STEPS = [
-  { n: '01', title: 'Connect your data', body: 'Link Stripe, your bank, or upload a CSV. AI Finance Ops pulls in revenue, expenses, and subscription data automatically.' },
-  { n: '02', title: 'AI builds your forecast', body: 'Our model analyzes your growth rate, churn, and burn to generate a 90-day cash flow projection.' },
-  { n: '03', title: 'Act before it's too late', body: 'Get alerts when your runway drops below 3 months. Export reports for investors or decisions.' },
+  {
+    n: '01',
+    title: 'Connect your data',
+    body: 'Link Stripe, your bank, or upload a CSV. AI Finance Ops pulls in revenue, expenses, and subscription data automatically.',
+  },
+  {
+    n: '02',
+    title: 'AI builds your forecast',
+    body: 'Our model analyzes your growth rate, churn, and burn to generate a 90-day cash flow projection.',
+  },
+  {
+    n: '03',
+    title: "Act before it's too late",
+    body: 'Get alerts when your runway drops below 3 months. Export reports for investors or decisions.',
+  },
 ]
 
 const FAQS = [
-  { q: 'How accurate is the 90-day forecast?', a: 'Our AI model achieves ~87% accuracy on average, validated across 200+ SaaS companies. Accuracy improves the more historical data you connect.' },
-  { q: 'Which plans include cash flow forecasting?', a: 'The 90-day cash flow forecast is available on the Growth plan ($79/mo). The Starter plan includes a 30-day cash flow overview.' },
-  { q: 'Can I connect multiple revenue sources?', a: 'Yes. Growth plan supports Stripe + bank feeds + manual expense entries, all unified in one dashboard.' },
-  { q: 'Is my financial data secure?', a: 'All data is encrypted in transit and at rest. We are SOC 2 Type II compliant and never sell your data.' },
+  {
+    q: 'How accurate is the 90-day forecast?',
+    a: 'Our AI model achieves ~87% accuracy on average, validated across 200+ SaaS companies. Accuracy improves the more historical data you connect.',
+  },
+  {
+    q: 'Which plans include cash flow forecasting?',
+    a: 'The 90-day cash flow forecast is available on the Growth plan ($79/mo). The Starter plan includes a 30-day cash flow overview.',
+  },
+  {
+    q: 'Can I connect multiple revenue sources?',
+    a: 'Yes. Growth plan supports Stripe + bank feeds + manual expense entries, all unified in one dashboard.',
+  },
+  {
+    q: 'Is my financial data secure?',
+    a: 'All data is encrypted in transit and at rest. We are SOC 2 Type II compliant and never sell your data.',
+  },
 ]
 
 export default function SaasCashFlowForecastPage() {
   return (
     <main className="min-h-screen bg-[#0f1117] text-white">
 
-      {/* ── HERO ── */}
+      {/* HERO */}
       <section className="relative overflow-hidden px-6 pt-24 pb-20 text-center">
         <div className="absolute inset-0 bg-gradient-to-b from-blue-950/40 to-transparent pointer-events-none" />
         <div className="relative mx-auto max-w-3xl">
-          {/* Promo Badge */}
           <span className="inline-flex items-center gap-2 rounded-full border border-blue-500/40 bg-blue-500/10 px-4 py-1.5 text-sm font-medium text-blue-400 mb-6">
             🎉 50% off first 3 months — Limited launch offer
           </span>
@@ -74,7 +97,7 @@ export default function SaasCashFlowForecastPage() {
         </div>
       </section>
 
-      {/* ── HOW IT WORKS ── */}
+      {/* HOW IT WORKS */}
       <section className="px-6 py-20 border-y border-white/10">
         <div className="mx-auto max-w-4xl">
           <h2 className="text-3xl font-bold text-center mb-14">How it works</h2>
@@ -90,7 +113,7 @@ export default function SaasCashFlowForecastPage() {
         </div>
       </section>
 
-      {/* ── COMPARISON ── */}
+      {/* COMPARISON */}
       <section id="comparison" className="px-6 py-20 bg-white/[0.02]">
         <div className="mx-auto max-w-4xl">
           <h2 className="text-3xl font-bold text-center mb-4">AI Finance Ops vs. the alternatives</h2>
@@ -132,7 +155,7 @@ export default function SaasCashFlowForecastPage() {
         </div>
       </section>
 
-      {/* ── FAQ ── */}
+      {/* FAQ */}
       <section className="px-6 py-20">
         <div className="mx-auto max-w-3xl">
           <h2 className="text-3xl font-bold text-center mb-12">Frequently asked questions</h2>
@@ -150,7 +173,7 @@ export default function SaasCashFlowForecastPage() {
         </div>
       </section>
 
-      {/* ── FINAL CTA ── */}
+      {/* FINAL CTA */}
       <section className="px-6 py-20 text-center bg-white/[0.02]">
         <div className="mx-auto max-w-xl">
           <h2 className="text-3xl font-bold mb-4">Forecast your next 90 days</h2>
@@ -161,7 +184,10 @@ export default function SaasCashFlowForecastPage() {
           >
             Start Growth Plan →
           </Link>
-          <p className="mt-4 text-sm text-blue-400 font-medium">🎉 50% off first 3 months with code LAUNCH50</p>
+          <p className="mt-4 text-sm text-blue-400 font-medium">
+            🎉 50% off first 3 months with code{' '}
+            <code className="bg-white/10 px-2 py-0.5 rounded">LAUNCH50</code>
+          </p>
         </div>
       </section>
 
