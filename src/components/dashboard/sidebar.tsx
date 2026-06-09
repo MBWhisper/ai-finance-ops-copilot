@@ -5,7 +5,8 @@ import { usePathname } from "next/navigation"
 import {
   LayoutDashboard, TrendingUp, Receipt, Settings, CreditCard,
   Menu, X, LogOut, Bell, AlertTriangle, BarChart3, Bot, Activity,
-  Ellipsis,
+  Ellipsis, BookOpen, Calculator, ArrowRight, ChevronDown, ChevronUp,
+  Layers, Zap,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { createClient } from "@/lib/supabase/browser"
@@ -28,11 +29,183 @@ export const navItems: NavItem[] = [
   { label: "Settings", href: "/dashboard/settings", icon: Settings },
 ]
 
+// ─── Internal resource links for SEO + UX ───
+const resourceLinks = [
+  {
+    group: "Calculators",
+    icon: Calculator,
+    items: [
+      { label: "MRR Calculator", href: "/calculators/mrr" },
+      { label: "Runway Calculator", href: "/calculators/runway" },
+      { label: "Churn Rate", href: "/calculators/churn" },
+      { label: "LTV / CAC", href: "/calculators/ltv-cac" },
+    ],
+  },
+  {
+    group: "Guides & Blog",
+    icon: BookOpen,
+    items: [
+      { label: "Stripe MRR for Founders", href: "/blog/stripe-mrr-dashboard-for-founders" },
+      { label: "SaaS Cash Flow Forecast", href: "/blog/saas-cash-flow-forecast" },
+      { label: "AI Finance for Startups", href: "/blog/ai-finance-tool-bootstrapped-startups" },
+    ],
+  },
+  {
+    group: "Compare",
+    icon: Layers,
+    items: [
+      { label: "vs Baremetrics", href: "/vs-baremetrics" },
+      { label: "vs ChartMogul", href: "/vs-chartmogul" },
+      { label: "Pricing Plans", href: "/pricing" },
+    ],
+  },
+]
+
+// ─── Desktop / Tablet Resources Panel ───
+function ResourcesPanel({ expanded }: { expanded: boolean }) {
+  const [openGroup, setOpenGroup] = useState<string | null>(null)
+
+  if (!expanded) {
+    // Icon-only: show a single bookmarks icon that links to /blog
+    return (
+      <div className="border-t pt-2 pb-1 px-2">
+        <Link
+          href="/blog"
+          className="flex justify-center items-center py-3 rounded-lg text-gray-400 hover:text-emerald-600 hover:bg-emerald-50 transition-colors min-touch-target"
+          title="Resources & Guides"
+        >
+          <BookOpen className="h-5 w-5" />
+        </Link>
+      </div>
+    )
+  }
+
+  return (
+    <div className="border-t pt-3 pb-2 px-2">
+      <p className="px-1 mb-2 text-[10px] font-semibold uppercase tracking-wider text-gray-400">Resources</p>
+      <div className="space-y-0.5">
+        {resourceLinks.map((group) => (
+          <div key={group.group}>
+            <button
+              onClick={() => setOpenGroup(openGroup === group.group ? null : group.group)}
+              className="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors"
+            >
+              <group.icon className="h-3.5 w-3.5 shrink-0 text-gray-400" />
+              <span className="flex-1 text-left truncate">{group.group}</span>
+              {openGroup === group.group
+                ? <ChevronUp className="h-3 w-3 text-gray-300" />
+                : <ChevronDown className="h-3 w-3 text-gray-300" />}
+            </button>
+            {openGroup === group.group && (
+              <div className="ml-5 mt-0.5 space-y-0.5 animate-in fade-in slide-in-from-top-1 duration-150">
+                {group.items.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="flex items-center gap-1.5 px-2 py-1.5 rounded-md text-xs text-gray-500 hover:text-emerald-700 hover:bg-emerald-50 transition-colors group"
+                  >
+                    <ArrowRight className="h-3 w-3 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <span className="truncate">{item.label}</span>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// ─── Mobile Resources Full Drawer ───
+function MobileResourcesDrawer({ open, onClose }: { open: boolean; onClose: () => void }) {
+  useEffect(() => {
+    if (!open) return
+    const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose() }
+    window.addEventListener("keydown", handler)
+    return () => window.removeEventListener("keydown", handler)
+  }, [open, onClose])
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : ""
+    return () => { document.body.style.overflow = "" }
+  }, [open])
+
+  if (!open) return null
+
+  return (
+    <div className="fixed inset-0 z-[60] md:hidden">
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
+      <div
+        className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-2xl max-h-[80dvh] overflow-y-auto"
+        style={{ paddingBottom: 'max(16px, env(safe-area-inset-bottom))' }}
+      >
+        {/* Header */}
+        <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100 sticky top-0 bg-white z-10">
+          <div className="flex items-center gap-2">
+            <BookOpen className="h-4 w-4 text-emerald-600" />
+            <span className="text-sm font-semibold text-gray-900">Resources & Guides</span>
+          </div>
+          <button
+            onClick={onClose}
+            className="h-9 w-9 flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100 transition-colors"
+            aria-label="Close"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
+
+        {/* Upgrade CTA */}
+        <div className="mx-4 mt-4 mb-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 p-4 text-white">
+          <div className="flex items-center gap-2 mb-1">
+            <Zap className="h-4 w-4" />
+            <span className="text-sm font-bold">Unlock All Features</span>
+          </div>
+          <p className="text-xs text-emerald-100 mb-3">Forecasts, AI Copilot, cohort analysis and more.</p>
+          <Link
+            href="/pricing"
+            onClick={onClose}
+            className="block w-full text-center bg-white text-emerald-700 text-xs font-semibold py-2 rounded-lg hover:bg-emerald-50 transition-colors"
+          >
+            See Pricing Plans →
+          </Link>
+        </div>
+
+        {/* Resource Groups */}
+        <div className="px-4 pb-2 space-y-4">
+          {resourceLinks.map((group) => (
+            <div key={group.group}>
+              <div className="flex items-center gap-2 mb-2">
+                <group.icon className="h-4 w-4 text-gray-400" />
+                <p className="text-xs font-semibold uppercase tracking-wider text-gray-400">{group.group}</p>
+              </div>
+              <div className="space-y-0.5">
+                {group.items.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={onClose}
+                    className="flex items-center justify-between px-3 py-3 rounded-xl text-sm text-gray-700 hover:bg-gray-50 active:bg-gray-100 transition-colors"
+                  >
+                    <span>{item.label}</span>
+                    <ArrowRight className="h-4 w-4 text-gray-300" />
+                  </Link>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export function Sidebar({ userEmail, plan, unreadAlerts = 0 }: { userEmail: string; plan?: string; unreadAlerts?: number }) {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const [hovered, setHovered] = useState(false)
   const [moreOpen, setMoreOpen] = useState(false)
+  const [resourcesOpen, setResourcesOpen] = useState(false)
 
   const primaryMobileItems: NavItem[] = [
     { label: "Overview", href: "/dashboard/overview", icon: LayoutDashboard },
@@ -48,7 +221,7 @@ export function Sidebar({ userEmail, plan, unreadAlerts = 0 }: { userEmail: stri
     { label: "Settings", href: "/dashboard/settings", icon: Settings },
   ]
 
-  useEffect(() => { setOpen(false); setMoreOpen(false) }, [pathname])
+  useEffect(() => { setOpen(false); setMoreOpen(false); setResourcesOpen(false) }, [pathname])
 
   useEffect(() => {
     if (!open && !moreOpen) return
@@ -58,9 +231,9 @@ export function Sidebar({ userEmail, plan, unreadAlerts = 0 }: { userEmail: stri
   }, [open, moreOpen])
 
   useEffect(() => {
-    document.body.style.overflow = open || moreOpen ? "hidden" : ""
+    document.body.style.overflow = (open || moreOpen || resourcesOpen) ? "hidden" : ""
     return () => { document.body.style.overflow = "" }
-  }, [open, moreOpen])
+  }, [open, moreOpen, resourcesOpen])
 
   async function handleLogout() {
     const supabase = createClient()
@@ -69,8 +242,6 @@ export function Sidebar({ userEmail, plan, unreadAlerts = 0 }: { userEmail: stri
   }
 
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + '/')
-
-  // ─── Desktop & Tablet sidebar content ───
   const sidebarExpanded = hovered
 
   const sidebarContent = (
@@ -98,7 +269,6 @@ export function Sidebar({ userEmail, plan, unreadAlerts = 0 }: { userEmail: stri
             </div>
           )}
         </div>
-        {/* Close button — visible on mobile drawer only */}
         <button
           onClick={() => setOpen(false)}
           className="lg:hidden h-9 w-9 flex items-center justify-center rounded-lg text-gray-400 hover:text-gray-900 hover:bg-gray-100 transition-colors min-touch-target"
@@ -150,6 +320,9 @@ export function Sidebar({ userEmail, plan, unreadAlerts = 0 }: { userEmail: stri
         })}
       </nav>
 
+      {/* Resources Panel — internal links for SEO */}
+      <ResourcesPanel expanded={sidebarExpanded} />
+
       {/* User area */}
       <div className={cn("border-t", sidebarExpanded ? "p-4" : "p-2")}>
         {sidebarExpanded && (
@@ -178,8 +351,10 @@ export function Sidebar({ userEmail, plan, unreadAlerts = 0 }: { userEmail: stri
   return (
     <>
       {/* ─── MOBILE: Bottom tab bar (< md: 768px) ─── */}
-      <nav className="fixed bottom-0 left-0 right-0 z-40 flex md:hidden bg-white border-t"
-           style={{ paddingBottom: 'max(0px, env(safe-area-inset-bottom))' }}>
+      <nav
+        className="fixed bottom-0 left-0 right-0 z-40 flex md:hidden bg-white border-t"
+        style={{ paddingBottom: 'max(0px, env(safe-area-inset-bottom))' }}
+      >
         {primaryMobileItems.map((item) => {
           const active = isActive(item.href)
           return (
@@ -210,8 +385,10 @@ export function Sidebar({ userEmail, plan, unreadAlerts = 0 }: { userEmail: stri
       {moreOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
           <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" onClick={() => setMoreOpen(false)} />
-          <div className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-2xl animate-slide-up"
-               style={{ paddingBottom: 'max(0px, env(safe-area-inset-bottom))' }}>
+          <div
+            className="absolute bottom-0 left-0 right-0 bg-white rounded-t-2xl shadow-2xl animate-slide-up"
+            style={{ paddingBottom: 'max(0px, env(safe-area-inset-bottom))' }}
+          >
             <div className="flex items-center justify-between px-5 py-3 border-b border-gray-100">
               <span className="text-sm font-semibold text-gray-900">More</span>
               <button
@@ -242,10 +419,38 @@ export function Sidebar({ userEmail, plan, unreadAlerts = 0 }: { userEmail: stri
                   </Link>
                 )
               })}
+
+              {/* Resources entry */}
+              <button
+                onClick={() => { setMoreOpen(false); setResourcesOpen(true) }}
+                className="w-full flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 active:bg-gray-100 transition-colors"
+              >
+                <BookOpen className="h-5 w-5 text-gray-400" />
+                <span>Resources & Guides</span>
+                <ArrowRight className="ml-auto h-4 w-4 text-gray-300" />
+              </button>
+
+              {/* AI Copilot shortcut */}
+              <Link
+                href="/dashboard/ai-chat"
+                onClick={() => setMoreOpen(false)}
+                className={cn(
+                  "flex items-center gap-3 px-3 py-3 rounded-lg text-sm font-medium transition-colors",
+                  isActive("/dashboard/ai-chat")
+                    ? "bg-emerald-50 text-emerald-700"
+                    : "text-gray-700 hover:bg-gray-50 active:bg-gray-100"
+                )}
+              >
+                <Bot className={cn("h-5 w-5", isActive("/dashboard/ai-chat") ? "text-emerald-600" : "text-gray-400")} />
+                <span>AI Copilot</span>
+              </Link>
             </div>
           </div>
         </div>
       )}
+
+      {/* ─── MOBILE: Resources Drawer ─── */}
+      <MobileResourcesDrawer open={resourcesOpen} onClose={() => setResourcesOpen(false)} />
 
       {/* ─── HAMBURGER (mobile only) ─── */}
       <button
