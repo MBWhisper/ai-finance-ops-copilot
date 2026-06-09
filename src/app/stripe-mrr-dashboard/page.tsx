@@ -233,7 +233,7 @@ export default function StripeMRRDashboardPage() {
           <div className="grid sm:grid-cols-3 gap-6">
             {TESTIMONIALS.map((t) => (
               <div key={t.name} className="rounded-xl border border-white/10 bg-white/5 p-6">
-                <p className="text-gray-300 text-sm leading-relaxed mb-4">"{t.quote}"</p>
+                <p className="text-gray-300 text-sm leading-relaxed mb-4">&ldquo;{t.quote}&rdquo;</p>
                 <div className="text-sm font-semibold">{t.name}</div>
                 <div className="text-xs text-gray-500">{t.role}</div>
               </div>
