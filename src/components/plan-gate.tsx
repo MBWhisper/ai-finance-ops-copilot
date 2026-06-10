@@ -11,10 +11,11 @@ interface PlanGateProps {
 }
 
 const PLAN_RANK: Record<PlanId, number> = {
-  free: 0, starter: 1, pro: 2, growth: 3,
+  free: 0, starter: 1, pro: 2, growth: 3, admin: 99,
 }
 
 export function PlanGate({ children, requiredPlan, currentPlan, feature }: PlanGateProps) {
+  // admin bypasses all gates
   const hasAccess = PLAN_RANK[currentPlan] >= PLAN_RANK[requiredPlan]
   if (hasAccess) return <>{children}</>
 
