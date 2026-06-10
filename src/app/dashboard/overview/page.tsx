@@ -1,14 +1,4 @@
-import { createClient } from '@/lib/supabase/server'
-import { redirect } from 'next/navigation'
-
-export default async function OverviewPage() {
-  const supabase = createClient()
-  const { data: { session } } = await supabase.auth.getSession()
-
-  if (!session) {
-    redirect('/login')
-  }
-
+export default function OverviewPage() {
   return (
     <div className="space-y-6">
       <div>
@@ -34,27 +24,19 @@ export default async function OverviewPage() {
       <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
         <h2 className="text-base font-semibold text-gray-800 mb-4">Getting Started</h2>
         <div className="space-y-3">
-          <div className="flex items-start gap-3">
-            <span className="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 text-xs flex items-center justify-center font-bold shrink-0 mt-0.5">1</span>
-            <div>
-              <p className="text-sm font-medium text-gray-800">Connect your payment provider</p>
-              <p className="text-xs text-gray-500">Link Stripe or LemonSqueezy to start tracking revenue.</p>
+          {[
+            { step: 1, title: 'Connect your payment provider', desc: 'Link Stripe or LemonSqueezy to start tracking revenue.' },
+            { step: 2, title: 'View your Cash Flow forecast', desc: 'AI-powered 12-month runway predictions.' },
+            { step: 3, title: 'Ask the AI Copilot', desc: 'Chat with your finance data in natural language.' },
+          ].map(({ step, title, desc }) => (
+            <div key={step} className="flex items-start gap-3">
+              <span className="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 text-xs flex items-center justify-center font-bold shrink-0 mt-0.5">{step}</span>
+              <div>
+                <p className="text-sm font-medium text-gray-800">{title}</p>
+                <p className="text-xs text-gray-500">{desc}</p>
+              </div>
             </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <span className="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 text-xs flex items-center justify-center font-bold shrink-0 mt-0.5">2</span>
-            <div>
-              <p className="text-sm font-medium text-gray-800">View your Cash Flow forecast</p>
-              <p className="text-xs text-gray-500">AI-powered 12-month runway predictions.</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <span className="w-6 h-6 rounded-full bg-indigo-100 text-indigo-700 text-xs flex items-center justify-center font-bold shrink-0 mt-0.5">3</span>
-            <div>
-              <p className="text-sm font-medium text-gray-800">Ask the AI Copilot</p>
-              <p className="text-xs text-gray-500">Chat with your finance data in natural language.</p>
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
