@@ -116,8 +116,11 @@ export default function AnalyticsPage() {
   const collectionHealth = useMemo(() => computeCollectionHealth(invoices), [invoices])
 
   const latest = periodHistory[periodHistory.length - 1]
-  const mrGrowth = periodHistory.length > 1 && periodHistory[periodHistory.length - 2].mrrCents > 0
-    ? ((latest?.mrrCents ?? 0 - (periodHistory[periodHistory.length - 2]?.mrrCents ?? 0)) / (periodHistory[periodHistory.length - 2]?.mrrCents ?? 1)) * 100
+  const prev = periodHistory[periodHistory.length - 2]
+
+  // ✅ Fixed: proper parentheses to avoid operator precedence bug with ??
+  const mrGrowth = periodHistory.length > 1 && (prev?.mrrCents ?? 0) > 0
+    ? (((latest?.mrrCents ?? 0) - (prev?.mrrCents ?? 0)) / (prev?.mrrCents ?? 1)) * 100
     : 0
 
   const insights = useMemo(
