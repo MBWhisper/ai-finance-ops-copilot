@@ -31,7 +31,7 @@ const PAIN_POINTS = [
     solution: 'AI Finance Ops sends you a daily MRR digest automatically — with highlights and anomaly alerts.',
   },
   {
-    problem: 'You don\'t know your real burn rate',
+    problem: 'You don&#39;t know your real burn rate',
     solution: 'Connect Stripe and your bank. Get a live burn dashboard that updates every 24 hours.',
   },
   {
@@ -124,7 +124,7 @@ export default function AiFinanceBootstrappedStartupsPage() {
               <div key={item.problem} className="rounded-xl border border-white/10 bg-white/5 p-6 grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">The problem</p>
-                  <p className="text-gray-300 text-sm">{item.problem}</p>
+                  <p className="text-gray-300 text-sm" dangerouslySetInnerHTML={{ __html: item.problem }} />
                 </div>
                 <div>
                   <p className="text-xs font-semibold text-violet-400 uppercase tracking-widest mb-2">The solution</p>
@@ -140,7 +140,7 @@ export default function AiFinanceBootstrappedStartupsPage() {
       <section className="px-6 py-20 bg-white/[0.02]">
         <div className="mx-auto max-w-5xl">
           <h2 className="text-3xl font-bold text-center mb-4">Pricing built for bootstrapped budgets</h2>
-          <p className="text-center text-gray-400 mb-14">Start free. No credit card. Upgrade only when you\'re ready.</p>
+          <p className="text-center text-gray-400 mb-14">Start free. No credit card. Upgrade only when you&apos;re ready.</p>
           <div className="grid sm:grid-cols-3 gap-6">
             {PLANS.map((plan) => (
               <div

@@ -27,22 +27,18 @@ export const metadata: Metadata = {
 
 const FEATURES = [
   {
-    icon: '📈',
     title: 'Live MRR Tracking',
     description: 'Connect Stripe once. See your MRR, ARR, and net revenue updated in real-time — no spreadsheets.',
   },
   {
-    icon: '🔮',
     title: 'AI Revenue Forecast',
     description: 'Our AI model predicts your next 90-day revenue trajectory based on current growth and churn patterns.',
   },
   {
-    icon: '⚠️',
     title: 'Churn Alerts',
     description: 'Get notified the moment a customer shows cancellation signals, before they actually churn.',
   },
   {
-    icon: '📊',
     title: 'Cohort Analysis',
     description: 'Understand retention by signup month. Spot which cohorts retain and which ones drop — automatically.',
   },
@@ -101,7 +97,7 @@ const PLANS = [
 
 const TESTIMONIALS = [
   {
-    quote: "I replaced Baremetrics with AI Finance Ops and saved $150/mo. The MRR dashboard is cleaner and the AI forecasts are scarily accurate.",
+    quote: 'I replaced Baremetrics with AI Finance Ops and saved $150/mo. The MRR dashboard is cleaner and the AI forecasts are scarily accurate.',
     name: 'Alex R.',
     role: 'Founder, SaaS tool — $12k MRR',
   },
@@ -111,7 +107,7 @@ const TESTIMONIALS = [
     role: 'Solo founder — $4k MRR',
   },
   {
-    quote: "The churn alerts alone saved me two customers last month. Absolute no-brainer.",
+    quote: 'The churn alerts alone saved me two customers last month. Absolute no-brainer.',
     name: 'Tom K.',
     role: 'Co-founder, B2B SaaS',
   },
@@ -241,7 +237,7 @@ export default function StripeMRRDashboardPage() {
           <div className="grid sm:grid-cols-3 gap-6">
             {TESTIMONIALS.map((t) => (
               <div key={t.name} className="rounded-xl border border-white/10 bg-white/5 p-6">
-                <p className="text-gray-300 text-sm leading-relaxed mb-4">"{t.quote}"</p>
+                <p className="text-gray-300 text-sm leading-relaxed mb-4">&ldquo;{t.quote}&rdquo;</p>
                 <div className="text-sm font-semibold">{t.name}</div>
                 <div className="text-xs text-gray-500">{t.role}</div>
               </div>
