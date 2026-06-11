@@ -161,9 +161,6 @@ export default function SettingsPage() {
     load()
   }, [])
 
-  // Workspace and notification preferences are now persisted server-side
-  // via users.settings JSONB column — loaded above from DB on mount
-
   const saveWorkspace = async () => {
     const result = await updateWorkspaceSettings({ companyName: company, billingEmail, financeContact, defaultCurrency, invoicePrefix })
     if (result.success) {
@@ -420,9 +417,6 @@ export default function SettingsPage() {
                           </>
                         )}
                       </div>
-                      {!ic.connected && ic.key !== 'stripe' && (
-                        <p className="text-[10px] text-gray-300">Integration setup coming soon</p>
-                      )}
                     </div>
                   </CardContent>
                 </Card>
