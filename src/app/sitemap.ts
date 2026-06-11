@@ -29,6 +29,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/pricing`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE}/register`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE}/login`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
+    // Landing Pages — SEO acquisition
+    { url: `${BASE}/stripe-mrr-dashboard`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${BASE}/saas-cash-flow-forecast`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${BASE}/ai-finance-bootstrapped-startups`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${BASE}/baremetrics-alternative`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
     // Calculators
     { url: `${BASE}/mrr-calculator`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
     { url: `${BASE}/churn-rate-calculator`, lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
