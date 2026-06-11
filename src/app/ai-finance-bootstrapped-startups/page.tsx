@@ -3,15 +3,46 @@ import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'AI Finance Tool for Bootstrapped Startups | AI Finance Ops',
-  description: 'The AI-powered finance tool built for bootstrapped founders. Track MRR, forecast runway, and get smart financial insights — without a CFO.',
-  keywords: ['ai finance tool', 'bootstrapped startup finance', 'saas finance tool', 'startup financial dashboard'],
+  description: 'The AI-powered finance platform built for bootstrapped startups. Track MRR, forecast cash flow, spot churn early, and make data-driven decisions — without a CFO.',
+  keywords: ['ai finance tool', 'bootstrapped startup finance', 'saas financial management', 'founder finance tool'],
+  alternates: {
+    canonical: 'https://aifinanceops.app/ai-finance-bootstrapped-startups',
+  },
   openGraph: {
-    title: 'AI Finance for Bootstrapped Startups — AI Finance Ops',
-    description: 'Smart financial operations for solo founders and small teams. No CFO needed.',
+    title: 'AI Finance Tool for Bootstrapped Startups — AI Finance Ops',
+    description: 'The AI finance platform built for founders who are doing it without a CFO. MRR tracking, forecasts, and AI insights in one place.',
     url: 'https://aifinanceops.app/ai-finance-bootstrapped-startups',
+    siteName: 'AI Finance Ops',
+    images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'AI Finance for Bootstrapped Startups' }],
     type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AI Finance Tool for Bootstrapped Startups — AI Finance Ops',
+    description: 'The AI finance platform built for founders who are doing it without a CFO.',
+    images: ['/og-image.png'],
   },
 }
+
+const PAIN_POINTS = [
+  {
+    problem: 'You check Stripe manually every morning',
+    solution: 'AI Finance Ops sends you a daily MRR digest automatically — with highlights and anomaly alerts.',
+  },
+  {
+    problem: 'You don\'t know your real burn rate',
+    solution: 'Connect Stripe and your bank. Get a live burn dashboard that updates every 24 hours.',
+  },
+  {
+    problem: 'Cash flow planning happens in a spreadsheet',
+    solution: 'Get a 12-month AI forecast that recalculates automatically as your data changes.',
+  },
+  {
+    problem: 'You find out about churn after it happens',
+    solution: 'Churn prediction alerts you 7-14 days before a customer cancels, so you can intervene.',
+  },
+]
 
 const PLANS = [
   {
@@ -19,95 +50,31 @@ const PLANS = [
     price: '$0',
     period: 'forever',
     highlight: false,
-    description: 'For founders just getting started.',
-    features: [
-      'MRR tracking only',
-      'Up to 100 customers',
-      'Stripe integration',
-      'Basic dashboard',
-    ],
+    features: ['MRR + ARR tracking', 'Up to 100 customers', 'Stripe integration', '7-day history'],
     cta: 'Start Free',
-    href: '/auth/sign-up',
+    href: '/register',
   },
   {
     name: 'Starter',
     price: '$29',
-    period: '/month',
+    period: 'per month',
     highlight: false,
-    description: 'For early-stage SaaS products.',
-    features: [
-      'MRR + ARR + churn tracking',
-      '30-day cash flow overview',
-      'AI revenue insights',
-      'Slack & email alerts',
-      'Up to 1,000 customers',
-    ],
+    features: ['Everything in Free', 'Cash flow overview', 'Churn alerts', 'AI insights', 'Priority support'],
     cta: 'Start Starter',
-    href: '/auth/sign-up?plan=starter',
+    href: '/register?plan=starter',
   },
   {
     name: 'Growth',
     price: '$79',
-    period: '/month',
+    period: 'per month',
     highlight: true,
-    description: 'For founders ready to scale.',
-    features: [
-      'Everything in Starter',
-      '90-day cash flow forecast',
-      'AI Copilot chat (unlimited)',
-      'Cohort retention analysis',
-      'Unlimited customers',
-      'Custom report exports',
-      'Priority support',
-    ],
+    features: ['Everything in Starter', '90-day AI forecast', 'Scenario planning', 'AI Copilot chat', 'Custom exports'],
     cta: 'Start Growth',
-    href: '/auth/sign-up?plan=growth',
+    href: '/register?plan=growth',
   },
 ]
 
-const AI_FEATURES = [
-  {
-    title: 'Ask anything about your finances',
-    body: 'Type "What was my best month this year?" or "When will I hit $10k MRR?" — the AI Copilot answers instantly.',
-    badge: 'AI Copilot',
-  },
-  {
-    title: 'Automated anomaly detection',
-    body: 'The AI flags unusual spikes or drops in your metrics before they become problems — with context, not just alerts.',
-    badge: 'Smart Alerts',
-  },
-  {
-    title: 'Revenue scenario planning',
-    body: 'Model scenarios like "What if churn drops by 2%?" and see the forecast impact in seconds.',
-    badge: 'Scenario Builder',
-  },
-  {
-    title: 'Monthly financial summaries',
-    body: 'Auto-generated end-of-month reports delivered to your inbox. Investor-ready, no manual work.',
-    badge: 'Auto Reports',
-  },
-]
-
-const PAIN_POINTS = [
-  {
-    pain: 'Spending hours in spreadsheets',
-    fix: 'Auto-synced dashboard in 60 seconds',
-  },
-  {
-    pain: 'No visibility into cash runway',
-    fix: '90-day cash flow forecast (Growth)',
-  },
-  {
-    pain: "Can't afford a CFO or analyst",
-    fix: 'AI Copilot answers financial questions instantly',
-  },
-  {
-    pain: 'Churn creeps up without warning',
-    fix: "Real-time churn alerts before it's too late",
-  },
-]
-
-export default function AiFinanceBootstrappedPage() {
+export default function AiFinanceBootstrappedStartupsPage() {
   return (
     <main className="min-h-screen bg-[#0f1117] text-white">
 
@@ -116,72 +83,53 @@ export default function AiFinanceBootstrappedPage() {
         <div className="absolute inset-0 bg-gradient-to-b from-violet-950/40 to-transparent pointer-events-none" />
         <div className="relative mx-auto max-w-3xl">
           <span className="inline-flex items-center gap-2 rounded-full border border-violet-500/40 bg-violet-500/10 px-4 py-1.5 text-sm font-medium text-violet-400 mb-6">
-            🎉 50% off first 3 months — Limited launch offer
+            Built for bootstrapped founders, not VCs
           </span>
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
-            Your AI Finance Team.
-            <span className="block text-violet-400">Without the Payroll.</span>
+            Your AI Finance Copilot
+            <span className="block text-violet-400">for Bootstrapped Startups</span>
           </h1>
           <p className="mt-6 text-lg text-gray-400 max-w-2xl mx-auto">
-            AI Finance Ops gives bootstrapped founders a CFO-level financial view of their SaaS —
-            MRR tracking, cash flow forecasting, and an AI copilot that answers your toughest financial questions.
+            Get the financial clarity of a CFO without the $15k/month price tag.
+            AI Finance Ops connects to Stripe and gives you real-time MRR tracking,
+            cash flow forecasts, churn alerts, and AI-powered insights — automatically.
           </p>
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
-              href="/auth/sign-up"
+              href="/register"
               className="inline-flex items-center justify-center rounded-lg bg-violet-500 px-6 py-3 text-base font-semibold text-white hover:bg-violet-400 transition-colors"
             >
-              Try It Free — 14 days
+              Start Free — No credit card
             </Link>
             <Link
-              href="#pricing"
+              href="/pricing"
               className="inline-flex items-center justify-center rounded-lg border border-white/20 px-6 py-3 text-base text-gray-300 hover:border-white/40 hover:text-white transition-colors"
             >
               See Pricing
             </Link>
           </div>
-          <p className="mt-4 text-sm text-gray-500">No credit card · Cancel anytime · Built by a bootstrapped founder</p>
+          <p className="mt-4 text-sm text-gray-500">Replacing Baremetrics for 200+ bootstrapped founders</p>
         </div>
       </section>
 
-      {/* PAIN TO FIX */}
-      <section className="px-6 py-20 border-y border-white/10">
-        <div className="mx-auto max-w-3xl">
-          <h2 className="text-3xl font-bold text-center mb-12">Sound familiar?</h2>
-          <div className="space-y-3">
-            {PAIN_POINTS.map((p) => (
-              <div key={p.pain} className="flex items-center gap-4 rounded-xl border border-white/10 bg-white/5 p-4">
-                <div className="flex-1">
-                  <span className="text-red-400 line-through text-sm">{p.pain}</span>
-                </div>
-                <span className="text-gray-600">→</span>
-                <div className="flex-1">
-                  <span className="text-emerald-400 text-sm font-medium">{p.fix}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* AI FEATURES */}
+      {/* PAIN POINTS */}
       <section className="px-6 py-20">
-        <div className="mx-auto max-w-5xl">
-          <h2 className="text-3xl font-bold text-center mb-4">Your AI Copilot for SaaS Finance</h2>
+        <div className="mx-auto max-w-4xl">
+          <h2 className="text-3xl font-bold text-center mb-4">Sound familiar?</h2>
           <p className="text-center text-gray-400 mb-14 max-w-xl mx-auto">
-            Available on the Growth plan — ask anything, forecast anything, report anything.
+            Every bootstrapped founder deals with these problems. AI Finance Ops solves all of them.
           </p>
-          <div className="grid sm:grid-cols-2 gap-6">
-            {AI_FEATURES.map((f) => (
-              <div
-                key={f.title}
-                className="rounded-xl border border-white/10 bg-white/5 p-6 hover:border-violet-500/40 hover:bg-violet-500/5 transition-colors"
-              >
-                <span className="inline-block text-xs font-semibold text-violet-400 uppercase tracking-widest border border-violet-500/30 bg-violet-500/10 rounded-full px-3 py-1 mb-3">
-                  {f.badge}
-                </span>
-                <h3 className="text-base font-semibold mb-2">{f.title}</h3>
-                <p className="text-gray-400 text-sm leading-relaxed">{f.body}</p>
+          <div className="space-y-4">
+            {PAIN_POINTS.map((item) => (
+              <div key={item.problem} className="rounded-xl border border-white/10 bg-white/5 p-6 grid sm:grid-cols-2 gap-4">
+                <div>
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">The problem</p>
+                  <p className="text-gray-300 text-sm">{item.problem}</p>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-violet-400 uppercase tracking-widest mb-2">The solution</p>
+                  <p className="text-gray-300 text-sm">{item.solution}</p>
+                </div>
               </div>
             ))}
           </div>
@@ -189,10 +137,10 @@ export default function AiFinanceBootstrappedPage() {
       </section>
 
       {/* PRICING */}
-      <section id="pricing" className="px-6 py-20 bg-white/[0.02]">
+      <section className="px-6 py-20 bg-white/[0.02]">
         <div className="mx-auto max-w-5xl">
-          <h2 className="text-3xl font-bold text-center mb-4">Pricing built for bootstrappers</h2>
-          <p className="text-center text-gray-400 mb-14">Start free. Upgrade when you are ready.</p>
+          <h2 className="text-3xl font-bold text-center mb-4">Pricing built for bootstrapped budgets</h2>
+          <p className="text-center text-gray-400 mb-14">Start free. No credit card. Upgrade only when you\'re ready.</p>
           <div className="grid sm:grid-cols-3 gap-6">
             {PLANS.map((plan) => (
               <div
@@ -204,18 +152,15 @@ export default function AiFinanceBootstrappedPage() {
                 }`}
               >
                 {plan.highlight && (
-                  <span className="text-xs font-semibold text-violet-400 uppercase tracking-widest mb-3">
-                    Best for Bootstrappers
-                  </span>
+                  <span className="text-xs font-semibold text-violet-400 uppercase tracking-widest mb-3">Most Popular</span>
                 )}
                 <div className="text-xl font-bold mb-1">{plan.name}</div>
-                <div className="text-3xl font-bold">{plan.price}</div>
-                <div className="text-sm text-gray-400 mb-2">{plan.period}</div>
-                <p className="text-xs text-gray-500 mb-5">{plan.description}</p>
+                <div className="text-3xl font-bold mb-0.5">{plan.price}</div>
+                <div className="text-sm text-gray-400 mb-6">{plan.period}</div>
                 <ul className="space-y-2.5 flex-1 mb-6">
                   {plan.features.map((feat) => (
                     <li key={feat} className="flex items-start gap-2 text-sm text-gray-300">
-                      <span className="text-violet-400 mt-0.5">✓</span>{feat}
+                      <span className="text-violet-400 mt-0.5">&#10003;</span>{feat}
                     </li>
                   ))}
                 </ul>
@@ -232,23 +177,22 @@ export default function AiFinanceBootstrappedPage() {
               </div>
             ))}
           </div>
-          <p className="text-center text-sm text-violet-400 font-medium mt-8">
-            🎉 50% off first 3 months — use code{' '}
-            <code className="bg-white/10 px-2 py-0.5 rounded">LAUNCH50</code>
-          </p>
         </div>
       </section>
 
-      {/* FINAL CTA */}
+      {/* CTA */}
       <section className="px-6 py-20 text-center">
         <div className="mx-auto max-w-xl">
-          <h2 className="text-3xl font-bold mb-4">Ready to run your startup smarter?</h2>
-          <p className="text-gray-400 mb-8">Join 200+ bootstrapped founders using AI Finance Ops.</p>
+          <h2 className="text-3xl font-bold mb-4">Stop flying blind on your finances</h2>
+          <p className="text-gray-400 mb-8">
+            Join 200+ bootstrapped founders who replaced spreadsheets and expensive tools
+            with AI Finance Ops. Setup takes 60 seconds.
+          </p>
           <Link
-            href="/auth/sign-up"
+            href="/register"
             className="inline-flex items-center justify-center rounded-lg bg-violet-500 px-8 py-3.5 text-base font-semibold text-white hover:bg-violet-400 transition-colors"
           >
-            Get Started Free →
+            Get Started Free
           </Link>
         </div>
       </section>

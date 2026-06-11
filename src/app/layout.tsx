@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   title: 'AI Finance Ops — Intelligent Financial Copilot',
   description: 'AI Finance Ops is your intelligent financial copilot — automate reporting, track KPIs, forecast cash flow, and make smarter decisions faster.',
   metadataBase: new URL('https://aifinanceops.app'),
+  alternates: {
+    canonical: 'https://aifinanceops.app',
+  },
   icons: {
     icon: '/favicon.svg',
     shortcut: '/favicon.svg',
