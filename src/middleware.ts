@@ -50,9 +50,19 @@ export async function middleware(request: NextRequest) {
     '/', '/marketing', '/pricing',
     '/api/health', '/api/stripe/webhook', '/api/webhooks/lemonsqueezy',
     '/demo', '/about', '/blog',
-    '/mrr-tracker', '/churn-calculator', '/baremetrics-alternative',
-    '/cash-flow-tracker', '/automate-reporting', '/runway-calculator',
+    // Calculators
+    '/mrr-tracker', '/churn-calculator', '/runway-calculator',
+    '/mrr-calculator', '/churn-rate-calculator', '/ltv-calculator',
+    '/arr-calculator',
+    // Landing pages — must be public for Google Googlebot crawling
+    '/stripe-mrr-dashboard',
+    '/saas-cash-flow-forecast',
+    '/ai-finance-bootstrapped-startups',
+    '/baremetrics-alternative',
+    '/cash-flow-tracker', '/automate-reporting',
     '/vs-baremetrics', '/vs-chartmogul',
+    // Calculators sub-routes
+    '/calculators',
   ]
 
   const isSetupPath      = pathname === '/setup'
