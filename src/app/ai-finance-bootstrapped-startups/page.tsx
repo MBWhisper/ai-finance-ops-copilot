@@ -31,7 +31,7 @@ const PAIN_POINTS = [
     solution: 'AI Finance Ops sends you a daily MRR digest automatically — with highlights and anomaly alerts.',
   },
   {
-    problem: 'You don&#39;t know your real burn rate',
+    problem: "You don't know your real burn rate",
     solution: 'Connect Stripe and your bank. Get a live burn dashboard that updates every 24 hours.',
   },
   {
@@ -124,7 +124,7 @@ export default function AiFinanceBootstrappedStartupsPage() {
               <div key={item.problem} className="rounded-xl border border-white/10 bg-white/5 p-6 grid sm:grid-cols-2 gap-4">
                 <div>
                   <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">The problem</p>
-                  <p className="text-gray-300 text-sm" dangerouslySetInnerHTML={{ __html: item.problem }} />
+                  <p className="text-gray-300 text-sm">{item.problem}</p>
                 </div>
                 <div>
                   <p className="text-xs font-semibold text-violet-400 uppercase tracking-widest mb-2">The solution</p>

@@ -102,7 +102,7 @@ const TESTIMONIALS = [
     role: 'Founder, SaaS tool — $12k MRR',
   },
   {
-    quote: "Finally an MRR dashboard that doesn't require a data team. Setup took 4 minutes.",
+    quote: 'Finally an MRR dashboard that does not require a data team. Setup took 4 minutes.',
     name: 'Maria S.',
     role: 'Solo founder — $4k MRR',
   },
