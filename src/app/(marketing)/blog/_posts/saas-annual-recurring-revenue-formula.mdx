@@ -3,6 +3,8 @@ title: "SaaS Annual Recurring Revenue (ARR): Formula, Examples & Common Mistakes
 slug: saas-annual-recurring-revenue-formula
 date: "2026-06-12"
 description: "The exact ARR formula used by SaaS companies, with worked examples, how ARR differs from revenue, and the 5 most common ARR calculation mistakes."
+author: "Mo"
+coverImage: "/blog/saas-annual-recurring-revenue-formula.png"
 tags: ["arr", "saas", "metrics", "revenue"]
 ---
 
@@ -14,15 +16,11 @@ ARR (Annual Recurring Revenue) is the most cited metric in SaaS — but it's als
 ARR = MRR × 12
 ```
 
-That's it. ARR is simply your Monthly Recurring Revenue annualized.
-
 **Example:**
 - January MRR: $12,500
 - ARR: $12,500 × 12 = **$150,000**
 
 ## Why ARR ≠ Annual Revenue
-
-This is the most important distinction. ARR is a **forward-looking metric** based on current subscriptions. Annual revenue is a **backward-looking accounting metric** based on cash received.
 
 | Metric | What It Measures | Time Orientation |
 |---|---|---|
@@ -30,66 +28,41 @@ This is the most important distinction. ARR is a **forward-looking metric** base
 | Annual Revenue | Cash actually received in a year | Backward-looking |
 | Bookings | Value of new contracts signed | Point-in-time |
 
-If you have $150K ARR in January, it means your current subscribers would generate $150K *if nothing changes for 12 months*. It does NOT mean you received $150K last year.
-
 ## ARR for Different Subscription Types
 
 ### Monthly Subscriptions
 ```
 Customer A: $99/month → $1,188 ARR
 Customer B: $299/month → $3,588 ARR
-Total ARR = $4,776
 ```
 
 ### Annual Subscriptions
-For annual plans, do NOT multiply by 12 — you'd be double-counting.
+Do NOT multiply by 12 — you'd be double-counting.
 ```
 Customer C pays $2,400/year upfront → $2,400 ARR (already annual)
 ```
 
-### Mixed Portfolio
-```
-10 customers × $99/month = $990 MRR → $11,880 ARR from monthly
-5 customers × $1,200/year = $6,000 ARR from annual
-Total ARR = $11,880 + $6,000 = $17,880
-```
-
 ## The 5 Most Common ARR Mistakes
 
-### Mistake 1: Including One-Time Revenue
-Setup fees, consulting, custom development — these are not recurring. Exclude them from ARR.
-
-### Mistake 2: Using Gross Revenue Instead of Net
-If you have a 10% payment processor fee, your ARR should be based on net revenue after processor fees — unless you're calculating gross ARR for investor reporting (always clarify which).
-
-### Mistake 3: Not Normalizing Annual Plans
-If a customer cancels their annual plan in month 3, you don't keep all 12 months of ARR. Adjust ARR downward when customers churn, even on annual plans.
-
-### Mistake 4: Including Trials and Freemium Users
-ARR is **recurring revenue only**. Free tier users, trial users, and expired subscriptions do not count.
-
-### Mistake 5: Snapshoting ARR on the Wrong Date
-ARR is a point-in-time metric. Measure it at the same time each month (e.g., last day of month) for consistent trends.
+1. **Including one-time revenue** — setup fees, consulting are not recurring
+2. **Using gross vs net revenue** — always clarify which you're reporting
+3. **Not normalizing annual plans** — if a customer cancels in month 3, adjust ARR downward
+4. **Including trials and freemium users** — ARR is recurring revenue only
+5. **Snapshoting ARR on the wrong date** — measure at the same time each month
 
 ## ARR vs MRR: When to Use Each
 
-- **Use MRR** for operational decisions — month-to-month growth, churn analysis, forecasting
-- **Use ARR** for investor reporting, benchmarking, company valuation, press releases
-
-Investors quote ARR because it's a larger, more impressive number. Internally, MRR is more useful for decisions.
+- **Use MRR** for operational decisions — month-to-month growth, churn analysis
+- **Use ARR** for investor reporting, benchmarking, company valuation
 
 ## ARR-Based Valuation
-
-Early-stage SaaS companies are often valued at a multiple of ARR:
 
 - **Bootstrapped / pre-traction:** 2–4× ARR
 - **Growing (20%+ MoM):** 5–10× ARR
 - **VC-backed, high-growth:** 10–30× ARR
 
-At $150K ARR with 15% MoM growth, a rough valuation range might be $750K–$1.5M.
-
 ## Track ARR Automatically
 
-[AI Finance Ops](https://aifinanceops.app) calculates your ARR in real time from Stripe, shows the decomposition (new ARR, expansion ARR, churned ARR), and projects your ARR 12 months forward based on current growth trends.
+[AI Finance Ops](https://aifinanceops.app) calculates your ARR in real time from Stripe and projects it 12 months forward based on current growth trends.
 
 **See your live ARR →** [aifinanceops.app/register](https://aifinanceops.app/register)
