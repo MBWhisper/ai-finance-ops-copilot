@@ -66,6 +66,15 @@ const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
 
+  // Suppress known benign warnings from Sentry / OpenTelemetry internals
+  webpack: (config) => {
+    config.ignoreWarnings = [
+      { module: /require-in-the-middle/ },
+      { module: /@opentelemetry\/instrumentation/ },
+    ]
+    return config
+  },
+
   async headers() {
     return [
       {
