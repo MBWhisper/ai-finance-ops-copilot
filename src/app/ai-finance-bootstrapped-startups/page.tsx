@@ -30,6 +30,23 @@ export const metadata: Metadata = {
   },
 }
 
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'AI Finance Ops — AI Finance Tool for Bootstrapped Startups',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+    description: 'Free plan available. Paid plans from $29/mo.',
+  },
+  description:
+    'AI-powered finance platform for bootstrapped founders. MRR tracking, cash flow forecasting, churn prediction, and AI Copilot chat — without a CFO.',
+  url: 'https://aifinanceops.app/ai-finance-bootstrapped-startups',
+}
+
 const PAIN_POINTS = [
   {
     problem: 'You check Stripe manually every morning',
@@ -107,6 +124,11 @@ const COPILOT_EXAMPLES = [
 export default function AiFinanceBootstrappedStartupsPage() {
   return (
     <main className="min-h-screen bg-[#0d0f12] text-white">
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+      />
 
       {/* ── HERO — editorial, left-aligned ── */}
       <section className="px-4 sm:px-6 pt-16 sm:pt-24 pb-16 sm:pb-20 border-b border-white/8">
@@ -114,14 +136,16 @@ export default function AiFinanceBootstrappedStartupsPage() {
           <p className="text-xs sm:text-sm text-gray-500 uppercase tracking-widest mb-4">
             Built for bootstrapped founders, not VCs
           </p>
-          <h1 className="text-[clamp(2.2rem,6vw,4.5rem)] font-bold tracking-tight leading-[1.08] mb-6 max-w-3xl">
-            Your AI Finance Copilot
+          <h1 className="text-[clamp(2.2rem,6vw,4.5rem)] font-bold tracking-tight leading-[1.08] mb-3 max-w-3xl">
+            AI Finance Tool for Bootstrapped Startups
           </h1>
+          <p className="text-base sm:text-lg text-gray-500 font-normal mb-6 max-w-2xl">
+            Your AI-powered CFO — without the $15k/month price tag
+          </p>
           <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
             <p className="text-base sm:text-lg text-gray-400 leading-relaxed max-w-lg">
-              Get the financial clarity of a CFO without the $15k/month price tag.
-              Connects to Stripe in 60 seconds. Gives you real-time MRR, cash flow
-              forecasts, churn alerts, and AI insights — on autopilot.
+              Connects to Stripe in 60 seconds. Gives you real-time MRR, 12-month cash flow
+              forecasts, churn alerts 7–14 days early, and AI insights — on autopilot.
             </p>
             <div className="flex flex-col xs:flex-row gap-3 shrink-0">
               <Link
@@ -138,11 +162,16 @@ export default function AiFinanceBootstrappedStartupsPage() {
               </Link>
             </div>
           </div>
-          <p className="mt-5 text-xs text-gray-600">Replacing Baremetrics for 200+ bootstrapped founders</p>
+          <p className="mt-5 text-xs text-gray-600">
+            Replacing Baremetrics for 200+ bootstrapped founders ·{' '}
+            <span>
+              50% off with code <code className="rounded bg-white/8 px-1.5 py-0.5 font-mono">LAUNCH50</code>
+            </span>
+          </p>
         </div>
       </section>
 
-      {/* ── PAIN POINTS — before/after rows ── */}
+      {/* ── PAIN POINTS ── */}
       <section className="px-4 sm:px-6 py-16 sm:py-20">
         <div className="mx-auto max-w-5xl">
           <h2 className="text-2xl sm:text-3xl font-bold mb-3">Sound familiar?</h2>
@@ -156,17 +185,14 @@ export default function AiFinanceBootstrappedStartupsPage() {
                 className="rounded-2xl border border-white/8 bg-white/[0.02] overflow-hidden"
               >
                 <div className="grid grid-cols-1 sm:grid-cols-[1fr_1px_1fr]">
-                  {/* Problem */}
                   <div className="p-5 sm:p-6">
                     <div className="text-[10px] font-semibold text-gray-600 uppercase tracking-widest mb-3">
                       Before
                     </div>
                     <p className="text-sm sm:text-base text-gray-300">{item.problem}</p>
                   </div>
-                  {/* Divider — vertical on desktop, horizontal on mobile */}
                   <div className="hidden sm:block bg-white/8" aria-hidden="true" />
                   <div className="block sm:hidden h-px bg-white/8" aria-hidden="true" />
-                  {/* Solution */}
                   <div className="p-5 sm:p-6 bg-white/[0.02]">
                     <div className="text-[10px] font-semibold text-gray-400 uppercase tracking-widest mb-3">
                       {item.metric}
@@ -199,7 +225,6 @@ export default function AiFinanceBootstrappedStartupsPage() {
                 Try AI Copilot on Growth plan
               </Link>
             </div>
-            {/* Chat bubbles */}
             <div className="flex-none lg:w-[400px] space-y-3">
               {COPILOT_EXAMPLES.map((q, i) => (
                 <div
@@ -273,17 +298,46 @@ export default function AiFinanceBootstrappedStartupsPage() {
               </div>
             ))}
           </div>
+          <p className="mt-6 text-center text-xs text-gray-500">
+            50% off your first 3 months — code{' '}
+            <code className="rounded bg-white/8 px-1.5 py-0.5 font-mono">LAUNCH50</code>
+          </p>
         </div>
       </section>
 
-      {/* ── CTA ── */}
+      {/* ── INTERNAL LINKS ── */}
+      <section className="px-4 sm:px-6 py-12 border-t border-white/8 bg-white/[0.01]">
+        <div className="mx-auto max-w-5xl">
+          <p className="text-xs text-gray-600 uppercase tracking-widest mb-4">Explore more tools</p>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/stripe-mrr-dashboard"
+              className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors min-h-[44px] flex items-center"
+            >
+              Stripe MRR Dashboard →
+            </Link>
+            <Link
+              href="/saas-cash-flow-forecast"
+              className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors min-h-[44px] flex items-center"
+            >
+              SaaS Cash Flow Forecast →
+            </Link>
+            <Link
+              href="/calculators"
+              className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors min-h-[44px] flex items-center"
+            >
+              Free Calculators →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FINAL CTA ── */}
       <section className="px-4 sm:px-6 py-16 sm:py-20 border-t border-white/8">
         <div className="mx-auto max-w-2xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
           <div>
-            <h2 className="text-xl sm:text-2xl font-bold mb-1">
-              Stop flying blind on your finances
-            </h2>
-            <p className="text-gray-400 text-sm">Join 200+ bootstrapped founders. Setup takes 60 seconds.</p>
+            <h2 className="text-xl sm:text-2xl font-bold mb-1">The AI CFO you always needed</h2>
+            <p className="text-gray-400 text-sm">Free plan. No credit card. Setup in 60 seconds.</p>
           </div>
           <Link
             href="/register"
@@ -293,7 +347,6 @@ export default function AiFinanceBootstrappedStartupsPage() {
           </Link>
         </div>
       </section>
-
     </main>
   )
 }

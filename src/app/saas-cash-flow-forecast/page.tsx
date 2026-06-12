@@ -26,6 +26,62 @@ export const metadata: Metadata = {
   },
 }
 
+const faqSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'How accurate is the cash flow forecast?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Our model achieves ~92% accuracy at the 30-day horizon based on back-tests on real SaaS data. Accuracy decreases for longer horizons, which is why we show confidence intervals on the 90-day forecast.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Does it work without Stripe?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Stripe is the primary integration. Support for Paddle, Lemon Squeezy, and manual CSV import is on the roadmap for Q3 2026.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What does "runway" mean exactly?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Runway is the number of months until your cash balance hits zero, assuming your current burn rate and revenue trajectory continue. We calculate this daily from your connected accounts.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Is my financial data safe?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. We use read-only Stripe OAuth — we can never initiate charges. Data is encrypted at rest and in transit. We are SOC 2 Type II compliant.',
+      },
+    },
+  ],
+}
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'AI Finance Ops — SaaS Cash Flow Forecast',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+    description: 'Free plan available. Paid plans from $29/mo.',
+  },
+  description:
+    'AI-powered SaaS cash flow forecasting tool. Predict your runway 12 months ahead using real Stripe data.',
+  url: 'https://aifinanceops.app/saas-cash-flow-forecast',
+}
+
 const STEPS = [
   {
     n: '01',
@@ -77,7 +133,6 @@ const FAQS = [
   },
 ]
 
-// Forecast bar data
 const BARS = [
   { h: 40, type: 'past' as const },
   { h: 55, type: 'past' as const },
@@ -96,6 +151,15 @@ const BARS = [
 export default function SaasCashFlowForecastPage() {
   return (
     <main className="min-h-screen bg-[#0d0f12] text-white">
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+      />
 
       {/* ── HERO ── */}
       <section className="px-4 sm:px-6 pt-16 sm:pt-24 pb-16 sm:pb-20 border-b border-white/8">
@@ -162,7 +226,7 @@ export default function SaasCashFlowForecastPage() {
               Start Free — No credit card
             </Link>
             <Link
-              href="/runway-calculator"
+              href="/calculators"
               className="w-full xs:w-auto inline-flex items-center justify-center rounded-lg border border-white/20 px-6 py-3.5 text-sm text-gray-300 hover:border-white/40 hover:text-white active:bg-white/5 transition-colors min-h-[44px]"
             >
               Try Runway Calculator Free
@@ -208,10 +272,7 @@ export default function SaasCashFlowForecastPage() {
             <table className="w-full text-sm min-w-[440px]">
               <thead>
                 <tr className="border-b border-white/10">
-                  <th
-                    scope="col"
-                    className="text-left py-3 pb-4 text-gray-400 font-medium text-xs uppercase tracking-widest"
-                  >
+                  <th scope="col" className="text-left py-3 pb-4 text-gray-400 font-medium text-xs uppercase tracking-widest">
                     Feature
                   </th>
                   <th scope="col" className="text-center py-3 pb-4 text-white font-semibold">
@@ -236,10 +297,7 @@ export default function SaasCashFlowForecastPage() {
                     <td className="py-3.5 text-gray-300 text-sm">{row.feature}</td>
                     <td className="py-3.5 text-center">
                       {typeof row.us === 'boolean' ? (
-                        <span
-                          className={row.us ? 'text-white' : 'text-gray-700'}
-                          aria-label={row.us ? 'Yes' : 'No'}
-                        >
+                        <span className={row.us ? 'text-white' : 'text-gray-700'} aria-label={row.us ? 'Yes' : 'No'}>
                           {row.us ? '✓' : '✗'}
                         </span>
                       ) : (
@@ -248,10 +306,7 @@ export default function SaasCashFlowForecastPage() {
                     </td>
                     <td className="py-3.5 text-center">
                       {typeof row.baremetrics === 'boolean' ? (
-                        <span
-                          className={row.baremetrics ? 'text-gray-400' : 'text-gray-700'}
-                          aria-label={row.baremetrics ? 'Yes' : 'No'}
-                        >
+                        <span className={row.baremetrics ? 'text-gray-400' : 'text-gray-700'} aria-label={row.baremetrics ? 'Yes' : 'No'}>
                           {row.baremetrics ? '✓' : '✗'}
                         </span>
                       ) : (
@@ -260,10 +315,7 @@ export default function SaasCashFlowForecastPage() {
                     </td>
                     <td className="py-3.5 text-center">
                       {typeof row.chartmogul === 'boolean' ? (
-                        <span
-                          className={row.chartmogul ? 'text-gray-400' : 'text-gray-700'}
-                          aria-label={row.chartmogul ? 'Yes' : 'No'}
-                        >
+                        <span className={row.chartmogul ? 'text-gray-400' : 'text-gray-700'} aria-label={row.chartmogul ? 'Yes' : 'No'}>
                           {row.chartmogul ? '✓' : '✗'}
                         </span>
                       ) : (
@@ -292,13 +344,7 @@ export default function SaasCashFlowForecastPage() {
                     aria-hidden="true"
                   >
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                      <path
-                        d="M4 6l4 4 4-4"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
+                      <path d="M4 6l4 4 4-4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                   </span>
                 </summary>
@@ -309,12 +355,44 @@ export default function SaasCashFlowForecastPage() {
         </div>
       </section>
 
+      {/* ── INTERNAL LINKS ── */}
+      <section className="px-4 sm:px-6 py-12 border-t border-white/8 bg-white/[0.01]">
+        <div className="mx-auto max-w-5xl">
+          <p className="text-xs text-gray-600 uppercase tracking-widest mb-4">Explore more tools</p>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/stripe-mrr-dashboard"
+              className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors min-h-[44px] flex items-center"
+            >
+              Stripe MRR Dashboard →
+            </Link>
+            <Link
+              href="/ai-finance-bootstrapped-startups"
+              className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors min-h-[44px] flex items-center"
+            >
+              AI Finance for Bootstrapped Startups →
+            </Link>
+            <Link
+              href="/calculators"
+              className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors min-h-[44px] flex items-center"
+            >
+              Free Calculators →
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ── CTA ── */}
       <section className="px-4 sm:px-6 py-16 sm:py-20 border-t border-white/8">
         <div className="mx-auto max-w-2xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
           <div>
             <h2 className="text-xl sm:text-2xl font-bold mb-1">Know your runway. Plan your growth.</h2>
-            <p className="text-gray-400 text-sm">Free plan. Connect Stripe in 60 seconds.</p>
+            <p className="text-gray-400 text-sm">
+              Free plan. Connect Stripe in 60 seconds.{' '}
+              <span className="text-gray-500">
+                Use code <code className="rounded bg-white/8 px-1.5 py-0.5 font-mono">LAUNCH50</code> for 50% off.
+              </span>
+            </p>
           </div>
           <Link
             href="/register"
@@ -324,7 +402,6 @@ export default function SaasCashFlowForecastPage() {
           </Link>
         </div>
       </section>
-
     </main>
   )
 }

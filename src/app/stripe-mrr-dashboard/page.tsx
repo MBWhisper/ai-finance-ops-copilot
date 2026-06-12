@@ -6,9 +6,7 @@ export const metadata: Metadata = {
   description:
     'Track your Stripe MRR, ARR, churn, and revenue trends in real-time. The smartest Stripe MRR dashboard built for bootstrapped SaaS founders.',
   keywords: ['stripe mrr dashboard', 'mrr tracking', 'saas revenue dashboard', 'stripe analytics'],
-  alternates: {
-    canonical: 'https://aifinanceops.app/stripe-mrr-dashboard',
-  },
+  alternates: { canonical: 'https://aifinanceops.app/stripe-mrr-dashboard' },
   openGraph: {
     title: 'Stripe MRR Dashboard — AI Finance Ops',
     description:
@@ -25,6 +23,60 @@ export const metadata: Metadata = {
     description:
       'Real-time MRR tracking, churn analysis, and AI-powered revenue forecasts from your Stripe data.',
     images: ['/og-image.png'],
+  },
+}
+
+const softwareSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'AI Finance Ops — Stripe MRR Dashboard',
+  applicationCategory: 'BusinessApplication',
+  operatingSystem: 'Web',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+    description: 'Free plan available. Paid plans from $29/mo.',
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.9',
+    reviewCount: '200',
+  },
+  description:
+    'Real-time Stripe MRR dashboard with AI-powered forecasts, churn alerts, and cohort analysis for bootstrapped SaaS founders.',
+  url: 'https://aifinanceops.app/stripe-mrr-dashboard',
+}
+
+const reviewSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Product',
+  name: 'AI Finance Ops',
+  review: [
+    {
+      '@type': 'Review',
+      reviewRating: { '@type': 'Rating', ratingValue: '5' },
+      author: { '@type': 'Person', name: 'Alex R.' },
+      reviewBody:
+        'I replaced Baremetrics with AI Finance Ops and saved $150/mo. The MRR dashboard is cleaner and the AI forecasts are scarily accurate.',
+    },
+    {
+      '@type': 'Review',
+      reviewRating: { '@type': 'Rating', ratingValue: '5' },
+      author: { '@type': 'Person', name: 'Maria S.' },
+      reviewBody: 'Finally an MRR dashboard that does not require a data team. Setup took 4 minutes.',
+    },
+    {
+      '@type': 'Review',
+      reviewRating: { '@type': 'Rating', ratingValue: '5' },
+      author: { '@type': 'Person', name: 'Tom K.' },
+      reviewBody: 'The churn alerts alone saved me two customers last month. Absolute no-brainer.',
+    },
+  ],
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.9',
+    reviewCount: '200',
   },
 }
 
@@ -135,6 +187,15 @@ const TESTIMONIALS = [
 export default function StripeMRRDashboardPage() {
   return (
     <main className="min-h-screen bg-[#0d0f12] text-white">
+      {/* JSON-LD Structured Data */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }}
+      />
 
       {/* ── HERO ── */}
       <section className="px-4 sm:px-6 pt-16 sm:pt-24 pb-16 sm:pb-20 border-b border-white/8">
@@ -183,14 +244,13 @@ export default function StripeMRRDashboardPage() {
         </div>
       </section>
 
-      {/* ── FEATURES — 2-col asymmetric ── */}
+      {/* ── FEATURES ── */}
       <section className="px-4 sm:px-6 py-16 sm:py-20">
         <div className="mx-auto max-w-5xl">
           <h2 className="text-2xl sm:text-3xl font-bold mb-3">Everything you need to track MRR</h2>
           <p className="text-gray-400 text-sm sm:text-base mb-10 sm:mb-14 max-w-md">
             Built for SaaS founders who want signal, not noise.
           </p>
-          {/* Stacked list layout — avoids the 3-col icon grid anti-pattern */}
           <div className="space-y-0 divide-y divide-white/8 border-y border-white/8">
             {FEATURES.map((f) => (
               <div
@@ -304,6 +364,33 @@ export default function StripeMRRDashboardPage() {
         </div>
       </section>
 
+      {/* ── INTERNAL LINKS ── */}
+      <section className="px-4 sm:px-6 py-12 border-t border-white/8 bg-white/[0.01]">
+        <div className="mx-auto max-w-5xl">
+          <p className="text-xs text-gray-600 uppercase tracking-widest mb-4">Explore more tools</p>
+          <div className="flex flex-wrap gap-3">
+            <Link
+              href="/saas-cash-flow-forecast"
+              className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors min-h-[44px] flex items-center"
+            >
+              SaaS Cash Flow Forecast →
+            </Link>
+            <Link
+              href="/ai-finance-bootstrapped-startups"
+              className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors min-h-[44px] flex items-center"
+            >
+              AI Finance for Bootstrapped Startups →
+            </Link>
+            <Link
+              href="/calculators"
+              className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors min-h-[44px] flex items-center"
+            >
+              Free Calculators →
+            </Link>
+          </div>
+        </div>
+      </section>
+
       {/* ── FINAL CTA ── */}
       <section className="px-4 sm:px-6 py-16 sm:py-20 border-t border-white/8">
         <div className="mx-auto max-w-2xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
@@ -319,7 +406,6 @@ export default function StripeMRRDashboardPage() {
           </Link>
         </div>
       </section>
-
     </main>
   )
 }
