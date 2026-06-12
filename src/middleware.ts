@@ -9,26 +9,11 @@ const ratelimit = new Ratelimit({
   prefix: 'copilot',
 })
 
-// ─── Vercel / bot traffic filter ───────────────────────────────────────────
-// These user-agents and referrers come from Vercel bots, preview crawlers, and
-// deployment health-checks. We skip Vercel Analytics tracking for them by
-// setting a response header that the @vercel/analytics SDK reads to opt-out.
 const BOT_UA_PATTERNS = [
   'vercel',
   'vercelbot',
   'NextJS',
-  'Googlebot',
-  'bingbot',
-  'YandexBot',
-  'DuckDuckBot',
-  'Baiduspider',
-  'facebookexternalhit',
-  'Twitterbot',
-  'LinkedInBot',
-  'WhatsApp',
-  'Slackbot',
-  'Discordbot',
-  'TelegramBot',
+  // NOTE: Search engine bots intentionally excluded — they must reach public pages
   'axios',
   'node-fetch',
   'python-requests',
@@ -51,31 +36,23 @@ function isInternalOrBotRequest(request: NextRequest): boolean {
   const ua = request.headers.get('user-agent') ?? ''
   const referrer = request.headers.get('referer') ?? ''
 
-  // Vercel preview deployments hit their own domain
   const host = request.headers.get('host') ?? ''
   if (host.endsWith('.vercel.app') || host.endsWith('.now.sh')) return true
-
-  // Vercel-internal header present on deployment probes
   if (request.headers.get('x-vercel-deployment-url')) return true
 
-  // Bot user-agent
   const uaLower = ua.toLowerCase()
   if (BOT_UA_PATTERNS.some(p => uaLower.includes(p.toLowerCase()))) return true
 
-  // Referrer from vercel.com / vercel.app (preview traffic showing in dashboard)
   const refLower = referrer.toLowerCase()
   if (VERCEL_REFERRERS.some(r => refLower.includes(r))) return true
 
   return false
 }
-// ───────────────────────────────────────────────────────────────────────────
 
 export async function middleware(request: NextRequest) {
-  // Rate limiting for copilot API (distributed, works across all edge nodes)
   if (request.nextUrl.pathname === '/api/copilot') {
     const ip = request.headers.get('x-forwarded-for')?.split(',')[0].trim() ?? 'anonymous'
     const { success } = await ratelimit.limit(ip)
-
     if (!success) {
       return NextResponse.json(
         { error: 'Rate limit exceeded. Try again in 1 hour.' },
@@ -86,10 +63,8 @@ export async function middleware(request: NextRequest) {
 
   let supabaseResponse = NextResponse.next({ request })
 
-  // ── Mark bot/internal requests so Vercel Analytics skips them ──
   if (isInternalOrBotRequest(request)) {
     supabaseResponse.headers.set('x-vercel-skip-toolbar', '1')
-    // The official way to exclude a request from Vercel Web Analytics:
     supabaseResponse.headers.set('x-vercel-analytics-skip', '1')
   }
 
@@ -113,24 +88,37 @@ export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
 
   const publicPaths = [
+    // Auth
     '/login', '/register', '/signup',
     '/auth/callback', '/auth/login', '/api/auth',
+    // Marketing
     '/', '/marketing', '/pricing',
+    '/features',
+    '/about', '/blog', '/demo',
+    // API
     '/api/health', '/api/stripe/webhook', '/api/webhooks/lemonsqueezy',
-    '/demo', '/about', '/blog',
-    // Calculators
-    '/mrr-tracker', '/churn-calculator', '/runway-calculator',
-    '/mrr-calculator', '/churn-rate-calculator', '/ltv-calculator',
+    // Free tools / calculators
+    '/mrr-tracker',
+    '/mrr-calculator',
+    '/churn-calculator',
+    '/churn-rate-calculator',
+    '/ltv-calculator',
     '/arr-calculator',
-    // Landing pages — must be public for Google Googlebot crawling
+    '/runway-calculator',
+    '/cash-flow-tracker',
+    '/calculators',
+    // Landing pages
     '/stripe-mrr-dashboard',
     '/saas-cash-flow-forecast',
     '/ai-finance-bootstrapped-startups',
     '/baremetrics-alternative',
-    '/cash-flow-tracker', '/automate-reporting',
-    '/vs-baremetrics', '/vs-chartmogul',
-    // Calculators sub-routes
-    '/calculators',
+    '/automate-reporting',
+    // Compare pages
+    '/vs-baremetrics',
+    '/vs-chartmogul',
+    '/vs-profitwell',
+    '/vs-stripe-sigma',
+    '/vs-recurly',
   ]
 
   const isSetupPath      = pathname === '/setup'
@@ -153,7 +141,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  // 3. Logged in on login/register → dashboard directly
+  // 3. Logged in on login/register → dashboard
   if (user && isAuthPage) {
     const url = request.nextUrl.clone()
     url.pathname = '/dashboard/overview'
@@ -174,7 +162,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url)
   }
 
-  // 6. Logged in on /onboarding → redirect to dashboard (onboarding is skipped)
+  // 6. Logged in on /onboarding → dashboard
   if (user && isOnboardingPath) {
     const url = request.nextUrl.clone()
     url.pathname = '/dashboard/overview'
