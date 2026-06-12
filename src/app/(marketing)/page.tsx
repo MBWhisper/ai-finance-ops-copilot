@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowRight } from "lucide-react"
+import { ArrowRight, Play, ChevronDown } from "lucide-react"
 
 export const metadata: Metadata = {
   title: 'AI Finance Ops — Automate SaaS Financial Reporting',
@@ -145,20 +145,70 @@ export default function LandingPage() {
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/register"
-                className="inline-flex items-center rounded-lg bg-emerald-600 px-8 py-4 text-base font-semibold text-white hover:bg-emerald-500 transition-all animate-pulse-glow"
+                className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-8 py-4 text-base font-semibold text-white hover:bg-emerald-500 transition-all animate-pulse-glow shadow-lg shadow-emerald-600/20"
               >
                 Start Free &mdash; No Credit Card Needed
+                <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/demo"
-                className="inline-flex items-center rounded-lg border border-gray-700 px-8 py-4 text-base font-semibold text-gray-300 hover:border-gray-500 hover:text-white transition-colors"
+                className="inline-flex items-center gap-2 rounded-lg border border-gray-700 bg-gray-900/50 px-8 py-4 text-base font-semibold text-gray-300 hover:border-emerald-500/50 hover:text-white transition-colors group"
               >
-                Watch product tour
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/20 border border-emerald-500/30 group-hover:bg-emerald-500/30 transition-colors">
+                  <Play className="h-3 w-3 text-emerald-400 fill-emerald-400" />
+                </span>
+                Watch 2-min demo
               </Link>
             </div>
-            <p className="mt-4 text-sm text-gray-400">
-              Trusted by solo founders and early-stage SaaS teams
-            </p>
+
+            {/* ─── TRUST BAR ─── */}
+            <div className="mt-10 flex flex-col items-center gap-3">
+              {/* Avatar stack + count */}
+              <div className="flex items-center gap-3">
+                <div className="flex -space-x-2">
+                  {["29", "34", "67", "12", "88"].map((seed, i) => (
+                    <img
+                      key={i}
+                      src={`https://api.dicebear.com/8.x/thumbs/svg?seed=${seed}&backgroundColor=059669,047857,065f46`}
+                      alt=""
+                      width={32}
+                      height={32}
+                      loading="lazy"
+                      className="h-8 w-8 rounded-full border-2 border-gray-950 bg-gray-800"
+                    />
+                  ))}
+                </div>
+                <p className="text-sm text-gray-400">
+                  <span className="font-semibold text-white">200+</span> founders already tracking their MRR
+                </p>
+              </div>
+
+              {/* Trust signals row */}
+              <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-gray-500">
+                <span className="flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  Free forever plan
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  5-min Stripe setup
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  No credit card
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                  Cancel anytime
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* ─── SCROLL HINT ─── */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-gray-600 animate-bounce">
+            <span className="text-xs tracking-widest uppercase">Scroll</span>
+            <ChevronDown className="h-4 w-4" />
           </div>
         </section>
 
