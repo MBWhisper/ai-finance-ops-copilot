@@ -8,17 +8,17 @@ coverImage: "/blog/how-to-track-mrr-without-stripe.png"
 tags: ["mrr", "tracking", "paypal", "gumroad", "saas"]
 ---
 
-Stripe makes MRR tracking easy. But millions of SaaS products use PayPal, Gumroad, Paddle, or LemonSqueezy — and many early-stage founders bill manually. Here's how to track MRR accurately regardless of your payment processor.
+Stripe makes MRR tracking easy. But millions of SaaS products use PayPal, Gumroad, Paddle, or LemonSqueezy -- and many early-stage founders bill manually. Here's how to track MRR accurately regardless of your payment processor.
 
 ## Why MRR Tracking Is Harder Without Stripe
 
 Stripe was built with subscriptions as a first-class feature. Other processors treat subscriptions differently:
 
-- **PayPal** — Subscription billing exists but API data is inconsistent
-- **Gumroad** — Memberships supported but no native MRR calculation
-- **Paddle** — Good subscription support, but MRR dashboard is limited on lower plans
-- **LemonSqueezy** — Growing subscription feature set, but newer
-- **Manual billing** — Wire transfers, invoices — no automated tracking at all
+- **PayPal** -- Subscription billing exists but API data is inconsistent
+- **Gumroad** -- Memberships supported but no native MRR calculation
+- **Paddle** -- Good subscription support, but MRR dashboard is limited on lower plans
+- **LemonSqueezy** -- Growing subscription feature set, but newer
+- **Manual billing** -- Wire transfers, invoices -- no automated tracking at all
 
 ## Method 1: Manual Spreadsheet
 
@@ -27,34 +27,35 @@ Stripe was built with subscriptions as a first-class feature. Other processors t
 3. Track changes manually: new (+), upgrades (+), downgrades (-), cancellations (-)
 
 For annual plans, divide by 12:
+
 ```
-Annual plan $1,200/year → $100 MRR contribution
+Annual plan $1,200/year = $100 MRR contribution per month
 ```
 
 ## Method 2: Processor CSV Export
 
-- **PayPal:** Reports → Statements → Download
-- **Gumroad:** Analytics → Export (memberships)
-- **Paddle:** Reports → Subscriptions → Export
-- **LemonSqueezy:** Reports → Subscriptions
+- **PayPal:** Reports > Statements > Download
+- **Gumroad:** Analytics > Export (memberships)
+- **Paddle:** Reports > Subscriptions > Export
+- **LemonSqueezy:** Reports > Subscriptions
 
 ## Method 3: Use a Multi-Processor Tool
 
-[AI Finance Ops](https://aifinanceops.app) supports Stripe natively, and for other processors you can use manual entry mode to input your subscriber list and get full MRR decomposition, churn tracking, and forecasting.
+[AI Finance Ops](https://aifinanceops.app) supports Stripe natively. For other processors, use manual entry mode to input your subscriber list and get full MRR decomposition, churn tracking, and forecasting.
 
 ## Method 4: Normalize Everything to Monthly
 
 The most common mistake is double-counting annual plans.
 
-- **Wrong:** Customer pays $1,200 upfront → record $1,200 MRR in January
-- **Right:** Divide by 12 → record $100 MRR each month
+- **Wrong:** Customer pays $1,200 upfront -- record $1,200 MRR in January
+- **Right:** Divide by 12 -- record $100 MRR each month
 
 ## The One Number That Matters
 
 ```
-Net New MRR = New MRR + Expansion MRR − Contraction MRR − Churned MRR
+Net New MRR = New MRR + Expansion MRR - Contraction MRR - Churned MRR
 ```
 
 If this number is positive every month, your business is growing.
 
-**Start tracking your MRR accurately →** [aifinanceops.app/register](https://aifinanceops.app/register)
+**Start tracking your MRR accurately:** [aifinanceops.app/register](https://aifinanceops.app/register)
