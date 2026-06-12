@@ -9,6 +9,67 @@ const ratelimit = new Ratelimit({
   prefix: 'copilot',
 })
 
+// ─── Vercel / bot traffic filter ───────────────────────────────────────────
+// These user-agents and referrers come from Vercel bots, preview crawlers, and
+// deployment health-checks. We skip Vercel Analytics tracking for them by
+// setting a response header that the @vercel/analytics SDK reads to opt-out.
+const BOT_UA_PATTERNS = [
+  'vercel',
+  'vercelbot',
+  'NextJS',
+  'Googlebot',
+  'bingbot',
+  'YandexBot',
+  'DuckDuckBot',
+  'Baiduspider',
+  'facebookexternalhit',
+  'Twitterbot',
+  'LinkedInBot',
+  'WhatsApp',
+  'Slackbot',
+  'Discordbot',
+  'TelegramBot',
+  'axios',
+  'node-fetch',
+  'python-requests',
+  'curl',
+  'wget',
+  'Lighthouse',
+  'Chrome-Lighthouse',
+  'HeadlessChrome',
+  'Playwright',
+  'Puppeteer',
+]
+
+const VERCEL_REFERRERS = [
+  'vercel.com',
+  'vercel.app',
+  'now.sh',
+]
+
+function isInternalOrBotRequest(request: NextRequest): boolean {
+  const ua = request.headers.get('user-agent') ?? ''
+  const referrer = request.headers.get('referer') ?? ''
+
+  // Vercel preview deployments hit their own domain
+  const host = request.headers.get('host') ?? ''
+  if (host.endsWith('.vercel.app') || host.endsWith('.now.sh')) return true
+
+  // Vercel-internal header present on deployment probes
+  if (request.headers.get('x-vercel-deployment-url')) return true
+
+  // Bot user-agent
+  const uaLower = ua.toLowerCase()
+  if (BOT_UA_PATTERNS.some(p => uaLower.includes(p.toLowerCase()))) return true
+
+  // Referrer from vercel.com / vercel.app (preview traffic showing in dashboard)
+  const refLower = referrer.toLowerCase()
+  if (VERCEL_REFERRERS.some(r => refLower.includes(r))) return true
+
+  return false
+}
+// ───────────────────────────────────────────────────────────────────────────
+
 export async function middleware(request: NextRequest) {
   // Rate limiting for copilot API (distributed, works across all edge nodes)
   if (request.nextUrl.pathname === '/api/copilot') {
@@ -24,6 +85,13 @@ export async function middleware(request: NextRequest) {
   }
 
   let supabaseResponse = NextResponse.next({ request })
+
+  // ── Mark bot/internal requests so Vercel Analytics skips them ──
+  if (isInternalOrBotRequest(request)) {
+    supabaseResponse.headers.set('x-vercel-skip-toolbar', '1')
+    // The official way to exclude a request from Vercel Web Analytics:
+    supabaseResponse.headers.set('x-vercel-analytics-skip', '1')
+  }
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
