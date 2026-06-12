@@ -88,11 +88,26 @@ const nextConfig = {
   },
 }
 
+const sentryOrg = process.env.SENTRY_ORG
+const sentryProject = process.env.SENTRY_PROJECT
+const sentryAuthToken = process.env.SENTRY_AUTH_TOKEN
+const sentryEnabled = !!(sentryOrg && sentryProject && sentryAuthToken)
+
 module.exports = withSentryConfig(nextConfig, {
-  org: process.env.SENTRY_ORG,
-  project: process.env.SENTRY_PROJECT,
-  authToken: process.env.SENTRY_AUTH_TOKEN,
-  silent: !process.env.CI,
-  widenClientFileUpload: true,
+  org: sentryOrg,
+  project: sentryProject,
+  authToken: sentryAuthToken,
+  // Silence ALL Sentry build output — warnings + info messages
+  silent: true,
+  // Don't expose source maps to end users
+  deleteSourceMapsAfterUpload: true,
+  // Only upload source maps when Sentry is fully configured
+  sourcemaps: {
+    disable: !sentryEnabled,
+  },
+  widenClientFileUpload: sentryEnabled,
   tunnelRoute: '/monitoring',
+  // Disable release creation when org is not configured
+  release: sentryEnabled ? undefined : { create: false, finalize: false },
+  telemetry: false,
 })
