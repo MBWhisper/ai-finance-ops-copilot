@@ -5,9 +5,7 @@ export const metadata: Metadata = {
   title: 'AI Finance Tool for Bootstrapped Startups | AI Finance Ops',
   description: 'The AI-powered finance platform built for bootstrapped startups. Track MRR, forecast cash flow, spot churn early, and make data-driven decisions — without a CFO.',
   keywords: ['ai finance tool', 'bootstrapped startup finance', 'saas financial management', 'founder finance tool'],
-  alternates: {
-    canonical: 'https://aifinanceops.app/ai-finance-bootstrapped-startups',
-  },
+  alternates: { canonical: 'https://aifinanceops.app/ai-finance-bootstrapped-startups' },
   openGraph: {
     title: 'AI Finance Tool for Bootstrapped Startups — AI Finance Ops',
     description: 'The AI finance platform built for founders who are doing it without a CFO. MRR tracking, forecasts, and AI insights in one place.',
@@ -29,18 +27,22 @@ const PAIN_POINTS = [
   {
     problem: 'You check Stripe manually every morning',
     solution: 'AI Finance Ops sends you a daily MRR digest automatically — with highlights and anomaly alerts.',
+    metric: 'Daily digest',
   },
   {
     problem: "You don't know your real burn rate",
     solution: 'Connect Stripe and your bank. Get a live burn dashboard that updates every 24 hours.',
+    metric: 'Live burn',
   },
   {
     problem: 'Cash flow planning happens in a spreadsheet',
     solution: 'Get a 12-month AI forecast that recalculates automatically as your data changes.',
+    metric: '12-month forecast',
   },
   {
     problem: 'You find out about churn after it happens',
-    solution: 'Churn prediction alerts you 7-14 days before a customer cancels, so you can intervene.',
+    solution: 'Churn prediction alerts you 7–14 days before a customer cancels, so you can intervene.',
+    metric: '7-14 days early',
   },
 ]
 
@@ -69,66 +71,81 @@ const PLANS = [
     period: 'per month',
     highlight: true,
     features: ['Everything in Starter', '90-day AI forecast', 'Scenario planning', 'AI Copilot chat', 'Custom exports'],
-    cta: 'Start Growth',
+    cta: 'Start Growth — Most Popular',
     href: '/register?plan=growth',
   },
 ]
 
+const COPILOT_EXAMPLES = [
+  '"What is my real burn rate this month?"',
+  '"If churn hits 5%, when do I run out of cash?"',
+  '"Which customers are at risk of churning?"',
+  '"How much runway do I gain if I cut $2k in expenses?"',
+]
+
 export default function AiFinanceBootstrappedStartupsPage() {
   return (
-    <main className="min-h-screen bg-[#0f1117] text-white">
+    <main className="min-h-screen bg-[#0d0f12] text-white">
 
-      {/* HERO */}
-      <section className="relative overflow-hidden px-6 pt-24 pb-20 text-center">
-        <div className="absolute inset-0 bg-gradient-to-b from-violet-950/40 to-transparent pointer-events-none" />
-        <div className="relative mx-auto max-w-3xl">
-          <span className="inline-flex items-center gap-2 rounded-full border border-violet-500/40 bg-violet-500/10 px-4 py-1.5 text-sm font-medium text-violet-400 mb-6">
-            Built for bootstrapped founders, not VCs
-          </span>
-          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl lg:text-6xl">
+      {/* HERO — editorial, full-width headline */}
+      <section className="px-4 sm:px-6 pt-16 sm:pt-24 pb-16 sm:pb-20 border-b border-white/8">
+        <div className="mx-auto max-w-5xl">
+          <p className="text-xs sm:text-sm text-gray-500 uppercase tracking-widest mb-4">Built for bootstrapped founders, not VCs</p>
+          <h1 className="text-[clamp(2.2rem,6vw,4.5rem)] font-bold tracking-tight leading-[1.08] mb-6 max-w-3xl">
             Your AI Finance Copilot
-            <span className="block text-violet-400">for Bootstrapped Startups</span>
           </h1>
-          <p className="mt-6 text-lg text-gray-400 max-w-2xl mx-auto">
-            Get the financial clarity of a CFO without the $15k/month price tag.
-            AI Finance Ops connects to Stripe and gives you real-time MRR tracking,
-            cash flow forecasts, churn alerts, and AI-powered insights — automatically.
-          </p>
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/register"
-              className="inline-flex items-center justify-center rounded-lg bg-violet-500 px-6 py-3 text-base font-semibold text-white hover:bg-violet-400 transition-colors"
-            >
-              Start Free — No credit card
-            </Link>
-            <Link
-              href="/pricing"
-              className="inline-flex items-center justify-center rounded-lg border border-white/20 px-6 py-3 text-base text-gray-300 hover:border-white/40 hover:text-white transition-colors"
-            >
-              See Pricing
-            </Link>
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8">
+            <p className="text-base sm:text-lg text-gray-400 leading-relaxed max-w-lg">
+              Get the financial clarity of a CFO without the $15k/month price tag.
+              Connects to Stripe in 60 seconds. Gives you real-time MRR,
+              cash flow forecasts, churn alerts, and AI insights — on autopilot.
+            </p>
+            <div className="flex flex-col xs:flex-row gap-3 shrink-0">
+              <Link
+                href="/register"
+                className="inline-flex items-center justify-center rounded-lg bg-white px-6 py-3.5 text-sm font-semibold text-black hover:bg-gray-100 active:bg-gray-200 transition-colors min-h-[44px]"
+              >
+                Start Free — No credit card
+              </Link>
+              <Link
+                href="/pricing"
+                className="inline-flex items-center justify-center rounded-lg border border-white/20 px-6 py-3.5 text-sm text-gray-300 hover:border-white/40 hover:text-white active:bg-white/5 transition-colors min-h-[44px]"
+              >
+                See Pricing
+              </Link>
+            </div>
           </div>
-          <p className="mt-4 text-sm text-gray-500">Replacing Baremetrics for 200+ bootstrapped founders</p>
+          <p className="mt-5 text-xs text-gray-600">Replacing Baremetrics for 200+ bootstrapped founders</p>
         </div>
       </section>
 
-      {/* PAIN POINTS */}
-      <section className="px-6 py-20">
-        <div className="mx-auto max-w-4xl">
-          <h2 className="text-3xl font-bold text-center mb-4">Sound familiar?</h2>
-          <p className="text-center text-gray-400 mb-14 max-w-xl mx-auto">
-            Every bootstrapped founder deals with these problems. AI Finance Ops solves all of them.
+      {/* PAIN POINTS — problem/solution pairs */}
+      <section className="px-4 sm:px-6 py-16 sm:py-20">
+        <div className="mx-auto max-w-5xl">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-3">Sound familiar?</h2>
+          <p className="text-gray-400 text-sm sm:text-base mb-10 sm:mb-14 max-w-md">
+            Every bootstrapped founder deals with these. AI Finance Ops solves all of them.
           </p>
-          <div className="space-y-4">
+          <div className="space-y-3">
             {PAIN_POINTS.map((item) => (
-              <div key={item.problem} className="rounded-xl border border-white/10 bg-white/5 p-6 grid sm:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-2">The problem</p>
-                  <p className="text-gray-300 text-sm">{item.problem}</p>
-                </div>
-                <div>
-                  <p className="text-xs font-semibold text-violet-400 uppercase tracking-widest mb-2">The solution</p>
-                  <p className="text-gray-300 text-sm">{item.solution}</p>
+              <div
+                key={item.problem}
+                className="rounded-2xl border border-white/8 bg-white/[0.02] overflow-hidden"
+              >
+                <div className="grid grid-cols-1 sm:grid-cols-[1fr_1px_1fr] gap-0">
+                  {/* Problem */}
+                  <div className="p-5 sm:p-6">
+                    <div className="text-[10px] font-semibold text-gray-600 uppercase tracking-widest mb-3">Before</div>
+                    <p className="text-sm sm:text-base text-gray-300">{item.problem}</p>
+                  </div>
+                  {/* Divider */}
+                  <div className="hidden sm:block bg-white/8" />
+                  <div className="block sm:hidden h-px bg-white/8" />
+                  {/* Solution */}
+                  <div className="p-5 sm:p-6 bg-white/[0.02]">
+                    <div className="text-[10px] font-semibold text-emerald-500 uppercase tracking-widest mb-3">{item.metric}</div>
+                    <p className="text-sm sm:text-base text-gray-200">{item.solution}</p>
+                  </div>
                 </div>
               </div>
             ))}
@@ -136,40 +153,75 @@ export default function AiFinanceBootstrappedStartupsPage() {
         </div>
       </section>
 
-      {/* PRICING */}
-      <section className="px-6 py-20 bg-white/[0.02]">
+      {/* AI COPILOT SECTION */}
+      <section className="px-4 sm:px-6 py-16 sm:py-20 bg-white/[0.02] border-y border-white/8">
         <div className="mx-auto max-w-5xl">
-          <h2 className="text-3xl font-bold text-center mb-4">Pricing built for bootstrapped budgets</h2>
-          <p className="text-center text-gray-400 mb-14">Start free. No credit card. Upgrade only when you&apos;re ready.</p>
-          <div className="grid sm:grid-cols-3 gap-6">
+          <div className="flex flex-col lg:flex-row lg:gap-16 lg:items-center">
+            <div className="flex-1 mb-10 lg:mb-0">
+              <h2 className="text-2xl sm:text-3xl font-bold mb-4">Ask your finances anything</h2>
+              <p className="text-gray-400 text-sm sm:text-base leading-relaxed mb-6">
+                The AI Copilot answers plain-English questions about your business
+                using your real Stripe and bank data — not generic advice.
+              </p>
+              <Link
+                href="/register?plan=growth"
+                className="inline-flex items-center justify-center rounded-lg border border-white/20 px-5 py-3 text-sm text-gray-300 hover:border-white/40 hover:text-white active:bg-white/5 transition-colors min-h-[44px]"
+              >
+                Try AI Copilot on Growth plan
+              </Link>
+            </div>
+            {/* Chat bubbles */}
+            <div className="flex-none lg:w-[400px] space-y-3">
+              {COPILOT_EXAMPLES.map((q, i) => (
+                <div
+                  key={i}
+                  className="rounded-xl border border-white/8 bg-[#131820] px-4 py-3.5 text-sm text-gray-300 flex items-start gap-3"
+                >
+                  <span className="text-gray-600 text-xs mt-0.5 shrink-0">Q</span>
+                  <span>{q}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* PRICING */}
+      <section className="px-4 sm:px-6 py-16 sm:py-20">
+        <div className="mx-auto max-w-5xl">
+          <h2 className="text-2xl sm:text-3xl font-bold mb-3">Pricing built for bootstrapped budgets</h2>
+          <p className="text-gray-400 text-sm sm:text-base mb-10 sm:mb-14">
+            Start free. No credit card. Upgrade only when you&apos;re ready.
+          </p>
+          <div className="grid sm:grid-cols-3 gap-4 sm:gap-6">
             {PLANS.map((plan) => (
               <div
                 key={plan.name}
-                className={`rounded-xl border p-6 flex flex-col ${
+                className={`rounded-2xl border p-5 sm:p-6 flex flex-col ${
                   plan.highlight
-                    ? 'border-violet-500 bg-violet-500/10 shadow-lg shadow-violet-500/10'
-                    : 'border-white/10 bg-white/5'
+                    ? 'border-white/30 bg-white/5'
+                    : 'border-white/8 bg-white/[0.02]'
                 }`}
               >
-                {plan.highlight && (
-                  <span className="text-xs font-semibold text-violet-400 uppercase tracking-widest mb-3">Most Popular</span>
-                )}
-                <div className="text-xl font-bold mb-1">{plan.name}</div>
-                <div className="text-3xl font-bold mb-0.5">{plan.price}</div>
-                <div className="text-sm text-gray-400 mb-6">{plan.period}</div>
+                <div className="text-base font-bold mb-1">{plan.name}</div>
+                <div className="text-3xl font-bold tabular-nums mb-0.5">{plan.price}</div>
+                <div className="text-xs text-gray-500 mb-5">{plan.period}</div>
                 <ul className="space-y-2.5 flex-1 mb-6">
                   {plan.features.map((feat) => (
                     <li key={feat} className="flex items-start gap-2 text-sm text-gray-300">
-                      <span className="text-violet-400 mt-0.5">&#10003;</span>{feat}
+                      <svg className="w-4 h-4 text-gray-500 mt-0.5 shrink-0" viewBox="0 0 16 16" fill="none">
+                        <path d="M3 8l3.5 3.5L13 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                      <span>{feat}</span>
                     </li>
                   ))}
                 </ul>
                 <Link
                   href={plan.href}
-                  className={`block text-center rounded-lg px-4 py-2.5 text-sm font-semibold transition-colors ${
+                  className={`block text-center rounded-lg px-4 py-3 text-sm font-semibold transition-colors min-h-[44px] flex items-center justify-center ${
                     plan.highlight
-                      ? 'bg-violet-500 text-white hover:bg-violet-400'
-                      : 'border border-white/20 text-white hover:border-white/40'
+                      ? 'bg-white text-black hover:bg-gray-100 active:bg-gray-200'
+                      : 'border border-white/15 text-white hover:border-white/30 active:bg-white/5'
                   }`}
                 >
                   {plan.cta}
@@ -181,16 +233,17 @@ export default function AiFinanceBootstrappedStartupsPage() {
       </section>
 
       {/* CTA */}
-      <section className="px-6 py-20 text-center">
-        <div className="mx-auto max-w-xl">
-          <h2 className="text-3xl font-bold mb-4">Stop flying blind on your finances</h2>
-          <p className="text-gray-400 mb-8">
-            Join 200+ bootstrapped founders who replaced spreadsheets and expensive tools
-            with AI Finance Ops. Setup takes 60 seconds.
-          </p>
+      <section className="px-4 sm:px-6 py-16 sm:py-20 border-t border-white/8">
+        <div className="mx-auto max-w-2xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+          <div>
+            <h2 className="text-xl sm:text-2xl font-bold mb-1">Stop flying blind on your finances</h2>
+            <p className="text-gray-400 text-sm">
+              Join 200+ bootstrapped founders. Setup takes 60 seconds.
+            </p>
+          </div>
           <Link
             href="/register"
-            className="inline-flex items-center justify-center rounded-lg bg-violet-500 px-8 py-3.5 text-base font-semibold text-white hover:bg-violet-400 transition-colors"
+            className="inline-flex items-center justify-center rounded-lg bg-white px-8 py-3.5 text-sm font-semibold text-black hover:bg-gray-100 active:bg-gray-200 transition-colors min-h-[44px] shrink-0"
           >
             Get Started Free
           </Link>
