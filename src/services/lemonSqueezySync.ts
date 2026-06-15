@@ -12,6 +12,7 @@ import {
   getLemonSqueezyCustomers,
 } from "@/services/lemonSqueezy";
 import { updateLemonSqueezySyncTime } from "@/db/queries/lemon-squeezy";
+import { writeMetricsFromLemonSqueezy } from "@/services/metricsWriter";
 import { decrypt } from "@/lib/crypto";
 import { logger } from "@/lib/logger";
 
@@ -113,6 +114,10 @@ export async function syncLemonSqueezyData(userId: string, apiKey: string) {
   }
 
   await updateLemonSqueezySyncTime(userId);
+
+  // Write daily metrics snapshot derived from the freshly synced data
+  await writeMetricsFromLemonSqueezy(userId);
+  logger.info({ userId }, 'metrics_daily snapshot written after sync');
 
   const result = {
     orders: orders.length,
