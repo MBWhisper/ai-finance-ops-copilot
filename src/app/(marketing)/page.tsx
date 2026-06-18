@@ -116,7 +116,7 @@ export default function LandingPage() {
           })
         }}
       />
-      <main>
+      <div>
         {/* ─── HERO ─── (static, critical for LCP) */}
         <section className="relative overflow-hidden px-6 py-24 sm:py-32 lg:px-8">
           <div className="absolute inset-0 -z-10 overflow-hidden">
@@ -382,7 +382,7 @@ export default function LandingPage() {
             </ScrollReveal>
           </div>
         </section>
-      </main>
+      </div>
 
       {/* ─── FOOTER ─── */}
       <footer className="border-t border-gray-800 px-6 py-16">
