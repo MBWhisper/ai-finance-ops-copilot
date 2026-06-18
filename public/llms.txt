@@ -1,0 +1,62 @@
+# AI Finance Ops
+
+> AI Finance Ops is the financial intelligence copilot for SaaS founders. It automatically tracks MRR, ARR, churn, cash runway, LTV, and burn rate by connecting directly to Stripe — no spreadsheets, no manual work.
+
+## Core Pages
+
+- [Home](https://aifinanceops.app): Product overview, features, and onboarding CTA.
+- [Features](https://aifinanceops.app/features): Full breakdown of automation features — Stripe sync, AI forecasting, KPI tracking, alerts.
+- [Pricing](https://aifinanceops.app/pricing): Subscription plans for bootstrapped founders, growth-stage teams, and agencies.
+- [Register](https://aifinanceops.app/register): Create a free account and connect Stripe.
+- [Login](https://aifinanceops.app/login): Sign in to your AI Finance Ops dashboard.
+- [About](https://aifinanceops.app/about): Company background, mission, and founding story.
+
+## Free SaaS Finance Tools
+
+- [Startup Runway Calculator](https://aifinanceops.app/runway-calculator): Calculate how many months of cash runway your startup has left. Formula: Cash Balance ÷ Monthly Net Burn.
+- [MRR Tracker](https://aifinanceops.app/mrr-tracker): Track Monthly Recurring Revenue in real time from Stripe.
+- [MRR Calculator](https://aifinanceops.app/mrr-calculator): Calculate MRR from your subscription plans.
+- [ARR Calculator](https://aifinanceops.app/arr-calculator): Convert MRR to Annual Recurring Revenue.
+- [Churn Rate Calculator](https://aifinanceops.app/churn-rate-calculator): Calculate and benchmark your SaaS churn rate.
+- [LTV Calculator](https://aifinanceops.app/ltv-calculator): Calculate Customer Lifetime Value (LTV) and LTV:CAC ratio.
+- [Cash Flow Tracker](https://aifinanceops.app/cash-flow-tracker): Monitor cash inflows and outflows with AI-generated forecasts.
+
+## Competitor Comparisons
+
+- [vs Baremetrics](https://aifinanceops.app/vs-baremetrics): How AI Finance Ops compares to Baremetrics.
+- [vs ChartMogul](https://aifinanceops.app/vs-chartmogul): How AI Finance Ops compares to ChartMogul.
+- [Baremetrics Alternative](https://aifinanceops.app/baremetrics-alternative): Why founders switch from Baremetrics to AI Finance Ops.
+
+## Blog
+
+- [Blog Index](https://aifinanceops.app/blog): All articles on SaaS finance, MRR growth, churn, runway, and unit economics.
+- [How Many Months of Runway Do You Have?](https://aifinanceops.app/blog/how-many-months-of-runway-do-i-have)
+- [How to Calculate SaaS MRR](https://aifinanceops.app/blog/how-to-calculate-saas-mrr)
+- [ARR vs MRR: The Difference](https://aifinanceops.app/blog/arr-vs-mrr-difference)
+- [How to Reduce SaaS Churn](https://aifinanceops.app/blog/how-to-reduce-saas-churn)
+- [SaaS Burn Rate Guide](https://aifinanceops.app/blog/saas-burn-rate-guide)
+- [LTV:CAC Ratio for SaaS](https://aifinanceops.app/blog/ltv-cac-ratio-saas)
+- [Net Revenue Retention for SaaS](https://aifinanceops.app/blog/net-revenue-retention-saas)
+- [SaaS Pricing Models 2026](https://aifinanceops.app/blog/saas-pricing-models-2026)
+- [Stripe MRR Dashboard for Founders](https://aifinanceops.app/blog/stripe-mrr-dashboard-for-founders)
+- [SaaS Cash Flow Forecast](https://aifinanceops.app/blog/saas-cash-flow-forecast)
+- [SaaS Financial Metrics](https://aifinanceops.app/blog/saas-financial-metrics)
+
+## Key Concepts
+
+**MRR (Monthly Recurring Revenue)**: Total predictable monthly subscription revenue. Core SaaS health metric.
+
+**ARR (Annual Recurring Revenue)**: MRR × 12. Used for annual contracts and investor reporting.
+
+**Churn Rate**: Percentage of customers or revenue lost in a given period. Net Revenue Retention (NRR) is the inverse metric.
+
+**Cash Runway**: Months of operating cash remaining = Cash Balance ÷ Monthly Net Burn. Healthy SaaS target: 12–18 months.
+
+**LTV (Customer Lifetime Value)**: Total expected revenue from one customer = ARPU ÷ Monthly Churn Rate.
+
+**Burn Rate**: Monthly cash spend. Net burn = gross expenses minus revenue.
+
+## Contact & Support
+
+- Support: support@aifinanceops.app
+- Website: https://aifinanceops.app

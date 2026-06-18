@@ -41,6 +41,14 @@ export function Navbar() {
 
   return (
     <>
+      {/* Skip to main content — accessibility */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:rounded-lg focus:bg-emerald-600 focus:text-white focus:font-semibold focus:text-sm focus:shadow-lg"
+      >
+        Skip to main content
+      </a>
+
       {!announcementDismissed && (
         <div className="relative bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-center text-xs sm:text-sm py-2.5 px-4">
           <span className="inline-flex items-center gap-1">
@@ -72,7 +80,7 @@ export function Navbar() {
             <span className="text-sm font-semibold text-white">AI Finance Ops</span>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-0.5">
+          <nav aria-label="Main navigation" className="hidden md:flex items-center gap-0.5">
             {navLinks.map((link) => {
               const active = isActive(link.href)
               return (
@@ -129,6 +137,9 @@ export function Navbar() {
 
       {/* Mobile panel */}
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label="Mobile navigation menu"
         className={`fixed top-0 right-0 z-[110] h-full w-full max-w-sm bg-gray-950 border-l border-gray-800 md:hidden overflow-y-auto transition-transform duration-300 ease-out ${
           mobileOpen ? "translate-x-0" : "translate-x-full"
         }`}

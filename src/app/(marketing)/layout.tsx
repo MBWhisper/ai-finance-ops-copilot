@@ -1,4 +1,12 @@
 import { Navbar } from "@/components/layout/Navbar";
+
 export default function MarketingLayout({ children }: { children: React.ReactNode }) {
-  return <><Navbar />{children}</>;
+  return (
+    <>
+      <Navbar />
+      <main id="main-content" tabIndex={-1}>
+        {children}
+      </main>
+    </>
+  );
 }
