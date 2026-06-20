@@ -87,12 +87,21 @@ export function FaqAccordion() {
         <div key={i} className="rounded-xl border border-gray-800 bg-gray-900/50 overflow-hidden transition-all duration-300">
           <button
             onClick={() => setOpenIndex(openIndex === i ? null : i)}
+            aria-expanded={openIndex === i}
+            aria-controls={`faq-answer-${i}`}
             className="flex w-full items-center justify-between px-6 py-5 text-left text-sm font-medium text-gray-200 hover:text-white transition-colors"
           >
             <span>{faq.q}</span>
-            {openIndex === i ? <ChevronUp className="h-4 w-4 text-emerald-400 shrink-0 ml-4" /> : <ChevronDown className="h-4 w-4 text-gray-500 shrink-0 ml-4" />}
+            {openIndex === i
+              ? <ChevronUp aria-hidden="true" className="h-4 w-4 text-emerald-400 shrink-0 ml-4" />
+              : <ChevronDown aria-hidden="true" className="h-4 w-4 text-gray-500 shrink-0 ml-4" />}
           </button>
-          <div className={`overflow-hidden transition-all duration-300 ${openIndex === i ? "max-h-96" : "max-h-0"}`}>
+          <div
+            id={`faq-answer-${i}`}
+            role="region"
+            aria-label={faq.q}
+            className={`overflow-hidden transition-all duration-300 ${openIndex === i ? "max-h-96" : "max-h-0"}`}
+          >
             <div className="px-6 pb-5 text-sm text-gray-400 leading-relaxed">
               {faq.a}
             </div>
@@ -144,20 +153,22 @@ export function TestimonialCarousel() {
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-      <div className="mb-4 flex gap-1">
-        {[...Array(5)].map((_, i) => <Star key={i} className="h-5 w-5 fill-amber-500 text-amber-500" />)}
+      <div className="mb-4 flex gap-1" aria-hidden="true">
+        {[...Array(5)].map((_, i) => <Star key={i} className="h-5 w-5 fill-amber-500 text-amber-500" aria-hidden="true" />)}
       </div>
-      <Quote className="mb-4 h-8 w-8 text-gray-600" />
+      <Quote aria-hidden="true" className="mb-4 h-8 w-8 text-gray-600" />
       <p className="text-gray-200 text-lg leading-relaxed mb-6 transition-opacity duration-300">&ldquo;{t.quote}&rdquo;</p>
       <div>
         <p className="text-sm font-semibold text-white">{t.name}</p>
         <p className="text-xs text-gray-500">{t.role}</p>
       </div>
 
-      <div className="flex justify-center gap-2 mt-8">
+      <div className="flex justify-center gap-2 mt-8" role="tablist" aria-label="Testimonials navigation">
         {testimonials.map((_, i) => (
           <button
             key={i}
+            role="tab"
+            aria-selected={i === active}
             onClick={() => setActive(i)}
             className={`h-2 rounded-full transition-all duration-300 ${i === active ? "w-8 bg-emerald-500" : "w-2 bg-gray-700 hover:bg-gray-600"}`}
             aria-label={`Go to testimonial ${i + 1}`}
@@ -196,7 +207,7 @@ export function AnimatedCounter({ target, suffix = "", prefix = "", label }: { t
 
   return (
     <div ref={ref} className="text-center">
-      <div className="text-4xl font-bold text-emerald-400 mb-2">
+      <div className="text-4xl font-bold text-emerald-400 mb-2" aria-live="polite">
         {prefix}{count.toLocaleString()}{suffix}
       </div>
       <p className="text-gray-400 text-sm">{label}</p>
@@ -222,7 +233,7 @@ export function BackToTop() {
       className="fixed bottom-6 right-6 z-50 flex h-12 w-12 items-center justify-center rounded-full bg-emerald-600 text-white shadow-lg shadow-emerald-600/25 hover:bg-emerald-500 transition-all animate-fade-in"
       aria-label="Back to top"
     >
-      <ArrowUp className="h-5 w-5" />
+      <ArrowUp aria-hidden="true" className="h-5 w-5" />
     </button>
   )
 }
@@ -237,7 +248,7 @@ export function LiveVisitorBadge() {
 
   return (
     <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-4 py-1.5 text-xs text-emerald-400 min-w-[200px] justify-center">
-      <span className="relative flex h-2 w-2 shrink-0">
+      <span className="relative flex h-2 w-2 shrink-0" aria-hidden="true">
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
         <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
       </span>
