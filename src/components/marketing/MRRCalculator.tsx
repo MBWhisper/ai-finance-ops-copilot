@@ -36,8 +36,9 @@ export function MRRCalculator() {
           <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-8 md:p-10">
             <div className="grid gap-6 sm:grid-cols-2 mb-8">
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-gray-300">Current MRR ($)</label>
+                <label htmlFor="mrr-current" className="mb-1.5 block text-sm font-medium text-gray-300">Current MRR ($)</label>
                 <input
+                  id="mrr-current"
                   type="number"
                   value={currentMRR}
                   onChange={(e) => setCurrentMRR(Math.max(0, Number(e.target.value)))}
@@ -45,8 +46,9 @@ export function MRRCalculator() {
                 />
               </div>
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-gray-300">Monthly growth rate (%)</label>
+                <label htmlFor="mrr-growth" className="mb-1.5 block text-sm font-medium text-gray-300">Monthly growth rate (%)</label>
                 <input
+                  id="mrr-growth"
                   type="number"
                   value={growthRate}
                   onChange={(e) => setGrowthRate(Math.max(0, Number(e.target.value)))}
@@ -54,8 +56,9 @@ export function MRRCalculator() {
                 />
               </div>
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-gray-300">Monthly churn rate (%)</label>
+                <label htmlFor="mrr-churn" className="mb-1.5 block text-sm font-medium text-gray-300">Monthly churn rate (%)</label>
                 <input
+                  id="mrr-churn"
                   type="number"
                   value={churnRate}
                   onChange={(e) => setChurnRate(Math.max(0, Number(e.target.value)))}
@@ -63,8 +66,9 @@ export function MRRCalculator() {
                 />
               </div>
               <div>
-                <label className="mb-1.5 block text-sm font-medium text-gray-300">Projection period (months)</label>
+                <label htmlFor="mrr-months" className="mb-1.5 block text-sm font-medium text-gray-300">Projection period (months)</label>
                 <input
+                  id="mrr-months"
                   type="number"
                   value={months}
                   onChange={(e) => setMonths(Math.max(1, Math.min(60, Number(e.target.value))))}
