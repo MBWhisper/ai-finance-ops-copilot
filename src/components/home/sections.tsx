@@ -32,24 +32,6 @@ export function SocialProofSection() {
         </svg>
       ),
     },
-    {
-      name: "Y Combinator",
-      svg: (
-        <svg viewBox="0 0 20 20" className="h-6 w-6" fill="currentColor">
-          <rect x="2" y="2" width="16" height="16" rx="2" strokeWidth="1" fill="none" stroke="currentColor" />
-          <path d="M6 6l2.5 4.5V14h3v-3.5L14 6h-2l-2 3.5L8 6H6z" />
-        </svg>
-      ),
-    },
-    {
-      name: "TechCrunch",
-      svg: (
-        <svg viewBox="0 0 20 20" className="h-6 w-6" fill="currentColor">
-          <rect x="3" y="3" width="14" height="14" rx="2" strokeWidth="1" fill="none" stroke="currentColor" />
-          <path d="M6 8h8v1.5H6zm0 3h6v1.5H6z" />
-        </svg>
-      ),
-    },
   ]
 
   return (
@@ -57,7 +39,7 @@ export function SocialProofSection() {
       <div className="mx-auto max-w-5xl">
         <ScrollReveal>
           <p className="mb-8 text-center text-xs font-medium uppercase tracking-widest text-gray-400">
-            As featured on
+            Discussed by founders on
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-12 gap-y-6">
             {logos.map((logo) => (
@@ -88,15 +70,15 @@ export function ProblemSection() {
             <div className="mt-8 space-y-4 text-left max-w-2xl mx-auto">
               <div className="flex items-start gap-4 rounded-lg border border-gray-800 bg-gray-900/50 p-5">
                 <span className="text-xl shrink-0 mt-0.5">📊</span>
-                <p className="text-gray-400 text-sm"><strong className="text-gray-200">ChartMogul</strong> is built for enterprise.</p>
+                <p className="text-gray-400 text-sm"><strong className="text-gray-200">ChartMogul</strong> is powerful, but designed for established revenue teams — not early-stage founders.</p>
               </div>
               <div className="flex items-start gap-4 rounded-lg border border-gray-800 bg-gray-900/50 p-5">
                 <span className="text-xl shrink-0 mt-0.5">💰</span>
-                <p className="text-gray-400 text-sm"><strong className="text-gray-200">Baremetrics</strong> costs more than your first paying customer.</p>
+                <p className="text-gray-400 text-sm"><strong className="text-gray-200">Baremetrics</strong> is a great product — but priced for teams well beyond the earliest stage.</p>
               </div>
               <div className="flex items-start gap-4 rounded-lg border border-emerald-500/20 bg-emerald-500/5 p-5">
                 <span className="text-xl shrink-0 mt-0.5">✅</span>
-                <p className="text-emerald-300 text-sm"><strong className="text-emerald-200">aifinanceops</strong> gives you everything you need — and nothing you don&apos;t.</p>
+                <p className="text-emerald-300 text-sm"><strong className="text-emerald-200">aifinanceops</strong> gives you everything you need to run your SaaS finances — and nothing you don&apos;t.</p>
               </div>
             </div>
           </div>
