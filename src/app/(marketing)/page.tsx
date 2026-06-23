@@ -140,7 +140,7 @@ export default function LandingPage() {
               SaaS Metrics for Founders Who Are Done With Spreadsheets
             </h1>
             <p className="mt-6 text-xl leading-8 text-gray-400 max-w-2xl mx-auto">
-              Real-time MRR, ARR, churn &amp; cash flow forecasting &mdash; powered by AI. No setup complexity. No $200/month bills.
+              Know your MRR, churn, runway, and cash risks before they surprise you &mdash; in one clean dashboard. Connect Stripe in 5 minutes.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
