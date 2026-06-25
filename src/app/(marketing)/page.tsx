@@ -167,7 +167,7 @@ export default function LandingPage() {
               <div className="flex items-center gap-3">
                 <div className="flex -space-x-2">
                   {["29", "34", "67", "12", "88"].map((seed, i) => (
-                    <img
+                    <Image
                       key={i}
                       src={`https://api.dicebear.com/8.x/thumbs/svg?seed=${seed}&backgroundColor=059669,047857,065f46`}
                       alt=""
