@@ -1,16 +1,49 @@
 import { OpenAI } from 'openai'
 import { NextRequest } from 'next/server'
+import { createClient } from '@/lib/supabase/server'
+import { buildCopilotContextLive } from '@/lib/copilot-context'
 
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
 
 export async function POST(req: NextRequest) {
-  const { message, context } = await req.json()
+  // ── 1. Auth ────────────────────────────────────────────────────────────────
+  const supabase = createClient()
+  const { data: { user }, error: authError } = await supabase.auth.getUser()
+
+  if (authError || !user) {
+    return new Response(
+      JSON.stringify({ error: 'Unauthorized' }),
+      { status: 401, headers: { 'Content-Type': 'application/json' } }
+    )
+  }
+
+  // ── 2. Parse request ───────────────────────────────────────────────────────
+  const { message, page = 'overview', pageData } = await req.json()
+
+  if (!message || typeof message !== 'string') {
+    return new Response(
+      JSON.stringify({ error: 'message is required' }),
+      { status: 400, headers: { 'Content-Type': 'application/json' } }
+    )
+  }
+
+  // ── 3. Build live context from DB ─────────────────────────────────────────
+  //    Falls back to demo data automatically if user has no synced metrics yet
+  const context = await buildCopilotContextLive(user.id, page, pageData)
+
+  // ── 4. Build system prompt ────────────────────────────────────────────────
+  const isDemo = (context as any).dataSource === 'demo'
+  const dataNote = isDemo
+    ? '\n\nNOTE: This user has not yet connected an integration. The numbers shown are DEMO data. ' +
+      'Mention once at the start that these are sample numbers, then answer normally.'
+    : ''
 
   const systemPrompt = `You are an expert AI financial copilot built into "AI Finance Ops" — 
 a SaaS financial intelligence platform for founders.
 
 Current user financial data:
 ${JSON.stringify(context, null, 2)}
+${dataNote}
 
 Rules:
 - ALWAYS respond in the SAME language as the user's message
@@ -23,6 +56,7 @@ Rules:
 - Max 150 words unless a detailed analysis is requested
 - For predictions, use the trend data to calculate realistic estimates
 - Tone: smart, direct, like a CFO advisor
+- If activeAlerts exist, proactively mention the most critical one
 
 You can help with:
 - MRR/ARR analysis and growth projections
@@ -30,15 +64,17 @@ You can help with:
 - Invoice and cash flow insights
 - PMF score interpretation
 - LTV and unit economics
-- Financial forecasting and runway calculations`
+- Financial forecasting and runway calculations
+- Interpreting active alerts and recommending actions`
 
+  // ── 5. Stream response ────────────────────────────────────────────────────
   let stream
   try {
     stream = await openai.chat.completions.create({
       model: 'gpt-4o-mini',
       messages: [
         { role: 'system', content: systemPrompt },
-        { role: 'user', content: message }
+        { role: 'user',   content: message }
       ],
       stream: true,
       max_tokens: 400,
@@ -65,9 +101,7 @@ You can help with:
       for await (const chunk of stream) {
         const text = chunk.choices?.[0]?.delta?.content || ''
         if (text) {
-          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text })}
-
-`))
+          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ text })}\n\n`))
         }
       }
       controller.enqueue(encoder.encode('data: [DONE]\n\n'))
