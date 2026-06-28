@@ -1,5 +1,4 @@
 import { useState, useCallback } from 'react'
-import { buildCopilotContext } from '@/lib/copilot-context'
 
 export interface CopilotMessage {
   id: string
@@ -8,7 +7,13 @@ export interface CopilotMessage {
   timestamp: Date
 }
 
-export function useCopilot(page: string = 'dashboard', pageData?: any) {
+/**
+ * useCopilot — client-side hook.
+ * Context is built SERVER-SIDE in /api/copilot; this hook just sends
+ * the page name + optional pageData so the route knows which page
+ * the user is on. No DB imports here.
+ */
+export function useCopilot(page: string = 'dashboard', pageData?: unknown) {
   const [messages, setMessages] = useState<CopilotMessage[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -36,15 +41,18 @@ export function useCopilot(page: string = 'dashboard', pageData?: any) {
     setIsLoading(true)
 
     try {
-      const context = buildCopilotContext(page, pageData)
-
+      // page + pageData are forwarded so the API route can tailor the context.
+      // The actual DB queries happen server-side inside the route.
       const response = await fetch('/api/copilot', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: userMessage, context }),
+        body: JSON.stringify({ message: userMessage, page, pageData }),
       })
 
       if (!response.ok) {
+        if (response.status === 401) {
+          throw new Error('يرجى تسجيل الدخول أولاً. / Please sign in first.')
+        }
         if (response.status === 429) {
           throw new Error('تجاوزت الحد المسموح. حاول بعد ساعة. / Rate limit exceeded. Try again in 1 hour.')
         }
@@ -78,12 +86,13 @@ export function useCopilot(page: string = 'dashboard', pageData?: any) {
           }
         }
       }
-    } catch (err: any) {
-      setError(err.message)
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'حدث خطأ غير متوقع. / Unexpected error.'
+      setError(message)
       setMessages(prev =>
         prev.map(msg =>
           msg.id === assistantMsg.id
-            ? { ...msg, content: err.message || 'حدث خطأ غير متوقع. / Unexpected error.' }
+            ? { ...msg, content: message }
             : msg
         )
       )
