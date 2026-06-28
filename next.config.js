@@ -30,6 +30,12 @@ const securityHeaders = [
 ]
 
 const nextConfig = {
+  // Tell Next.js to keep these packages server-side only — never bundle
+  // them into the client-side Webpack output.  postgres and drizzle-orm
+  // depend on Node.js built-ins (net, tls, fs, perf_hooks) that do not
+  // exist in the browser.
+  serverExternalPackages: ['postgres', 'drizzle-orm', 'pg'],
+
   // Image optimization
   images: {
     formats: ['image/avif', 'image/webp'],
@@ -66,12 +72,29 @@ const nextConfig = {
   poweredByHeader: false,
   reactStrictMode: true,
 
-  // Suppress known benign warnings from Sentry / OpenTelemetry internals
-  webpack: (config) => {
+  // Webpack customisations
+  webpack: (config, { isServer }) => {
+    // Suppress known benign warnings from Sentry / OpenTelemetry internals
     config.ignoreWarnings = [
       { module: /require-in-the-middle/ },
       { module: /@opentelemetry\/instrumentation/ },
     ]
+
+    // Explicitly stub out Node.js built-ins for the client bundle so any
+    // accidental import fails fast with a clear error rather than a
+    // cryptic runtime crash.
+    if (!isServer) {
+      config.resolve.fallback = {
+        ...config.resolve.fallback,
+        net: false,
+        tls: false,
+        fs: false,
+        perf_hooks: false,
+        dns: false,
+        child_process: false,
+      }
+    }
+
     return config
   },
 
