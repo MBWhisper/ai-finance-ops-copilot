@@ -9,173 +9,113 @@ const ratelimit = new Ratelimit({
   prefix: 'copilot',
 })
 
-const BOT_UA_PATTERNS = [
-  'vercel',
-  'vercelbot',
-  'NextJS',
-  // NOTE: Search engine bots intentionally excluded — they must reach public pages
-  'axios',
-  'node-fetch',
-  'python-requests',
-  'curl',
-  'wget',
-  'Lighthouse',
-  'Chrome-Lighthouse',
-  'HeadlessChrome',
-  'Playwright',
-  'Puppeteer',
-]
+const AUTH_PAGES = ['/login', '/register', '/signup']
+const PROTECTED_PREFIXES = ['/dashboard']
+const PROTECTED_EXACT = ['/setup', '/onboarding']
 
-const VERCEL_REFERRERS = [
-  'vercel.com',
-  'vercel.app',
-  'now.sh',
-]
+function isProtectedPath(pathname: string) {
+  return (
+    PROTECTED_EXACT.includes(pathname) ||
+    PROTECTED_PREFIXES.some((prefix) => pathname.startsWith(prefix))
+  )
+}
 
-function isInternalOrBotRequest(request: NextRequest): boolean {
-  const ua = request.headers.get('user-agent') ?? ''
-  const referrer = request.headers.get('referer') ?? ''
+function isAuthPage(pathname: string) {
+  return AUTH_PAGES.includes(pathname)
+}
 
-  const host = request.headers.get('host') ?? ''
-  if (host.endsWith('.vercel.app') || host.endsWith('.now.sh')) return true
-  if (request.headers.get('x-vercel-deployment-url')) return true
+function getClientIp(request: NextRequest) {
+  return (
+    request.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    request.headers.get('x-real-ip') ||
+    'anonymous'
+  )
+}
 
-  const uaLower = ua.toLowerCase()
-  if (BOT_UA_PATTERNS.some(p => uaLower.includes(p.toLowerCase()))) return true
-
-  const refLower = referrer.toLowerCase()
-  if (VERCEL_REFERRERS.some(r => refLower.includes(r))) return true
-
-  return false
+function createRedirect(request: NextRequest, pathname: string) {
+  const url = request.nextUrl.clone()
+  url.pathname = pathname
+  return NextResponse.redirect(url)
 }
 
 export async function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname === '/api/copilot') {
-    const ip = request.headers.get('x-forwarded-for')?.split(',')[0].trim() ?? 'anonymous'
+  const pathname = request.nextUrl.pathname
+
+  // 1) Rate limiting فقط لمسار Copilot
+  if (pathname === '/api/copilot') {
+    const ip = getClientIp(request)
     const { success } = await ratelimit.limit(ip)
+
     if (!success) {
       return NextResponse.json(
         { error: 'Rate limit exceeded. Try again in 1 hour.' },
         { status: 429 }
       )
     }
+
+    return NextResponse.next()
   }
 
-  let supabaseResponse = NextResponse.next({ request })
+  // 2) المسارات العامة لا تشغّل Supabase middleware
+  const needsAuthCheck =
+    pathname === '/' ||
+    isProtectedPath(pathname) ||
+    isAuthPage(pathname)
 
-  if (isInternalOrBotRequest(request)) {
-    supabaseResponse.headers.set('x-vercel-skip-toolbar', '1')
-    supabaseResponse.headers.set('x-vercel-analytics-skip', '1')
+  if (!needsAuthCheck) {
+    return NextResponse.next()
   }
+
+  let response = NextResponse.next({ request })
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
     {
       cookies: {
-        getAll() { return request.cookies.getAll() },
+        getAll() {
+          return request.cookies.getAll()
+        },
         setAll(cookiesToSet: { name: string; value: string; options: CookieOptions }[]) {
           cookiesToSet.forEach(({ name, value, options }) => {
-            request.cookies.set(name, value)
-            supabaseResponse.cookies.set(name, value, options)
+            response.cookies.set(name, value, options)
           })
         },
       },
     }
   )
 
-  const { data: { user } } = await supabase.auth.getUser()
-  const pathname = request.nextUrl.pathname
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
-  const publicPaths = [
-    // Auth
-    '/login', '/register', '/signup',
-    '/auth/callback', '/auth/login', '/api/auth',
-    // Marketing
-    '/', '/marketing', '/pricing',
-    '/features',
-    '/about', '/blog', '/demo',
-    // API
-    '/api/health', '/api/stripe/webhook', '/api/webhooks/lemonsqueezy',
-    // AI agent navigation
-    '/llms.txt',
-    // Free tools / calculators
-    '/mrr-tracker',
-    '/mrr-calculator',
-    '/churn-calculator',
-    '/churn-rate-calculator',
-    '/ltv-calculator',
-    '/arr-calculator',
-    '/runway-calculator',
-    '/cash-flow-tracker',
-    '/calculators',
-    // Landing pages
-    '/stripe-mrr-dashboard',
-    '/saas-cash-flow-forecast',
-    '/ai-finance-bootstrapped-startups',
-    '/baremetrics-alternative',
-    '/automate-reporting',
-    // Compare pages
-    '/vs-baremetrics',
-    '/vs-chartmogul',
-    '/vs-profitwell',
-    '/vs-stripe-sigma',
-    '/vs-recurly',
-  ]
-
-  const isSetupPath      = pathname === '/setup'
-  const isOnboardingPath = pathname === '/onboarding'
-  const isAuthPage       = pathname === '/login' || pathname === '/register' || pathname === '/signup'
-  const isDashboardPath  = pathname.startsWith('/dashboard')
-  const isPublicPath     = publicPaths.some(p => pathname === p || pathname.startsWith(p + '/'))
-
-  // 1. Not logged in → login (except public paths)
-  if (!user && !isPublicPath && !isSetupPath && !isOnboardingPath) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/login'
-    return NextResponse.redirect(url)
+  // 3) غير مسجل + يحاول دخول صفحة محمية
+  if (!user && isProtectedPath(pathname)) {
+    return createRedirect(request, '/login')
   }
 
-  // 2. Not logged in trying onboarding → login
-  if (!user && isOnboardingPath) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/login'
-    return NextResponse.redirect(url)
+  // 4) مسجل + يحاول دخول صفحات auth
+  if (user && isAuthPage(pathname)) {
+    return createRedirect(request, '/dashboard/overview')
   }
 
-  // 3. Logged in on login/register → dashboard
-  if (user && isAuthPage) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/dashboard/overview'
-    return NextResponse.redirect(url)
-  }
-
-  // 4. Logged in on / → dashboard
+  // 5) مسجل + دخل الصفحة الرئيسية
   if (user && pathname === '/') {
-    const url = request.nextUrl.clone()
-    url.pathname = '/dashboard/overview'
-    return NextResponse.redirect(url)
+    return createRedirect(request, '/dashboard/overview')
   }
 
-  // 5. Logged in on /setup → dashboard
-  if (user && isSetupPath) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/dashboard/overview'
-    return NextResponse.redirect(url)
-  }
-
-  // 6. Logged in on /onboarding → dashboard
-  if (user && isOnboardingPath) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/dashboard/overview'
-    return NextResponse.redirect(url)
-  }
-
-  return supabaseResponse
+  return response
 }
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|ads.txt|llms\.txt|.*\.(?:svg|png|jpg|jpeg|gif|webp)$).*)',
+    '/',
+    '/login',
+    '/register',
+    '/signup',
+    '/setup',
+    '/onboarding',
+    '/dashboard/:path*',
+    '/api/copilot',
   ],
 }
