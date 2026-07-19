@@ -1,0 +1,245 @@
+---
+title: "SaaS Unit Economics: The Complete Guide for Founders"
+description: "Master SaaS unit economics — LTV, CAC, payback period, and gross margin. Learn how to calculate, benchmark, and improve your unit economics to scale profitably."
+date: "2026-07-15"
+author: "AI Finance Ops"
+tags: ["unit-economics", "ltv", "cac", "saas-metrics", "founders"]
+coverImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200&h=630&fit=crop"
+slug: saas-unit-economics-guide
+---
+
+Unit economics tell you whether your SaaS business model actually works — before you scale. If your unit economics are broken, more customers just means more losses.
+
+This guide covers every metric you need, how to calculate them, and what "good" looks like.
+
+## What Are SaaS Unit Economics?
+
+Unit economics measure the direct revenue and costs associated with acquiring and serving a single customer. The two core metrics are:
+
+- **Customer Lifetime Value (LTV)** — how much revenue one customer generates over their lifetime
+- **Customer Acquisition Cost (CAC)** — how much it costs to acquire one customer
+
+The relationship between these two numbers determines whether your business is viable.
+
+## LTV:CAC Ratio
+
+The golden rule of SaaS unit economics:
+
+```
+LTV:CAC Ratio = Customer Lifetime Value ÷ Customer Acquisition Cost
+```
+
+| Ratio | Verdict |
+|-------|---------|
+| < 1:1 | Losing money on every customer |
+| 1:1 – 2:1 | Unsustainable — growth kills you |
+| 3:1 | Healthy — industry benchmark |
+| 5:1+ | Excellent — room to invest aggressively |
+| > 7:1 | Under-investing in growth |
+
+**Target: 3:1 or higher.** For every $1 spent on acquisition, you should get $3+ back in lifetime revenue.
+
+## How to Calculate LTV
+
+The simplest formula:
+
+```
+LTV = ARPA × Gross Margin ÷ Monthly Churn Rate
+```
+
+**Example:**
+- ARPA (Average Revenue Per Account): $100/month
+- Gross Margin: 80%
+- Monthly Churn Rate: 5%
+
+```
+LTV = $100 × 0.80 ÷ 0.05 = $1,600
+```
+
+### LTV Variations
+
+**Simple LTV:**
+```
+LTV = ARPA ÷ Churn Rate
+```
+
+**Adjusted LTV (with expansion revenue):**
+```
+LTV = (ARPA + Expansion MRR per Customer) ÷ Churn Rate × Gross Margin
+```
+
+**Cohort-Based LTV (most accurate):**
+Track actual revenue per cohort over 12-24 months rather than using a formula.
+
+![Dashboard showing LTV calculation](https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=450&fit=crop)
+
+## How to Calculate CAC
+
+```
+CAC = Total Sales & Marketing Spend ÷ Number of New Customers Acquired
+```
+
+**Include ALL costs:**
+- Ad spend (Google, LinkedIn, Facebook)
+- Content marketing costs
+- Sales team salaries + commissions
+- Marketing tools and software
+- Events and sponsorships
+- Creative and design costs
+
+**Example:**
+- Monthly marketing spend: $10,000
+- Sales team cost: $15,000
+- Tools: $2,000
+- New customers: 50
+
+```
+CAC = ($10,000 + $15,000 + $2,000) ÷ 50 = $540
+```
+
+### Blended vs. Paid CAC
+
+- **Blended CAC** — total spend ÷ all new customers (includes organic)
+- **Paid CAC** — only paid channels ÷ customers from paid channels
+
+Always track both. Paid CAC shows your true acquisition cost; blended shows overall efficiency.
+
+## Payback Period
+
+How long it takes to recover your CAC:
+
+```
+Payback Period (months) = CAC ÷ (ARPA × Gross Margin)
+```
+
+**Example:**
+- CAC: $540
+- ARPA: $100/month
+- Gross Margin: 80%
+
+```
+Payback = $540 ÷ ($100 × 0.80) = 6.75 months
+```
+
+| Payback Period | Assessment |
+|----------------|-----------|
+| < 6 months | Excellent — fast payback |
+| 6-12 months | Good — industry standard |
+| 12-18 months | Acceptable for enterprise SaaS |
+| > 18 months | Risky — ties up capital |
+
+**Shorter payback = faster growth.** If you recover CAC in 6 months, you can reinvest that money 2x per year.
+
+## Gross Margin
+
+```
+Gross Margin = (Revenue - COGS) ÷ Revenue × 100
+```
+
+**What counts as COGS for SaaS:**
+- Hosting infrastructure (AWS, Vercel, Supabase)
+- Third-party API costs (Stripe, payment processing)
+- Customer support costs (if tied to delivery)
+- CDN and bandwidth costs
+
+**Typical SaaS gross margins:**
+- Self-serve SaaS: 75-85%
+- Enterprise SaaS: 70-80%
+- Infrastructure SaaS: 60-75%
+
+**Target: 80%+ gross margin.** Below 70% makes it hard to fund growth.
+
+## Quick Ratio (SaaS Growth Efficiency)
+
+```
+Quick Ratio = (New MRR + Expansion MRR) ÷ (Churned MRR + Contraction MRR)
+```
+
+| Quick Ratio | Growth Assessment |
+|-------------|------------------|
+| < 1 | Shrinking |
+| 1-2 | Slow growth |
+| 2-4 | Healthy growth |
+| 4+ | Exceptional growth |
+
+**Example:**
+- New MRR: $5,000
+- Expansion MRR: $2,000
+- Churned MRR: $1,500
+- Contraction MRR: $500
+
+```
+Quick Ratio = ($5,000 + $2,000) ÷ ($1,500 + $500) = 3.5
+```
+
+## Magic Number (Sales Efficiency)
+
+```
+Magic Number = Net New ARR (current quarter) ÷ Sales & Marketing Spend (previous quarter)
+```
+
+| Magic Number | Assessment |
+|-------------|-----------|
+| < 0.75 | Inefficient — fix before scaling |
+| 0.75-1.0 | Good — invest more in sales |
+| 1.0+ | Excellent — high sales efficiency |
+
+## Putting It All Together: A Complete Example
+
+**Company: SaaS Startup**
+- MRR: $50,000
+- Customers: 500
+- ARPA: $100/month
+- Monthly churn: 3%
+- Gross margin: 80%
+- Monthly CAC: $400
+- Sales & Marketing spend: $20,000/month
+- New customers: 50/month
+
+**Calculated Metrics:**
+- LTV = $100 × 0.80 ÷ 0.03 = **$2,667**
+- LTV:CAC = $2,667 ÷ $400 = **6.7:1** (excellent)
+- Payback = $400 ÷ $80 = **5 months** (excellent)
+- Quick Ratio = ($5,000 + $1,000) ÷ ($1,500 + $500) = **3.0** (healthy)
+
+## How to Improve Your Unit Economics
+
+### Increase LTV
+1. **Reduce churn** — improve onboarding, add activation emails
+2. **Expand revenue** — upsell, cross-sell, usage-based pricing
+3. **Raise prices** — most SaaS undercharges by 20-50%
+
+### Reduce CAC
+1. **Improve conversion rates** — optimize landing pages, trial-to-paid flow
+2. **Invest in content/SEO** — lower CAC over time
+3. **Refine targeting** — focus on ICP (Ideal Customer Profile)
+4. **Leverage referrals** — existing customers bring new ones at near-zero CAC
+
+### Improve Gross Margin
+1. **Optimize infrastructure** — right-size servers, use spot instances
+2. **Negotiate vendor pricing** — volume discounts on APIs
+3. **Automate support** — chatbots, knowledge base, self-serve
+
+## Common Mistakes
+
+1. **Ignoring churn in LTV** — a 5% monthly churn means average customer stays only 20 months
+2. **Using revenue instead of gross margin** — LTV should be based on profit, not revenue
+3. **Not including all CAC costs** — salaries, tools, events all count
+4. **Comparing to wrong benchmarks** — B2C SaaS ≠ Enterprise SaaS benchmarks
+5. **Tracking blended only** — always separate organic vs. paid CAC
+
+## Benchmark Summary
+
+| Metric | Poor | Average | Good | Excellent |
+|--------|------|---------|------|-----------|
+| LTV:CAC | < 1 | 1-2 | 3-5 | 5+ |
+| Payback | > 18mo | 12-18mo | 6-12mo | < 6mo |
+| Gross Margin | < 60% | 60-70% | 70-80% | 80%+ |
+| Quick Ratio | < 1 | 1-2 | 2-4 | 4+ |
+| Magic Number | < 0.5 | 0.5-0.75 | 0.75-1.0 | 1.0+ |
+
+## Track Your Unit Economics
+
+The best way to improve unit economics is to measure them consistently. AI Finance Ops automatically calculates LTV, CAC, churn, and MRR — so you can focus on improving, not spreadsheets.
+
+[Start tracking for free →](/register)

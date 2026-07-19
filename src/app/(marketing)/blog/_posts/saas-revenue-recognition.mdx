@@ -1,0 +1,149 @@
+---
+title: "SaaS Revenue Recognition: ASC 606 Guide for Founders"
+description: "Understand SaaS revenue recognition under ASC 606 — when to recognize revenue, deferred revenue, and compliance requirements for SaaS businesses."
+date: "2026-06-28"
+author: "AI Finance Ops"
+tags: ["revenue-recognition", "asc-606", "accounting", "saas-metrics", "founders"]
+coverImage: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&h=630&fit=crop"
+slug: saas-revenue-recognition
+---
+
+Revenue recognition sounds like an accounting problem — but it directly affects your reported MRR, ARR, and financial health. Get it wrong, and your numbers are meaningless.
+
+## What Is Revenue Recognition?
+
+Revenue recognition is the accounting principle that determines **when** you can count money as revenue. For SaaS, this is especially important because customers often pay upfront for annual plans.
+
+**The key rule:** Revenue is recognized when it's **earned**, not when cash is received.
+
+## The ASC 606 Standard
+
+ASC 606 (Revenue from Contracts with Customers) is the standard that governs how SaaS companies recognize revenue. It follows five steps:
+
+### Step 1: Identify the Contract
+- Customer agrees to pay for your service
+- Both parties understand the terms
+- Payment terms are defined
+- The contract has commercial substance
+
+### Step 2: Identify Performance Obligations
+What are you delivering? For SaaS:
+- Access to the software platform
+- Customer support
+- Data storage
+- Custom integrations (if applicable)
+
+### Step 3: Determine Transaction Price
+Total amount the customer will pay:
+- Subscription fees
+- Setup fees
+- Usage-based charges
+- Support fees
+
+### Step 4: Allocate Price to Obligations
+If you sell multiple things, allocate price to each based on standalone selling price.
+
+**Example:**
+- $12,000/year subscription
+- $2,000 setup fee
+- Standalone price of subscription: $12,000
+- Standalone price of setup: $2,000
+- Allocation: 85.7% subscription, 14.3% setup
+
+### Step 5: Recognize Revenue When Obligations Are Satisfied
+
+For SaaS subscriptions:
+- **Recognize ratably over the subscription period**
+- If customer pays $12,000 for 12 months → recognize $1,000/month
+- If customer pays $12,000 upfront → $11,000 is deferred revenue initially
+
+![Revenue recognition timeline](https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=450&fit=crop)
+
+## Common SaaS Scenarios
+
+### Annual Subscription (Paid Upfront)
+- Customer pays $12,000 on January 1
+- 12-month contract
+- **Recognition:** $1,000/month for 12 months
+- **January balance sheet:** $12,000 cash, $11,000 deferred revenue
+
+### Monthly Subscription
+- Customer pays $1,000/month
+- **Recognition:** $1,000 each month as earned
+- **No deferred revenue** — pay as you go
+
+### Free Trial → Paid
+- 14-day free trial, then $99/month
+- **Recognition:** $0 during trial, $99/month after conversion
+
+### Setup Fee + Subscription
+- $2,000 setup + $500/month
+- **Setup fee:** Recognize over expected customer lifetime (typically 24-36 months)
+- **Subscription:** Recognize monthly
+
+## Deferred Revenue
+
+**Deferred revenue** = money received but not yet earned. It's a liability on your balance sheet.
+
+**Example:**
+- January 1: Customer pays $12,000 for 12 months
+- January 1: Deferred revenue = $12,000
+- January 31: Deferred revenue = $11,000 (recognized $1,000)
+- February 28: Deferred revenue = $10,000
+- December 31: Deferred revenue = $0
+
+**Why it matters:**
+- Deferred revenue is NOT revenue — it's money you owe (service obligation)
+- True MRR = recognized revenue, not cash received
+- Investors look at recognized revenue, not cash
+
+## Impact on SaaS Metrics
+
+### MRR Calculation
+```
+True MRR = Recognized Revenue (not cash received)
+```
+
+If you have annual plans:
+```
+Monthly recognized = Annual payment ÷ 12
+```
+
+### ARR Calculation
+```
+ARR = Recognized annual revenue = MRR × 12
+```
+
+### Cash vs. Revenue
+| Metric | Cash Basis | Accrual Basis |
+|--------|-----------|---------------|
+| January | $12,000 | $1,000 |
+| February | $0 | $1,000 |
+| March | $0 | $1,000 |
+
+**Always use accrual basis for SaaS metrics.** Cash basis distorts growth and retention.
+
+## Compliance Checklist
+
+For SaaS founders:
+
+1. **Use accrual accounting** — not cash basis
+2. **Track deferred revenue** — every annual plan creates it
+3. **Recognize ratably** — over the contract period
+4. **Document contracts** — have clear terms
+5. **Review quarterly** — ensure recognition matches obligations
+6. **Get an accountant** — ASC 606 compliance is complex
+
+## Common Mistakes
+
+1. **Recognizing cash as revenue** — annual plans must be deferred
+2. **Ignoring setup fees** — these must be allocated and recognized
+3. **Not tracking deferred revenue** — it's a real liability
+4. **Mixing up MRR and cash** — they're different numbers
+5. **Forgetting usage-based revenue** — recognize when consumed
+
+## Track Revenue Automatically
+
+AI Finance Ops correctly calculates recognized revenue and deferred revenue from your Stripe data — no accounting degree required.
+
+[Start tracking for free →](/register)
