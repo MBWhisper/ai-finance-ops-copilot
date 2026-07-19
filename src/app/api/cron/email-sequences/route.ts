@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/db';
 import { users } from '@/db/schema';
-import { eq, lt, gte, isNull } from 'drizzle-orm';
 import {
   sendWelcomeEmail,
   sendDay3Nudge,

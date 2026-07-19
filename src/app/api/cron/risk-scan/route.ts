@@ -45,6 +45,7 @@ export async function GET(request: Request) {
       where: and(
         lt(invoices.dueDate, today),
         sql`${invoices.status} != 'paid'`,
+        sql`${invoices.status} != 'draft'`,
       ),
     });
     for (const inv of overdueInvoices) {

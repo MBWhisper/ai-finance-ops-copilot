@@ -10,6 +10,7 @@ import { getForecasts } from '@/db/queries/forecasts'
 import { db } from '@/db'
 import { invoices, notifications } from '@/db/schema'
 import { eq, and, desc } from 'drizzle-orm'
+import { computeOverdueStatus } from '@/lib/invoice-utils'
 
 // ─── helpers ──────────────────────────────────────────────────────────────────
 
@@ -95,9 +96,9 @@ export async function buildCopilotContextLive(
       limit: 50,
     })
     const paidInvoices     = invoiceRows.filter(i => i.status === 'paid')
-    const overdueInvoices  = invoiceRows.filter(i => i.status === 'overdue')
+    const overdueInvoices  = invoiceRows.filter(i => computeOverdueStatus(i as any) === 'overdue')
     const outstandingCents = invoiceRows
-      .filter(i => i.status !== 'paid')
+      .filter(i => { const s = computeOverdueStatus(i as any); return s !== 'paid' && s !== 'draft' })
       .reduce((s, i) => s + (i.amountCents ?? 0), 0)
 
     const today    = new Date().toISOString().slice(0, 10)

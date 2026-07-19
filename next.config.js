@@ -66,8 +66,6 @@ const nextConfig = {
   // File compression
   compress: true,
 
-
-
   // Security & behavior
   poweredByHeader: false,
   reactStrictMode: true,
