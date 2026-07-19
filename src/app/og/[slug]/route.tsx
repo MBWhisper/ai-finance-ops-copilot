@@ -11,8 +11,8 @@ const titles: Record<string, { title: string; subtitle: string }> = {
   'runway-calculator': { title: 'Runway Calculator', subtitle: 'How many months of runway do you have?' },
 }
 
-export async function GET(request: NextRequest, { params }: { params: { slug: string } }) {
-  const { slug } = params
+export async function GET(request: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
   const meta = titles[slug] ?? { title: 'AI Finance Ops', subtitle: 'Financial copilot for SaaS founders' }
 
   return new ImageResponse(

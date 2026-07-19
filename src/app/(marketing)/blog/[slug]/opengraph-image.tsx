@@ -30,11 +30,12 @@ function parseFrontmatter(content: string): PostMeta {
 
 
 
-export default async function Image({ params }: { params: { slug: string } }) {
+export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
   const postsDir = join(process.cwd(), 'src/app/(marketing)/blog/_posts')
   let meta: PostMeta = { title: 'AI Finance Ops Blog', description: 'SaaS financial intelligence for early-stage founders.', tags: [] }
   try {
-    const content = readFileSync(join(postsDir, `${params.slug}.mdx`), 'utf-8')
+    const content = readFileSync(join(postsDir, `${slug}.mdx`), 'utf-8')
     meta = parseFrontmatter(content)
   } catch {}
 

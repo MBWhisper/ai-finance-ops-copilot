@@ -134,7 +134,7 @@ const testimonials = [
 export function TestimonialCarousel() {
   const [active, setActive] = useState(0)
   const [isPaused, setIsPaused] = useState(false)
-  const timerRef = useRef<ReturnType<typeof setInterval>>()
+  const timerRef = useRef<ReturnType<typeof setInterval>>(null)
 
   useEffect(() => {
     if (isPaused) {

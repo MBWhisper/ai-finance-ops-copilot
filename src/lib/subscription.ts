@@ -16,7 +16,7 @@ export interface SubscriptionInfo {
 const ACTIVE_STATUSES = ['active', 'on_trial']
 
 export async function getUserSubscription(userId: string): Promise<SubscriptionInfo> {
-  const supabase = createClient()
+  const supabase = await createClient()
 
   // Check admin role first via user metadata
   const { data: { user } } = await supabase.auth.getUser()

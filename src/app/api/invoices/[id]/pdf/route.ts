@@ -8,8 +8,9 @@ import { logger } from '@/lib/logger';
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { id: string } },
+  { params }: { params: Promise<{ id: string }> },
 ) {
+  const { id } = await params;
   try {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
@@ -18,7 +19,7 @@ export async function GET(
     }
 
     const invoice = await db.query.invoices.findFirst({
-      where: eq(invoices.id, params.id),
+      where: eq(invoices.id, id),
     });
 
     if (!invoice) {
@@ -48,7 +49,7 @@ export async function GET(
       },
     });
   } catch (err) {
-    logger.error({ err, invoiceId: params.id }, 'Failed to generate invoice PDF');
+    logger.error({ err, invoiceId: id }, 'Failed to generate invoice PDF');
     return NextResponse.json({ error: 'Failed to generate PDF' }, { status: 500 });
   }
 }

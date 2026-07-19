@@ -236,7 +236,7 @@ export function Sidebar({ userEmail, plan, unreadAlerts = 0 }: { userEmail: stri
   }, [open, moreOpen, resourcesOpen])
 
   async function handleLogout() {
-    const supabase = createClient()
+    const supabase = await createClient()
     await supabase.auth.signOut()
     window.location.href = '/login'
   }

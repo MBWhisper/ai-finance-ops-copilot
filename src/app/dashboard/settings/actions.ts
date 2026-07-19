@@ -8,7 +8,7 @@ import { users } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function saveStripeKey(formData: FormData): Promise<void> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) throw new Error("Unauthorized");
 
@@ -44,7 +44,7 @@ export async function saveStripeKey(formData: FormData): Promise<void> {
 }
 
 export async function updateProfile(formData: FormData): Promise<{ success: boolean; error?: string }> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { success: false, error: "Unauthorized" };
 
@@ -79,7 +79,7 @@ type NotificationSettings = {
 export async function updateWorkspaceSettings(
   data: WorkspaceSettings
 ): Promise<{ success: boolean; error?: string }> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { success: false, error: "Unauthorized" };
 
@@ -107,7 +107,7 @@ export async function updateWorkspaceSettings(
 export async function updateNotificationSettings(
   data: NotificationSettings
 ): Promise<{ success: boolean; error?: string }> {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) return { success: false, error: "Unauthorized" };
 

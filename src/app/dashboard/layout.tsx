@@ -5,15 +5,14 @@ import { NotificationBell } from '@/components/risk/NotificationBell'
 import { ensureUserRecord } from '@/lib/auth/ensure-user'
 import { getUserSubscription } from '@/lib/subscription'
 import { logger } from '@/lib/logger'
-import dynamic from 'next/dynamic'
-const CopilotChat = dynamic(() => import('@/components/copilot/CopilotChat').then(m => m.CopilotChat), { ssr: false })
+import { CopilotChat } from '@/components/dashboard/CopilotChatWrapper'
 
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: { session } } = await supabase.auth.getSession()
 
   if (!session) {

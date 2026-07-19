@@ -6,7 +6,7 @@ import { logger } from '@/lib/logger'
 export async function GET(request: Request) {
   logger.info('[CREATE-USER-API] GET called')
   
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: { session }, error: sessionError } = await supabase.auth.getSession()
 
   if (sessionError) {

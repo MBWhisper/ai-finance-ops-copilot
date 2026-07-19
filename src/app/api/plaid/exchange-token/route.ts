@@ -5,7 +5,7 @@ import { exchangePublicToken } from "@/services/plaid";
 import { upsertPlaidAccount } from "@/db/queries/plaid";
 
 export async function POST(request: Request) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

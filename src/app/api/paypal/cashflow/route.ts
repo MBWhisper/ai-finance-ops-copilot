@@ -3,7 +3,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getPayPalAccount, getPayPalDashboardData } from "@/db/queries/paypal";
 
 export async function GET() {
-  const supabase = createClient();
+  const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });

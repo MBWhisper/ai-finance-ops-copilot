@@ -4,7 +4,7 @@ import { redirect } from 'next/navigation'
 export const revalidate = 300
 
 export default async function AdminCancellationReasonsPage() {
-  const supabase = createClient()
+  const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
   if (!user) redirect('/login')
 

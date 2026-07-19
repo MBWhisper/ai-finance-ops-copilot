@@ -59,7 +59,7 @@ export default function WarningsPage() {
 
   useEffect(() => {
     async function load() {
-      const supabase = createClient()
+      const supabase = await createClient()
       const { data: { user } } = await supabase.auth.getUser()
 
       if (!user) {
