@@ -1,8 +1,22 @@
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Privacy Policy — AI Finance Ops',
-  description: 'How AI Finance Ops collects, uses, and protects your data.',
+  title: 'Privacy Policy',
+  description: 'How AI Finance Ops collects, uses, and protects your data. We are committed to protecting your privacy.',
+  alternates: { canonical: 'https://aifinanceops.app/privacy' },
+  openGraph: {
+    title: 'Privacy Policy — AI Finance Ops',
+    description: 'How AI Finance Ops collects, uses, and protects your data.',
+    url: 'https://aifinanceops.app/privacy',
+    siteName: 'AI Finance Ops',
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Privacy Policy — AI Finance Ops',
+    description: 'How AI Finance Ops collects, uses, and protects your data.',
+  },
 }
 
 export default function PrivacyPage() {

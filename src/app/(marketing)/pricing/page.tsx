@@ -4,9 +4,24 @@ import PricingCards from "@/components/pricing/PricingCards"
 import { InternalLinks, CALCULATOR_LINKS, COMPARISON_LINKS, BLOG_LINKS } from "@/components/seo/InternalLinks"
 
 export const metadata: Metadata = {
-  title: 'Pricing — AI Finance Ops',
-  description: 'Simple pricing for SaaS financial automation. Start free, upgrade when you grow.',
+  title: 'Pricing — SaaS Financial Dashboard | Free Plan Available',
+  description: 'Simple pricing for SaaS financial automation. Start free, upgrade when you grow. MRR tracking, cash flow forecasting, AI copilot — all included.',
   alternates: { canonical: 'https://aifinanceops.app/pricing' },
+  openGraph: {
+    title: 'Pricing — AI Finance Ops',
+    description: 'Simple pricing for SaaS financial automation. Start free, upgrade when you grow.',
+    url: 'https://aifinanceops.app/pricing',
+    siteName: 'AI Finance Ops',
+    images: [{ url: 'https://aifinanceops.app/og-image.png', width: 1200, height: 630, alt: 'AI Finance Ops Pricing' }],
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Pricing — AI Finance Ops',
+    description: 'Simple pricing for SaaS financial automation. Start free, upgrade when you grow.',
+    images: ['https://aifinanceops.app/og-image.png'],
+  },
 }
 
 export default function PricingPage() {

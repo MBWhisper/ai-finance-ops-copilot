@@ -3,15 +3,25 @@ import Link from 'next/link'
 import { InternalLinks, CALCULATOR_LINKS, COMPARISON_LINKS } from '@/components/seo/InternalLinks'
 
 export const metadata: Metadata = {
-  title: 'Features — AI Finance Ops',
+  title: 'Features — Real-Time SaaS Metrics Dashboard | MRR, ARR, Churn, Runway',
   description:
-    'Real-time MRR, ARR, churn, LTV, and runway tracking for SaaS founders. Connect Stripe in minutes — no spreadsheets, no SQL.',
+    'Real-time MRR, ARR, churn, LTV, and runway tracking for SaaS founders. AI copilot, Stripe integration, cash flow forecasting. Connect in minutes — no spreadsheets.',
   alternates: { canonical: 'https://aifinanceops.app/features' },
   openGraph: {
     title: 'Features — AI Finance Ops',
     description:
       'Real-time MRR, ARR, churn, LTV, and runway tracking for SaaS founders.',
     url: 'https://aifinanceops.app/features',
+    siteName: 'AI Finance Ops',
+    images: [{ url: 'https://aifinanceops.app/og-image.png', width: 1200, height: 630, alt: 'AI Finance Ops Features' }],
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Features — AI Finance Ops',
+    description: 'Real-time MRR, ARR, churn, LTV, and runway tracking for SaaS founders.',
+    images: ['https://aifinanceops.app/og-image.png'],
   },
 }
 

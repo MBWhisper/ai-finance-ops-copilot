@@ -4,23 +4,24 @@ import { InternalLinks } from "@/components/InternalLinks"
 import { Check } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "MRR Calculator for SaaS — Monthly Recurring Revenue | AI Finance Ops",
+  title: "MRR Calculator for SaaS — Monthly Recurring Revenue",
   description:
-    "Calculate your Monthly Recurring Revenue (MRR) instantly. Understand expansion MRR, contraction, and net new MRR.",
+    "Calculate your Monthly Recurring Revenue (MRR) instantly. Understand expansion MRR, contraction, and net new MRR. Free tool for SaaS founders.",
+  alternates: { canonical: 'https://aifinanceops.app/mrr-calculator' },
   openGraph: {
     title: "MRR Calculator for SaaS — Monthly Recurring Revenue | AI Finance Ops",
     description: "Calculate your MRR instantly. Understand expansion, contraction, and net new MRR.",
     url: "https://aifinanceops.app/mrr-calculator",
     siteName: "AI Finance Ops",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "MRR Calculator" }],
+    images: [{ url: "https://aifinanceops.app/og-image.png", width: 1200, height: 630, alt: "MRR Calculator" }],
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "MRR Calculator for SaaS — Monthly Recurring Revenue | AI Finance Ops",
-    description: "Calculate your MRR instantly.",
-    images: ["/og-image.png"],
+    title: "MRR Calculator for SaaS — Monthly Recurring Revenue",
+    description: "Calculate your MRR instantly. Free tool for SaaS founders.",
+    images: ["https://aifinanceops.app/og-image.png"],
   },
 }
 

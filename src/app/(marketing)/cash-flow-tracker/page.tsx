@@ -7,12 +7,13 @@ export const metadata: Metadata = {
   title: "SaaS Cash Flow Tracker — Free Tool | AI Finance Ops",
   description:
     "Track and forecast SaaS cash flow in real time. Understand burn rate, runway, and 90-day cash projections without spreadsheets.",
+  alternates: { canonical: 'https://aifinanceops.app/cash-flow-tracker' },
   openGraph: {
     title: "SaaS Cash Flow Tracker — Free Tool | AI Finance Ops",
     description: "Track and forecast SaaS cash flow in real time. Understand burn rate, runway, and 90-day cash projections.",
     url: "https://aifinanceops.app/cash-flow-tracker",
     siteName: "AI Finance Ops",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "SaaS Cash Flow Tracker" }],
+    images: [{ url: "https://aifinanceops.app/og-image.png", width: 1200, height: 630, alt: "SaaS Cash Flow Tracker" }],
     type: "website",
     locale: "en_US",
   },
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "SaaS Cash Flow Tracker — Free Tool | AI Finance Ops",
     description: "Track and forecast SaaS cash flow in real time.",
-    images: ["/og-image.png"],
+    images: ["https://aifinanceops.app/og-image.png"],
   },
 }
 

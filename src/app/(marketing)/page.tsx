@@ -4,9 +4,25 @@ import Image from "next/image"
 import { ArrowRight, Play, ChevronDown } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: 'AI Finance Ops — Automate SaaS Financial Reporting',
-  description: 'Track MRR, ARR, churn, and cash flow automatically. AI-powered financial copilot for SaaS founders.',
+  title: 'AI Finance Ops — SaaS Financial Dashboard & AI Copilot for Founders',
+  description: 'Free SaaS financial dashboard for founders. Track MRR, ARR, churn, runway, and cash flow in real time. AI-powered copilot, Stripe integration, 5-minute setup.',
   alternates: { canonical: 'https://aifinanceops.app' },
+  openGraph: {
+    title: 'AI Finance Ops — SaaS Financial Dashboard & AI Copilot',
+    description: 'Free SaaS financial dashboard for founders. Track MRR, ARR, churn, runway, and cash flow in real time.',
+    url: 'https://aifinanceops.app',
+    siteName: 'AI Finance Ops',
+    images: [{ url: 'https://aifinanceops.app/og-image.png', width: 1200, height: 630, alt: 'AI Finance Ops — SaaS Financial Dashboard' }],
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'AI Finance Ops — SaaS Financial Dashboard & AI Copilot',
+    description: 'Free SaaS financial dashboard for founders. Track MRR, ARR, churn, runway, and cash flow in real time.',
+    images: ['https://aifinanceops.app/og-image.png'],
+    creator: '@MbtechE80106',
+  },
 }
 import { Logo } from "@/components/logo"
 import { OptimizedImage } from "@/components/OptimizedImage"

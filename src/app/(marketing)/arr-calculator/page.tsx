@@ -11,7 +11,16 @@ export const metadata: Metadata = {
     title: 'Free ARR Calculator | AI Finance Ops',
     description: 'Calculate Annual Recurring Revenue (ARR) instantly for your SaaS.',
     url: 'https://aifinanceops.app/arr-calculator',
-    images: [{ url: 'https://aifinanceops.app/og/arr-calculator.png', width: 1200, height: 630 }],
+    siteName: 'AI Finance Ops',
+    images: [{ url: 'https://aifinanceops.app/og/arr-calculator.png', width: 1200, height: 630, alt: 'ARR Calculator' }],
+    type: 'website',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Free ARR Calculator | AI Finance Ops',
+    description: 'Calculate Annual Recurring Revenue (ARR) instantly for your SaaS.',
+    images: ['https://aifinanceops.app/og/arr-calculator.png'],
   },
 }
 

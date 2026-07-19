@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Churn Rate Calculator for SaaS Startups — Free Tool",
   description:
     "Calculate your monthly and annual churn rate instantly. Understand what churn means for your SaaS growth.",
+  alternates: { canonical: 'https://aifinanceops.app/churn-calculator' },
   openGraph: {
     title: "Churn Rate Calculator for SaaS Startups — Free Tool",
     description:
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Churn Rate Calculator for SaaS Startups — Free Tool",
     description:
-      "Calculate your monthly and annual churn rate instantly. Understand what churn means for your SaaS growth.",
+      "Calculate your monthly and annual churn rate instantly.",
     images: ["/og-image.png"],
   },
 }

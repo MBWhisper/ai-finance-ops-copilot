@@ -7,13 +7,14 @@ export const metadata: Metadata = {
   title: "Automate SaaS Reporting — AI Finance Ops",
   description:
     "Automate your SaaS financial reporting. Get MRR, churn, cash flow, and KPI reports generated automatically.",
+  alternates: { canonical: 'https://aifinanceops.app/automate-reporting' },
   openGraph: {
     title: "Automate SaaS Reporting — AI Finance Ops",
     description:
       "Automate your SaaS financial reporting. Get MRR, churn, cash flow, and KPI reports generated automatically.",
     url: "https://aifinanceops.app/automate-reporting",
     siteName: "AI Finance Ops",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "Automate SaaS Reporting with AI Finance Ops" }],
+    images: [{ url: "https://aifinanceops.app/og-image.png", width: 1200, height: 630, alt: "Automate SaaS Reporting with AI Finance Ops" }],
     type: "website",
     locale: "en_US",
   },
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
     title: "Automate SaaS Reporting — AI Finance Ops",
     description:
       "Automate your SaaS financial reporting. Get MRR, churn, cash flow, and KPI reports generated automatically.",
-    images: ["/og-image.png"],
+    images: ["https://aifinanceops.app/og-image.png"],
   },
 }
 

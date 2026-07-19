@@ -1,10 +1,27 @@
+import type { Metadata } from "next"
 import Link from "next/link"
 import { OptimizedImage } from "@/components/OptimizedImage"
 
-export const metadata = {
-  title: "About Mo | AI Finance Ops",
-  description:
-    "Meet Mo, the founder behind AI Finance Ops. A builder from Morocco who got tired of spreadsheet chaos and decided to fix it.",
+export const metadata: Metadata = {
+  title: 'About Mo — Founder of AI Finance Ops | Bootstrapped SaaS from Morocco',
+  description: 'Meet Mo, the bootstrapped founder who built AI Finance Ops from Agadir, Morocco. Why he created a free SaaS financial dashboard for founders.',
+  alternates: { canonical: 'https://aifinanceops.app/about' },
+  openGraph: {
+    title: 'About Mo — Founder of AI Finance Ops',
+    description: 'The bootstrapped founder who built AI Finance Ops from Morocco.',
+    url: 'https://aifinanceops.app/about',
+    siteName: 'AI Finance Ops',
+    images: [{ url: 'https://aifinanceops.app/og-image.png', width: 1200, height: 630, alt: 'Mo — Founder of AI Finance Ops' }],
+    type: 'profile',
+    locale: 'en_US',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About Mo — Founder of AI Finance Ops',
+    description: 'The bootstrapped founder who built AI Finance Ops from Morocco.',
+    images: ['https://aifinanceops.app/og-image.png'],
+    creator: '@MbtechE80106',
+  },
 }
 
 export default function AboutPage() {
