@@ -3,6 +3,7 @@ import { readFileSync, readdirSync } from 'fs'
 import { join } from 'path'
 
 export const runtime = 'nodejs'
+export const dynamic = 'force-dynamic'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -27,11 +28,7 @@ function parseFrontmatter(content: string): PostMeta {
   return { title: get('title'), description: get('description'), tags }
 }
 
-export async function generateStaticParams() {
-  const postsDir = join(process.cwd(), 'src/app/(marketing)/blog/_posts')
-  const files = readdirSync(postsDir).filter((f) => f.endsWith('.mdx'))
-  return files.map((f) => ({ slug: f.replace(/\.mdx$/, '') }))
-}
+
 
 export default async function Image({ params }: { params: { slug: string } }) {
   const postsDir = join(process.cwd(), 'src/app/(marketing)/blog/_posts')

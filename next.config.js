@@ -34,7 +34,16 @@ const nextConfig = {
   // them into the client-side Webpack output.  postgres and drizzle-orm
   // depend on Node.js built-ins (net, tls, fs, perf_hooks) that do not
   // exist in the browser.
-  serverExternalPackages: ['postgres', 'drizzle-orm', 'pg'],
+  experimental: {
+    serverComponentsExternalPackages: ['postgres', 'drizzle-orm', 'pg'],
+    optimizePackageImports: [
+      'lucide-react',
+      '@radix-ui/react-icons',
+      'date-fns',
+      'recharts',
+      'framer-motion',
+    ],
+  },
 
   // Image optimization
   images: {
@@ -57,16 +66,7 @@ const nextConfig = {
   // File compression
   compress: true,
 
-  // Bundle optimization
-  experimental: {
-    optimizePackageImports: [
-      'lucide-react',
-      '@radix-ui/react-icons',
-      'date-fns',
-      'recharts',
-      'framer-motion',
-    ],
-  },
+
 
   // Security & behavior
   poweredByHeader: false,
