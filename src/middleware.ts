@@ -1,13 +1,16 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
-import { Ratelimit } from '@upstash/ratelimit'
-import { Redis } from '@upstash/redis'
 
-const ratelimit = new Ratelimit({
-  redis: Redis.fromEnv(),
-  limiter: Ratelimit.slidingWindow(20, '1 h'),
-  prefix: 'copilot',
-})
+let ratelimit: import('@upstash/ratelimit').Ratelimit | null = null
+if (process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN) {
+  const { Ratelimit } = require('@upstash/ratelimit')
+  const { Redis } = require('@upstash/redis')
+  ratelimit = new Ratelimit({
+    redis: Redis.fromEnv(),
+    limiter: Ratelimit.slidingWindow(20, '1 h'),
+    prefix: 'copilot',
+  })
+}
 
 const AUTH_PAGES = ['/login', '/register', '/signup']
 const PROTECTED_PREFIXES = ['/dashboard']
@@ -43,14 +46,16 @@ export async function middleware(request: NextRequest) {
 
   // 1) Rate limiting فقط لمسار Copilot
   if (pathname === '/api/copilot') {
-    const ip = getClientIp(request)
-    const { success } = await ratelimit.limit(ip)
+    if (ratelimit) {
+      const ip = getClientIp(request)
+      const { success } = await ratelimit.limit(ip)
 
-    if (!success) {
-      return NextResponse.json(
-        { error: 'Rate limit exceeded. Try again in 1 hour.' },
-        { status: 429 }
-      )
+      if (!success) {
+        return NextResponse.json(
+          { error: 'Rate limit exceeded. Try again in 1 hour.' },
+          { status: 429 }
+        )
+      }
     }
 
     return NextResponse.next()
@@ -58,9 +63,11 @@ export async function middleware(request: NextRequest) {
 
   // 2) المسارات العامة لا تشغّل Supabase middleware
   const needsAuthCheck =
-    pathname === '/' ||
+    (pathname === '/' ||
     isProtectedPath(pathname) ||
-    isAuthPage(pathname)
+    isAuthPage(pathname)) &&
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
 
   if (!needsAuthCheck) {
     return NextResponse.next()
@@ -68,40 +75,44 @@ export async function middleware(request: NextRequest) {
 
   let response = NextResponse.next({ request })
 
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll()
+  try {
+    const supabase = createServerClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+      {
+        cookies: {
+          getAll() {
+            return request.cookies.getAll()
+          },
+          setAll(cookiesToSet: { name: string; value: string; options: CookieOptions }[]) {
+            cookiesToSet.forEach(({ name, value, options }) => {
+              response.cookies.set(name, value, options)
+            })
+          },
         },
-        setAll(cookiesToSet: { name: string; value: string; options: CookieOptions }[]) {
-          cookiesToSet.forEach(({ name, value, options }) => {
-            response.cookies.set(name, value, options)
-          })
-        },
-      },
+      }
+    )
+
+    const {
+      data: { user },
+    } = await supabase.auth.getUser()
+
+    // 3) غير مسجل + يحاول دخول صفحة محمية
+    if (!user && isProtectedPath(pathname)) {
+      return createRedirect(request, '/login')
     }
-  )
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser()
+    // 4) مسجل + يحاول دخول صفحات auth
+    if (user && isAuthPage(pathname)) {
+      return createRedirect(request, '/dashboard/overview')
+    }
 
-  // 3) غير مسجل + يحاول دخول صفحة محمية
-  if (!user && isProtectedPath(pathname)) {
-    return createRedirect(request, '/login')
-  }
-
-  // 4) مسجل + يحاول دخول صفحات auth
-  if (user && isAuthPage(pathname)) {
-    return createRedirect(request, '/dashboard/overview')
-  }
-
-  // 5) مسجل + دخل الصفحة الرئيسية
-  if (user && pathname === '/') {
-    return createRedirect(request, '/dashboard/overview')
+    // 5) مسجل + دخل الصفحة الرئيسية
+    if (user && pathname === '/') {
+      return createRedirect(request, '/dashboard/overview')
+    }
+  } catch {
+    // If auth check fails, let the request through (fallback to client-side auth)
   }
 
   return response
