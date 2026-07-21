@@ -1,0 +1,248 @@
+---
+title: "MRR Cohort Analysis: See Which Customers Actually Drive Your Growth"
+description: "Cohort analysis reveals which customer groups generate the most revenue and which ones silently drain your MRR. Here's how to read the heatmap."
+date: "2026-07-21"
+author: "AI Finance Ops"
+tags: ["cohort-analysis", "mrr", "retention", "saas-metrics"]
+coverImage: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1200&h=630&fit=crop"
+slug: mrr-cohort-analysis
+---
+
+A SaaS founder showed me his MRR chart last quarter. It was going up — $45K, $52K, $61K, $70K. He was thrilled. Then I asked him to run a cohort analysis. Turns out, his January cohort was hemorrhaging money. He was growing by spending more on acquisition, not by retaining customers. The aggregate MRR chart was lying to him.
+
+**Cohort analysis is the X-ray of your SaaS business.** It reveals which customer groups drive real growth and which ones silently bleed revenue. If you've never run one, this is the guide that will change how you think about your metrics.
+
+## What Is MRR Cohort Analysis?
+
+A **cohort** is a group of customers who share a common starting point — typically their signup month. MRR cohort analysis tracks how much revenue each cohort generates over time.
+
+Instead of looking at total MRR (which hides everything), you see:
+
+- **January cohort:** Started at $8,000 MRR → now at $5,200 (35% churn)
+- **February cohort:** Started at $12,000 MRR → now at $11,400 (5% churn)
+- **March cohort:** Started at $15,000 MRR → now at $15,900 (6% expansion)
+
+**Same product. Same pricing. Wildly different outcomes.** That's what cohort analysis reveals.
+
+## Why Aggregate MRR Is Misleading
+
+Total MRR tells you the **what**. Cohort analysis tells you the **why**.
+
+**Example of misleading aggregate data:**
+- Month 1: $50K MRR (100 customers)
+- Month 2: $55K MRR (110 customers)
+- Month 3: $62K MRR (125 customers)
+
+Looks great, right? But let's look at cohorts:
+
+| Cohort | Month 0 | Month 1 | Month 2 | Month 3 |
+|--------|---------|---------|---------|---------|
+| Jan | $50,000 | $42,500 | $37,000 | $33,300 |
+| Feb | — | $55,000 | $46,750 | $41,600 |
+| Mar | — | — | $62,000 | $52,700 |
+
+**The truth:** Every single cohort is losing revenue over time. The only reason total MRR is growing is that you're acquiring customers faster than you're losing them. That's a treadmill, not a growth engine.
+
+## How to Read an MRR Cohort Heatmap
+
+The cohort heatmap is the most powerful visualization in SaaS analytics. Here's how to read it:
+
+**The structure:**
+- **Rows:** Customer cohorts (by signup month)
+- **Columns:** Months since signup
+- **Cells:** MRR retained (or % of starting MRR)
+
+**Color coding:**
+- **Green:** High retention/expansion (100%+ of starting MRR)
+- **Yellow:** Moderate retention (70–90%)
+- **Red:** Poor retention (below 70%)
+
+**Reading the diagonals:**
+- **Top-left to bottom-right diagonal** = where you are today
+- **Left of diagonal** = historical performance
+- **Right of diagonal** = future projections (based on past cohorts)
+
+## Building Your First MRR Cohort Table
+
+Here's a real cohort table with 6 months of data:
+
+| Cohort | Month 0 | Month 1 | Month 2 | Month 3 | Month 4 | Month 5 | Month 6 |
+|--------|---------|---------|---------|---------|---------|---------|---------|
+| Jan 26 | $8,000 | $6,800 | $5,900 | $5,200 | $4,700 | $4,300 | $4,000 |
+| Feb 26 | $12,000 | $10,800 | $9,700 | $8,900 | $8,200 | $7,700 | — |
+| Mar 26 | $15,000 | $14,100 | $13,200 | $12,400 | $11,700 | — | — |
+| Apr 26 | $18,000 | $17,100 | $16,200 | $15,500 | — | — | — |
+| May 26 | $22,000 | $21,100 | $20,300 | — | — | — | — |
+| Jun 26 | $25,000 | $24,300 | — | — | — | — | — |
+
+**What this tells you:**
+
+1. **January cohort lost 50% of MRR in 6 months** — something was very wrong
+2. **Retention improves with each cohort** — you fixed the onboarding
+3. **June cohort retains 97% at Month 1** — your product is getting stickier
+4. **Expansion revenue kicks in around Month 3** — customers expand after getting value
+
+## The 5 Patterns Every Founder Should Spot
+
+### Pattern 1: Early Churn Cliff
+
+**What it looks like:** A steep drop in the first 1–3 months, then flattening.
+
+**What it means:** Your onboarding is broken. Customers don't reach the "aha moment" fast enough.
+
+**Example:**
+- Month 0: $10,000
+- Month 1: $6,000 (40% drop!)
+- Month 2: $5,800 (only 3% drop)
+
+**Action:** Fix onboarding. Get customers to value in the first 7 days.
+
+### Pattern 2: Gradual Decay
+
+**What it looks like:** Steady, consistent loss of MRR every month.
+
+**What it means:** Your product isn't creating enough value to justify the price. Customers gradually realize this and leave.
+
+**Example:**
+- Month 0: $10,000
+- Month 1: $9,000
+- Month 2: $8,100
+- Month 3: $7,300
+- Month 4: $6,600
+
+**Action:** Improve product stickiness. Add integrations, workflows, or features that create switching costs.
+
+### Pattern 3: The Expansion Kick
+
+**What it looks like:** Retention dips initially, then climbs back up above 100%.
+
+**What it means:** Customers expand after getting value. This is the holy grail — NRR above 100%.
+
+**Example:**
+- Month 0: $10,000
+- Month 1: $9,200 (churn)
+- Month 2: $8,800 (churn)
+- Month 3: $9,500 (expansion starts)
+- Month 4: $10,400 (expansion > churn)
+- Month 5: $11,500 (net positive!)
+
+**Action:** Double down on expansion triggers. Identify what makes customers upgrade and accelerate that journey.
+
+### Pattern 4: Cohort Quality Degradation
+
+**What it looks like:** Earlier cohorts retain better than later ones.
+
+**What it means:** You're acquiring lower-quality customers as you scale. Marketing is reaching less-qualified leads.
+
+**Example:**
+- Jan cohort at Month 3: 78% retention
+- Feb cohort at Month 3: 72% retention
+- Mar cohort at Month 3: 65% retention
+
+**Action:** Tighten your ICP (Ideal Customer Profile). Don't sacrifice quality for quantity.
+
+### Pattern 5: Seasonal Cohort Effects
+
+**What it looks like:** Certain cohorts perform dramatically better or worse.
+
+**What it means:** External factors (seasonality, economic events, product launches) affect cohort quality.
+
+**Example:**
+- Q1 cohorts (budget season): 85% retention at Month 6
+- Q3 cohorts (summer slowdown): 60% retention at Month 6
+
+**Action:** Adjust marketing spend by season. Invest more in high-retention quarters.
+
+## How to Calculate Revenue Retention by Cohort
+
+**Formula:**
+```
+Cohort Revenue Retention = Current MRR from Cohort ÷ Starting MRR from Cohort × 100
+```
+
+**Example:**
+- January cohort started with $8,000 MRR
+- January cohort now generates $4,000 MRR
+- Revenue Retention: $4,000 ÷ $8,000 = **50%**
+
+**Benchmarks:**
+
+| Retention | Rating | Implication |
+|-----------|--------|-------------|
+| Below 50% | Critical | Severe churn problem |
+| 50–70% | Poor | Customers leaving too fast |
+| 70–85% | Average | Room for improvement |
+| 85–100% | Good | Strong retention |
+| 100%+ | Excellent | Expansion exceeds churn |
+
+## The Cohort Retention Curve
+
+Plot each cohort's retention as a line chart. Here's what to look for:
+
+**Healthy pattern:**
+- Lines start high (100%)
+- Drop in Month 1–2 (expected)
+- Flatten by Month 3–4
+- Some lines climb back up (expansion)
+
+**Unhealthy pattern:**
+- Lines keep declining with no flattening
+- Earlier cohorts drop faster (degrading quality)
+- No lines ever recover above 100%
+
+**The key metric:** Where does the curve flatten? If it flattens at 60%, that's your long-term retention. If it flattens at 80%, you're in great shape.
+
+## Using Cohort Analysis to Drive Decisions
+
+### 1. Identify Churn Triggers
+
+Look for the steepest drop in each cohort. That's when customers decide to leave.
+
+- Month 1 drop → Onboarding failure
+- Month 3 drop → Value not delivered
+- Month 6 drop → Budget cuts or competitor switch
+
+### 2. Measure Feature Impact
+
+Launch a new onboarding flow in March? Compare March cohort to February. Did Month 1 retention improve?
+
+**Example:**
+- Feb cohort Month 1 retention: 82%
+- Mar cohort Month 1 retention: 91%
+- Impact: **+9% improvement**
+
+### 3. Predict Future Revenue
+
+Use historical cohort curves to forecast. If every cohort flattens at 70% retention by Month 4, you can predict:
+- Current customers will retain ~70% of their MRR long-term
+- New MRR is pure growth (not replacing churned revenue)
+
+### 4. Allocate Resources
+
+If January cohorts have 90% retention and June cohorts have 70%, investigate what changed. Maybe your ICP shifted, or your onboarding team was understaffed.
+
+## Common Cohort Analysis Mistakes
+
+### 1. Too Many Cohort Definitions
+
+Don't create cohorts by signup month, plan, acquisition channel, and company size all at once. Start with **signup month** and add dimensions one at a time.
+
+### 2. Ignoring Revenue Weight
+
+A cohort with 10 customers paying $500/month matters more than 100 customers paying $10/month. Always look at **MRR-weighted cohorts**, not just customer counts.
+
+### 3. Not Segmenting by Plan
+
+Enterprise cohorts and SMB cohorts behave differently. Mix them together and you'll get misleading averages.
+
+### 4. Looking at Too Short a Timeframe
+
+Cohort analysis needs at least **6 months** of data to be useful. Less than that and you can't see the full retention curve.
+
+## Start Your Cohort Analysis
+
+Cohort analysis is the difference between growing and *actually* growing. It shows you which customers drive real value and which ones are just inflating your MRR number.
+
+**[AI Finance Ops](https://aifinanceops.app)** generates MRR cohort heatmaps automatically from your Stripe data. See retention curves, expansion patterns, and churn triggers — without building a single spreadsheet.
+
+**Start tracking cohorts free → [aifinanceops.app/register](https://aifinanceops.app/register)**

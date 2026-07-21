@@ -1,0 +1,151 @@
+---
+title: "SaaS Gross Margin Explained: Benchmarks, Formulas, and Mistakes to Avoid"
+description: "What is gross margin in SaaS, what's a healthy benchmark, and how to calculate it correctly — with examples from real SaaS businesses."
+date: "2026-07-21"
+author: "AI Finance Ops"
+tags: ["gross-margin", "saas-metrics", "finance-basics", "benchmarks"]
+coverImage: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1200&h=630&fit=crop"
+slug: saas-gross-margin-explained
+---
+
+A SaaS founder I know hit $1M ARR and celebrated. Six months later, he realized he was barely breaking even. His revenue was impressive, but his costs were eating him alive. The metric that would have warned him? **Gross margin.**
+
+Gross margin is the single most important profitability metric in SaaS. It tells you how much money you keep from every dollar of revenue — before accounting for sales, marketing, and overhead. If your gross margin is bad, no amount of growth will save you.
+
+## What Is Gross Margin?
+
+Gross margin measures the percentage of revenue that remains after subtracting the **direct costs** of delivering your product. In SaaS, these direct costs are called **Cost of Goods Sold (COGS)** or **Cost of Revenue**.
+
+**The formula:**
+
+```
+Gross Margin = (Revenue - COGS) ÷ Revenue × 100
+```
+
+**Simple example:**
+- Monthly Revenue: $100,000
+- COGS: $25,000
+- Gross Margin: ($100,000 - $25,000) ÷ $100,000 = **75%**
+
+That means for every dollar earned, $0.75 stays in the business to cover operating expenses and profit.
+
+## What Counts as COGS in SaaS?
+
+This is where most founders make mistakes. SaaS COGS includes **any cost directly tied to delivering your product to customers**:
+
+**Include in COGS:**
+- **Hosting costs** (AWS, GCP, Azure — the compute that runs your product)
+- **Third-party APIs** (Stripe fees, email providers, AI APIs you resell)
+- **DevOps/infrastructure labor** (engineers maintaining uptime, not building features)
+- **Customer support** (directly supporting product usage — not sales support)
+- **Payment processing fees** (Stripe's 2.9%, PayPal fees)
+- **CDN and bandwidth costs**
+- **On-call/monitoring tools**
+
+**Do NOT include in COGS:**
+- Product development (R&D — this is an operating expense)
+- Sales and marketing
+- General and administrative (legal, HR, office)
+- Executive salaries
+- Customer success (if focused on retention/upsell, not product support)
+
+**The gray area:** Customer support is the most debated. If your support team answers "how do I use this feature?" — it's COGS. If they handle billing disputes or sales questions — it's not.
+
+## SaaS Gross Margin Benchmarks
+
+Not all SaaS companies are created equal. Here's what "good" looks like:
+
+| Gross Margin | Rating | What It Means |
+|-------------|--------|---------------|
+| Below 60% | Poor | Something is structurally wrong |
+| 60–70% | Below Average | High COGS eating into margins |
+| 70–80% | Good | Healthy for most SaaS |
+| 80–85% | Excellent | Efficient, well-optimized |
+| 85%+ | Best-in-Class | Top-tier SaaS companies |
+
+**The benchmark:** Most public SaaS companies report gross margins of **75–85%**. Companies like Datadog, CrowdStrike, and Snowflake consistently hit 80%+.
+
+**Why this matters:** Investors use gross margin as a quick health check. Below 70%? They'll ask hard questions about your cost structure.
+
+## Real-World Examples
+
+**Example 1: Simple SaaS (High Margin)**
+- Project management tool
+- Revenue: $50,000/month
+- COGS: $6,000/month (hosting + support)
+- Gross Margin: **88%**
+- Verdict: Excellent — almost all revenue is available for growth
+
+**Example 2: API-Based SaaS (Lower Margin)**
+- AI content generation tool
+- Revenue: $80,000/month
+- COGS: $28,000/month (AI API costs + hosting)
+- Gross Margin: **65%**
+- Verdict: Below average — AI API costs are the problem
+
+**Example 3: Marketplace-Style SaaS (Mixed)**
+- E-commerce analytics platform
+- Revenue: $120,000/month
+- COGS: $24,000/month (data providers + hosting)
+- Gross Margin: **80%**
+- Verdict: Good — data costs are well-managed
+
+## The 5 Most Common Gross Margin Mistakes
+
+### 1. Excluding Payment Processing Fees
+
+Stripe's 2.9% + 30¢ adds up fast. If you process $500K/month in payments, that's **$15,000/month** in COGS. Founders often exclude this because "it's just Stripe's fee" — but it's a real cost of delivering your product.
+
+### 2. Putting All Engineering in COGS
+
+Product engineers building features are **R&D**, not COGS. Only infrastructure/DevOps engineers maintaining production systems count. Mixing these up makes your margins look artificially low.
+
+### 3. Ignoring Third-Party API Costs
+
+If you use OpenAI, Anthropic, Stripe, or any third-party API, those costs are COGS. Many founders forget to include them or underestimate their growth.
+
+### 4. Not Tracking Margin by Customer Segment
+
+Your $29/month customers might have 90% margins. Your enterprise customers with dedicated support might have 50% margins. Blending them hides the truth.
+
+### 5. Confusing Gross Margin with Net Margin
+
+Gross margin doesn't include sales, marketing, or overhead. A company with 80% gross margin might have 10% net margin after spending on growth. Both matter — but they measure different things.
+
+## How to Improve Your Gross Margin
+
+### 1. Negotiate Infrastructure Costs
+
+- Use reserved instances on AWS/GCP (30–50% savings)
+- Optimize database queries and caching
+- Move to serverless where possible
+
+### 2. Reduce Third-Party Dependency
+
+- Build in-house vs. renting APIs (when cost-effective)
+- Negotiate volume discounts with vendors
+- Cache API responses to reduce calls
+
+### 3. Automate Support
+
+- Build self-serve help centers
+- Use AI chatbots for common questions
+- Create video tutorials for onboarding
+
+### 4. Price for Margin
+
+If your COGS per customer is $15/month, don't charge $19/month. Price for a **minimum 70% margin** at the customer level.
+
+## The Gross Margin Rule of Thumb
+
+**Target 75%+ gross margin from day one.** If you can't hit 70%, your business model needs adjustment before you scale.
+
+Here's why: If your gross margin is 60%, you need to generate **$2.5M in revenue** to have the same gross profit as a company with 80% margin generating **$2M**. Low margins mean you need more revenue to fund the same amount of growth.
+
+## Track Your Margins Automatically
+
+Calculating gross margin shouldn't require a spreadsheet. You need to see it in real-time — broken down by customer, plan, and feature.
+
+**[AI Finance Ops](https://aifinanceops.app)** calculates your SaaS gross margin automatically, segments it by customer cohort, and alerts you when margins drop below your targets.
+
+**Start tracking free → [aifinanceops.app/register](https://aifinanceops.app/register)**
