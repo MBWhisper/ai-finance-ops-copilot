@@ -5,7 +5,7 @@ import type { Metadata } from "next"
 import BlogClient from "./BlogClient"
 
 export const metadata: Metadata = {
-  title: "SaaS Finance Blog | AI Finance Ops",
+  title: { absolute: "SaaS Finance Blog | AI Finance Ops" },
   description: "MRR guides, churn playbooks, and financial clarity for founders. Learn how to track SaaS metrics, reduce churn, and forecast cash flow.",
   alternates: { canonical: "https://aifinanceops.app/blog" },
   openGraph: {
@@ -13,6 +13,13 @@ export const metadata: Metadata = {
     description: "MRR guides, churn playbooks, and financial clarity for founders.",
     url: "https://aifinanceops.app/blog",
     images: [{ url: "https://aifinanceops.app/og/blog.png", width: 1200, height: 630 }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "SaaS Finance Blog | AI Finance Ops",
+    description: "MRR guides, churn playbooks, and financial clarity for founders.",
+    images: ["https://aifinanceops.app/og/blog.png"],
+    creator: '@MbtechE80106',
   },
 }
 

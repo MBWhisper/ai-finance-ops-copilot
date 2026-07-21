@@ -41,20 +41,20 @@ export function LTVCalculatorClient() {
         <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-6 mb-8">
           <div className="grid grid-cols-2 gap-5">
             <div>
-              <label className="block text-xs text-gray-500 mb-2">Average Revenue Per User / month ($)</label>
-              <input type="number" min="0" className={inputClass} value={arpu} onChange={e => setArpu(e.target.value)} />
+              <label htmlFor="ltv-arpu" className="block text-xs text-gray-500 mb-2">Average Revenue Per User / month ($)</label>
+              <input id="ltv-arpu" type="number" min="0" className={inputClass} value={arpu} onChange={e => setArpu(e.target.value)} />
             </div>
             <div>
-              <label className="block text-xs text-gray-500 mb-2">Monthly Churn Rate (%)</label>
-              <input type="number" min="0.1" max="100" step="0.1" className={inputClass} value={churnRate} onChange={e => setChurnRate(e.target.value)} />
+              <label htmlFor="ltv-churn" className="block text-xs text-gray-500 mb-2">Monthly Churn Rate (%)</label>
+              <input id="ltv-churn" type="number" min="0.1" max="100" step="0.1" className={inputClass} value={churnRate} onChange={e => setChurnRate(e.target.value)} />
             </div>
             <div>
-              <label className="block text-xs text-gray-500 mb-2">Gross Margin (%)</label>
-              <input type="number" min="0" max="100" className={inputClass} value={grossMargin} onChange={e => setGrossMargin(e.target.value)} />
+              <label htmlFor="ltv-margin" className="block text-xs text-gray-500 mb-2">Gross Margin (%)</label>
+              <input id="ltv-margin" type="number" min="0" max="100" className={inputClass} value={grossMargin} onChange={e => setGrossMargin(e.target.value)} />
             </div>
             <div>
-              <label className="block text-xs text-gray-500 mb-2">Customer Acquisition Cost ($)</label>
-              <input type="number" min="0" className={inputClass} value={cac} onChange={e => setCac(e.target.value)} />
+              <label htmlFor="ltv-cac" className="block text-xs text-gray-500 mb-2">Customer Acquisition Cost ($)</label>
+              <input id="ltv-cac" type="number" min="0" className={inputClass} value={cac} onChange={e => setCac(e.target.value)} />
             </div>
           </div>
         </div>

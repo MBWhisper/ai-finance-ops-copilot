@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     canonical: "https://aifinanceops.app/runway-calculator",
   },
   openGraph: {
-    title: "Startup Runway Calculator (Free) — Calculate Cash Runway | AI Finance Ops",
+  title: { absolute: "Startup Runway Calculator (Free) — Calculate Cash Runway | AI Finance Ops" },
     description:
       "Free startup runway calculator. Estimate how many months of cash runway you have left based on cash balance and monthly burn.",
     url: "https://aifinanceops.app/runway-calculator",

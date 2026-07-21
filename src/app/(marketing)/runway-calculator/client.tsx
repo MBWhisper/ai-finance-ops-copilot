@@ -61,20 +61,20 @@ export function RunwayCalculatorClient() {
         <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-6 mb-6">
           <div className="grid grid-cols-2 gap-5">
             <div>
-              <label className="block text-xs text-gray-500 mb-2">Current cash balance ($)</label>
-              <input type="number" min="0" className={inputClass} value={cash} onChange={e => setCash(e.target.value)} />
+              <label htmlFor="rw-cash" className="block text-xs text-gray-500 mb-2">Current cash balance ($)</label>
+              <input id="rw-cash" type="number" min="0" className={inputClass} value={cash} onChange={e => setCash(e.target.value)} />
             </div>
             <div>
-              <label className="block text-xs text-gray-500 mb-2">Monthly gross burn ($)</label>
-              <input type="number" min="0" className={inputClass} value={burn} onChange={e => setBurn(e.target.value)} />
+              <label htmlFor="rw-burn" className="block text-xs text-gray-500 mb-2">Monthly gross burn ($)</label>
+              <input id="rw-burn" type="number" min="0" className={inputClass} value={burn} onChange={e => setBurn(e.target.value)} />
             </div>
             <div>
-              <label className="block text-xs text-gray-500 mb-2">Current MRR ($)</label>
-              <input type="number" min="0" className={inputClass} value={mrr} onChange={e => setMrr(e.target.value)} />
+              <label htmlFor="rw-mrr" className="block text-xs text-gray-500 mb-2">Current MRR ($)</label>
+              <input id="rw-mrr" type="number" min="0" className={inputClass} value={mrr} onChange={e => setMrr(e.target.value)} />
             </div>
             <div>
-              <label className="block text-xs text-gray-500 mb-2">Monthly MRR growth (%)</label>
-              <input type="number" min="0" max="100" step="0.5" className={inputClass} value={mrrGrowth} onChange={e => setMrrGrowth(e.target.value)} />
+              <label htmlFor="rw-growth" className="block text-xs text-gray-500 mb-2">Monthly MRR growth (%)</label>
+              <input id="rw-growth" type="number" min="0" max="100" step="0.5" className={inputClass} value={mrrGrowth} onChange={e => setMrrGrowth(e.target.value)} />
             </div>
           </div>
         </div>

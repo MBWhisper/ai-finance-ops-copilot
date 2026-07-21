@@ -41,10 +41,10 @@ export async function POST(request: NextRequest) {
 
   if (error) {
     // Auto-confirm user if email confirmation is blocking login (dev convenience)
-    if (error.message === 'Email not confirmed' && process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    if (error.message === 'Email not confirmed' && (process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_SUPABASE_SERVICE_ROLE_KEY)) {
       const admin = createClient(
         process.env.NEXT_PUBLIC_SUPABASE_URL!,
-        process.env.SUPABASE_SERVICE_ROLE_KEY,
+        process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_SUPABASE_SERVICE_ROLE_KEY!,
         { auth: { autoRefreshToken: false, persistSession: false } }
       )
       const { data: users } = await admin.auth.admin.listUsers()

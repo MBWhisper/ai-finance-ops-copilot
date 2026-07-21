@@ -62,7 +62,7 @@ export default function PrivacyPage() {
           <h2 className="text-xl font-semibold mb-2">4. Data Sharing</h2>
           <p>We share data only with essential service providers:</p>
           <ul className="list-disc pl-5 space-y-1 mt-2">
-            <li><strong>Plaid</strong> — bank account connectivity (<a href="https://plaid.com/legal" className="underline" target="_blank">plaid.com/legal</a>)</li>
+            <li><strong>Plaid</strong> — bank account connectivity (<a href="https://plaid.com/legal" className="underline" target="_blank" rel="noopener noreferrer">plaid.com/legal</a>)</li>
             <li><strong>PayPal</strong> — transaction data retrieval</li>
             <li><strong>LemonSqueezy</strong> — payment processing</li>
             <li><strong>Supabase</strong> — encrypted database storage</li>

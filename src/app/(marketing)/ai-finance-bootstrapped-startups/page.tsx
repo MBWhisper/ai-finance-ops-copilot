@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'AI Finance Tool for Bootstrapped Startups | AI Finance Ops',
+  title: { absolute: 'AI Finance Tool for Bootstrapped Startups | AI Finance Ops' },
   description:
     'The AI-powered finance platform built for bootstrapped startups. Track MRR, forecast cash flow, spot churn early, and make data-driven decisions — without a CFO.',
   keywords: ['ai finance tool', 'bootstrapped startup finance', 'saas financial management', 'founder finance tool'],

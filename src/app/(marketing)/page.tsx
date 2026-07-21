@@ -1,6 +1,5 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import Image from "next/image"
 import { ArrowRight, Play, ChevronDown } from "lucide-react"
 
 export const metadata: Metadata = {
@@ -174,10 +173,10 @@ export default function LandingPage() {
               <div className="flex items-center gap-3">
                 <div className="flex -space-x-2">
                   {["29", "34", "67", "12", "88"].map((seed, i) => (
-                    <Image
+                    <img
                       key={i}
                       src={`https://api.dicebear.com/8.x/thumbs/svg?seed=${seed}&backgroundColor=059669,047857,065f46`}
-                      alt=""
+                      alt={`Founder avatar ${i + 1}`}
                       width={32}
                       height={32}
                       loading="lazy"

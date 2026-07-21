@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Stripe MRR Dashboard for SaaS Founders | AI Finance Ops',
+  title: { absolute: 'Stripe MRR Dashboard for SaaS Founders | AI Finance Ops' },
   description:
     'Track your Stripe MRR, ARR, churn, and revenue trends in real-time. The smartest Stripe MRR dashboard built for bootstrapped SaaS founders.',
   keywords: ['stripe mrr dashboard', 'mrr tracking', 'saas revenue dashboard', 'stripe analytics'],

@@ -45,7 +45,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   logger.info('[CREATE-USER-API] POST called')
   
-  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+  const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_SUPABASE_SERVICE_ROLE_KEY
   if (!serviceKey) {
     logger.error('[CREATE-USER-API] Service role key not configured')
     return NextResponse.json({ error: 'Server not configured' }, { status: 500 })

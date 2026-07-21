@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'SaaS Cash Flow Forecast Tool | AI Finance Ops',
+  title: { absolute: 'SaaS Cash Flow Forecast Tool | AI Finance Ops' },
   description:
     'Predict your SaaS cash flow and runway with AI-powered forecasting. Built for bootstrapped founders who need to know exactly how many months of runway they have.',
   keywords: ['saas cash flow forecast', 'runway calculator', 'saas financial planning', 'cash flow tool'],

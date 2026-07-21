@@ -4,7 +4,7 @@ import { InternalLinks } from "@/components/InternalLinks"
 import { TrendingUp, BarChart2, AlertCircle, Check } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "SaaS Cash Flow Tracker — Free Tool | AI Finance Ops",
+  title: { absolute: "SaaS Cash Flow Tracker — Free Tool | AI Finance Ops" },
   description:
     "Track and forecast SaaS cash flow in real time. Understand burn rate, runway, and 90-day cash projections without spreadsheets.",
   alternates: { canonical: 'https://aifinanceops.app/cash-flow-tracker' },

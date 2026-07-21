@@ -12,6 +12,7 @@ interface Frontmatter {
   title: string
   description: string
   date: string
+  updated?: string
   author: string
   tags: string[]
   coverImage?: string
@@ -47,7 +48,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const url = `https://aifinanceops.app/blog/${slug}`
   const coverUrl = getCoverImage(slug, frontmatter.coverImage)
   return {
-    title: `${frontmatter.title} | AI Finance Ops`,
+    title: { absolute: `${frontmatter.title} | AI Finance Ops` },
     description: frontmatter.description,
     alternates: { canonical: url },
     openGraph: {
@@ -56,6 +57,13 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
       url,
       type: 'article',
       images: [{ url: coverUrl, width: 1200, height: 630, alt: frontmatter.title }],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${frontmatter.title} | AI Finance Ops`,
+      description: frontmatter.description,
+      images: [coverUrl],
+      creator: '@MbtechE80106',
     },
   }
 }
@@ -114,6 +122,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             "@type": "Article",
             headline: frontmatter.title,
             datePublished: frontmatter.date,
+            dateModified: frontmatter.updated || frontmatter.date,
             image: coverUrl,
             author: { "@type": "Person", name: "Mo" },
             publisher: { "@type": "Organization", name: "AI Finance Ops", url: "https://aifinanceops.app" },

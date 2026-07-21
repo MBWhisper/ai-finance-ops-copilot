@@ -86,9 +86,9 @@ export default function VsChartmogulPage() {
               <table className="w-full text-left">
                 <thead>
                   <tr className="border-b border-gray-800">
-                    <th className="p-5 text-sm font-semibold text-gray-500 w-1/3" />
-                    <th className="p-5 text-sm font-semibold text-emerald-400 w-1/3">aifinanceops</th>
-                    <th className="p-5 text-sm font-semibold text-gray-400 w-1/3">ChartMogul</th>
+                    <th scope="col" className="p-5 text-sm font-semibold text-gray-500 w-1/3" />
+                    <th scope="col" className="p-5 text-sm font-semibold text-emerald-400 w-1/3">aifinanceops</th>
+                    <th scope="col" className="p-5 text-sm font-semibold text-gray-400 w-1/3">ChartMogul</th>
                   </tr>
                 </thead>
                 <tbody>

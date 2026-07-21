@@ -46,12 +46,12 @@ export function ChurnCalculatorClient() {
           <h2 className="text-sm font-semibold text-gray-300 mb-5 uppercase tracking-wider">Customer Churn</h2>
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs text-gray-500 mb-2">Customers at start of period</label>
-              <input type="number" min="0" className={inputClass} value={startCustomers} onChange={e => setStartCustomers(e.target.value)} />
+              <label htmlFor="churn-start-customers" className="block text-xs text-gray-500 mb-2">Customers at start of period</label>
+              <input id="churn-start-customers" type="number" min="0" className={inputClass} value={startCustomers} onChange={e => setStartCustomers(e.target.value)} />
             </div>
             <div>
-              <label className="block text-xs text-gray-500 mb-2">Customers lost this period</label>
-              <input type="number" min="0" className={inputClass} value={lostCustomers} onChange={e => setLostCustomers(e.target.value)} />
+              <label htmlFor="churn-lost-customers" className="block text-xs text-gray-500 mb-2">Customers lost this period</label>
+              <input id="churn-lost-customers" type="number" min="0" className={inputClass} value={lostCustomers} onChange={e => setLostCustomers(e.target.value)} />
             </div>
           </div>
         </div>
@@ -60,17 +60,17 @@ export function ChurnCalculatorClient() {
           <h2 className="text-sm font-semibold text-gray-300 mb-5 uppercase tracking-wider">Revenue Churn (MRR)</h2>
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div>
-              <label className="block text-xs text-gray-500 mb-2">MRR at start of period ($)</label>
-              <input type="number" min="0" className={inputClass} value={startMRR} onChange={e => setStartMRR(e.target.value)} />
+              <label htmlFor="churn-start-mrr" className="block text-xs text-gray-500 mb-2">MRR at start of period ($)</label>
+              <input id="churn-start-mrr" type="number" min="0" className={inputClass} value={startMRR} onChange={e => setStartMRR(e.target.value)} />
             </div>
             <div>
-              <label className="block text-xs text-gray-500 mb-2">MRR lost this period ($)</label>
-              <input type="number" min="0" className={inputClass} value={lostMRR} onChange={e => setLostMRR(e.target.value)} />
+              <label htmlFor="churn-lost-mrr" className="block text-xs text-gray-500 mb-2">MRR lost this period ($)</label>
+              <input id="churn-lost-mrr" type="number" min="0" className={inputClass} value={lostMRR} onChange={e => setLostMRR(e.target.value)} />
             </div>
           </div>
           <div>
-            <label className="block text-xs text-gray-500 mb-2">Expansion MRR this period (upgrades, $)</label>
-            <input type="number" min="0" className={inputClass} value={expansionMRR} onChange={e => setExpansionMRR(e.target.value)} />
+              <label htmlFor="churn-expansion-mrr" className="block text-xs text-gray-500 mb-2">Expansion MRR this period (upgrades, $)</label>
+              <input id="churn-expansion-mrr" type="number" min="0" className={inputClass} value={expansionMRR} onChange={e => setExpansionMRR(e.target.value)} />
           </div>
         </div>
 

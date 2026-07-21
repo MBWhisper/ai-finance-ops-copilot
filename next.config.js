@@ -60,6 +60,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'api.producthunt.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'api.dicebear.com',
+      },
     ],
   },
 

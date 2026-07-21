@@ -30,6 +30,8 @@ build/
 .zed/
 # Gemini CLI
 .gemini/
+# Codex
+.codex/
 # OpenCode
 opencode.json
 
@@ -56,3 +58,7 @@ Thumbs.db
 # ── One-off generated files (not part of source) ─────────
 aifinanceops-dashboard.html
 build-html.js
+
+# ── Internal planning docs (not for public repo) ─────────
+PRD.md
+PROJECT_PLAN.md

@@ -99,9 +99,9 @@ export default function VsRecurlyPage() {
               <table className="w-full text-left">
                 <thead>
                   <tr className="border-b border-gray-800">
-                    <th className="p-5 text-sm font-semibold text-gray-500 w-1/3" />
-                    <th className="p-5 text-sm font-semibold text-emerald-400 w-1/3">AI Finance Ops</th>
-                    <th className="p-5 text-sm font-semibold text-gray-400 w-1/3">Recurly</th>
+                    <th scope="col" className="p-5 text-sm font-semibold text-gray-500 w-1/3" />
+                    <th scope="col" className="p-5 text-sm font-semibold text-emerald-400 w-1/3">AI Finance Ops</th>
+                    <th scope="col" className="p-5 text-sm font-semibold text-gray-400 w-1/3">Recurly</th>
                   </tr>
                 </thead>
                 <tbody>

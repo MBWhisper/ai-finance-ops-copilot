@@ -4,7 +4,7 @@ import { InternalLinks } from "@/components/InternalLinks"
 import { Check } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "SaaS LTV Calculator — Customer Lifetime Value | AI Finance Ops",
+  title: { absolute: "SaaS LTV Calculator — Customer Lifetime Value | AI Finance Ops" },
   description:
     "Calculate Customer Lifetime Value (LTV) for your SaaS business. Understand your LTV:CAC ratio and what drives long-term profitability. Free LTV calculator for SaaS founders.",
   alternates: {

@@ -149,10 +149,10 @@ export function ComparisonTableSection() {
             <table className="w-full text-left">
               <thead>
                 <tr className="border-b border-gray-800">
-                  <th className="pb-4 pr-4 text-sm font-semibold text-gray-400" />
-                  <th className="pb-4 px-4 text-sm font-semibold text-emerald-400">aifinanceops</th>
-                  <th className="pb-4 px-4 text-sm font-semibold text-gray-400">Baremetrics</th>
-                  <th className="pb-4 px-4 text-sm font-semibold text-gray-400">ChartMogul</th>
+                  <th scope="col" className="pb-4 pr-4 text-sm font-semibold text-gray-400" />
+                  <th scope="col" className="pb-4 px-4 text-sm font-semibold text-emerald-400">aifinanceops</th>
+                  <th scope="col" className="pb-4 px-4 text-sm font-semibold text-gray-400">Baremetrics</th>
+                  <th scope="col" className="pb-4 px-4 text-sm font-semibold text-gray-400">ChartMogul</th>
                 </tr>
               </thead>
               <tbody>
@@ -189,7 +189,7 @@ export function ReassuranceSection() {
             <div className="grid gap-8 md:grid-cols-3">
               <div className="flex gap-4">
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10">
-                  <svg className="h-4 w-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  <svg className="h-4 w-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold text-white mb-1">Stripe-native setup</h3>
@@ -198,7 +198,7 @@ export function ReassuranceSection() {
               </div>
               <div className="flex gap-4">
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10">
-                  <svg className="h-4 w-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  <svg className="h-4 w-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold text-white mb-1">No accounting degree required</h3>
@@ -207,7 +207,7 @@ export function ReassuranceSection() {
               </div>
               <div className="flex gap-4">
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10">
-                  <svg className="h-4 w-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                  <svg className="h-4 w-4 text-emerald-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold text-white mb-1">Built by a founder, in public</h3>

@@ -50,12 +50,12 @@ export function ARRCalculatorClient() {
         <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-6 mb-8">
           <div className="grid grid-cols-2 gap-5">
             <div>
-              <label className="block text-xs text-gray-500 mb-2">Current MRR ($)</label>
-              <input type="number" min="0" className={inputClass} value={mrr} onChange={e => setMrr(e.target.value)} />
+              <label htmlFor="arr-mrr" className="block text-xs text-gray-500 mb-2">Current MRR ($)</label>
+              <input id="arr-mrr" type="number" min="0" className={inputClass} value={mrr} onChange={e => setMrr(e.target.value)} />
             </div>
             <div>
-              <label className="block text-xs text-gray-500 mb-2">Last month&apos;s MRR ($)</label>
-              <input type="number" min="0" className={inputClass} value={lastMrr} onChange={e => setLastMrr(e.target.value)} />
+              <label htmlFor="arr-last-mrr" className="block text-xs text-gray-500 mb-2">Last month&apos;s MRR ($)</label>
+              <input id="arr-last-mrr" type="number" min="0" className={inputClass} value={lastMrr} onChange={e => setLastMrr(e.target.value)} />
             </div>
           </div>
         </div>
