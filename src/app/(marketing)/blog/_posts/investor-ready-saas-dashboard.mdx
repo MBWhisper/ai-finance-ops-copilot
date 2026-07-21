@@ -8,19 +8,19 @@ coverImage: "https://images.unsplash.com/photo-1551434678-e076c223a692?w=1200&h=
 slug: investor-ready-saas-dashboard
 ---
 
-Two weeks before a Series A meeting, a founder sent me his metrics dashboard. It was 47 tabs in Google Sheets. He had MRR in one sheet, churn in another, and customer logos in a third. The investor asked one question: "What's your NRR?" He couldn't answer in under 30 seconds.
+Two weeks before a Series A meeting, a founder sent me his metrics dashboard. It was 47 tabs in Google Sheets. He had MRR in one sheet, churn in another, and customer logos in a third. The investor asked one question: "What's your NRR?" He could not answer in under 30 seconds.
 
-Investors don't want your spreadsheet. They want a **single-page dashboard** that tells the story of your business in 60 seconds. Here's exactly what to build — and how to build it fast.
+Investors do not want your spreadsheet. They want a **single-page dashboard** that tells the story of your business in 60 seconds. Here is exactly what to build and how to build it fast.
 
 ## The 6 Metrics Investors Actually Care About
 
-Before you build anything, understand what investors are looking for. They care about six metrics. That's it.
+Before you build anything, understand what investors are looking for. They care about six metrics. That is it.
 
 ### 1. MRR (Monthly Recurring Revenue)
 
 **What it is:** The predictable revenue you earn each month from subscriptions.
 
-**Why investors care:** It's the foundation of everything. No MRR = no SaaS business.
+**Why investors care:** It is the foundation of everything. No MRR means no SaaS business.
 
 **How to present it:**
 - Current MRR (e.g., $85,000)
@@ -28,6 +28,7 @@ Before you build anything, understand what investors are looking for. They care 
 - MRR breakdown: New + Expansion - Contraction - Churned
 
 **Example dashboard card:**
+
 ```
 MRR: $85,000
 MoM Growth: +12%
@@ -39,9 +40,9 @@ Net New MRR: $16,300
 
 ### 2. ARR (Annual Recurring Revenue)
 
-**What it is:** MRR × 12. The annualized version of your recurring revenue.
+**What it is:** MRR x 12. The annualized version of your recurring revenue.
 
-**Why investors care:** It's the headline number for valuation. A $1M ARR SaaS is valued differently than a $100K ARR SaaS.
+**Why investors care:** It is the headline number for valuation. A $1M ARR SaaS is valued differently than a $100K ARR SaaS.
 
 **How to present it:**
 - Current ARR
@@ -49,6 +50,7 @@ Net New MRR: $16,300
 - ARR trajectory (where will you be in 12 months?)
 
 **Example:**
+
 ```
 ARR: $1,020,000
 YoY Growth: +140%
@@ -59,22 +61,24 @@ Projected ARR (12mo): $2,400,000
 
 **What it is:** The percentage of customers (or revenue) you lose each month.
 
-**Why investors care:** High churn means you're filling a leaky bucket. Growth is pointless if you can't retain customers.
+**Why investors care:** High churn means you are filling a leaky bucket. Growth is pointless if you cannot retain customers.
 
 **Two types to show:**
 - **Logo Churn:** % of customers lost
 - **Revenue Churn (MRR Churn):** % of MRR lost
 
 **Benchmarks:**
+
 | Metric | Good | Average | Bad |
 |--------|------|---------|-----|
-| Logo Churn | <3% monthly | 3–5% | >5% |
-| Revenue Churn | <2% monthly | 2–4% | >4% |
+| Logo Churn | less than 3% monthly | 3-5% | greater than 5% |
+| Revenue Churn | less than 2% monthly | 2-4% | greater than 4% |
 
 **Example:**
+
 ```
-Logo Churn: 2.8% (↓ from 4.1% last quarter)
-Revenue Churn: 1.9% (↓ from 3.2%)
+Logo Churn: 2.8% (down from 4.1% last quarter)
+Revenue Churn: 1.9% (down from 3.2%)
 ```
 
 ### 4. LTV (Customer Lifetime Value)
@@ -82,40 +86,43 @@ Revenue Churn: 1.9% (↓ from 3.2%)
 **What it is:** How much revenue a customer generates over their entire lifetime.
 
 **Formula:**
+
 ```
-LTV = ARPU ÷ Revenue Churn Rate
+LTV = ARPU / Revenue Churn Rate
 ```
 
 **Example:**
 - ARPU: $85/month
 - Revenue churn: 3%
-- LTV: $85 ÷ 0.03 = **$2,833**
+- LTV: $85 / 0.03 = $2,833
 
-**Why investors care:** It tells them how much each customer is worth — and whether your CAC is justified.
+**Why investors care:** It tells them how much each customer is worth and whether your CAC is justified.
 
 ### 5. CAC (Customer Acquisition Cost)
 
 **What it is:** How much you spend to acquire one new customer.
 
 **Formula:**
+
 ```
-CAC = Total Sales & Marketing Spend ÷ New Customers Acquired
+CAC = Total Sales and Marketing Spend / New Customers Acquired
 ```
 
 **Example:**
-- Sales & marketing spend: $45,000/month
+- Sales and marketing spend: $45,000/month
 - New customers: 90
-- CAC: **$500**
+- CAC: $500
 
-**Why investors care:** If CAC > LTV, you're losing money on every customer. If CAC is too high relative to LTV, you can't scale profitably.
+**Why investors care:** If CAC is greater than LTV, you are losing money on every customer. If CAC is too high relative to LTV, you cannot scale profitably.
 
 ### 6. NRR (Net Revenue Retention)
 
 **What it is:** How much revenue you retain from existing customers (including expansion, contraction, and churn).
 
 **Formula:**
+
 ```
-NRR = (Starting MRR - Churned MRR - Contraction MRR + Expansion MRR) ÷ Starting MRR
+NRR = (Starting MRR - Churned MRR - Contraction MRR + Expansion MRR) / Starting MRR
 ```
 
 **Example:**
@@ -123,25 +130,25 @@ NRR = (Starting MRR - Churned MRR - Contraction MRR + Expansion MRR) ÷ Starting
 - Churned: -$1,800
 - Contraction: -$900
 - Expansion: +$7,200
-- NRR: ($60,000 - $1,800 - $900 + $7,200) ÷ $60,000 = **107.5%**
+- NRR: ($60,000 - $1,800 - $900 + $7,200) / $60,000 = 107.5%
 
-**The magic number:** NRR above 100% means your existing customers are spending **more** over time. This is the single metric investors love most. **Top SaaS companies hit 120–130% NRR.**
+**The magic number:** NRR above 100% means your existing customers are spending **more** over time. This is the single metric investors love most. **Top SaaS companies hit 120-130% NRR.**
 
 ## Building the Dashboard: Step by Step
 
 ### Step 1: Choose Your Tool
 
-You don't need to build from scratch. Options:
+You do not need to build from scratch. Options:
 
 | Tool | Cost | Best For |
 |------|------|----------|
 | **AI Finance Ops** | Free tier available | Automated SaaS metrics |
-| **Notion** | Free–$10/mo | Quick and visual |
+| **Notion** | Free-$10/mo | Quick and visual |
 | **Google Sheets** | Free | If you already have data |
 | **ChartMogul** | $99+/mo | Deep analytics |
 | **Baremetrics** | $108+/mo | Stripe-native metrics |
 
-**Recommendation:** Start with AI Finance Ops if you use Stripe — it auto-calculates all 6 metrics. Use Notion for the dashboard layout.
+**Recommendation:** Start with AI Finance Ops if you use Stripe. It auto-calculates all 6 metrics. Use Notion for the dashboard layout.
 
 ### Step 2: Set Up the Layout
 
@@ -170,7 +177,7 @@ HEADER: Company Name | Date | Stage
 
 ### Step 3: Add Context With Trends
 
-Investors don't just want current numbers — they want **direction**. Show:
+Investors do not just want current numbers. They want **direction**. Show:
 
 - **6-month MRR trend** (line chart)
 - **Churn rate over time** (line chart)
@@ -184,13 +191,14 @@ This single ratio tells investors if your business model works:
 | LTV:CAC Ratio | Verdict |
 |---------------|---------|
 | Below 1:1 | Losing money on every customer |
-| 1:1 – 3:1 | Not enough margin for growth |
-| 3:1 – 5:1 | Healthy — room for profit |
-| 5:1+ | Excellent — you might be under-investing in growth |
+| 1:1 to 3:1 | Not enough margin for growth |
+| 3:1 to 5:1 | Healthy with room for profit |
+| 5:1+ | Excellent, you might be under-investing in growth |
 
 **Example:**
+
 ```
-LTV: $2,833 | CAC: $500 | Ratio: 5.7x ✓
+LTV: $2,833 | CAC: $500 | Ratio: 5.7x
 ```
 
 ### Step 5: Add the NRR Waterfall
@@ -213,7 +221,7 @@ This tells a story: **even though you lost some revenue, expansion more than mad
 
 ### 1. Too Many Metrics
 
-Don't show 20 metrics. Investors will get lost. Stick to the 6 core metrics plus 2–3 supporting charts.
+Do not show 20 metrics. Investors will get lost. Stick to the 6 core metrics plus 2-3 supporting charts.
 
 ### 2. No Trend Data
 
@@ -225,7 +233,7 @@ If your churn definition changes between slides, you lose credibility. Define ea
 
 ### 4. Forgetting the Story
 
-The best dashboards tell a narrative: "We're growing fast (MRR), retaining well (NRR), and our unit economics work (LTV:CAC)."
+The best dashboards tell a narrative: "We are growing fast (MRR), retaining well (NRR), and our unit economics work (LTV:CAC)."
 
 ## What to Send Before the Meeting
 
@@ -236,11 +244,12 @@ Email this to investors 48 hours before your meeting:
 3. **Key question you want to discuss** (shows focus)
 
 **Example email:**
-> "Hi [Name], here's our current metrics dashboard. We're at $85K MRR (+12% MoM), 107.5% NRR, and 5.7x LTV:CAC. We'd love to discuss our path to $2M ARR and how to optimize our expansion revenue."
+
+> "Hi [Name], here is our current metrics dashboard. We are at $85K MRR (+12% MoM), 107.5% NRR, and 5.7x LTV:CAC. We would love to discuss our path to $2M ARR and how to optimize our expansion revenue."
 
 ## Your Dashboard, Built in 24 Hours
 
-You don't need a data engineering team. You need:
+You do not need a data engineering team. You need:
 
 1. **2 hours:** Connect your Stripe/payment data
 2. **2 hours:** Set up the 6 core metrics in your tool
@@ -252,8 +261,8 @@ You don't need a data engineering team. You need:
 
 ## Stop Spreadsheeting, Start Fundraising
 
-Your metrics dashboard is your fundraising weapon. Every investor wants to see the same six numbers — MRR, ARR, churn, LTV, CAC, and NRR. Get them on one page, show the trends, and tell the story.
+Your metrics dashboard is your fundraising weapon. Every investor wants to see the same six numbers: MRR, ARR, churn, LTV, CAC, and NRR. Get them on one page, show the trends, and tell the story.
 
 **[AI Finance Ops](https://aifinanceops.app)** generates all 6 metrics automatically from your Stripe data. No spreadsheets. No manual calculations. Just a clean, investor-ready dashboard.
 
-**Start building your dashboard free → [aifinanceops.app/register](https://aifinanceops.app/register)**
+**Start building your dashboard free at [aifinanceops.app/register](https://aifinanceops.app/register)**

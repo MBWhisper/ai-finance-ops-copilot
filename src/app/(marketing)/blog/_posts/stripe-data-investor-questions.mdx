@@ -12,7 +12,7 @@ Last quarter, a founder walked into a Series A pitch with $200K MRR. The investo
 
 He pulled up Stripe's dashboard. The investors looked at each other. They passed.
 
-The problem wasn't the numbers — it was that Stripe's default reporting doesn't answer the questions investors actually ask. You need to extract and transform the data yourself. Here's exactly how to do that for the five questions that matter most.
+The problem wasn't the numbers -- it was that Stripe's default reporting doesn't answer the questions investors actually ask. You need to extract and transform the data yourself. Here's exactly how to do that for the five questions that matter most.
 
 ## Question 1: "What's Your Churn Rate?"
 
@@ -29,12 +29,12 @@ Go to **Stripe Dashboard > Subscriptions > Canceled**. Filter by the last 30 day
 **Revenue churn** is trickier. You need to calculate:
 
 ```
-MRR Churn = (MRR from customers who canceled this month) / (MRR at start of month) × 100
+MRR Churn = (MRR from customers who canceled this month) / (MRR at start of month) x 100
 ```
 
 If your MRR was $100,000 on July 1st and you lost $5,000 from cancellations in July, your monthly revenue churn is **5%**.
 
-> **Pro tip:** Investors love seeing a declining churn rate over time. If your churn dropped from 8% to 3% over four quarters, that's a powerful story — make sure you can show the trend.
+> **Pro tip:** Investors love seeing a declining churn rate over time. If your churn dropped from 8% to 3% over four quarters, that's a powerful story -- make sure you can show the trend.
 
 ### What Great Looks Like
 
@@ -44,14 +44,14 @@ If your MRR was $100,000 on July 1st and you lost $5,000 from cancellations in J
 
 ## Question 2: "What's Your Net Revenue Retention?"
 
-NRR is the metric that separates good SaaS companies from great ones. It tells investors whether existing customers are spending more over time — the holy grail of SaaS.
+NRR is the metric that separates good SaaS companies from great ones. It tells investors whether existing customers are spending more over time -- the holy grail of SaaS.
 
 ### How to Calculate from Stripe Data
 
 NRR accounts for expansion, contraction, and churn from your existing customer base:
 
 ```
-NRR = (Starting MRR + Expansion - Contraction - Churn) / Starting MRR × 100
+NRR = (Starting MRR + Expansion - Contraction - Churn) / Starting MRR x 100
 ```
 
 Here's how to pull each piece from Stripe:
@@ -72,17 +72,17 @@ Imagine you start January with $80,000 MRR:
 - 4 customers cancel, losing $3,000 in MRR
 
 ```
-NRR = ($80,000 + $6,000 - $2,000 - $3,000) / $80,000 × 100 = 101.25%
+NRR = ($80,000 + $6,000 - $2,000 - $3,000) / $80,000 x 100 = 101.25%
 ```
 
 **Above 100%** means your existing customers are spending more than they're churning. That's what investors want to see.
 
 ### What Great Looks Like
 
-- **Below 90%:** Red flag — you're losing existing revenue faster than you can replace it
+- **Below 90%:** Red flag -- you're losing existing revenue faster than you can replace it
 - **90-100%:** Decent, but you're relying on new customer acquisition to grow
-- **Above 100%:** Excellent — your base is growing organically
-- **Above 120%:** Elite — typically seen in product-led growth and enterprise SaaS
+- **Above 100%:** Excellent -- your base is growing organically
+- **Above 120%:** Elite -- typically seen in product-led growth and enterprise SaaS
 
 ## Question 3: "What's Your Average Revenue Per User?"
 
@@ -96,7 +96,7 @@ The formula is simple:
 ARPU = Total MRR / Number of Active Subscribers
 ```
 
-From Stripe, pull your total MRR and active subscriber count from the subscriptions tab. But investors want more than a snapshot — they want **ARPU trends**.
+From Stripe, pull your total MRR and active subscriber count from the subscriptions tab. But investors want more than a snapshot -- they want **ARPU trends**.
 
 Calculate ARPU month-over-month for the last 12 months. An increasing ARPU means your upsell engine is working. A flat or declining ARPU might signal pricing pressure.
 
@@ -108,14 +108,14 @@ Calculate ARPU month-over-month for the last 12 months. An increasing ARPU means
 
 ## Question 4: "How Fast Are You Growing Month-Over-Month?"
 
-Growth rate is the most scrutinized number in any pitch. Investors want to see **consistent, accelerating growth** — not wild swings.
+Growth rate is the most scrutinized number in any pitch. Investors want to see **consistent, accelerating growth** -- not wild swings.
 
 ### The Stripe Data You Need
 
 Pull your MRR for each of the last 12 months. Calculate the percentage change:
 
 ```
-MoM Growth = (Current MRR - Previous MRR) / Previous MRR × 100
+MoM Growth = (Current MRR - Previous MRR) / Previous MRR x 100
 ```
 
 **Be honest about the trend.** If you grew 15% for three months and then 5% for two months, show both. Investors respect transparency and will find inconsistencies.
@@ -157,9 +157,9 @@ LTV:CAC = $2,000 / $500 = 4:1
 
 ### What Great Looks Like
 
-- **Below 1:1:** You're losing money on every customer — urgent problem
-- **1:1 to 3:1:** Viable but tight — room for improvement
-- **3:1 to 5:1:** Healthy — this is the sweet spot most investors look for
+- **Below 1:1:** You're losing money on every customer -- urgent problem
+- **1:1 to 3:1:** Viable but tight -- room for improvement
+- **3:1 to 5:1:** Healthy -- this is the sweet spot most investors look for
 - **Above 5:1:** You might be under-investing in growth
 
 ## Putting It All Together
@@ -174,10 +174,10 @@ Before your next investor meeting, pull these five metrics from Stripe and make 
 | **MoM Growth** | Are you accelerating? | MRR history |
 | **LTV:CAC** | Is growth sustainable? | MRR + churn + marketing spend |
 
-You don't need a data team to answer these. You need the right queries and a spreadsheet — or a tool that does it for you.
+You don't need a data team to answer these. You need the right queries and a spreadsheet -- or a tool that does it for you.
 
 ## Get Your Investor-Ready Metrics in Minutes
 
-AI Finance Ops connects to your Stripe account and automatically calculates all five of these metrics — churn, NRR, ARPU, growth rate, and LTV:CAC — updated daily. No spreadsheets, no SQL, no manual calculations.
+AI Finance Ops connects to your Stripe account and automatically calculates all five of these metrics -- churn, NRR, ARPU, growth rate, and LTV:CAC -- updated daily. No spreadsheets, no SQL, no manual calculations.
 
 [Start your free trial](https://www.aifinanceops.app/register) and walk into your next investor meeting with numbers you can trust.
