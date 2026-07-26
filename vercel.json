@@ -1,5 +1,4 @@
 {
-  "buildCommand": "NODE_OPTIONS=--max-old-space-size=4096 next build",
   "crons": [
     {
       "path": "/api/cron/lemonsqueezy-sync",
