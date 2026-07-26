@@ -60,6 +60,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/what-is-mrr`,                   lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE}/saas-benchmarks-2026`,          lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
     { url: `${BASE}/saas-financial-dashboard`,      lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
+    // Widgets (backlink generators)
+    { url: `${BASE}/widgets/mrr-calculator`,        lastModified: new Date(), changeFrequency: 'monthly', priority: 0.6 },
     // Legal & info
     { url: `${BASE}/privacy`,                       lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.3 },
   ]
