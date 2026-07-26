@@ -53,6 +53,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/vs-recurly`,                    lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
     { url: `${BASE}/vs-stripe-sigma`,               lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
     { url: `${BASE}/baremetrics-alternative`,       lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${BASE}/chartmogul-alternative`,        lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${BASE}/profitwell-alternative`,        lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${BASE}/stripe-dashboard-alternative`,  lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
+    // Pillar content & guides
+    { url: `${BASE}/what-is-mrr`,                   lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
+    { url: `${BASE}/saas-benchmarks-2026`,          lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
+    { url: `${BASE}/saas-financial-dashboard`,      lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
     // Legal & info
     { url: `${BASE}/privacy`,                       lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.3 },
   ]
