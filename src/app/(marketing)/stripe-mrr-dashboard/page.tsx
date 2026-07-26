@@ -38,46 +38,9 @@ const softwareSchema = {
     priceCurrency: 'USD',
     description: 'Free plan available. Paid plans from $29/mo.',
   },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.9',
-    reviewCount: '200',
-  },
   description:
     'Real-time Stripe MRR dashboard with AI-powered forecasts, churn alerts, and cohort analysis for bootstrapped SaaS founders.',
   url: 'https://aifinanceops.app/stripe-mrr-dashboard',
-}
-
-const reviewSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Product',
-  name: 'AI Finance Ops',
-  review: [
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5' },
-      author: { '@type': 'Person', name: 'Alex R.' },
-      reviewBody:
-        'I replaced Baremetrics with AI Finance Ops and saved $150/mo. The MRR dashboard is cleaner and the AI forecasts are scarily accurate.',
-    },
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5' },
-      author: { '@type': 'Person', name: 'Maria S.' },
-      reviewBody: 'Finally an MRR dashboard that does not require a data team. Setup took 4 minutes.',
-    },
-    {
-      '@type': 'Review',
-      reviewRating: { '@type': 'Rating', ratingValue: '5' },
-      author: { '@type': 'Person', name: 'Tom K.' },
-      reviewBody: 'The churn alerts alone saved me two customers last month. Absolute no-brainer.',
-    },
-  ],
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '4.9',
-    reviewCount: '200',
-  },
 }
 
 const METRICS = [
@@ -191,11 +154,6 @@ export default function StripeMRRDashboardPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(softwareSchema) }}
       />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(reviewSchema) }}
-      />
-
       <section className="px-4 sm:px-6 pt-16 sm:pt-24 pb-16 sm:pb-20 border-b border-white/8">
         <div className="mx-auto max-w-5xl">
           <p className="text-xs sm:text-sm text-gray-500 uppercase tracking-widest mb-4">

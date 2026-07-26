@@ -12,6 +12,13 @@ export default function robots(): MetadataRoute.Robots {
           '/api/',
           '/_next/',
           '/admin',
+          '/demo',
+          '/demo/',
+          '/onboarding',
+          '/signup',
+          '/sign-in',
+          '/sign-up',
+          '/setup',
         ],
       },
       {

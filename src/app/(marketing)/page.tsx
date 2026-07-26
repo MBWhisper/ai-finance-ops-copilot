@@ -62,7 +62,7 @@ export default function LandingPage() {
             "name": "AI Finance Ops",
             "applicationCategory": "BusinessApplication",
             "description": "AI-powered financial copilot for SaaS founders",
-            "url": "https://www.aifinanceops.app",
+            "url": "https://aifinanceops.app",
             "offers": {
               "@type": "Offer",
               "price": "0",

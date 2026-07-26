@@ -53,7 +53,43 @@ const REASONS = [
 ]
 
 export default function VsStripeSigmaPage() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "Is AI Finance Ops a free alternative to Stripe Sigma?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. AI Finance Ops is free to start and provides MRR, churn, LTV, and cash flow forecasting automatically. Stripe Sigma requires a paid Stripe plan and you must write all SQL queries yourself.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Do I need to know SQL to use AI Finance Ops?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "No. AI Finance Ops connects to Stripe via OAuth and automatically calculates all SaaS metrics. No SQL, no code, no queries. Stripe Sigma requires you to write and maintain SQL queries for every report.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What metrics does AI Finance Ops track that Stripe Sigma doesn't?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "AI Finance Ops automatically tracks MRR, ARR, churn rate, LTV, cash flow, and runway with AI-powered forecasting. Stripe Sigma is a raw data tool — you must build every metric yourself via SQL.",
+        },
+      },
+    ],
+  }
+
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
     <div className="min-h-screen bg-gray-950 text-gray-100">
       <main>
         {/* Hero */}
@@ -170,5 +206,6 @@ export default function VsStripeSigmaPage() {
         </section>
       </main>
     </div>
+    </>
   )
 }

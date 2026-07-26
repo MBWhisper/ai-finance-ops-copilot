@@ -66,6 +66,7 @@ export const metadata: Metadata = {
     description: 'Free SaaS financial dashboard for founders. Track MRR, ARR, churn, runway, and cash flow in real time.',
     images: [`${SITE_URL}/og-image.png`],
     creator: '@MbtechE80106',
+    site: '@MbtechE80106',
   },
   robots: {
     index: true,
@@ -227,12 +228,7 @@ export default function RootLayout({
                 priceCurrency: 'USD',
                 description: 'Free plan available',
               },
-              aggregateRating: {
-                '@type': 'AggregateRating',
-                ratingValue: '4.8',
-                ratingCount: '200',
-                bestRating: '5',
-              },
+
             }),
           }}
         />

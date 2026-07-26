@@ -3,23 +3,23 @@ import Link from "next/link"
 import { Check, ArrowRight } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "aifinanceops vs ChartMogul | Simpler SaaS Analytics",
-  description: "Compare aifinanceops and ChartMogul. The affordable, AI-powered alternative built for early-stage SaaS founders.",
+  title: "AI Finance Ops vs ChartMogul | Simpler SaaS Analytics",
+  description: "Compare AI Finance Ops and ChartMogul. The affordable, AI-powered alternative built for early-stage SaaS founders.",
   alternates: { canonical: "https://aifinanceops.app/vs-chartmogul" },
   openGraph: {
-    title: "aifinanceops vs ChartMogul | Simpler SaaS Analytics",
-    description: "Compare aifinanceops and ChartMogul. The affordable, AI-powered alternative built for early-stage SaaS founders.",
+    title: "AI Finance Ops vs ChartMogul | Simpler SaaS Analytics",
+    description: "Compare AI Finance Ops and ChartMogul. The affordable, AI-powered alternative built for early-stage SaaS founders.",
     url: "https://aifinanceops.app/vs-chartmogul",
     siteName: "AI Finance Ops",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "aifinanceops vs ChartMogul" }],
+    images: [{ url: "https://aifinanceops.app/og-image.png", width: 1200, height: 630, alt: "AI Finance Ops vs ChartMogul" }],
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "aifinanceops vs ChartMogul | Simpler SaaS Analytics",
-    description: "Compare aifinanceops and ChartMogul. The affordable, AI-powered alternative built for early-stage SaaS founders.",
-    images: ["/og-image.png"],
+    title: "AI Finance Ops vs ChartMogul | Simpler SaaS Analytics",
+    description: "Compare AI Finance Ops and ChartMogul. The affordable, AI-powered alternative built for early-stage SaaS founders.",
+    images: ["https://aifinanceops.app/og-image.png"],
   },
 }
 
@@ -27,7 +27,7 @@ const REASONS = [
   {
     number: "1",
     title: "Built for founders, not enterprises",
-    desc: "ChartMogul is powerful but complex. aifinanceops is simple by design — get your metrics in 5 minutes, no training required.",
+    desc: "ChartMogul is powerful but complex. AI Finance Ops is simple by design — get your metrics in 5 minutes, no training required.",
   },
   {
     number: "2",
@@ -37,7 +37,7 @@ const REASONS = [
   {
     number: "3",
     title: "AI-powered forecasting",
-    desc: "ChartMogul shows charts. aifinanceops tells you what to do next with AI-driven cash flow predictions and actionable insights.",
+    desc: "ChartMogul shows charts. AI Finance Ops tells you what to do next with AI-driven cash flow predictions and actionable insights.",
   },
 ]
 
@@ -50,7 +50,43 @@ const COMPARISON_ROWS = [
 ]
 
 export default function VsChartmogulPage() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "Is AI Finance Ops a cheaper alternative to ChartMogul?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. AI Finance Ops starts free and paid plans begin at $29/mo. ChartMogul is free up to $10K MRR, then starts at $59/mo and goes up to $199/mo for Pro features like forecasting.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Does AI Finance Ops have AI features that ChartMogul lacks?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. AI Finance Ops includes an AI copilot that explains metric changes and provides 90-day cash flow forecasting. ChartMogul is a traditional analytics platform without AI insights.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Can I migrate from ChartMogul to AI Finance Ops?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. Connect your Stripe account and AI Finance Ops automatically syncs your subscription data. No manual export or import required.",
+        },
+      },
+    ],
+  }
+
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
     <div className="min-h-screen bg-gray-950 text-gray-100">
       <main>
         {/* Hero */}
@@ -61,10 +97,10 @@ export default function VsChartmogulPage() {
           </div>
           <div className="mx-auto max-w-4xl text-center">
             <h1 className="text-4xl font-bold tracking-tight text-white sm:text-6xl bg-gradient-to-r from-white via-emerald-300 to-white bg-clip-text text-transparent">
-              aifinanceops vs ChartMogul: The Better Choice for Solo Founders
+              AI Finance Ops vs ChartMogul: The Better Choice for Solo Founders
             </h1>
             <p className="mt-6 text-xl leading-8 text-gray-400 max-w-2xl mx-auto">
-              See why early-stage SaaS founders choose aifinanceops over ChartMogul
+              See why early-stage SaaS founders choose AI Finance Ops over ChartMogul
             </p>
             <div className="mt-10">
               <Link
@@ -81,13 +117,13 @@ export default function VsChartmogulPage() {
         <section className="border-t border-gray-800 px-6 py-24">
           <div className="mx-auto max-w-4xl">
             <h2 className="text-3xl font-bold text-white text-center mb-4">Feature comparison</h2>
-            <p className="text-gray-400 text-center mb-12">How aifinanceops stacks up against ChartMogul.</p>
+            <p className="text-gray-400 text-center mb-12">How AI Finance Ops stacks up against ChartMogul.</p>
             <div className="overflow-x-auto rounded-2xl border border-gray-800 bg-gray-900/50">
               <table className="w-full text-left">
                 <thead>
                   <tr className="border-b border-gray-800">
                     <th scope="col" className="p-5 text-sm font-semibold text-gray-500 w-1/3" />
-                    <th scope="col" className="p-5 text-sm font-semibold text-emerald-400 w-1/3">aifinanceops</th>
+                    <th scope="col" className="p-5 text-sm font-semibold text-emerald-400 w-1/3">AI Finance Ops</th>
                     <th scope="col" className="p-5 text-sm font-semibold text-gray-400 w-1/3">ChartMogul</th>
                   </tr>
                 </thead>
@@ -108,7 +144,7 @@ export default function VsChartmogulPage() {
         {/* 3 Reasons */}
         <section className="border-t border-gray-800 px-6 py-24">
           <div className="mx-auto max-w-5xl">
-            <h2 className="text-3xl font-bold text-white text-center mb-4">3 reasons to switch to aifinanceops</h2>
+            <h2 className="text-3xl font-bold text-white text-center mb-4">3 reasons to switch to AI Finance Ops</h2>
             <p className="text-gray-400 text-center mb-16">Why founders are making the move.</p>
             <div className="grid gap-8 md:grid-cols-3">
               {REASONS.map((r) => (
@@ -138,5 +174,6 @@ export default function VsChartmogulPage() {
         </section>
       </main>
     </div>
+    </>
   )
 }

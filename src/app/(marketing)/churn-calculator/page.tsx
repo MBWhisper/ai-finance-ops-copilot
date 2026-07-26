@@ -28,9 +28,53 @@ export const metadata: Metadata = {
   },
 }
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What is customer churn?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Customer churn is the percentage of customers who cancel their subscription in a given period. It measures customer retention.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What is revenue churn?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Revenue churn is the percentage of MRR lost from cancellations and downgrades. It's more important than customer churn for SaaS because it directly impacts your revenue.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What is a good monthly churn rate?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Below 5% is good for B2B SaaS. Below 2% is excellent. For B2C SaaS, below 7% is acceptable. Enterprise SaaS should target below 1% monthly churn.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How does churn affect MRR growth?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "High churn means you need more new customers just to maintain flat MRR. At 5% monthly churn, you need to replace 5% of your MRR every month just to stay even — before any growth.",
+      },
+    },
+  ],
+}
+
 export default function ChurnCalculatorPage() {
   return (
-    <div className="min-h-screen bg-gray-950 text-gray-100">
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <div className="min-h-screen bg-gray-950 text-gray-100">
       {/* Hero */}
       <section className="mx-auto max-w-5xl px-6 pt-32 pb-16 text-center">
         <div className="inline-flex items-center gap-2 rounded-full bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold tracking-widest uppercase text-emerald-400 mb-6">
@@ -90,6 +134,41 @@ export default function ChurnCalculatorPage() {
         </div>
       </section>
 
+      {/* Customer Churn vs Revenue Churn */}
+      <section className="border-t border-gray-800 px-6 py-20">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            Customer Churn vs Revenue Churn
+          </h2>
+          <p className="text-gray-400 leading-relaxed mb-4">
+            There are two main types of churn metrics every SaaS founder should understand:
+          </p>
+          <div className="grid md:grid-cols-2 gap-6 mb-6">
+            <div className="border border-gray-800 bg-gray-900/50 rounded-xl p-6">
+              <div className="text-sm font-mono text-emerald-400 mb-2">Customer Churn</div>
+              <div className="text-lg font-mono text-white mb-2">
+                (Customers Lost &divide; Customers at Start) &times; 100
+              </div>
+              <p className="text-sm text-gray-400">
+                Counts the percentage of accounts that cancel. Simple to calculate but doesn&apos;t reflect revenue impact.
+              </p>
+            </div>
+            <div className="border border-gray-800 bg-gray-900/50 rounded-xl p-6">
+              <div className="text-sm font-mono text-emerald-400 mb-2">Revenue Churn</div>
+              <div className="text-lg font-mono text-white mb-2">
+                (MRR Lost &divide; MRR at Start) &times; 100
+              </div>
+              <p className="text-sm text-gray-400">
+                Measures the percentage of recurring revenue lost. More important for SaaS because it directly impacts your bottom line.
+              </p>
+            </div>
+          </div>
+          <p className="text-gray-400 leading-relaxed">
+            Revenue churn is almost always more important than customer churn. Losing 10 small customers might hurt less than losing 1 enterprise client. Always track both, but prioritize revenue churn when making strategic decisions.
+          </p>
+        </div>
+      </section>
+
       {/* Impact */}
       <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-20">
         <div className="mx-auto max-w-5xl">
@@ -118,6 +197,133 @@ export default function ChurnCalculatorPage() {
             <Link href="/runway-calculator" className="text-emerald-400 hover:underline">runway calculator</Link>{" "}
             to see how churn affects your cash runway.
           </p>
+        </div>
+      </section>
+
+      {/* Churn Rate Benchmarks */}
+      <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-20">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            Churn Rate Benchmarks
+          </h2>
+          <p className="text-gray-400 leading-relaxed mb-8">
+            Where does your churn rate fall? Use these benchmarks to understand how you compare to other SaaS companies.
+          </p>
+          <div className="border border-gray-800 bg-gray-900/50 rounded-xl overflow-hidden">
+            <table className="w-full text-left">
+              <thead>
+                <tr className="border-b border-gray-800">
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-300">Rating</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-300">Monthly Churn</th>
+                  <th className="px-6 py-3 text-sm font-semibold text-gray-300">Annual Churn</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr className="border-b border-gray-800">
+                  <td className="px-6 py-4 text-sm"><span className="text-emerald-400 font-semibold">Excellent</span></td>
+                  <td className="px-6 py-4 text-sm text-gray-300 font-mono">&lt;2%</td>
+                  <td className="px-6 py-4 text-sm text-gray-300 font-mono">&lt;21%</td>
+                </tr>
+                <tr className="border-b border-gray-800">
+                  <td className="px-6 py-4 text-sm"><span className="text-emerald-400 font-semibold">Good</span></td>
+                  <td className="px-6 py-4 text-sm text-gray-300 font-mono">2–5%</td>
+                  <td className="px-6 py-4 text-sm text-gray-300 font-mono">21–46%</td>
+                </tr>
+                <tr className="border-b border-gray-800">
+                  <td className="px-6 py-4 text-sm"><span className="text-amber-400 font-semibold">Warning</span></td>
+                  <td className="px-6 py-4 text-sm text-gray-300 font-mono">5–8%</td>
+                  <td className="px-6 py-4 text-sm text-gray-300 font-mono">46–63%</td>
+                </tr>
+                <tr>
+                  <td className="px-6 py-4 text-sm"><span className="text-red-400 font-semibold">Danger</span></td>
+                  <td className="px-6 py-4 text-sm text-gray-300 font-mono">&gt;8%</td>
+                  <td className="px-6 py-4 text-sm text-gray-300 font-mono">&gt;63%</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      {/* Common Churn Calculation Mistakes */}
+      <section className="border-t border-gray-800 px-6 py-20">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            Common Churn Calculation Mistakes
+          </h2>
+          <p className="text-gray-400 leading-relaxed mb-8">
+            Avoid these pitfalls that lead to inaccurate churn metrics and bad decisions.
+          </p>
+          <div className="space-y-6">
+            <div className="border border-gray-800 bg-gray-900/50 rounded-xl p-6">
+              <div className="text-sm font-mono text-emerald-400 mb-2">Mistake 1</div>
+              <div className="text-white font-semibold mb-2">Using total customers lost instead of churn rate</div>
+              <p className="text-sm text-gray-400">
+                Saying &ldquo;we lost 10 customers&rdquo; means nothing without context. If you started with 1,000 customers, 10 is 1% churn. If you started with 20, it&apos;s 50%. Always express churn as a percentage relative to the starting count.
+              </p>
+            </div>
+            <div className="border border-gray-800 bg-gray-900/50 rounded-xl p-6">
+              <div className="text-sm font-mono text-emerald-400 mb-2">Mistake 2</div>
+              <div className="text-white font-semibold mb-2">Ignoring expansion and contraction revenue</div>
+              <p className="text-sm text-gray-400">
+                Revenue churn should account for lost MRR from cancellations AND downgrades, but expansion revenue from upgrades should offset gross churn to show net revenue retention. Don&apos;t confuse gross churn with net churn.
+              </p>
+            </div>
+            <div className="border border-gray-800 bg-gray-900/50 rounded-xl p-6">
+              <div className="text-sm font-mono text-emerald-400 mb-2">Mistake 3</div>
+              <div className="text-white font-semibold mb-2">Measuring churn over inconsistent time periods</div>
+              <p className="text-sm text-gray-400">
+                Comparing monthly churn to quarterly churn gives misleading results. Always use consistent time periods — monthly is standard for SaaS. Annualizing monthly churn without compound interest math also overstates the true annual rate.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Real Churn Example */}
+      <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-20">
+        <div className="mx-auto max-w-3xl">
+          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+            Real Churn Example
+          </h2>
+          <p className="text-gray-400 leading-relaxed mb-8">
+            Here&apos;s a practical example of how to calculate churn step by step.
+          </p>
+          <div className="border border-gray-800 bg-gray-900/50 rounded-xl p-8">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+              <div>
+                <div className="text-xs text-gray-500 uppercase tracking-widest mb-1">Starting Customers</div>
+                <div className="text-3xl font-bold text-emerald-400">200</div>
+              </div>
+              <div>
+                <div className="text-xs text-gray-500 uppercase tracking-widest mb-1">Customers Lost</div>
+                <div className="text-3xl font-bold text-red-400">8</div>
+              </div>
+              <div>
+                <div className="text-xs text-gray-500 uppercase tracking-widest mb-1">Churned Revenue</div>
+                <div className="text-3xl font-bold text-amber-400">$640</div>
+              </div>
+              <div>
+                <div className="text-xs text-gray-500 uppercase tracking-widest mb-1">Total MRR</div>
+                <div className="text-3xl font-bold text-white">$16,000</div>
+              </div>
+              <div>
+                <div className="text-xs text-gray-500 uppercase tracking-widest mb-1">Revenue Churn</div>
+                <div className="text-3xl font-bold text-emerald-400">4%</div>
+              </div>
+            </div>
+            <div className="border-t border-gray-800 pt-6 space-y-2">
+              <div className="font-mono text-sm text-gray-300">
+                Customer Churn = (8 &divide; 200) &times; 100 = <span className="text-emerald-400 font-bold">4%</span>
+              </div>
+              <div className="font-mono text-sm text-gray-300">
+                Revenue Churn = ($640 &divide; $16,000) &times; 100 = <span className="text-emerald-400 font-bold">4%</span>
+              </div>
+              <p className="text-sm text-gray-400 mt-4">
+                In this example, the average revenue per customer is $80/month ($16,000 &divide; 200). Each churned customer costs you $80 in lost MRR.
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -180,6 +386,7 @@ export default function ChurnCalculatorPage() {
         title="More Free SaaS Finance Tools"
         limit={8}
       />
-    </div>
+      </div>
+    </>
   )
 }

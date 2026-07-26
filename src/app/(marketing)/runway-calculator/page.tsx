@@ -16,7 +16,7 @@ export const metadata: Metadata = {
       "Free startup runway calculator. Estimate how many months of cash runway you have left based on cash balance and monthly burn.",
     url: "https://aifinanceops.app/runway-calculator",
     siteName: "AI Finance Ops",
-    images: [{ url: "https://aifinanceops.app/og/runway-calculator.png", width: 1200, height: 630, alt: "Startup Runway Calculator — AI Finance Ops" }],
+    images: [{ url: "https://aifinanceops.app/og-image.png", width: 1200, height: 630, alt: "Startup Runway Calculator — AI Finance Ops" }],
     type: "website",
     locale: "en_US",
   },
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Startup Runway Calculator (Free) — Calculate Cash Runway",
     description: "Free startup runway calculator. Estimate how many months of cash runway you have left.",
-    images: ["https://aifinanceops.app/og/runway-calculator.png"],
+    images: ["https://aifinanceops.app/og-image.png"],
   },
 }
 
@@ -90,6 +90,39 @@ const webAppSchema = {
   },
 }
 
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "How to Calculate Startup Runway",
+  description: "Step-by-step guide to calculating your startup's cash runway in months.",
+  step: [
+    {
+      "@type": "HowToStep",
+      position: 1,
+      name: "Calculate your total cash balance",
+      text: "Add up all available cash across bank accounts and liquid investments to get your total cash balance.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 2,
+      name: "Calculate monthly net burn",
+      text: "Subtract your monthly revenue from your total monthly expenses. This gives you the monthly net burn rate.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 3,
+      name: "Apply the runway formula",
+      text: "Divide your cash balance by your monthly net burn. Runway = Cash Balance ÷ Monthly Net Burn.",
+    },
+    {
+      "@type": "HowToStep",
+      position: 4,
+      name: "Compare to benchmarks",
+      text: "18+ months of runway is healthy, while fewer than 6 months is a danger zone requiring immediate action.",
+    },
+  ],
+}
+
 export default function RunwayCalculatorPage() {
   return (
     <>
@@ -100,6 +133,10 @@ export default function RunwayCalculatorPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(webAppSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
       <div className="min-h-screen bg-gray-950 text-gray-100">
 
@@ -202,6 +239,179 @@ export default function RunwayCalculatorPage() {
                   </div>
                 </div>
               ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Runway Benchmarks by Funding Stage */}
+        <section className="border-t border-gray-800 px-6 py-20">
+          <div className="mx-auto max-w-5xl">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 text-center">
+              Runway Benchmarks by Funding Stage
+            </h2>
+            <p className="text-center text-gray-400 max-w-2xl mx-auto mb-12">
+              Investors expect different runway targets depending on your funding stage.
+              Use this table to benchmark your runway and plan your next move.
+            </p>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="border-b border-gray-800">
+                    <th className="pb-4 text-sm font-semibold text-white">Stage</th>
+                    <th className="pb-4 text-sm font-semibold text-white">Typical Runway Target</th>
+                    <th className="pb-4 text-sm font-semibold text-white">Action if Below</th>
+                  </tr>
+                </thead>
+                <tbody className="text-gray-400">
+                  <tr className="border-b border-gray-800/50">
+                    <td className="py-4 text-white font-medium">Pre-seed</td>
+                    <td className="py-4">12–18 months</td>
+                    <td className="py-4">Cut costs or raise</td>
+                  </tr>
+                  <tr className="border-b border-gray-800/50">
+                    <td className="py-4 text-white font-medium">Seed</td>
+                    <td className="py-4">12–18 months</td>
+                    <td className="py-4">Optimize unit economics</td>
+                  </tr>
+                  <tr className="border-b border-gray-800/50">
+                    <td className="py-4 text-white font-medium">Series A</td>
+                    <td className="py-4">18–24 months</td>
+                    <td className="py-4">Focus on growth</td>
+                  </tr>
+                  <tr>
+                    <td className="py-4 text-white font-medium">Growth</td>
+                    <td className="py-4">24+ months</td>
+                    <td className="py-4">Optimize for profitability</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        {/* How to Extend Your Runway */}
+        <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-20">
+          <div className="mx-auto max-w-5xl">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 text-center">
+              How to Extend Your Runway
+            </h2>
+            <p className="text-center text-gray-400 max-w-2xl mx-auto mb-12">
+              Running low on runway? These four strategies can buy you more time
+              before you need to fundraise — or help you reach profitability.
+            </p>
+            <div className="grid sm:grid-cols-2 gap-6">
+              <div className="border border-gray-800 bg-gray-900/50 rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-white mb-2">Grow MRR Faster</h3>
+                <p className="text-sm text-gray-400">
+                  Accelerate revenue growth through upsells, new pricing tiers, or expanding
+                  into new segments. Every dollar of MRR directly extends your runway.
+                </p>
+              </div>
+              <div className="border border-gray-800 bg-gray-900/50 rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-white mb-2">Reduce Churn</h3>
+                <p className="text-sm text-gray-400">
+                  Lowering churn by even 1–2% can add months to your runway. Focus on
+                  onboarding, customer success, and product-market fit improvements.
+                </p>
+              </div>
+              <div className="border border-gray-800 bg-gray-900/50 rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-white mb-2">Cut Non-Essential Spend</h3>
+                <p className="text-sm text-gray-400">
+                  Review every line item. Pause non-critical hires, renegotiate contracts,
+                  and eliminate tools you rarely use. Every dollar saved is runway gained.
+                </p>
+              </div>
+              <div className="border border-gray-800 bg-gray-900/50 rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-white mb-2">Raise at the Right Time</h3>
+                <p className="text-sm text-gray-400">
+                  Start fundraising when you have 9–12 months of runway remaining. Raising
+                  from a position of strength — not desperation — leads to better terms.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Runway Scenario Planning */}
+        <section className="border-t border-gray-800 px-6 py-20">
+          <div className="mx-auto max-w-5xl">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 text-center">
+              Runway Scenario Planning
+            </h2>
+            <p className="text-center text-gray-400 max-w-2xl mx-auto mb-12">
+              Your runway depends heavily on growth rate. Here is how different
+              MRR growth scenarios impact your timeline.
+            </p>
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="border border-emerald-800/50 bg-emerald-950/20 rounded-xl p-6">
+                <div className="text-xs text-emerald-400 uppercase tracking-widest mb-2">Best Case</div>
+                <div className="text-2xl font-bold text-emerald-400 mb-1">24 months</div>
+                <div className="text-sm text-gray-400 mb-4">20% MoM MRR growth</div>
+                <p className="text-sm text-gray-400">
+                  Aggressive growth compounds quickly, significantly extending your
+                  runway and giving you leverage in fundraising negotiations.
+                </p>
+              </div>
+              <div className="border border-gray-800 bg-gray-900/50 rounded-xl p-6">
+                <div className="text-xs text-gray-500 uppercase tracking-widest mb-2">Base Case</div>
+                <div className="text-2xl font-bold text-white mb-1">15 months</div>
+                <div className="text-sm text-gray-400 mb-4">10% MoM MRR growth</div>
+                <p className="text-sm text-gray-400">
+                  Steady growth keeps you on track. This is the baseline most
+                  investors expect to see from a well-run SaaS startup.
+                </p>
+              </div>
+              <div className="border border-red-800/50 bg-red-950/20 rounded-xl p-6">
+                <div className="text-xs text-red-400 uppercase tracking-widest mb-2">Worst Case</div>
+                <div className="text-2xl font-bold text-red-400 mb-1">10 months</div>
+                <div className="text-sm text-gray-400 mb-4">Flat MRR (0% growth)</div>
+                <p className="text-sm text-gray-400">
+                  Without growth, revenue stops offsetting burn and your runway
+                  shrinks fast. This scenario demands immediate cost cuts.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Real Runway Example */}
+        <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-20">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6 text-center">
+              Real Runway Example
+            </h2>
+            <p className="text-center text-gray-400 max-w-2xl mx-auto mb-10">
+              Here is a concrete example of how runway calculation works for a
+              typical early-stage SaaS startup.
+            </p>
+            <div className="border border-gray-800 bg-gray-900/50 rounded-xl p-8">
+              <div className="grid sm:grid-cols-2 gap-6 mb-8">
+                <div>
+                  <div className="text-xs text-gray-500 uppercase tracking-widest mb-1">Cash Balance</div>
+                  <div className="text-2xl font-bold text-white">$200,000</div>
+                </div>
+                <div>
+                  <div className="text-xs text-gray-500 uppercase tracking-widest mb-1">MRR</div>
+                  <div className="text-2xl font-bold text-white">$15,000</div>
+                </div>
+                <div>
+                  <div className="text-xs text-gray-500 uppercase tracking-widest mb-1">Monthly Expenses</div>
+                  <div className="text-2xl font-bold text-white">$25,000</div>
+                </div>
+                <div>
+                  <div className="text-xs text-gray-500 uppercase tracking-widest mb-1">Net Burn</div>
+                  <div className="text-2xl font-bold text-emerald-400">$10,000</div>
+                </div>
+              </div>
+              <div className="border-t border-gray-800 pt-6 flex items-center justify-between">
+                <div>
+                  <div className="text-sm text-gray-500 mb-1">Runway = $200,000 ÷ $10,000</div>
+                  <div className="text-3xl font-bold text-emerald-400">20 months</div>
+                </div>
+                <span className="inline-flex items-center rounded-full bg-emerald-500/10 px-4 py-1.5 text-sm font-semibold text-emerald-400">
+                  Healthy runway
+                </span>
+              </div>
             </div>
           </div>
         </section>

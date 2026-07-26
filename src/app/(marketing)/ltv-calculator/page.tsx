@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     description: "Calculate Customer Lifetime Value (LTV) and your LTV:CAC ratio. Free for SaaS founders.",
     url: "https://aifinanceops.app/ltv-calculator",
     siteName: "AI Finance Ops",
-    images: [{ url: "https://aifinanceops.app/og/ltv-calculator.png", width: 1200, height: 630, alt: "SaaS LTV Calculator" }],
+    images: [{ url: "https://aifinanceops.app/og-image.png", width: 1200, height: 630, alt: "SaaS LTV Calculator" }],
     type: "website",
     locale: "en_US",
   },
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "SaaS LTV Calculator — Customer Lifetime Value | AI Finance Ops",
     description: "Calculate LTV and LTV:CAC ratio for your SaaS. Free tool.",
-    images: ["https://aifinanceops.app/og/ltv-calculator.png"],
+    images: ["https://aifinanceops.app/og-image.png"],
   },
 }
 
@@ -58,12 +58,46 @@ const faqSchema = {
   ],
 }
 
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "How to Calculate SaaS Customer Lifetime Value (LTV)",
+  description:
+    "Step-by-step guide to calculate SaaS LTV and LTV:CAC ratio for your business.",
+  step: [
+    {
+      "@type": "HowToStep",
+      name: "Calculate ARPU",
+      text: "Calculate your Average Revenue Per User (ARPU) by dividing MRR by the number of active customers.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Determine Churn Rate",
+      text: "Determine your monthly churn rate — the percentage of customers who cancel each month.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Apply LTV Formula",
+      text: "Apply the formula: LTV = ARPU ÷ Monthly Churn Rate.",
+    },
+    {
+      "@type": "HowToStep",
+      name: "Calculate LTV:CAC Ratio",
+      text: "Calculate LTV:CAC ratio by dividing LTV by Customer Acquisition Cost (CAC).",
+    },
+  ],
+}
+
 export default function LTVCalculatorPage() {
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
       />
       <div className="min-h-screen bg-gray-950 text-gray-100">
         {/* Hero */}
@@ -150,10 +184,127 @@ export default function LTVCalculatorPage() {
           </div>
         </section>
 
+        {/* LTV Benchmarks */}
+        <section className="border-t border-gray-800 px-6 py-20">
+          <div className="mx-auto max-w-5xl">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-12 text-center">
+              LTV Benchmarks by SaaS Type
+            </h2>
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-gray-800">
+                    <th className="py-4 px-6 text-sm font-semibold text-gray-400 uppercase tracking-widest">SaaS Type</th>
+                    <th className="py-4 px-6 text-sm font-semibold text-gray-400 uppercase tracking-widest">Typical LTV</th>
+                    <th className="py-4 px-6 text-sm font-semibold text-gray-400 uppercase tracking-widest">Good LTV:CAC</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-800">
+                  {[
+                    { type: "B2B SaaS", ltv: "$5K–$50K", ratio: "3:1+" },
+                    { type: "B2C SaaS", ltv: "$200–$2K", ratio: "2:1+" },
+                    { type: "Enterprise SaaS", ltv: "$50K–$500K", ratio: "5:1+" },
+                    { type: "PLG SaaS", ltv: "$100–$1K", ratio: "2:1+" },
+                  ].map((row) => (
+                    <tr key={row.type} className="bg-gray-900/50">
+                      <td className="py-4 px-6 text-sm font-medium text-white">{row.type}</td>
+                      <td className="py-4 px-6 text-sm text-emerald-400 font-mono">{row.ltv}</td>
+                      <td className="py-4 px-6 text-sm text-gray-400">{row.ratio}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        {/* Common LTV Mistakes */}
+        <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-20">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-10 text-center">
+              Common LTV Mistakes
+            </h2>
+            <div className="space-y-6">
+              {[
+                { title: "Using revenue instead of gross margin", desc: "Raw revenue overstates LTV. Use gross margin to reflect the true cost of delivering your product." },
+                { title: "Not segmenting by cohort", desc: "Blending all customers hides trends. Cohort analysis reveals how retention and LTV change over time." },
+                { title: "Ignoring expansion revenue", desc: "Upsells and cross-sells increase ARPU over time. A static ARPU undervalues your best customers." },
+                { title: "Using monthly churn when LTV should be annual", desc: "Mixing monthly and annual churn rates inflates or deflates LTV. Keep your time units consistent." },
+              ].map((item, i) => (
+                <div key={i} className="flex gap-4">
+                  <div className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-red-500/10 text-sm font-bold text-red-400 mt-0.5">
+                    {i + 1}
+                  </div>
+                  <div>
+                    <h3 className="text-sm font-semibold text-white">{item.title}</h3>
+                    <p className="text-sm text-gray-400 mt-1">{item.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Real LTV Calculation Example */}
+        <section className="border-t border-gray-800 px-6 py-20">
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-10">
+              Real LTV Calculation Example
+            </h2>
+            <div className="inline-grid grid-cols-2 sm:grid-cols-5 gap-4 text-center">
+              <div className="border border-gray-800 bg-gray-900/50 rounded-xl p-5">
+                <div className="text-xs text-gray-500 uppercase tracking-widest mb-2">ARPU</div>
+                <div className="text-2xl font-bold text-white font-mono">$80</div>
+              </div>
+              <div className="border border-gray-800 bg-gray-900/50 rounded-xl p-5">
+                <div className="text-xs text-gray-500 uppercase tracking-widest mb-2">Monthly Churn</div>
+                <div className="text-2xl font-bold text-red-400 font-mono">4%</div>
+              </div>
+              <div className="border border-gray-800 bg-gray-900/50 rounded-xl p-5">
+                <div className="text-xs text-gray-500 uppercase tracking-widest mb-2">LTV</div>
+                <div className="text-2xl font-bold text-emerald-400 font-mono">$2,000</div>
+              </div>
+              <div className="border border-gray-800 bg-gray-900/50 rounded-xl p-5">
+                <div className="text-xs text-gray-500 uppercase tracking-widest mb-2">CAC</div>
+                <div className="text-2xl font-bold text-white font-mono">$500</div>
+              </div>
+              <div className="border border-gray-800 bg-gray-900/50 rounded-xl p-5 sm:col-span-2 md:col-span-1">
+                <div className="text-xs text-gray-500 uppercase tracking-widest mb-2">LTV:CAC</div>
+                <div className="text-2xl font-bold text-emerald-400 font-mono">4:1</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* HowTo Visual Steps */}
+        <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-20">
+          <div className="mx-auto max-w-4xl">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-12 text-center">
+              How to Calculate Your SaaS LTV
+            </h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {[
+                { step: 1, title: "Calculate ARPU", desc: "Divide MRR by number of active customers to get Average Revenue Per User." },
+                { step: 2, title: "Determine Churn Rate", desc: "Find your monthly churn rate — the % of customers who cancel each month." },
+                { step: 3, title: "Apply the Formula", desc: "LTV = ARPU ÷ Monthly Churn Rate. This gives you the lifetime value per customer." },
+                { step: 4, title: "Calculate LTV:CAC", desc: "Divide LTV by Customer Acquisition Cost to measure unit economics." },
+              ].map((item) => (
+                <div key={item.step} className="flex flex-col items-center text-center">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-500/10 text-xl font-bold text-emerald-400 mb-4">
+                    {item.step}
+                  </div>
+                  <h3 className="text-base font-semibold text-white mb-2">{item.title}</h3>
+                  <p className="text-sm text-gray-400">{item.desc}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* FAQ */}
         <section className="border-t border-gray-800 px-6 py-20">
           <div className="mx-auto max-w-3xl">
-            <h2 className="text-3xl font-bold text-white mb-10">SaaS LTV FAQ</h2>
+            <h2 className="text-3xl font-bold text-white mb-10">LTV Frequently Asked Questions</h2>
             <div className="space-y-8">
               <div>
                 <h3 className="text-lg font-semibold text-white mb-2">How do you calculate LTV for SaaS?</h3>

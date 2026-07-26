@@ -53,7 +53,43 @@ const REASONS = [
 ]
 
 export default function VsProfitWellPage() {
+  const faqSchema = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: [
+      {
+        "@type": "Question",
+        name: "Is AI Finance Ops a free alternative to ProfitWell?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. AI Finance Ops offers a forever free tier with MRR tracking, churn analysis, and 90-day cash flow forecasting. ProfitWell's core metrics are free, but their churn-fighting tool Retain costs $200+/mo as a separate add-on.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "What does ProfitWell charge for churn reduction?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "ProfitWell's Retain product — which handles dunning and churn reduction — starts at $200/month as a separate paid add-on. AI Finance Ops includes churn alerts and at-risk customer identification in the base plan at no extra cost.",
+        },
+      },
+      {
+        "@type": "Question",
+        name: "Can I migrate from ProfitWell to AI Finance Ops?",
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: "Yes. Connect your Stripe account and AI Finance Ops automatically syncs your historical subscription data. No manual export or import is required. Setup takes about 2 minutes.",
+        },
+      },
+    ],
+  }
+
   return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+      />
     <div className="min-h-screen bg-gray-950 text-gray-100">
       <main>
         {/* Hero */}
@@ -170,5 +206,6 @@ export default function VsProfitWellPage() {
         </section>
       </main>
     </div>
+    </>
   )
 }

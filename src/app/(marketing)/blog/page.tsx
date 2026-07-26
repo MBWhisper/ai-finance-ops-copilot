@@ -12,13 +12,13 @@ export const metadata: Metadata = {
     title: "SaaS Finance Blog | AI Finance Ops",
     description: "MRR guides, churn playbooks, and financial clarity for founders.",
     url: "https://aifinanceops.app/blog",
-    images: [{ url: "https://aifinanceops.app/og/blog.png", width: 1200, height: 630 }],
+    images: [{ url: "https://aifinanceops.app/og-image.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
     title: "SaaS Finance Blog | AI Finance Ops",
     description: "MRR guides, churn playbooks, and financial clarity for founders.",
-    images: ["https://aifinanceops.app/og/blog.png"],
+    images: ["https://aifinanceops.app/og-image.png"],
     creator: '@MbtechE80106',
   },
 }

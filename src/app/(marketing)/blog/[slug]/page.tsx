@@ -125,7 +125,8 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             dateModified: frontmatter.updated || frontmatter.date,
             image: coverUrl,
             author: { "@type": "Person", name: "Mo" },
-            publisher: { "@type": "Organization", name: "AI Finance Ops", url: "https://aifinanceops.app" },
+            publisher: { "@type": "Organization", name: "AI Finance Ops", url: "https://aifinanceops.app", logo: { "@type": "ImageObject", url: "https://aifinanceops.app/favicon.svg", width: 32, height: 32 } },
+            mainEntityOfPage: { "@type": "WebPage", "@id": `https://aifinanceops.app/blog/${slug}` },
           }),
         }}
       />
