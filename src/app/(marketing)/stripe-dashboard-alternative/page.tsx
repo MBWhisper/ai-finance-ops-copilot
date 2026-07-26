@@ -265,10 +265,14 @@ export default function StripeDashboardAlternativePage() {
         <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-16">
           <div className="mx-auto max-w-4xl">
             <h2 className="text-xl font-bold text-white mb-6 text-center">Free SaaS tools — no SQL required</h2>
-            <div className="grid sm:grid-cols-3 gap-4">
+              <div className="grid sm:grid-cols-3 gap-4">
               {[
                 { href: "/mrr-tracker", label: "MRR Tracker", desc: "Automatic MRR breakdown from Stripe" },
                 { href: "/churn-rate-calculator", label: "Churn Calculator", desc: "Real-time customer and revenue churn" },
+                { href: "/ltv-calculator", label: "LTV Calculator", desc: "Calculate customer lifetime value" },
+                { href: "/runway-calculator", label: "Runway Calculator", desc: "Calculate your startup runway" },
+                { href: "/saas-financial-dashboard", label: "Financial Dashboard", desc: "See our full financial dashboard" },
+                { href: "/what-is-mrr", label: "What is MRR?", desc: "Learn what MRR means" },
                 { href: "/vs-stripe-sigma", label: "vs Stripe Sigma", desc: "See how we compare to Sigma" },
               ].map((l) => (
                 <Link key={l.href} href={l.href} className="rounded-xl border border-gray-800 bg-gray-900/50 p-5 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all group">

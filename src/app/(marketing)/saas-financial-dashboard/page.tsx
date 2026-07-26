@@ -123,6 +123,24 @@ const CORE_METRICS = [
     linkLabel: "Calculate runway →",
   },
   {
+    title: "MRR Calculator",
+    desc: "Calculate your Monthly Recurring Revenue from scratch. Understand the formula and components of MRR.",
+    href: "/mrr-calculator",
+    linkLabel: "Calculate MRR →",
+  },
+  {
+    title: "ARR Calculator",
+    desc: "Annual Recurring Revenue — what investors actually look at. Convert MRR to ARR and benchmark against your stage.",
+    href: "/arr-calculator",
+    linkLabel: "Calculate ARR →",
+  },
+  {
+    title: "What is MRR?",
+    desc: "New to SaaS metrics? Learn what MRR means, how to calculate it, and why it matters for your business.",
+    href: "/what-is-mrr",
+    linkLabel: "Learn what MRR means →",
+  },
+  {
     title: "Expansion & Contraction MRR",
     desc: "See which customers upgrade and which downgrade. Expansion MRR is the hidden growth lever most founders ignore.",
     href: "/mrr-tracker",

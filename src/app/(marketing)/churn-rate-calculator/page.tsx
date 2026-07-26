@@ -130,6 +130,10 @@ export default function ChurnCalculatorPage() {
             <Link href="/mrr-calculator" className="text-emerald-400 hover:underline">MRR</Link>, and{" "}
             <Link href="/runway-calculator" className="text-emerald-400 hover:underline">runway</Link>.
           </p>
+          <p className="text-sm text-gray-500 max-w-xl mx-auto mb-8">
+            Churn directly impacts MRR and LTV.{" "}
+            <Link href="/what-is-mrr" className="text-emerald-400 hover:underline">Learn how churn affects MRR →</Link>
+          </p>
           <Link
             href="/register"
             className="inline-flex items-center gap-2 rounded-full bg-emerald-500 px-8 py-3 text-base font-medium text-white hover:bg-emerald-400 transition-all shadow-lg shadow-emerald-500/25 hover:-translate-y-0.5"
@@ -188,7 +192,8 @@ export default function ChurnCalculatorPage() {
             </h2>
             <p className="text-gray-400 leading-relaxed mb-8">
               What counts as &ldquo;good&rdquo; churn depends on your business model, price point, and customer segment.
-              Here are 2026 SaaS benchmarks:
+              Here are 2026 SaaS benchmarks.{" "}
+              <Link href="/saas-benchmarks-2026" className="text-emerald-400 hover:underline">See full churn benchmarks for your industry →</Link>
             </p>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm border-collapse">

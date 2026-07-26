@@ -261,6 +261,9 @@ export default function ProfitWellAlternativePage() {
                   { href: "/mrr-tracker", label: "MRR Tracker", desc: "Track Monthly Recurring Revenue automatically" },
                   { href: "/churn-rate-calculator", label: "Churn Rate Calculator", desc: "Customer churn, revenue churn, net revenue churn" },
                   { href: "/ltv-calculator", label: "LTV Calculator", desc: "Customer Lifetime Value + LTV:CAC ratio" },
+                  { href: "/runway-calculator", label: "Runway Calculator", desc: "Calculate your startup runway" },
+                  { href: "/saas-financial-dashboard", label: "Financial Dashboard", desc: "See our full dashboard" },
+                  { href: "/what-is-mrr", label: "What is MRR?", desc: "Learn what MRR means" },
                 ].map((l) => (
                   <Link
                     key={l.href}

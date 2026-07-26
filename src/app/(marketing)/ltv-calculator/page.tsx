@@ -169,6 +169,8 @@ export default function LTVCalculatorPage() {
                 { label: "MRR per user",  link: "/mrr-tracker",       desc: "Higher ARPU directly increases LTV. Track expansion revenue and upsell opportunities." },
                 { label: "Cash runway",   link: "/runway-calculator",  desc: "High LTV gives you more flexibility to invest in growth without burning through runway." },
                 { label: "ARR growth",    link: "/arr-calculator",     desc: "Compounding ARR growth multiplies the value of each percentage point improvement in LTV." },
+                { label: "Calculate MRR first", link: "/mrr-calculator", desc: "LTV starts with MRR. Calculate your Monthly Recurring Revenue before measuring lifetime value." },
+                { label: "LTV benchmarks", link: "/saas-benchmarks-2026", desc: "See how your LTV compares to industry benchmarks for your SaaS stage." },
               ].map((item) => (
                 <div key={item.label} className="flex gap-4">
                   <Check className="h-5 w-5 text-emerald-500 mt-0.5 shrink-0" />

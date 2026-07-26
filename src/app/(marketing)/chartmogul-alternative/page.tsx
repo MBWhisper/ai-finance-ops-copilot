@@ -335,6 +335,39 @@ export default function ChartmogulAlternativePage() {
                   </p>
                 </Link>
                 <Link
+                  href="/mrr-calculator"
+                  className="rounded-xl border border-gray-800 bg-gray-900/50 p-6 hover:border-gray-700 transition-colors"
+                >
+                  <span className="text-sm font-medium text-emerald-400">
+                    MRR Calculator
+                  </span>
+                  <p className="mt-2 text-xs text-gray-500">
+                    Try our free MRR calculator
+                  </p>
+                </Link>
+                <Link
+                  href="/saas-financial-dashboard"
+                  className="rounded-xl border border-gray-800 bg-gray-900/50 p-6 hover:border-gray-700 transition-colors"
+                >
+                  <span className="text-sm font-medium text-emerald-400">
+                    Financial Dashboard
+                  </span>
+                  <p className="mt-2 text-xs text-gray-500">
+                    See our full financial dashboard
+                  </p>
+                </Link>
+                <Link
+                  href="/what-is-mrr"
+                  className="rounded-xl border border-gray-800 bg-gray-900/50 p-6 hover:border-gray-700 transition-colors"
+                >
+                  <span className="text-sm font-medium text-emerald-400">
+                    What is MRR?
+                  </span>
+                  <p className="mt-2 text-xs text-gray-500">
+                    Learn what MRR means
+                  </p>
+                </Link>
+                <Link
                   href="/"
                   className="rounded-xl border border-gray-800 bg-gray-900/50 p-6 hover:border-gray-700 transition-colors"
                 >

@@ -314,6 +314,8 @@ export default function MRRCalculatorPage() {
               { label: "Calculate ARR",         link: "/arr-calculator",     desc: "Annual Recurring Revenue — what investors actually look at." },
               { label: "Forecast cash flow",    link: "/cash-flow-tracker",  desc: "MRR doesn't equal cash. Track when money actually arrives." },
               { label: "Measure LTV",           link: "/ltv-calculator",     desc: "Is your MRR per customer enough to justify your CAC?" },
+              { label: "Learn what MRR means",  link: "/what-is-mrr",        desc: "Deep dive into MRR components, formulas, and how to calculate it." },
+              { label: "Track MRR automatically", link: "/mrr-tracker",      desc: "Stop calculating MRR in spreadsheets. Track it live from Stripe." },
             ].map((item) => (
               <div key={item.label} className="flex gap-4">
                 <Check className="h-5 w-5 text-emerald-500 mt-0.5 shrink-0" />

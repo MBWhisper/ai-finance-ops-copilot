@@ -228,6 +228,8 @@ export default function RunwayCalculatorPage() {
                 { label: "Churn rate",    link: "/churn-rate-calculator", desc: "High churn shrinks revenue faster than you can grow it, burning through runway faster." },
                 { label: "Burn rate",     link: "/cash-flow-tracker",  desc: "Track every cash outflow to identify unnecessary expenses before they drain your runway." },
                 { label: "LTV:CAC ratio", link: "/ltv-calculator",     desc: "Efficient growth extends runway. Poor LTV:CAC burns through cash without building a sustainable business." },
+                { label: "Calculate recurring revenue", link: "/mrr-calculator", desc: "MRR offsets burn. Calculate your recurring revenue to see how it extends your runway." },
+                { label: "Track cash flow live", link: "/cash-flow-tracker", desc: "Monitor cash inflows and outflows in real time to manage runway proactively." },
               ].map((item) => (
                 <div key={item.label} className="flex gap-4">
                   <Check className="h-5 w-5 text-emerald-500 mt-0.5 shrink-0" />
