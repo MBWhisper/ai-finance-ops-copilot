@@ -8,6 +8,8 @@ coverImage: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1200
 slug: saas-unit-economics-guide
 ---
 
+import { FaqSchema } from '@/components/FaqSchema'
+
 Unit economics tell you whether your SaaS business model actually works — before you scale. If your unit economics are broken, more customers just means more losses.
 
 This guide covers every metric you need, how to calculate them, and what "good" looks like.
@@ -243,3 +245,26 @@ Magic Number = Net New ARR (current quarter) ÷ Sales & Marketing Spend (previou
 The best way to improve unit economics is to measure them consistently. AI Finance Ops automatically calculates LTV, CAC, churn, and MRR — so you can focus on improving, not spreadsheets.
 
 [Start tracking for free →](/register)
+
+<FaqSchema items={[
+  {
+    question: "What is the ideal LTV:CAC ratio for SaaS?",
+    answer: "The target LTV:CAC ratio for SaaS is 3:1 or higher. A ratio below 2:1 means you're spending too much to acquire customers relative to their lifetime value. Above 5:1 is excellent and suggests room to invest more aggressively in growth."
+  },
+  {
+    question: "How do you calculate SaaS customer lifetime value (LTV)?",
+    answer: "LTV = ARPA × Gross Margin ÷ Monthly Churn Rate. For example, with $100/month ARPA, 80% gross margin, and 5% monthly churn, LTV = $100 × 0.80 ÷ 0.05 = $1,600."
+  },
+  {
+    question: "What is a good CAC payback period?",
+    answer: "A CAC payback period under 6 months is excellent, 6-12 months is good, 12-18 months is acceptable for enterprise SaaS, and over 18 months is risky as it ties up capital. Shorter payback allows faster reinvestment and growth."
+  },
+  {
+    question: "What is a good SaaS quick ratio?",
+    answer: "A SaaS quick ratio above 4 indicates exceptional growth, 2-4 is healthy, and below 2 suggests slow growth. The quick ratio = (New MRR + Expansion MRR) ÷ (Churned MRR + Contraction MRR)."
+  },
+  {
+    question: "What is the magic number in SaaS?",
+    answer: "The magic number measures sales efficiency: Magic Number = Net New ARR (current quarter) ÷ Sales & Marketing Spend (previous quarter). Above 0.75 is good, and above 1.0 is excellent — indicating you're acquiring customers efficiently."
+  }
+]} />
