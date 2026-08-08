@@ -8,54 +8,202 @@ coverImage: "/blog/how-to-track-mrr-without-stripe.png"
 tags: ["mrr", "tracking", "paypal", "gumroad", "saas"]
 ---
 
-Stripe makes MRR tracking easy. But millions of SaaS products use PayPal, Gumroad, Paddle, or LemonSqueezy -- and many early-stage founders bill manually. Here's how to track MRR accurately regardless of your payment processor.
+Stripe makes MRR tracking easy. But millions of SaaS products use PayPal, Gumroad, Paddle, or LemonSqueezy — and many early-stage founders bill manually. Here's how to track MRR accurately regardless of your payment processor.
+
+Not every SaaS starts with Stripe. Some founders begin with PayPal because it's familiar. Others use Gumroad because it handles taxes. Some bill via wire transfer because their first customers are enterprise clients who won't use self-serve checkout. The payment method you start with shouldn't prevent you from tracking your most important metric.
+
+This guide covers four methods for tracking MRR without Stripe — from fully manual spreadsheets to automated multi-processor tools — plus the common mistakes that trip up founders who don't have Stripe's native subscription tracking.
 
 ## Why MRR Tracking Is Harder Without Stripe
 
-Stripe was built with subscriptions as a first-class feature. Other processors treat subscriptions differently:
+Stripe was built with subscriptions as a first-class feature. The API returns subscription status, renewal dates, failed payments, and MRR data directly. Other processors were designed for one-time payments and bolted on subscription features later.
 
-- **PayPal** -- Subscription billing exists but API data is inconsistent
-- **Gumroad** -- Memberships supported but no native MRR calculation
-- **Paddle** -- Good subscription support, but MRR dashboard is limited on lower plans
-- **LemonSqueezy** -- Growing subscription feature set, but newer
-- **Manual billing** -- Wire transfers, invoices -- no automated tracking at all
+Here's how the major processors compare for subscription tracking:
 
-## Method 1: Manual Spreadsheet
+- **PayPal** — Subscription billing exists but API data is inconsistent. PayPal's subscription reports don't always align with what you'd expect for MRR calculations. Failed payment recovery is less transparent, and churn detection requires manual work.
 
-1. Create a spreadsheet: Customer, Plan, Monthly Amount, Start Date, Status
-2. Each month, sum all Active rows
-3. Track changes manually: new (+), upgrades (+), downgrades (-), cancellations (-)
+- **Gumroad** — Memberships supported, but there's no native MRR calculation. You get revenue totals, not recurring revenue broken down by period. Gumroad also takes a revenue cut, so your net revenue differs from gross.
 
-For annual plans, divide by 12:
+- **Paddle** — Good subscription support with merchant-of-record features. Paddle's MRR dashboard is available on higher-tier plans, but limited on lower tiers where most early-stage founders start.
+
+- **LemonSqueezy** — Growing subscription feature set. As a newer platform, the analytics are improving but still lack the depth that Stripe provides natively.
+
+- **Manual billing** — Wire transfers, invoicing, custom contracts. No automated tracking at all. You're building your own system from scratch.
+
+The core challenge is the same across all non-Stripe processors: **you have to do more work yourself.** The data exists, but it's not organized into the MRR framework that subscription businesses need.
+
+## Method 1: Manual Spreadsheet Tracking
+
+The simplest approach. No integrations, no tools — just a spreadsheet. This works for founders with fewer than 50 subscribers and simple pricing.
+
+### Spreadsheet Template
+
+Set up a spreadsheet with these columns:
+
+| Column | Purpose |
+|---|---|
+| **Customer Name** | Who they are |
+| **Email** | Unique identifier |
+| **Plan** | Which pricing tier |
+| **Monthly Amount** | Normalized monthly rate (not what they paid — what they owe per month) |
+| **Billing Cycle** | Monthly, Annual, Quarterly |
+| **Amount Paid** | What they actually paid |
+| **Start Date** | When their subscription began |
+| **End Date** | When their subscription ends (or "active") |
+| **Status** | Active, Cancelled, Paused, Past Due |
+| **MRR Contribution** | Monthly Amount × (days active in month / days in month) |
+
+### How to Calculate MRR from the Spreadsheet
+
+1. Filter for Status = "Active"
+2. Sum the Monthly Amount column
+3. For annual plans, divide the annual amount by 12
 
 ```
-Annual plan $1,200/year = $100 MRR contribution per month
+Customer A: $99/month (Monthly) → $99 MRR
+Customer B: $990/year (Annual) → $82.50 MRR
+Customer C: $299/month (Monthly) → $299 MRR
+
+Total MRR: $99 + $82.50 + $299 = $480.50
 ```
 
-## Method 2: Processor CSV Export
+### Tracking Changes Month-Over-Month
 
-- **PayPal:** Reports > Statements > Download
-- **Gumroad:** Analytics > Export (memberships)
-- **Paddle:** Reports > Subscriptions > Export
-- **LemonSqueezy:** Reports > Subscriptions
+To track growth, you need to log changes:
+
+- **New MRR:** Customer signed up this month → add their monthly rate
+- **Expansion MRR:** Customer upgraded → add the difference
+- **Contraction MRR:** Customer downgraded → subtract the difference
+- **Churned MRR:** Customer cancelled → subtract their monthly rate
+
+| Month | New | Expansion | Contraction | Churn | Net Change | MRR |
+|---|---|---|---|---|---|---|
+| January | — | — | — | — | — | $480.50 |
+| February | +$149 | — | — | −$99 | +$50 | $530.50 |
+| March | — | +$50 | — | — | +$50 | $580.50 |
+
+### When This Breaks Down
+
+Spreadsheets work until they don't. The problems start when:
+- You have more than 50 subscribers and updating takes hours
+- Customers have complex billing (usage overages, mid-month changes)
+- Multiple people need access to the same data
+- You need to generate reports for investors or accountants
+- Formula errors silently corrupt your numbers
+
+## Method 2: Export and Import from Your Processor
+
+Most payment processors let you export transaction data as CSV files. You can import these into a spreadsheet and process them into MRR.
+
+### Export Instructions by Processor
+
+- **PayPal:** Reports > Statements > Download. Filter for recurring payments.
+- **Gumroad:** Analytics > Export. Filter for memberships/subscriptions.
+- **Paddle:** Reports > Subscriptions > Export. Includes subscription status and billing dates.
+- **LemonSqueezy:** Reports > Subscriptions. Export subscriber data with renewal dates.
+- **Chargebee:** Subscriptions > Export. Includes MRR data if you've configured it.
+- **Recurly:** Analytics > Exports. Subscription-level data available.
+
+### Processing the Export
+
+1. Filter for active subscriptions only
+2. Normalize all amounts to monthly (divide annual by 12, quarterly by 3)
+3. Remove duplicates and one-time payments
+4. Sum the monthly amounts to get MRR
+
+The advantage over pure manual tracking: you're pulling data directly from the source, which reduces transcription errors. The downside: it's still a manual process, and you need to do it regularly to keep your MRR current.
 
 ## Method 3: Use a Multi-Processor Tool
 
-[AI Finance Ops](https://aifinanceops.app) supports Stripe natively. For other processors, use manual entry mode to input your subscriber list and get full MRR decomposition, churn tracking, and forecasting.
+If you're billing customers across multiple platforms — or if you want automation without switching to Stripe — a multi-processor analytics tool is the answer.
+
+[AI Finance Ops](https://aifinanceops.app) supports Stripe natively with automatic MRR calculation, decomposition, and forecasting. For other processors, use the manual entry mode to input your subscriber list and get full MRR tracking.
+
+### How AI Finance Ops Handles Non-Stripe Processors
+
+1. **Create a free account** — no credit card required
+2. **Add your subscribers manually** — enter customer name, plan, monthly amount, billing cycle, and status
+3. **Get full MRR decomposition** — new, expansion, contraction, and churned MRR tracked automatically
+4. **See churn tracking** — monitor customer and revenue churn over time
+5. **View runway projections** — forecast 12 months forward based on current trends
+
+This gives you the same metrics that Stripe users get — MRR, ARR, LTV, churn — without requiring Stripe as your payment processor.
+
+[Track your PayPal MRR with AI Finance Ops →](/blog/paypal-mrr-tracking)
 
 ## Method 4: Normalize Everything to Monthly
 
-The most common mistake is double-counting annual plans.
+The most common mistake when tracking MRR without Stripe is double-counting annual plans. This happens constantly and inflates your MRR by 12x for affected customers.
 
-- **Wrong:** Customer pays $1,200 upfront -- record $1,200 MRR in January
-- **Right:** Divide by 12 -- record $100 MRR each month
+**Wrong:** Customer pays $1,200 upfront → record $1,200 MRR in January
+
+**Right:** Divide by 12 → record $100 MRR each month
+
+The $1,200 hit your bank account in January, but your recurring revenue didn't spike. Your MRR represents the monthly run rate — what you're earning per month from that customer — not the cash you received.
+
+### Normalization Rules
+
+| Payment Type | What They Paid | MRR Contribution |
+|---|---|---|
+| Monthly subscription | $99/month | $99 |
+| Annual subscription | $1,200/year | $100/month |
+| Quarterly subscription | $300/quarter | $100/month |
+| One-time setup fee | $500 | $0 (not recurring) |
+| Custom contract | $24,000/year, paid monthly | $2,000/month |
+
+### Why This Matters
+
+If you have 20 customers on annual plans at $1,200/year, and you record the full annual amount as MRR, your reported MRR is $24,000. The actual MRR is $2,000. That's a 12x overstatement — a mistake that will destroy your credibility with investors.
+
+## When to Switch to Stripe
+
+If you're still billing manually or using a processor without native subscription tracking, consider switching to Stripe when:
+
+- You have more than 20 subscribers and manual tracking takes more than 2 hours per month
+- You need automated dunning (failed payment recovery)
+- You're preparing for a fundraise and need clean, auditable subscription data
+- You want to use tools like AI Finance Ops, Baremetrics, or ChartMogul that integrate directly with Stripe
+
+Stripe isn't the right choice for everyone — especially if your customers prefer PayPal or if you're selling in regions where Stripe has limited support. But for most SaaS businesses, Stripe's subscription infrastructure is worth the switch.
 
 ## The One Number That Matters
 
+Regardless of your payment processor, the metric that tells you if your business is growing is Net New MRR:
+
 ```
-Net New MRR = New MRR + Expansion MRR - Contraction MRR - Churned MRR
+Net New MRR = New MRR + Expansion MRR − Contraction MRR − Churned MRR
 ```
 
-If this number is positive every month, your business is growing.
+If this number is positive every month, your recurring revenue is growing. If it's negative, you're shrinking — even if total revenue looks fine because one-time income masks the decline.
 
-**Start tracking your MRR accurately:** [aifinanceops.app/register](https://aifinanceops.app/register)
+Track this number monthly. It's the single best indicator of whether your SaaS is on the right trajectory.
+
+## Start Tracking Your MRR Accurately
+
+Whether you use Stripe, PayPal, Gumroad, or manual billing, [AI Finance Ops](https://aifinanceops.app) gives you a unified view of your subscription metrics. Connect Stripe for automatic tracking, or enter subscribers manually for any processor. Get MRR decomposition, churn tracking, and runway forecasting — all in one place.
+
+**Start tracking free:** [aifinanceops.app/register](https://aifinanceops.app/register)
+
+[Try our free MRR calculator →](/mrr-calculator)
+
+## Frequently Asked Questions
+
+### Can I track MRR without Stripe using only Excel or Google Sheets?
+
+Yes. Create a spreadsheet with customer, plan, monthly amount, billing cycle, start date, status, and MRR contribution. Sum the active monthly amounts for total MRR. The limitation is scalability — this works for fewer than 50 subscribers but becomes error-prone and time-consuming beyond that.
+
+### What's the best way to handle annual plans when calculating MRR?
+
+Divide the annual amount by 12 to get the monthly contribution. A customer paying $1,200/year contributes $100/month to MRR. Do not count the full annual payment as a single month's MRR — that inflates your numbers and misrepresents your run rate.
+
+### Do I need to switch to Stripe to track MRR properly?
+
+No. You can track MRR manually or with multi-processor tools like AI Finance Ops. However, Stripe provides the cleanest subscription data and integrates with the most analytics tools. If your customer base is growing and manual tracking is becoming burdensome, Stripe is worth considering.
+
+### How often should I update my MRR?
+
+At minimum, once per month at the same time (ideally month-end). For more accurate tracking, update weekly or whenever a subscription change occurs (new signup, upgrade, downgrade, cancellation). AI Finance Ops and similar tools update automatically as your Stripe data changes.
+
+### What's the difference between gross MRR and net MRR?
+
+Gross MRR is the total recurring revenue from all active subscribers before any deductions. Net MRR subtracts churned and contracted revenue and adds expansion revenue. Net MRR is the more useful metric because it tells you whether your recurring revenue is actually growing.
