@@ -49,23 +49,26 @@ export function Navbar() {
         Skip to main content
       </a>
 
-      {!announcementDismissed && (
-        <div className="relative bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-center text-xs sm:text-sm py-2.5 px-4">
-          <span className="inline-flex items-center gap-1">
-            AI Finance Ops is live &mdash; early adopters get 50% off their first 3 months.{" "}
-            <Link href="/register" className="font-bold underline underline-offset-2 hover:no-underline">
-              Claim the launch offer
-            </Link>
-          </span>
-          <button
-            onClick={() => setAnnouncementDismissed(true)}
-            className="absolute right-1 top-1/2 -translate-y-1/2 min-h-[44px] min-w-[44px] flex items-center justify-center text-white/70 hover:text-white transition-colors"
-            aria-label="Dismiss announcement"
-          >
-            <X className="h-4 w-4" />
-          </button>
-        </div>
-      )}
+      <div
+        className={`sticky top-0 z-[60] bg-gradient-to-r from-emerald-600 to-teal-600 text-white text-center text-xs sm:text-sm py-2.5 px-4 transition-all duration-300 overflow-hidden ${
+          announcementDismissed ? "max-h-0 py-0 opacity-0" : "max-h-20 opacity-100"
+        }`}
+        aria-hidden={announcementDismissed}
+      >
+        <span className="inline-flex items-center gap-1">
+          AI Finance Ops is live &mdash; early adopters get 50% off their first 3 months.{" "}
+          <Link href="/register" className="font-bold underline underline-offset-2 hover:no-underline">
+            Claim the launch offer
+          </Link>
+        </span>
+        <button
+          onClick={() => setAnnouncementDismissed(true)}
+          className="absolute right-1 top-1/2 -translate-y-1/2 min-h-[44px] min-w-[44px] flex items-center justify-center text-white/70 hover:text-white transition-colors"
+          aria-label="Dismiss announcement"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      </div>
 
       <header
         className={`sticky top-0 z-50 transition-all duration-300 ${
