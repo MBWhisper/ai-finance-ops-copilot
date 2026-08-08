@@ -426,7 +426,7 @@ export default function SaaSBenchmarks2026Page() {
             </div>
             <div className="mt-8 grid sm:grid-cols-3 gap-4">
               <Link
-                href="/churn-calculator"
+                href="/churn-rate-calculator"
                 className="group block border border-gray-800 bg-gray-900/50 hover:border-emerald-500/40 hover:bg-emerald-500/5 rounded-xl p-5 transition-all"
               >
                 <div className="text-2xl mb-3">📉</div>
@@ -804,7 +804,7 @@ export default function SaaSBenchmarks2026Page() {
                   target <strong className="text-white">below 1% monthly churn</strong>.
                   Annual churn above 50% signals serious retention problems. Calculate your
                   churn with our{" "}
-                  <Link href="/churn-calculator" className="text-emerald-400 hover:underline">
+                  <Link href="/churn-rate-calculator" className="text-emerald-400 hover:underline">
                     Churn Rate Calculator
                   </Link>.
                 </p>

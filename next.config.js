@@ -100,6 +100,16 @@ const nextConfig = {
     return config
   },
 
+  async redirects() {
+    return [
+      {
+        source: '/churn-calculator',
+        destination: '/churn-rate-calculator',
+        permanent: true,
+      },
+    ]
+  },
+
   async headers() {
     return [
       {

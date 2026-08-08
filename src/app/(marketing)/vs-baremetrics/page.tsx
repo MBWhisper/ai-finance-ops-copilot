@@ -119,7 +119,7 @@ export default function VsBaremetricsPage() {
               <p className="mt-6 text-xl leading-8 text-gray-400 max-w-2xl mx-auto">
                 Baremetrics costs $308/month and has no AI features. AI Finance Ops gives early-stage SaaS founders{" "}
                 <Link href="/mrr-tracker" className="text-emerald-400 hover:underline">MRR tracking</Link>,{" "}
-                <Link href="/churn-calculator" className="text-emerald-400 hover:underline">churn analysis</Link>,{" "}
+                <Link href="/churn-rate-calculator" className="text-emerald-400 hover:underline">churn analysis</Link>,{" "}
                 <Link href="/cash-flow-tracker" className="text-emerald-400 hover:underline">90-day cash flow forecasting</Link>,
                 and AI-powered insights — starting free.
               </p>
@@ -202,7 +202,7 @@ export default function VsBaremetricsPage() {
               </p>
               <div className="flex flex-wrap justify-center gap-3">
                 {[
-                  { href: "/churn-calculator",  label: "Churn Calculator" },
+                  { href: "/churn-rate-calculator", label: "Churn Calculator" },
                   { href: "/mrr-calculator",    label: "MRR Calculator" },
                   { href: "/arr-calculator",    label: "ARR Calculator" },
                   { href: "/runway-calculator", label: "Runway Calculator" },

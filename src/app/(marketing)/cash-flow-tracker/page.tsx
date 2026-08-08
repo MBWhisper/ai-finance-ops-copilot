@@ -144,7 +144,7 @@ export default function CashFlowTrackerPage() {
               Cash flow is the lifeblood of any SaaS business. Even profitable companies fail when they run out of cash.
               Tracking it alongside your{" "}
               <Link href="/mrr-tracker" className="text-emerald-400 hover:underline">MRR</Link>,{" "}
-              <Link href="/churn-calculator" className="text-emerald-400 hover:underline">churn rate</Link>, and{" "}
+              <Link href="/churn-rate-calculator" className="text-emerald-400 hover:underline">churn rate</Link>, and{" "}
               <Link href="/runway-calculator" className="text-emerald-400 hover:underline">runway</Link>{" "}
               gives you the full financial picture.
             </p>

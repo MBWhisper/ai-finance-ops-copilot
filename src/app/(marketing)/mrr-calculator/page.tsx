@@ -310,7 +310,7 @@ export default function MRRCalculatorPage() {
           </h2>
           <div className="grid md:grid-cols-2 gap-6">
             {[
-              { label: "Track churn",          link: "/churn-calculator",   desc: "Churned MRR is the silent killer. Calculate your churn rate now." },
+              { label: "Track churn",          link: "/churn-rate-calculator", desc: "Churned MRR is the silent killer. Calculate your churn rate now." },
               { label: "Calculate ARR",         link: "/arr-calculator",     desc: "Annual Recurring Revenue — what investors actually look at." },
               { label: "Forecast cash flow",    link: "/cash-flow-tracker",  desc: "MRR doesn't equal cash. Track when money actually arrives." },
               { label: "Measure LTV",           link: "/ltv-calculator",     desc: "Is your MRR per customer enough to justify your CAC?" },

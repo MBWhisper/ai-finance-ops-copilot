@@ -8,7 +8,7 @@ type LinkItem = {
 }
 
 const allTools: LinkItem[] = [
-  { href: "/churn-calculator",     label: "Churn Rate Calculator",       description: "Calculate monthly & annual churn instantly",        emoji: "📉" },
+  { href: "/churn-rate-calculator", label: "Churn Rate Calculator",       description: "Calculate monthly & annual churn instantly",        emoji: "📉" },
   { href: "/churn-rate-calculator",label: "Churn Rate Calculator (v2)",  description: "Detailed churn analysis with revenue impact",        emoji: "📊" },
   { href: "/mrr-calculator",       label: "MRR Calculator",              description: "Calculate Monthly Recurring Revenue",               emoji: "💰" },
   { href: "/mrr-tracker",          label: "MRR Tracker",                 description: "Track MRR growth trends over time",                  emoji: "📈" },

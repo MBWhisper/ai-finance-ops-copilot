@@ -40,7 +40,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/churn-rate-calculator`,         lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE}/ltv-calculator`,                lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE}/cash-flow-tracker`,             lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
-    { url: `${BASE}/churn-calculator`,              lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
     // Landing Pages
     { url: `${BASE}/stripe-mrr-dashboard`,          lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE}/saas-cash-flow-forecast`,       lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },

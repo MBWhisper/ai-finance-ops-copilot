@@ -342,7 +342,7 @@ export default function ARRCalculatorPage() {
             ARR is just one piece of the puzzle. Pair it with your{' '}
             <Link href="/mrr-calculator" className="text-emerald-400 hover:underline">MRR calculator</Link>{' '}
             to track monthly growth, your{' '}
-            <Link href="/churn-calculator" className="text-emerald-400 hover:underline">churn rate</Link>{' '}
+            <Link href="/churn-rate-calculator" className="text-emerald-400 hover:underline">churn rate</Link>{' '}
             to see how much ARR you&apos;re losing, and your{' '}
             <Link href="/runway-calculator" className="text-emerald-400 hover:underline">runway calculator</Link>{' '}
             to know how long your current ARR sustains the business.
