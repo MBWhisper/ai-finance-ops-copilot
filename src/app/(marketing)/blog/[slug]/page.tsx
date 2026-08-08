@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { notFound } from 'next/navigation'
 import { getCoverImage } from '@/lib/post-covers'
+import { FaqSchema } from '@/components/FaqSchema'
 
 interface Frontmatter {
   title: string
@@ -105,6 +106,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
       ),
       th: (props) => <th className="border-b border-slate-700 px-4 py-3 font-semibold text-slate-200" {...props} />,
       td: (props) => <td className="border-b border-slate-800 px-4 py-3 text-slate-300" {...props} />,
+      FaqSchema,
     },
   })
 
