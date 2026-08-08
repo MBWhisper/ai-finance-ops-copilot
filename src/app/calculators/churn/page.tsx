@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 
+export const metadata = { robots: { index: false, follow: true } };
+
 export default function ChurnCalculatorPage() {
   const [startCustomers, setStartCustomers] = useState("");
   const [lostCustomers, setLostCustomers] = useState("");

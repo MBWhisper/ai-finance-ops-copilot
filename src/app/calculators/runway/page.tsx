@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 
+export const metadata = { robots: { index: false, follow: true } };
+
 export default function RunwayCalculatorPage() {
   const [cashBalance, setCashBalance] = useState("");
   const [monthlyRevenue, setMonthlyRevenue] = useState("");

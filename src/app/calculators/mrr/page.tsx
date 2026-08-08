@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 
+export const metadata = { robots: { index: false, follow: true } };
+
 export default function MRRCalculatorPage() {
   const [newCustomers, setNewCustomers] = useState("");
   const [avgRevenue, setAvgRevenue] = useState("");
