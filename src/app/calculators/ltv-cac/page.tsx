@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 
-export const metadata = { robots: { index: false, follow: true } };
 
 export default function LTVCACCalculatorPage() {
   const [avgRevenue, setAvgRevenue] = useState("");
