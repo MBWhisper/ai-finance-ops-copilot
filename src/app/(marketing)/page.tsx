@@ -67,6 +67,10 @@ function DashboardScreenshot() {
             </div>
             {/* Dashboard Content */}
             <div className="relative rounded-b-xl bg-gray-950 p-4 sm:p-6">
+              {/* Illustrative data disclaimer */}
+              <div className="mb-4 flex items-center justify-center gap-1.5 rounded-md border border-dashed border-gray-700 bg-gray-900/30 px-3 py-1.5 text-[11px] text-gray-500">
+                Illustrative dashboard data — your real metrics appear after connecting Stripe
+              </div>
               {/* Annotation Badges */}
               <div className="absolute right-4 top-4 hidden rounded-full bg-red-500/10 border border-red-500/20 px-3 py-1 text-xs font-medium text-red-400 sm:block">
                 Churn alert
