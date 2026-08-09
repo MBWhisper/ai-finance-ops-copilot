@@ -18,7 +18,6 @@ const MRRCalculator = dynamic(() => import("@/components/marketing/MRRCalculator
 const SocialProofSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.SocialProofSection })), { ssr: false })
 const ProblemSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.ProblemSection })), { ssr: false })
 const ComparisonTableSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.ComparisonTableSection })), { ssr: false })
-const StatsSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.StatsSection })), { ssr: false })
 const PricingSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.PricingSection })), { ssr: false })
 const TestimonialsSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.TestimonialsSection })), { ssr: false })
 const FAQSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.FAQSection })), { ssr: false })
@@ -32,7 +31,6 @@ export {
   SocialProofSection,
   ProblemSection,
   ComparisonTableSection,
-  StatsSection,
   PricingSection,
   TestimonialsSection,
   FAQSection,

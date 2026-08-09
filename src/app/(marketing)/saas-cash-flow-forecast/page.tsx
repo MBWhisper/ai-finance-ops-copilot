@@ -59,7 +59,7 @@ const faqSchema = {
       name: 'Is my financial data safe?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Yes. We use read-only Stripe OAuth — we can never initiate charges. Data is encrypted at rest and in transit. We are SOC 2 Type II compliant.',
+        text: 'Yes. We use read-only Stripe OAuth — we can never initiate charges. Data is encrypted at rest and in transit.',
       },
     },
   ],
@@ -129,7 +129,7 @@ const FAQS = [
   },
   {
     q: 'Is my financial data safe?',
-    a: 'Yes. We use read-only Stripe OAuth — we can never initiate charges. Data is encrypted at rest and in transit. We are SOC 2 Type II compliant.',
+    a: 'Yes. We use read-only Stripe OAuth — we can never initiate charges. Data is encrypted at rest and in transit.',
   },
 ]
 

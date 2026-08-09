@@ -122,7 +122,7 @@ export default function BaremetricsAlternativePage() {
                 Watch 2-min Demo
               </Link>
             </div>
-            <p className="mt-4 text-sm text-gray-500">Trusted by 200+ bootstrapped founders · Free forever plan available</p>
+            <p className="mt-4 text-sm text-gray-500">Built for bootstrapped founders · Free forever plan available</p>
           </div>
         </section>
 

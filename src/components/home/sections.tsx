@@ -129,8 +129,8 @@ export function FeaturesSection() {
 export function ComparisonTableSection() {
   const rows = [
     { label: "Price", values: ["From $29", "From $79", "From $199"] },
-    { label: "Free Plan", values: ["✅", "❌", "❌"] },
-    { label: "AI Forecasting", values: ["✅", "❌", "❌"] },
+    { label: "Free Plan", values: ["Yes", "No", "No"] },
+    { label: "AI Forecasting", values: ["Yes", "No", "No"] },
     { label: "Setup time", values: ["5 minutes", "30 minutes", "2+ hours"] },
     { label: "Built for", values: ["Founders", "SMB teams", "Enterprise"] },
   ]
@@ -150,7 +150,7 @@ export function ComparisonTableSection() {
               <thead>
                 <tr className="border-b border-gray-800">
                   <th scope="col" className="pb-4 pr-4 text-sm font-semibold text-gray-400" />
-                  <th scope="col" className="pb-4 px-4 text-sm font-semibold text-emerald-400">aifinanceops</th>
+                  <th scope="col" className="pb-4 px-4 text-sm font-semibold text-emerald-400">AI Finance Ops</th>
                   <th scope="col" className="pb-4 px-4 text-sm font-semibold text-gray-400">Baremetrics</th>
                   <th scope="col" className="pb-4 px-4 text-sm font-semibold text-gray-400">ChartMogul</th>
                 </tr>
@@ -224,9 +224,9 @@ export function ReassuranceSection() {
 
 export function PricingSection() {
   const plans = [
-    { name: "Starter", price: 29, desc: "For solo founders getting started", features: ["1 workspace", "KPI dashboard (MRR, ARR, Churn)", "30-day cash flow forecast", "Single billing integration", "Email support"], highlighted: false },
-    { name: "Growth", price: 79, desc: "For growing SaaS teams", features: ["3 workspaces", "Everything in Starter", "90-day P50/P80/P95 forecast", "Multiple billing integrations", "Smart AR reminders", "Priority support"], highlighted: true },
-    { name: "Scale", price: 199, desc: "For established businesses", features: ["Unlimited workspaces", "Everything in Growth", "API access & webhooks", "AI-powered insights", "Custom integrations", "Dedicated account manager"], highlighted: false },
+    { name: "Free", price: 0, desc: "For founders exploring their numbers", features: ["Up to 2 connected accounts", "MRR tracking only", "30-day history", "Community support"], highlighted: false },
+    { name: "Founder", price: 29, desc: "For solo founders getting started", features: ["1 workspace", "KPI dashboard (MRR, ARR, Churn)", "30-day cash flow forecast", "Single billing integration", "Email support"], highlighted: true },
+    { name: "Growth", price: 79, desc: "For growing SaaS teams", features: ["3 workspaces", "Everything in Founder", "90-day P50/P80/P95 forecast", "Multiple billing integrations", "Smart AR reminders", "Priority support"], highlighted: false },
   ]
 
   return (
@@ -262,8 +262,8 @@ export function PricingSection() {
                   ))}
                 </ul>
                 <Link href="/register" className="mt-8 block">
-                  <span className={`flex w-full items-center justify-center rounded-lg px-6 py-3 text-sm font-semibold transition-all ${plan.highlighted ? "bg-emerald-600 text-white hover:bg-emerald-500 shadow-lg shadow-emerald-600/25" : "border border-gray-700 text-gray-300 hover:border-gray-500 hover:text-white"}`}>
-                    Start Free Trial
+                  <span className={`flex w-full items-center justify-center rounded-lg px-6 py-3 text-sm font-semibold transition-all min-h-[48px] ${plan.highlighted ? "bg-emerald-600 text-white hover:bg-emerald-500 shadow-lg shadow-emerald-600/25" : "border border-gray-700 text-gray-300 hover:border-gray-500 hover:text-white"}`}>
+                    {plan.price === 0 ? "Get Started Free" : "Start Free Trial"}
                   </span>
                 </Link>
               </div>
@@ -271,7 +271,7 @@ export function PricingSection() {
           ))}
         </div>
         <ScrollReveal>
-          <p className="mt-8 text-center text-sm text-gray-400">14-day free trial &bull; No credit card required &bull; Cancel anytime</p>
+          <p className="mt-8 text-center text-sm text-gray-400">14-day free trial on paid plans &bull; No credit card required &bull; Cancel anytime</p>
         </ScrollReveal>
       </div>
     </section>
@@ -364,21 +364,7 @@ export function TestimonialsSection() {
   )
 }
 
-export function StatsSection() {
-  return (
-    <section className="border-t border-gray-800 px-6 py-16">
-      <div className="mx-auto max-w-5xl">
-        <ScrollReveal>
-          <div className="grid gap-8 md:grid-cols-3">
-            <AnimatedCounter target={200} suffix="+" label="Founders using AI Finance Ops" />
-            <AnimatedCounter target={2000000} suffix="+" label="MRR tracked" prefix="$" />
-            <AnimatedCounter target={12000} suffix="+" label="Invoices processed" />
-          </div>
-        </ScrollReveal>
-      </div>
-    </section>
-  )
-}
+
 
 export function FAQSection() {
   return (

@@ -184,7 +184,7 @@ export default function StripeMRRDashboardPage() {
               </Link>
             </div>
           </div>
-          <p className="mt-5 text-xs text-gray-600">Trusted by 200+ bootstrapped founders</p>
+          <p className="mt-5 text-xs text-gray-600">Built for bootstrapped founders</p>
         </div>
       </section>
 

@@ -19,7 +19,7 @@ const FREE_PLAN = {
 
 const PAID_PLANS = [
   {
-    name: "Starter",
+    name: "Founder",
     price: 29,
     desc: "For solo founders getting started",
     features: [
@@ -31,7 +31,7 @@ const PAID_PLANS = [
     ],
     checkoutUrl: "https://ai-finance-ops.lemonsqueezy.com/checkout/buy/8d014d41-35a8-4d91-87a8-fbd63080e700",
     annualCheckoutUrl: "https://ai-finance-ops.lemonsqueezy.com/checkout/buy/8d014d41-35a8-4d91-87a8-fbd63080e700",
-    highlighted: false,
+    highlighted: true,
   },
   {
     name: "Growth",
@@ -39,7 +39,7 @@ const PAID_PLANS = [
     desc: "For growing SaaS teams",
     features: [
       "3 workspaces",
-      "Everything in Starter",
+      "Everything in Founder",
       "90-day P50/P80/P95 forecast",
       "Multiple billing integrations",
       "Smart AR reminders",
@@ -47,22 +47,6 @@ const PAID_PLANS = [
     ],
     checkoutUrl: "https://ai-finance-ops.lemonsqueezy.com/checkout/buy/4aa74f04-b732-410d-a862-d96573728dd4",
     annualCheckoutUrl: "https://ai-finance-ops.lemonsqueezy.com/checkout/buy/4aa74f04-b732-410d-a862-d96573728dd4",
-    highlighted: true,
-  },
-  {
-    name: "Scale",
-    price: 199,
-    desc: "For established businesses",
-    features: [
-      "Unlimited workspaces",
-      "Everything in Growth",
-      "API access & webhooks",
-      "AI-powered insights",
-      "Custom integrations",
-      "Dedicated account manager",
-    ],
-    checkoutUrl: "https://ai-finance-ops.lemonsqueezy.com/checkout/buy/6944b5a1-7fc9-4439-987c-d1e8d214877f",
-    annualCheckoutUrl: "https://ai-finance-ops.lemonsqueezy.com/checkout/buy/6944b5a1-7fc9-4439-987c-d1e8d214877f",
     highlighted: false,
   },
 ]
@@ -96,7 +80,7 @@ export default function PricingCards() {
         </div>
       </div>
 
-      <div className="grid gap-8 lg:grid-cols-4">
+      <div className="grid gap-8 lg:grid-cols-3">
         {/* Free Plan */}
         <div className="relative flex flex-col rounded-2xl border border-gray-800 bg-gray-900/50 p-8 hover:border-emerald-500/50 transition-colors">
           <h3 className="text-xl font-bold text-white">{FREE_PLAN.name}</h3>

@@ -1,6 +1,6 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { ArrowRight, Play, ChevronDown } from "lucide-react"
+import { ArrowRight, Play, ChevronDown, AlertTriangle, TrendingDown, DollarSign } from "lucide-react"
 
 export const metadata: Metadata = {
   title: 'AI Finance Ops — SaaS Financial Dashboard & AI Copilot for Founders',
@@ -34,13 +34,11 @@ import { ProductHuntBadge } from "@/components/marketing/ProductHuntBadge"
 import {
   HeroCanvas,
   LiveVisitorBadge,
-  PhoneMockupPreview,
   NewsletterSignup,
   MRRCalculator,
   SocialProofSection,
   ProblemSection,
   ComparisonTableSection,
-  StatsSection,
   PricingSection,
   TestimonialsSection,
   FAQSection,
@@ -49,6 +47,151 @@ import {
 // Above-fold sections: keep ssr:true so they render in initial HTML
 const FeaturesSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.FeaturesSection })), { ssr: true })
 const ReassuranceSection = dynamic(() => import("@/components/home/sections").then(m => ({ default: m.ReassuranceSection })), { ssr: true })
+
+function DashboardScreenshot() {
+  return (
+    <section className="px-6 py-12 sm:py-16">
+      <div className="mx-auto max-w-4xl">
+        <ScrollReveal>
+          <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-1 shadow-2xl shadow-emerald-500/5">
+            {/* Browser Chrome */}
+            <div className="flex items-center gap-2 rounded-t-xl border-b border-gray-800 bg-gray-900 px-4 py-3">
+              <div className="flex gap-1.5">
+                <div className="h-3 w-3 rounded-full bg-red-500/80" />
+                <div className="h-3 w-3 rounded-full bg-yellow-500/80" />
+                <div className="h-3 w-3 rounded-full bg-green-500/80" />
+              </div>
+              <div className="ml-4 flex-1 rounded-md bg-gray-800/50 px-3 py-1.5 text-xs text-gray-500">
+                app.aifinanceops.app/dashboard
+              </div>
+            </div>
+            {/* Dashboard Content */}
+            <div className="relative rounded-b-xl bg-gray-950 p-4 sm:p-6">
+              {/* Annotation Badges */}
+              <div className="absolute right-4 top-4 hidden rounded-full bg-red-500/10 border border-red-500/20 px-3 py-1 text-xs font-medium text-red-400 sm:block">
+                Churn alert
+              </div>
+              <div className="absolute bottom-16 left-4 hidden rounded-full bg-blue-500/10 border border-blue-500/20 px-3 py-1 text-xs font-medium text-blue-400 sm:block">
+                MRR movement
+              </div>
+              <div className="absolute bottom-4 right-4 hidden rounded-full bg-emerald-500/10 border border-emerald-500/20 px-3 py-1 text-xs font-medium text-emerald-400 sm:block">
+                Runway forecast
+              </div>
+              {/* Metric Cards */}
+              <div className="grid gap-4 sm:grid-cols-3 mb-6">
+                <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-4">
+                  <div className="flex items-center gap-2 text-gray-400 text-xs font-medium mb-2">
+                    <DollarSign className="h-3.5 w-3.5" />
+                    MRR
+                  </div>
+                  <div className="text-2xl font-bold text-white">$24,850</div>
+                  <div className="mt-1 text-xs text-emerald-400 font-medium">+12.3% from last month</div>
+                </div>
+                <div className="rounded-xl border border-red-500/20 bg-red-500/5 p-4">
+                  <div className="flex items-center gap-2 text-gray-400 text-xs font-medium mb-2">
+                    <TrendingDown className="h-3.5 w-3.5" />
+                    Churn Rate
+                  </div>
+                  <div className="text-2xl font-bold text-white">3.2%</div>
+                  <div className="mt-1 flex items-center gap-1.5 text-xs text-red-400 font-medium">
+                    <AlertTriangle className="h-3 w-3" />
+                    Spike detected — 2 accounts at risk
+                  </div>
+                </div>
+                <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-4">
+                  <div className="flex items-center gap-2 text-gray-400 text-xs font-medium mb-2">
+                    <DollarSign className="h-3.5 w-3.5" />
+                    Cash Runway
+                  </div>
+                  <div className="text-2xl font-bold text-white">14 months</div>
+                  <div className="mt-1 text-xs text-emerald-400 font-medium">On track</div>
+                </div>
+              </div>
+              {/* Bar Chart */}
+              <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-4">
+                <div className="mb-4 text-sm font-medium text-gray-300">90-Day Cash Flow Forecast</div>
+                <div className="flex items-end gap-1.5 h-32">
+                  {[35, 42, 38, 55, 48, 62, 58, 72, 65, 78, 82, 88, 75, 92, 85, 95, 88, 98, 90, 92, 86, 94, 88, 96, 91, 99, 93, 97, 90, 100].map((h, i) => (
+                    <div
+                      key={i}
+                      className="flex-1 rounded-t bg-emerald-500/60 transition-all hover:bg-emerald-400"
+                      style={{ height: `${h}%` }}
+                    />
+                  ))}
+                </div>
+                <div className="mt-2 flex justify-between text-[10px] text-gray-500">
+                  <span>Jun</span>
+                  <span>Jul</span>
+                  <span>Aug</span>
+                  <span>Sep</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ScrollReveal>
+      </div>
+    </section>
+  )
+}
+
+function WhyFoundersSwitch() {
+  const cards = [
+    {
+      icon: "📊",
+      title: "Stripe Dashboard",
+      desc: "Shows raw data. No MRR, no churn rate, no runway forecast. You still have to calculate everything yourself.",
+      highlight: false,
+    },
+    {
+      icon: "📈",
+      title: "Spreadsheets",
+      desc: "Manual. Error-prone. Takes hours every month. One wrong formula and your entire forecast is off.",
+      highlight: false,
+    },
+    {
+      icon: "✅",
+      title: "AI Finance Ops",
+      desc: "Connects to Stripe in 5 minutes. Auto-calculates MRR, churn, runway, and cash flow. AI alerts you before problems hit.",
+      highlight: true,
+    },
+  ]
+
+  return (
+    <section className="border-t border-gray-800 px-6 py-24">
+      <div className="mx-auto max-w-5xl">
+        <ScrollReveal>
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-white">Why founders switch</h2>
+            <p className="mt-4 text-lg text-gray-400">
+              Stop stitching data together. Start making decisions.
+            </p>
+          </div>
+        </ScrollReveal>
+        <div className="space-y-4">
+          {cards.map((card, i) => (
+            <ScrollReveal key={i} delay={i * 100}>
+              <div
+                className={`rounded-xl border p-6 ${
+                  card.highlight
+                    ? "border-emerald-500/30 bg-emerald-500/5"
+                    : "border-gray-800 bg-gray-900/50"
+                }`}
+              >
+                <div className="flex items-start gap-4">
+                  <span className="text-2xl mt-0.5">{card.icon}</span>
+                  <div>
+                    <h3 className="text-lg font-semibold text-white">{card.title}</h3>
+                    <p className="mt-1 text-gray-400 leading-relaxed">{card.desc}</p>
+                  </div>
+                </div>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
 
 export default function LandingPage() {
   return (
@@ -91,7 +234,7 @@ export default function LandingPage() {
                 "name": "Which payment processors do you support?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Currently Stripe, with more integrations including LemonSqueezy and PayPal coming soon."
+                  "text": "Stripe is fully supported today. PayPal and LemonSqueezy integrations are coming soon."
                 }
               },
               {
@@ -107,7 +250,7 @@ export default function LandingPage() {
                 "name": "What metrics can I track?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "MRR, ARR, churn rate, LTV, cash flow forecasts, and more — all updated in real-time from your billing integrations."
+                  "text": "MRR, ARR, churn rate, LTV, cash flow forecasts, and more — all updated in real-time from your Stripe account."
                 }
               },
               {
@@ -142,54 +285,33 @@ export default function LandingPage() {
                 <LiveVisitorBadge />
               </div>
             </ScrollReveal>
-            <h1 className="text-5xl font-bold tracking-tight text-white sm:text-7xl bg-gradient-to-r from-white via-emerald-300 to-white bg-clip-text text-transparent animate-gradient-shift">
-              SaaS Metrics for Founders Who Are Done With Spreadsheets
+            <h1 className="text-5xl font-bold tracking-tight text-white sm:text-7xl">
+              Your Stripe data is not a financial plan.
             </h1>
             <p className="mt-6 text-xl leading-8 text-gray-400 max-w-2xl mx-auto">
-              Know your MRR, churn, runway, and cash risks before they surprise you &mdash; in one clean dashboard. Connect Stripe in 5 minutes.
+              See MRR, churn, runway, and cash risks in one founder-friendly dashboard. Connect Stripe in 5 minutes.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 href="/register"
-                className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-8 py-4 text-base font-semibold text-white hover:bg-emerald-500 transition-all animate-pulse-glow shadow-lg shadow-emerald-600/20"
+                className="inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-8 py-4 text-base font-semibold text-white hover:bg-emerald-500 transition-all shadow-lg shadow-emerald-600/20 min-h-[48px]"
               >
-                Start Free &mdash; No Credit Card Needed
+                Connect Stripe — Start Free
                 <ArrowRight className="h-4 w-4" />
               </Link>
               <Link
                 href="/demo"
-                className="inline-flex items-center gap-2 rounded-lg border border-gray-700 bg-gray-900/50 px-8 py-4 text-base font-semibold text-gray-300 hover:border-emerald-500/50 hover:text-white transition-colors group"
+                className="inline-flex items-center gap-2 rounded-lg border border-gray-700 bg-gray-900/50 px-8 py-4 text-base font-semibold text-gray-300 hover:border-emerald-500/50 hover:text-white transition-colors group min-h-[48px]"
               >
                 <span className="flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/20 border border-emerald-500/30 group-hover:bg-emerald-500/30 transition-colors">
                   <Play className="h-3 w-3 text-emerald-400 fill-emerald-400" />
                 </span>
-                Watch 2-min demo
+                Watch the 2-minute demo
               </Link>
             </div>
 
             {/* ─── TRUST BAR ─── */}
             <div className="mt-10 flex flex-col items-center gap-3">
-              {/* Avatar stack + count */}
-              <div className="flex items-center gap-3">
-                <div className="flex -space-x-2">
-                  {["29", "34", "67", "12", "88"].map((seed, i) => (
-                    <img
-                      key={i}
-                      src={`https://api.dicebear.com/8.x/thumbs/svg?seed=${seed}&backgroundColor=059669,047857,065f46`}
-                      alt={`Founder avatar ${i + 1}`}
-                      width={32}
-                      height={32}
-                      loading="lazy"
-                      className="h-8 w-8 rounded-full border-2 border-gray-950 bg-gray-800"
-                    />
-                  ))}
-                </div>
-                <p className="text-sm text-gray-400">
-                  <span className="font-semibold text-white">200+</span> founders already tracking their MRR
-                </p>
-              </div>
-
-              {/* Trust signals row */}
               <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-gray-500">
                 <span className="flex items-center gap-1.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
@@ -218,6 +340,9 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* ─── DASHBOARD SCREENSHOT ─── */}
+        <DashboardScreenshot />
+
         {/* ─── LAZY-LOADED SECTIONS (below the fold) ─── */}
         <div className="content-visibility-section">
           <Suspense fallback={<div className="h-48 animate-pulse bg-gray-900/50" />}>
@@ -230,6 +355,26 @@ export default function LandingPage() {
             <ProblemSection />
           </Suspense>
         </div>
+
+        <Suspense fallback={<div className="h-96 animate-pulse bg-gray-900/50" />}>
+          <FeaturesSection />
+        </Suspense>
+
+        <div className="content-visibility-section">
+          <Suspense fallback={<div className="h-96 animate-pulse bg-gray-900/50" />}>
+            <MRRCalculator />
+          </Suspense>
+        </div>
+
+        <div className="content-visibility-section">
+          <Suspense fallback={<div className="h-48 animate-pulse bg-gray-900/50" />}>
+            <ComparisonTableSection />
+          </Suspense>
+        </div>
+
+        <Suspense fallback={<div className="h-64 animate-pulse bg-gray-900/50" />}>
+          <ReassuranceSection />
+        </Suspense>
 
         {/* ─── FOUNDER STORY ─── */}
         <section className="border-t border-gray-800 px-6 py-24">
@@ -290,8 +435,7 @@ export default function LandingPage() {
                     Just a clean dashboard that tells you what you need to know.
                   </p>
                   <p className="text-sm text-gray-400">
-                    Today, AI Finance Ops helps 200+ founders track their MRR, forecast runway, and
-                    automate AR — completely bootstrapped and built in public.
+                    AI Finance Ops tracks real MRR data for founders who are tired of spreadsheets.
                   </p>
                   <div className="flex items-center gap-3 pt-2">
                     <span className="text-xs text-gray-400">Follow the journey:</span>
@@ -308,42 +452,14 @@ export default function LandingPage() {
         </section>
 
         <Suspense fallback={<div className="h-96 animate-pulse bg-gray-900/50" />}>
-          <FeaturesSection />
-        </Suspense>
-
-        <div className="content-visibility-section">
-          <Suspense fallback={<div className="h-96 animate-pulse bg-gray-900/50" />}>
-            <MRRCalculator />
-          </Suspense>
-        </div>
-
-        <div className="content-visibility-section">
-          <Suspense fallback={<div className="h-32 animate-pulse bg-gray-900/50" />}>
-            <StatsSection />
-          </Suspense>
-        </div>
-
-        <div className="content-visibility-section">
-          <Suspense fallback={<div className="h-48 animate-pulse bg-gray-900/50" />}>
-            <ComparisonTableSection />
-          </Suspense>
-        </div>
-
-        <Suspense fallback={<div className="h-64 animate-pulse bg-gray-900/50" />}>
-          <ReassuranceSection />
-        </Suspense>
-
-        <Suspense fallback={<div className="h-96 animate-pulse bg-gray-900/50" />}>
-          <PhoneMockupPreview />
-        </Suspense>
-
-        <Suspense fallback={<div className="h-96 animate-pulse bg-gray-900/50" />}>
           <PricingSection />
         </Suspense>
 
         <Suspense fallback={<div className="h-64 animate-pulse bg-gray-900/50" />}>
           <TestimonialsSection />
         </Suspense>
+
+        <WhyFoundersSwitch />
 
         <Suspense fallback={<div className="h-48 animate-pulse bg-gray-900/50" />}>
           <FAQSection />
@@ -376,13 +492,13 @@ export default function LandingPage() {
               </div>
             </ScrollReveal>
             <ScrollReveal>
-              <h2 className="text-4xl font-bold text-white">Stop guessing. Start knowing.</h2>
+              <h2 className="text-4xl font-bold text-white">Your Stripe data is waiting.</h2>
               <p className="mt-4 text-lg text-gray-400">
-                Every day without clear metrics is a decision made in the dark. Get your MRR dashboard live in 5 minutes.
+                Connect in 5 minutes. See your real MRR, churn, and runway — no spreadsheets required.
               </p>
               <Link href="/register" className="mt-10 inline-flex">
-                <span className="group inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-10 py-4 text-lg font-semibold text-white hover:bg-emerald-500 transition-all animate-pulse-glow shadow-xl shadow-emerald-600/25">
-                  Start Free Today <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <span className="group inline-flex items-center gap-2 rounded-lg bg-emerald-600 px-10 py-4 text-lg font-semibold text-white hover:bg-emerald-500 transition-all shadow-xl shadow-emerald-600/25 min-h-[48px]">
+                  Connect Stripe — Start Free <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </span>
               </Link>
             </ScrollReveal>

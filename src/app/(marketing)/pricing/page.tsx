@@ -53,11 +53,11 @@ export default function PricingPage() {
               },
               {
                 q: 'Can I connect multiple payment processors?',
-                a: 'Yes. You can connect Stripe, PayPal, and LemonSqueezy. Revenue from all sources is unified into a single MRR dashboard.',
+                a: 'Stripe is fully supported today. PayPal and LemonSqueezy integrations are coming soon.',
               },
               {
                 q: 'Is my financial data safe?',
-                a: 'We use read-only OAuth access — we can never move money or modify your Stripe account. All data is encrypted at rest and in transit. We are SOC 2 compliant.',
+                a: 'We use read-only OAuth access — we can never move money or modify your Stripe account. All data is encrypted at rest and in transit.',
               },
               {
                 q: 'What happens after the free trial?',

@@ -74,7 +74,7 @@ export default function AiFinanceBootstrappedStartupsPage() {
               <Link href="/pricing" className="inline-flex items-center justify-center rounded-lg border border-white/20 px-6 py-3.5 text-sm text-gray-300 hover:border-white/40 hover:text-white active:bg-white/5 transition-colors min-h-[44px]">See Pricing</Link>
             </div>
           </div>
-          <p className="mt-5 text-xs text-gray-600">Replacing Baremetrics for 200+ bootstrapped founders · 50% off with code <code className="rounded bg-white/8 px-1.5 py-0.5 font-mono">LAUNCH50</code></p>
+          <p className="mt-5 text-xs text-gray-600">Built for bootstrapped founders · 50% off with code <code className="rounded bg-white/8 px-1.5 py-0.5 font-mono">LAUNCH50</code></p>
         </div>
       </section>
 

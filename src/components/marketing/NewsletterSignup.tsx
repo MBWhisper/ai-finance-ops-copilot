@@ -33,7 +33,7 @@ export function NewsletterSignup() {
         <ScrollReveal>
           <h3 className="text-xl font-bold text-white mb-2">Get SaaS finance tips</h3>
           <p className="text-sm text-gray-400 mb-6">
-            Join 200+ founders who receive weekly insights on MRR growth, cash flow, and bootstrapping.
+            Join founders who receive weekly insights on MRR growth, cash flow, and bootstrapping.
           </p>
           {status === "success" ? (
             <div className="flex items-center justify-center gap-2 rounded-lg bg-emerald-500/10 px-4 py-3 text-sm text-emerald-400">

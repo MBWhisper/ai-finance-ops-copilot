@@ -50,7 +50,7 @@ const faqs = [
   },
   {
     q: "Which payment processors do you support?",
-    a: "Currently Stripe is fully supported. LemonSqueezy and PayPal integrations are coming next. If you use a different processor, reach out and we'll prioritize it."
+    a: "Stripe is fully supported today. PayPal and LemonSqueezy integrations are coming soon. If you use a different processor, reach out and we'll prioritize it."
   },
   {
     q: "How is this different from Baremetrics?",
