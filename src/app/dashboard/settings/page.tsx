@@ -1043,6 +1043,7 @@ function StripeKeyFormInline() {
         type="password"
         placeholder="sk_live_..."
         required
+        aria-label="Stripe Secret Key"
         className="w-full rounded-md border border-gray-300 px-3 py-2 font-mono text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
       />
       <p className="text-xs text-gray-500">Find this in Stripe Dashboard → Developers → API keys</p>

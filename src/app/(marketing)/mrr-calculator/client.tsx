@@ -65,9 +65,9 @@ export function MRRCalculatorClient() {
             { label: 'ARPU', value: fmt(arpu), sub: 'Avg Revenue per User' },
           ].map(stat => (
             <div key={stat.label} className="rounded-xl border border-gray-800 bg-gray-900/50 p-5 text-center">
-              <p className="text-xs text-gray-500 mb-1">{stat.label}</p>
+              <p className="text-xs text-gray-400 mb-1">{stat.label}</p>
               <p className="text-2xl font-bold text-emerald-400">{stat.value}</p>
-              <p className="text-xs text-gray-600 mt-1">{stat.sub}</p>
+              <p className="text-xs text-gray-400 mt-1">{stat.sub}</p>
             </div>
           ))}
         </div>
@@ -78,15 +78,17 @@ export function MRRCalculatorClient() {
             <div key={plan.id} className="rounded-xl border border-gray-800 bg-gray-900/50 p-4">
               <div className="grid grid-cols-12 gap-3 items-center">
                 <input
-                  className="col-span-3 rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none"
+                  aria-label="Plan name"
+                  className="col-span-3 rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
                   placeholder="Plan name"
                   value={plan.name}
                   onChange={e => updatePlan(plan.id, 'name', e.target.value)}
                 />
                 <div className="col-span-3 relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">$</span>
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm">$</span>
                   <input
-                    className="w-full rounded-lg border border-gray-700 bg-gray-800 pl-7 pr-3 py-2 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none"
+                    aria-label="Plan price"
+                    className="w-full rounded-lg border border-gray-700 bg-gray-800 pl-7 pr-3 py-2 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
                     placeholder="Price"
                     type="number"
                     min="0"
@@ -95,7 +97,8 @@ export function MRRCalculatorClient() {
                   />
                 </div>
                 <input
-                  className="col-span-2 rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none"
+                  aria-label="Number of customers"
+                  className="col-span-2 rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
                   placeholder="Customers"
                   type="number"
                   min="0"
@@ -103,7 +106,8 @@ export function MRRCalculatorClient() {
                   onChange={e => updatePlan(plan.id, 'customers', e.target.value)}
                 />
                 <select
-                  className="col-span-3 rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:border-emerald-500 focus:outline-none"
+                  aria-label="Billing interval"
+                  className="col-span-3 rounded-lg border border-gray-700 bg-gray-800 px-3 py-2 text-sm text-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
                   value={plan.interval}
                   onChange={e => updatePlan(plan.id, 'interval', e.target.value)}
                 >

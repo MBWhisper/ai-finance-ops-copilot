@@ -353,7 +353,7 @@ export function TestimonialsSection() {
                       <p className="text-xs text-gray-400">{t.role}</p>
                     </div>
                   </div>
-                  <span className="text-xs text-gray-600 italic">{t.via}</span>
+                  <span className="text-xs text-gray-400 italic">{t.via}</span>
                 </div>
               </div>
             </ScrollReveal>

@@ -47,7 +47,7 @@ export function CancellationModal({ open, onClose, onConfirm }: CancellationModa
       <div className="relative bg-white rounded-xl shadow-xl border border-gray-200 w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
           <h2 className="text-lg font-semibold text-gray-900">Before you go...</h2>
-          <button onClick={onClose} className="p-1 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100">
+          <button onClick={onClose} aria-label="Close" className="p-1 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100">
             <X className="h-5 w-5" />
           </button>
         </div>

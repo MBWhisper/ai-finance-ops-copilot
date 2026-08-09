@@ -481,11 +481,11 @@ export default function CohortsPage() {
 
       {/* Customer Drill-Down Drawer (Desktop) */}
       {isDesktop && drilldown && (
-        <div className="fixed inset-y-0 right-0 z-50 w-96 bg-white shadow-2xl" role="dialog" aria-labelledby="drilldown-title">
+        <div className="fixed inset-y-0 right-0 z-50 w-96 bg-white shadow-2xl" role="dialog" aria-labelledby="drilldown-title-desktop">
           <div className="flex h-full flex-col">
             <div className="flex items-center justify-between border-b px-4 py-3">
               <div>
-                <h3 className="text-sm font-semibold text-gray-900" id="drilldown-title">Cohort Details</h3>
+                <h3 className="text-sm font-semibold text-gray-900" id="drilldown-title-desktop">Cohort Details</h3>
                 <p className="text-xs text-gray-500">
                   {drilldown.cohortDate} · M+{drilldown.monthIndex} · {drilldown.retention}% retention
                 </p>
@@ -552,7 +552,7 @@ export default function CohortsPage() {
           <div className="flex h-full flex-col">
             <div className="flex items-center justify-between border-b px-4 py-3">
               <div>
-                <h3 className="text-sm font-semibold text-gray-900" id="drilldown-title">Cohort Details</h3>
+                <h3 className="text-sm font-semibold text-gray-900" id="drilldown-title-mobile">Cohort Details</h3>
                 <p className="text-xs text-gray-500">
                   {drilldown.cohortDate} · M+{drilldown.monthIndex}
                 </p>

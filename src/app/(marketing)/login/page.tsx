@@ -190,18 +190,18 @@ export default function LoginPage() {
               <motion.form onSubmit={handleSubmit} className="space-y-5" initial="hidden" animate="visible" variants={{ visible: { transition: { staggerChildren: 0.05 } } }}>
                 <motion.div variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }} className="relative">
                   <input id="login-email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required placeholder=" " autoComplete="email"
-                    className="peer w-full h-12 rounded-xl border border-gray-800 bg-gray-900/50 px-4 pt-4 text-sm text-white placeholder-transparent focus:border-emerald-500/50 focus:outline-none focus:ring-0 transition-colors" />
+                    className="peer w-full h-12 rounded-xl border border-gray-800 bg-gray-900/50 px-4 pt-4 text-sm text-white placeholder-transparent focus:border-emerald-500/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 transition-colors" />
                   <label htmlFor="login-email"
                     className="absolute left-4 top-3.5 text-sm text-gray-500 transition-all duration-200 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:top-1.5 peer-focus:text-xs peer-focus:text-emerald-400 peer-[:not(:placeholder-shown)]:top-1.5 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-400">
                     Email address</label>
                 </motion.div>
                 <motion.div variants={{ hidden: { opacity: 0, y: 12 }, visible: { opacity: 1, y: 0 } }} className="relative">
                   <input id="login-password" type={showPassword ? "text" : "password"} value={password} onChange={(e) => setPassword(e.target.value)} required placeholder=" " autoComplete="current-password"
-                    className="peer w-full h-12 rounded-xl border border-gray-800 bg-gray-900/50 px-4 pt-4 pr-12 text-sm text-white placeholder-transparent focus:border-emerald-500/50 focus:outline-none focus:ring-0 transition-colors" />
+                    className="peer w-full h-12 rounded-xl border border-gray-800 bg-gray-900/50 px-4 pt-4 pr-12 text-sm text-white placeholder-transparent focus:border-emerald-500/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 transition-colors" />
                   <label htmlFor="login-password"
                     className="absolute left-4 top-3.5 text-sm text-gray-500 transition-all duration-200 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:top-1.5 peer-focus:text-xs peer-focus:text-emerald-400 peer-[:not(:placeholder-shown)]:top-1.5 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-400">
                     Password</label>
-                  <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-3 text-gray-500 hover:text-gray-300" tabIndex={-1}>
+                  <button type="button" onClick={() => setShowPassword(!showPassword)} aria-label={showPassword ? "Hide password" : "Show password"} className="absolute right-3 top-3 text-gray-500 hover:text-gray-300">
                     {showPassword ? <EyeOffSvg /> : <EyeSvg />}
                   </button>
                 </motion.div>
@@ -226,7 +226,7 @@ export default function LoginPage() {
             <motion.form onSubmit={handleMagicLink} initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="space-y-4">
               <div className="relative">
                 <input id="login-magic-email" type="email" value={magicEmail} onChange={(e) => setMagicEmail(e.target.value)} required placeholder=" " autoComplete="email"
-                  className="peer w-full h-12 rounded-xl border border-gray-800 bg-gray-900/50 px-4 pt-4 text-sm text-white placeholder-transparent focus:border-emerald-500/50 focus:outline-none focus:ring-0 transition-colors" />
+                  className="peer w-full h-12 rounded-xl border border-gray-800 bg-gray-900/50 px-4 pt-4 text-sm text-white placeholder-transparent focus:border-emerald-500/50 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500 transition-colors" />
                 <label htmlFor="login-magic-email"
                   className="absolute left-4 top-3.5 text-sm text-gray-500 transition-all duration-200 peer-placeholder-shown:top-3.5 peer-placeholder-shown:text-sm peer-placeholder-shown:text-gray-500 peer-focus:top-1.5 peer-focus:text-xs peer-focus:text-emerald-400 peer-[:not(:placeholder-shown)]:top-1.5 peer-[:not(:placeholder-shown)]:text-xs peer-[:not(:placeholder-shown)]:text-gray-400">
                   Email address</label>

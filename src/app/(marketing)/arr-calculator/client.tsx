@@ -36,7 +36,7 @@ export function ARRCalculatorClient() {
     : n >= 1_000 ? `$${(n / 1_000).toFixed(1)}K`
     : `$${n.toFixed(0)}`
 
-  const inputClass = "w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none"
+  const inputClass = "w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
 
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100">
@@ -65,26 +65,26 @@ export function ARRCalculatorClient() {
           <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5">
             <p className="text-xs text-gray-500 mb-1">ARR</p>
             <p className="text-3xl font-bold text-emerald-400">{fmt(arr)}</p>
-            <p className="text-xs text-gray-600 mt-1">Annual Recurring Revenue</p>
+            <p className="text-xs text-gray-400 mt-1">Annual Recurring Revenue</p>
           </div>
           <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5">
             <p className="text-xs text-gray-500 mb-1">MRR</p>
             <p className="text-3xl font-bold text-white">{fmt(mrrVal)}</p>
-            <p className="text-xs text-gray-600 mt-1">Monthly Recurring Revenue</p>
+            <p className="text-xs text-gray-400 mt-1">Monthly Recurring Revenue</p>
           </div>
           <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5">
             <p className="text-xs text-gray-500 mb-1">MoM Growth</p>
             <p className={`text-3xl font-bold ${mrrGrowth >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
               {mrrGrowth >= 0 ? '+' : ''}{mrrGrowth.toFixed(1)}%
             </p>
-            <p className="text-xs text-gray-600 mt-1">Month-over-month</p>
-          </div>
-          <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5">
+            <p className="text-xs text-gray-400 mt-1">Month-over-month</p>
+            </div>
+            <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5">
             <p className="text-xs text-gray-500 mb-1">ARR Growth</p>
             <p className={`text-3xl font-bold ${arrGrowth >= 0 ? 'text-emerald-400' : 'text-red-400'}`}>
               {arrGrowth >= 0 ? '+' : ''}{arrGrowth.toFixed(1)}%
             </p>
-            <p className="text-xs text-gray-600 mt-1">Month-over-month</p>
+            <p className="text-xs text-gray-400 mt-1">Month-over-month</p>
           </div>
         </div>
 
@@ -94,7 +94,7 @@ export function ARRCalculatorClient() {
             <TrendingUp className="h-4 w-4 text-emerald-400" />
             ARR Milestone Tracker
           </h2>
-          <p className="text-xs text-gray-500 mb-5">
+          <p className="text-xs text-gray-400 mb-5">
             {mrrGrowth > 0
               ? `Based on your current ${mrrGrowth.toFixed(1)}% MoM growth rate:`
               : 'Enter last month’s MRR to see milestone projections.'}
@@ -109,7 +109,7 @@ export function ARRCalculatorClient() {
                     <div className={`h-2 w-2 rounded-full ${reached ? 'bg-emerald-400' : 'bg-gray-700'}`} />
                     <span className={`text-sm font-semibold ${reached ? 'text-emerald-400' : 'text-gray-300'}`}>{m.label}</span>
                   </div>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-gray-400">
                     {reached ? '\u2713 Reached' : months === null ? 'Enter growth rate' : `~${months} months`}
                   </span>
                 </div>

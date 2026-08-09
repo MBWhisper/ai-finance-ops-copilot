@@ -88,7 +88,7 @@ export function CreateInvoiceModal({ open, onClose, onCreated }: CreateInvoiceMo
       <div className="relative bg-white rounded-xl shadow-xl border border-gray-200 w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto">
         <div className="flex items-center justify-between border-b border-gray-100 px-6 py-4">
           <h2 className="text-lg font-semibold text-gray-900">Create Invoice</h2>
-          <button onClick={onClose} className="p-1 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100">
+          <button onClick={onClose} aria-label="Close" className="p-1 rounded-lg text-gray-400 hover:text-gray-600 hover:bg-gray-100">
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -121,9 +121,10 @@ export function CreateInvoiceModal({ open, onClose, onCreated }: CreateInvoiceMo
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Amount *</label>
+              <label htmlFor="invoice-amount" className="block text-sm font-medium text-gray-700 mb-1">Amount *</label>
               <div className="flex gap-2">
                 <select
+                  aria-label="Currency"
                   value={currency}
                   onChange={e => setCurrency(e.target.value)}
                   className="rounded-lg border border-gray-200 px-2 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
@@ -133,6 +134,7 @@ export function CreateInvoiceModal({ open, onClose, onCreated }: CreateInvoiceMo
                   <option value="GBP">£</option>
                 </select>
                 <input
+                  id="invoice-amount"
                   type="number"
                   step="0.01"
                   min="0.01"

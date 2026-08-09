@@ -88,6 +88,7 @@ function ResourcesPanel({ expanded }: { expanded: boolean }) {
           <div key={group.group}>
             <button
               onClick={() => setOpenGroup(openGroup === group.group ? null : group.group)}
+              aria-expanded={openGroup === group.group}
               className="w-full flex items-center gap-2 px-2 py-1.5 rounded-lg text-xs font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition-colors"
             >
               <group.icon className="h-3.5 w-3.5 shrink-0 text-gray-400" />

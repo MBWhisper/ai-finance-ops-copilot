@@ -27,7 +27,7 @@ export function LTVCalculatorClient() {
 
   const health = getLTVHealth()
   const fmt = (n: number, decimals = 0) => n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: decimals })
-  const inputClass = "w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none"
+  const inputClass = "w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
 
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100">
@@ -63,7 +63,7 @@ export function LTVCalculatorClient() {
           <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5">
             <p className="text-xs text-gray-500 mb-1">Customer LTV</p>
             <p className="text-3xl font-bold text-emerald-400">{fmt(ltv)}</p>
-            <p className="text-xs text-gray-600 mt-1">avg lifetime value</p>
+            <p className="text-xs text-gray-400 mt-1">avg lifetime value</p>
           </div>
           <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5">
             <p className="text-xs text-gray-500 mb-1">LTV:CAC Ratio</p>
@@ -73,12 +73,12 @@ export function LTVCalculatorClient() {
           <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5">
             <p className="text-xs text-gray-500 mb-1">Avg Customer Lifetime</p>
             <p className="text-3xl font-bold text-white">{avgLifetime.toFixed(1)}</p>
-            <p className="text-xs text-gray-600 mt-1">months</p>
+            <p className="text-xs text-gray-400 mt-1">months</p>
           </div>
           <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5">
             <p className="text-xs text-gray-500 mb-1">CAC Payback Period</p>
             <p className="text-3xl font-bold text-white">{paybackMonths.toFixed(1)}</p>
-            <p className="text-xs text-gray-600 mt-1">months to recover CAC</p>
+            <p className="text-xs text-gray-400 mt-1">months to recover CAC</p>
           </div>
         </div>
 

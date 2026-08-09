@@ -160,7 +160,7 @@ export function TestimonialCarousel() {
       <p className="text-gray-200 text-lg leading-relaxed mb-6 transition-opacity duration-300">&ldquo;{t.quote}&rdquo;</p>
       <div>
         <p className="text-sm font-semibold text-white">{t.name}</p>
-        <p className="text-xs text-gray-500">{t.role}</p>
+        <p className="text-xs text-gray-400">{t.role}</p>
       </div>
 
       <div className="flex justify-center gap-2 mt-8" role="tablist" aria-label="Testimonials navigation">

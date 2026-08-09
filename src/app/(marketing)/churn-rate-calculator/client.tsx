@@ -30,7 +30,7 @@ export function ChurnCalculatorClient() {
 
   const health = getChurnHealth(customerChurn)
 
-  const inputClass = "w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none"
+  const inputClass = "w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
 
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100">
@@ -79,22 +79,22 @@ export function ChurnCalculatorClient() {
           <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5">
             <p className="text-xs text-gray-500 mb-1">Customer Churn Rate</p>
             <p className={`text-3xl font-bold ${health.color}`}>{customerChurn.toFixed(2)}%</p>
-            <p className="text-xs text-gray-600 mt-1">per month</p>
+            <p className="text-xs text-gray-400 mt-1">per month</p>
           </div>
           <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5">
             <p className="text-xs text-gray-500 mb-1">Revenue Churn Rate</p>
             <p className="text-3xl font-bold text-amber-400">{revenueChurn.toFixed(2)}%</p>
-            <p className="text-xs text-gray-600 mt-1">per month</p>
+            <p className="text-xs text-gray-400 mt-1">per month</p>
           </div>
           <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5">
             <p className="text-xs text-gray-500 mb-1">Net Revenue Retention</p>
             <p className={`text-3xl font-bold ${nrr >= 100 ? 'text-emerald-400' : 'text-red-400'}`}>{nrr.toFixed(1)}%</p>
-            <p className="text-xs text-gray-600 mt-1">{nrr >= 100 ? 'Negative churn!' : 'Below 100% = shrinking'}</p>
+            <p className="text-xs text-gray-400 mt-1">{nrr >= 100 ? 'Negative churn!' : 'Below 100% = shrinking'}</p>
           </div>
           <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5">
             <p className="text-xs text-gray-500 mb-1">Annualized Churn</p>
             <p className={`text-3xl font-bold ${health.color}`}>{Math.min(annualChurn, 100).toFixed(1)}%</p>
-            <p className="text-xs text-gray-600 mt-1">projected per year</p>
+            <p className="text-xs text-gray-400 mt-1">projected per year</p>
           </div>
         </div>
 

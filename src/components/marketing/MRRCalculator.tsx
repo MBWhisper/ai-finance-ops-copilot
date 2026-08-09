@@ -114,7 +114,7 @@ export function MRRCalculator() {
                   )
                 })}
               </div>
-              <div className="flex justify-between mt-1 text-xs text-gray-500">
+              <div className="flex justify-between mt-1 text-xs text-gray-400">
                 <span>Month 0</span>
                 <span>Month {months}</span>
               </div>

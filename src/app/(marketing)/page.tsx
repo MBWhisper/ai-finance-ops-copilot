@@ -61,14 +61,14 @@ function DashboardScreenshot() {
                 <div className="h-3 w-3 rounded-full bg-yellow-500/80" />
                 <div className="h-3 w-3 rounded-full bg-green-500/80" />
               </div>
-              <div className="ml-4 flex-1 rounded-md bg-gray-800/50 px-3 py-1.5 text-xs text-gray-500">
+              <div className="ml-4 flex-1 rounded-md bg-gray-800/50 px-3 py-1.5 text-xs text-gray-400">
                 app.aifinanceops.app/dashboard
               </div>
             </div>
             {/* Dashboard Content */}
             <div className="relative rounded-b-xl bg-gray-950 p-4 sm:p-6">
               {/* Illustrative data disclaimer */}
-              <div className="mb-4 flex items-center justify-center gap-1.5 rounded-md border border-dashed border-gray-700 bg-gray-900/30 px-3 py-1.5 text-[11px] text-gray-500">
+              <div className="mb-4 flex items-center justify-center gap-1.5 rounded-md border border-dashed border-gray-700 bg-gray-900/30 px-3 py-1.5 text-[11px] text-gray-400">
                 Illustrative dashboard data — your real metrics appear after connecting Stripe
               </div>
               {/* Annotation Badges */}
@@ -123,7 +123,7 @@ function DashboardScreenshot() {
                     />
                   ))}
                 </div>
-                <div className="mt-2 flex justify-between text-[10px] text-gray-500">
+                <div className="mt-2 flex justify-between text-[10px] text-gray-400">
                   <span>Jun</span>
                   <span>Jul</span>
                   <span>Aug</span>
@@ -316,7 +316,7 @@ export default function LandingPage() {
 
             {/* ─── TRUST BAR ─── */}
             <div className="mt-10 flex flex-col items-center gap-3">
-              <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-gray-500">
+              <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-xs text-gray-400">
                 <span className="flex items-center gap-1.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" />
                   Free forever plan
@@ -338,7 +338,7 @@ export default function LandingPage() {
           </div>
 
           {/* ─── SCROLL HINT ─── */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-gray-600 animate-bounce">
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 text-gray-400 animate-bounce">
             <span className="text-xs tracking-widest uppercase">Scroll</span>
             <ChevronDown className="h-4 w-4" />
           </div>

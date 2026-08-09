@@ -47,7 +47,7 @@ export function RunwayCalculatorClient() {
   }
 
   const fmt = (n: number) => n.toLocaleString('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 })
-  const inputClass = "w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none"
+  const inputClass = "w-full rounded-lg border border-gray-700 bg-gray-800 px-3 py-2.5 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
 
   return (
     <div className="min-h-screen bg-gray-950 text-gray-100">
@@ -86,27 +86,27 @@ export function RunwayCalculatorClient() {
             <p className={`text-3xl font-bold ${warningLevel === 'good' ? 'text-emerald-400' : warningLevel === 'warning' ? 'text-amber-400' : 'text-red-400'}`}>
               {isFinite(staticRunway) ? `${staticRunway.toFixed(1)} mo` : '∞'}
             </p>
-            <p className="text-xs text-gray-600 mt-1">at current net burn</p>
+            <p className="text-xs text-gray-400 mt-1">at current net burn</p>
           </div>
           <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5">
             <p className="text-xs text-gray-500 mb-1">Dynamic Runway</p>
             <p className="text-3xl font-bold text-emerald-400">
               {isFinite(dynamicRunway) ? `${dynamicRunway} mo` : '∞'}
             </p>
-            <p className="text-xs text-gray-600 mt-1">with {mrrGrowth}% MoM growth</p>
+            <p className="text-xs text-gray-400 mt-1">with {mrrGrowth}% MoM growth</p>
           </div>
           <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5">
             <p className="text-xs text-gray-500 mb-1">Net Monthly Burn</p>
             <p className="text-3xl font-bold text-white">{fmt(netBurn)}</p>
-            <p className="text-xs text-gray-600 mt-1">gross burn minus MRR</p>
+            <p className="text-xs text-gray-400 mt-1">gross burn minus MRR</p>
           </div>
           <div className="rounded-xl border border-gray-800 bg-gray-900/50 p-5">
             <p className="text-xs text-gray-500 mb-1">Cash Out Date</p>
             <p className="text-xl font-bold text-white flex items-center gap-2">
-              <Calendar className="h-4 w-4 text-gray-500" />
+              <Calendar className="h-4 w-4 text-gray-400" />
               {runwayDate(staticRunway)}
             </p>
-            <p className="text-xs text-gray-600 mt-1">static projection</p>
+            <p className="text-xs text-gray-400 mt-1">static projection</p>
           </div>
         </div>
 

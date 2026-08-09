@@ -61,9 +61,11 @@ export default function PricingCards() {
   return (
     <>
       <div className="flex items-center justify-center gap-3 mb-12">
-        <span className={`text-sm font-medium ${!annual ? 'text-white' : 'text-gray-500'}`}>Monthly</span>
+        <span className={`text-sm font-medium ${!annual ? 'text-white' : 'text-gray-400'}`}>Monthly</span>
         <button
           onClick={() => setAnnual(!annual)}
+          aria-pressed={annual}
+          aria-label="Toggle annual billing"
           className={`relative inline-flex h-7 w-12 items-center rounded-full transition-colors ${annual ? 'bg-emerald-500' : 'bg-gray-700'}`}
         >
           <span
@@ -71,7 +73,7 @@ export default function PricingCards() {
           />
         </button>
         <div className="flex items-center gap-2">
-          <span className={`text-sm font-medium ${annual ? 'text-white' : 'text-gray-500'}`}>Annual</span>
+          <span className={`text-sm font-medium ${annual ? 'text-white' : 'text-gray-400'}`}>Annual</span>
           {annual && (
             <span className="rounded-full bg-emerald-500/10 px-2 py-0.5 text-xs font-semibold text-emerald-400">
               Save 20%
@@ -87,7 +89,7 @@ export default function PricingCards() {
           <p className="mt-2 text-sm text-gray-400">{FREE_PLAN.desc}</p>
           <div className="mt-6">
             <span className="text-5xl font-bold text-white">$0</span>
-            <span className="text-gray-500">/mo</span>
+            <span className="text-gray-400">/mo</span>
           </div>
           <ul className="mt-8 flex-1 space-y-4">
             {FREE_PLAN.features.map((f) => (
@@ -128,9 +130,9 @@ export default function PricingCards() {
               <p className="mt-2 text-sm text-gray-400">{plan.desc}</p>
               <div className="mt-6">
                 <PriceDisplay monthly={displayPrice} />
-                <span className="text-gray-500">/mo</span>
+                <span className="text-gray-400">/mo</span>
                 {annual && (
-                  <p className="mt-1 text-xs text-gray-500">${Math.round(annualTotal)}/year</p>
+                  <p className="mt-1 text-xs text-gray-400">${Math.round(annualTotal)}/year</p>
                 )}
               </div>
               <ul className="mt-8 flex-1 space-y-4">

@@ -145,15 +145,15 @@ export default function OnboardingSteps() {
     <div className="min-h-screen flex items-center justify-center bg-gray-950 px-4">
       <div className="w-full max-w-lg">
         {/* Time estimate + skip reminder */}
-        <p className="mb-6 text-center text-sm text-gray-500">
+        <p className="mb-6 text-center text-sm text-gray-400">
           Takes 2 minutes &middot; You can skip and come back
         </p>
 
         {/* Progress bar */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-2">
-            <span className="text-xs font-medium text-gray-500">Step {step} of 3</span>
-            <span className="text-xs font-medium text-gray-500">{Math.round(progress)}%</span>
+            <span className="text-xs font-medium text-gray-400">Step {step} of 3</span>
+            <span className="text-xs font-medium text-gray-400">{Math.round(progress)}%</span>
           </div>
           <div className="h-2 rounded-full bg-gray-800">
             <div
@@ -165,7 +165,7 @@ export default function OnboardingSteps() {
             {[1, 2, 3].map((s) => (
               <div
                 key={s}
-                className={`flex items-center gap-1.5 ${s <= step ? "text-emerald-400" : "text-gray-600"}`}
+                className={`flex items-center gap-1.5 ${s <= step ? "text-emerald-400" : "text-gray-400"}`}
               >
                 <div
                   className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-bold ${
@@ -173,7 +173,7 @@ export default function OnboardingSteps() {
                       ? "bg-emerald-500 text-white"
                       : s === step
                         ? "border-2 border-emerald-500 text-emerald-400"
-                        : "border-2 border-gray-700 text-gray-600"
+                        : "border-2 border-gray-700 text-gray-400"
                   }`}
                 >
                   {s < step ? <Check className="h-3 w-3" /> : s}
@@ -190,7 +190,7 @@ export default function OnboardingSteps() {
         <div className="flex justify-end mb-4">
           <a
             href="/dashboard/overview"
-            className="text-sm text-gray-500 hover:text-gray-300 underline underline-offset-2 transition-colors"
+                  className="text-sm text-gray-400 hover:text-gray-300 underline underline-offset-2 transition-colors"
           >
             Skip for now
           </a>
@@ -205,20 +205,22 @@ export default function OnboardingSteps() {
             </p>
             <div className="mt-6 flex flex-col sm:flex-row gap-3">
               <select
+                aria-label="Currency"
                 value={currency}
                 onChange={(e) => setCurrency(e.target.value)}
-                className="w-full sm:w-auto rounded-lg border border-gray-700 bg-gray-800 px-3 py-3 text-sm text-white focus:border-emerald-500 focus:outline-none"
+                className="w-full sm:w-auto rounded-lg border border-gray-700 bg-gray-800 px-3 py-3 text-sm text-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
               >
                 {["USD", "EUR", "GBP", "MAD"].map((c) => (
                   <option key={c} value={c}>{c}</option>
                 ))}
               </select>
               <input
+                aria-label="Monthly Recurring Revenue"
                 type="number"
                 placeholder="12000"
                 value={mrr}
                 onChange={(e) => setMrr(e.target.value)}
-                className="w-full flex-1 rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none"
+                className="w-full flex-1 rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
               />
             </div>
             <Button
@@ -241,40 +243,40 @@ export default function OnboardingSteps() {
             </p>
             <div className="mt-6 space-y-4">
               <div>
-                <label className="block text-xs font-medium text-gray-500 mb-1">Customer Name</label>
+                <label className="block text-xs font-medium text-gray-400 mb-1">Customer Name</label>
                 <input
                   type="text"
                   placeholder="Acme Corp"
                   value={customerName}
                   onChange={(e) => setCustomerName(e.target.value)}
-                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none"
+                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-500 mb-1">Monthly Amount ($)</label>
+                <label className="block text-xs font-medium text-gray-400 mb-1">Monthly Amount ($)</label>
                 <input
                   type="number"
                   placeholder="999"
                   value={customerAmount}
                   onChange={(e) => setCustomerAmount(e.target.value)}
-                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none"
+                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-sm text-white placeholder-gray-500 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-500 mb-1">Due Date</label>
+                <label className="block text-xs font-medium text-gray-400 mb-1">Due Date</label>
                 <input
                   type="date"
                   value={customerDueDate}
                   onChange={(e) => setCustomerDueDate(e.target.value)}
-                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-sm text-white focus:border-emerald-500 focus:outline-none"
+                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-sm text-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
                 />
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-500 mb-1">Status</label>
+                <label className="block text-xs font-medium text-gray-400 mb-1">Status</label>
                 <select
                   value={customerStatus}
                   onChange={(e) => setCustomerStatus(e.target.value)}
-                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-sm text-white focus:border-emerald-500 focus:outline-none"
+                  className="w-full rounded-lg border border-gray-700 bg-gray-800 px-4 py-3 text-sm text-white focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/50"
                 >
                   <option value="active">Active</option>
                   <option value="trialing">Trialing</option>
@@ -296,7 +298,7 @@ export default function OnboardingSteps() {
                 <button
                   onClick={completeOnboarding}
                   disabled={loading}
-                  className="text-sm text-gray-500 hover:text-gray-300 underline underline-offset-2 transition-colors"
+            className="text-sm text-gray-400 hover:text-gray-300 underline underline-offset-2 transition-colors"
                 >
                   Skip for now
                 </button>

@@ -63,7 +63,7 @@ export function PhoneMockupPreview() {
                 <div className="bg-gray-950 px-3 py-3 space-y-3">
                   <div className="flex items-center justify-between mb-1">
                     <div>
-                      <p className="text-xs text-gray-500">Good morning 👋</p>
+                      <p className="text-xs text-gray-400">Good morning 👋</p>
                       <p className="text-sm font-semibold text-white">Dashboard</p>
                     </div>
                     <div className="w-7 h-7 rounded-full bg-emerald-600 flex items-center justify-center">
@@ -73,29 +73,29 @@ export function PhoneMockupPreview() {
 
                   <div className="grid grid-cols-2 gap-2">
                     <div className="bg-gray-800 rounded-2xl p-3">
-                      <p className="text-[10px] text-gray-500 mb-1">MRR</p>
+                      <p className="text-[10px] text-gray-400 mb-1">MRR</p>
                       <p className="text-base font-bold text-white">$12,480</p>
                       <p className="text-[10px] text-emerald-400 mt-0.5">↑ 18%</p>
                     </div>
                     <div className="bg-gray-800 rounded-2xl p-3">
-                      <p className="text-[10px] text-gray-500 mb-1">ARR</p>
+                      <p className="text-[10px] text-gray-400 mb-1">ARR</p>
                       <p className="text-base font-bold text-white">$149.7k</p>
                       <p className="text-[10px] text-emerald-400 mt-0.5">↑ 12%</p>
                     </div>
                     <div className="bg-gray-800 rounded-2xl p-3">
-                      <p className="text-[10px] text-gray-500 mb-1">Churn</p>
+                      <p className="text-[10px] text-gray-400 mb-1">Churn</p>
                       <p className="text-base font-bold text-white">3.2%</p>
                       <p className="text-[10px] text-red-400 mt-0.5">↓ 0.4%</p>
                     </div>
                     <div className="bg-gray-800 rounded-2xl p-3">
-                      <p className="text-[10px] text-gray-500 mb-1">Runway</p>
+                      <p className="text-[10px] text-gray-400 mb-1">Runway</p>
                       <p className="text-base font-bold text-white">14 mo</p>
                       <p className="text-[10px] text-gray-400 mt-0.5">Cash safe</p>
                     </div>
                   </div>
 
                   <div className="bg-gray-800 rounded-2xl p-3">
-                    <p className="text-[10px] text-gray-500 mb-2">Revenue — last 6 months</p>
+                      <p className="text-[10px] text-gray-400 mb-2">Revenue — last 6 months</p>
                     <div className="flex items-end gap-1 h-10">
                       {bars.map((h, i) => (
                         <div
@@ -113,7 +113,7 @@ export function PhoneMockupPreview() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <p className="text-[10px] text-white font-medium truncate">PayPal Business</p>
-                      <p className="text-[9px] text-gray-500">Synced 2 min ago</p>
+                      <p className="text-[9px] text-gray-400">Synced 2 min ago</p>
                     </div>
                     <div className="w-1.5 h-1.5 rounded-full bg-emerald-400 flex-shrink-0" />
                   </div>

@@ -31,7 +31,7 @@ export function NewsletterSignup() {
     <section className="border-t border-gray-800 px-6 py-16">
       <div className="mx-auto max-w-lg text-center">
         <ScrollReveal>
-          <h3 className="text-xl font-bold text-white mb-2">Get SaaS finance tips</h3>
+          <h2 className="text-xl font-bold text-white mb-2">Get SaaS finance tips</h2>
           <p className="text-sm text-gray-400 mb-6">
             Join founders who receive weekly insights on MRR growth, cash flow, and bootstrapping.
           </p>
@@ -63,7 +63,7 @@ export function NewsletterSignup() {
           {status === "error" && (
             <p className="mt-2 text-xs text-red-400">Something went wrong. Try again.</p>
           )}
-          <p className="mt-3 text-xs text-gray-500">No spam. Unsubscribe anytime.</p>
+          <p className="mt-3 text-xs text-gray-400">No spam. Unsubscribe anytime.</p>
         </ScrollReveal>
       </div>
     </section>
