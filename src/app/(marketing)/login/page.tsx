@@ -43,8 +43,7 @@ export default function LoginPage() {
       options: { emailRedirectTo: `${window.location.origin}/auth/callback?next=/onboarding` },
     })
     if (resendError) {
-      // eslint-disable-next-line no-console
-      console.error("[AUTH_LOGIN_RESEND_ERROR]", { email, message: resendError.message })
+      // Error handled silently — user sees generic failure UI
     } else {
       setResentConfirm(true)
     }
@@ -58,17 +57,12 @@ export default function LoginPage() {
     setNeedsConfirmation(false)
     setResentConfirm(false)
 
-    // eslint-disable-next-line no-console
-    console.log("[AUTH_LOGIN_START]", { email })
-
     const { error: signInError } = await supabase.auth.signInWithPassword({
       email,
       password,
     })
 
     if (signInError) {
-      // eslint-disable-next-line no-console
-      console.error("[AUTH_LOGIN_ERROR]", { email, code: signInError.code, message: signInError.message })
       const mapped = mapAuthError(signInError)
       setError(mapped)
       // Show resend link if credentials are "wrong" — could be unconfirmed
@@ -80,8 +74,6 @@ export default function LoginPage() {
       return
     }
 
-    // eslint-disable-next-line no-console
-    console.log("[AUTH_LOGIN_REDIRECT]", { destination: "/onboarding" })
     setSuccess(true)
     setTimeout(() => router.push("/onboarding"), 600)
   }
@@ -99,8 +91,6 @@ export default function LoginPage() {
     })
 
     if (magicErr) {
-      // eslint-disable-next-line no-console
-      console.error("[AUTH_MAGIC_ERROR]", { email: magicEmail, message: magicErr.message })
       setError(mapAuthError(magicErr))
       setMagicLoading(false)
       return

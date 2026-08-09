@@ -97,7 +97,7 @@ export default function CookieBanner() {
             rel="noopener noreferrer"
             className="underline text-emerald-400 hover:text-emerald-300"
           >
-            Learn more
+            Privacy Policy
           </a>
         </p>
         <div className="flex gap-2 shrink-0">

@@ -57,9 +57,6 @@ export default function RegisterPage() {
     setLoading(true)
     setError("")
 
-    // eslint-disable-next-line no-console
-    console.log("[AUTH_REGISTER_START]", { email })
-
     const { data, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
@@ -70,7 +67,6 @@ export default function RegisterPage() {
     })
 
     if (signUpError) {
-      console.error("[AUTH_REGISTER_ERROR]", { email, code: signUpError.code, message: signUpError.message })
       const mapped = mapAuthError(signUpError)
       if (signUpError.message?.toLowerCase().includes("email") && signUpError.message?.toLowerCase().includes("smtp")) {
         setConfirmScreen(true)
@@ -84,20 +80,13 @@ export default function RegisterPage() {
       return
     }
 
-    // eslint-disable-next-line no-console
-    console.log("[AUTH_REGISTER_RESULT]", { email, hasSession: !!data?.session, user: data?.user?.id })
-
     if (data?.session) {
-      // eslint-disable-next-line no-console
-      console.log("[AUTH_REGISTER_REDIRECT]", { destination: "/onboarding", via: "session" })
       setSuccess(true)
       setTimeout(() => router.push("/dashboard/overview"), 600)
       return
     }
 
     // No session → email confirmation is required by Supabase
-    // eslint-disable-next-line no-console
-    console.log("[AUTH_REGISTER_CONFIRM_REQUIRED]", { email })
     setConfirmScreen(true)
     setConfirmEmail(email)
     setLoading(false)
@@ -112,8 +101,6 @@ export default function RegisterPage() {
       options: { emailRedirectTo: `${process.env.NEXT_PUBLIC_APP_URL || window.location.origin}/auth/callback?next=/dashboard/overview` },
     })
     if (resendError) {
-      // eslint-disable-next-line no-console
-      console.error("[AUTH_RESEND_ERROR]", { email: confirmEmail, message: resendError.message })
       setError(mapAuthError(resendError))
     } else {
       setResent(true)
@@ -134,8 +121,6 @@ export default function RegisterPage() {
     })
 
     if (magicErr) {
-      // eslint-disable-next-line no-console
-      console.error("[AUTH_MAGIC_ERROR]", { email: magicEmail, message: magicErr.message })
       setError(mapAuthError(magicErr))
       setMagicLoading(false)
       return

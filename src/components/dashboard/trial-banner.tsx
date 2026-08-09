@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
@@ -10,13 +13,23 @@ interface TrialBannerProps {
 }
 
 export function TrialBanner({ trialEndsAt, plan, createdAt, showWelcome }: TrialBannerProps) {
+  const [daysSinceSignup, setDaysSinceSignup] = useState<number | null>(null);
+
+  useEffect(() => {
+    if (createdAt) {
+      setDaysSinceSignup(
+        Math.floor((Date.now() - new Date(createdAt).getTime()) / (1000 * 60 * 60 * 24))
+      );
+    } else {
+      setDaysSinceSignup(0);
+    }
+  }, [createdAt]);
+
   if (plan !== "starter" && plan !== "pro" && plan !== "free") {
     return null;
   }
 
-  const daysSinceSignup = createdAt
-    ? Math.floor((Date.now() - new Date(createdAt).getTime()) / (1000 * 60 * 60 * 24))
-    : 0;
+  if (daysSinceSignup === null) return null;
 
   if (daysSinceSignup === 0 && showWelcome) {
     return (

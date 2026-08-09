@@ -561,7 +561,7 @@ export default function LandingPage() {
               <div className="flex flex-wrap gap-4">
                 <Link href="/about" className="text-xs text-gray-400 hover:text-white transition-colors">About</Link>
                 <a href="mailto:hello@aifinanceops.app" className="text-xs text-gray-400 hover:text-white transition-colors">Contact</a>
-                <Link href="/privacy" className="text-xs text-gray-400 hover:text-white transition-colors">Privacy</Link>
+                <Link href="/privacy" className="text-xs text-gray-400 hover:text-white transition-colors">Privacy Policy</Link>
                 <a href="https://www.linkedin.com/in/mo-systemarchitect" target="_blank" rel="noopener noreferrer" className="text-xs text-gray-400 hover:text-white transition-colors">LinkedIn</a>
                 <a href="https://twitter.com/MbtechE80106" target="_blank" rel="noopener noreferrer" className="text-xs text-gray-400 hover:text-white transition-colors">Twitter / X</a>
               </div>
