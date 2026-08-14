@@ -577,7 +577,12 @@ export default function LandingPage() {
           </div>
           <div className="mt-8 border-t border-gray-800 pt-8">
             <p className="text-xs text-gray-400 mb-3">Featured on</p>
-            <ProductHuntBadge />
+            <div className="flex flex-wrap items-center gap-4">
+              <ProductHuntBadge />
+              <a href="https://aihuntlist.com/tool/ai-finance-ops-copilot" target="_blank" rel="noopener noreferrer">
+                <img src="https://frogdr.com/aihuntlist.com/badge-white-sm.svg?round=1" alt="Featured on AIHuntList" className="h-6" />
+              </a>
+            </div>
           </div>
           <div className="mt-8 border-t border-gray-800 pt-8">
             <p className="text-xs text-gray-400 mb-3">Recommended tools:</p>
