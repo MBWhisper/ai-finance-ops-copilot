@@ -346,5 +346,6 @@ export default function RegisterPage() {
         </motion.div>
       </div>
     </div>
+    </>
   )
 }
