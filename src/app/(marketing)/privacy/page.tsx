@@ -3,6 +3,7 @@ import { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Privacy Policy',
   description: 'How AI Finance Ops collects, uses, and protects your data. We are committed to protecting your privacy.',
+  robots: { index: false },
   alternates: { canonical: 'https://aifinanceops.app/privacy' },
   openGraph: {
     title: 'Privacy Policy — AI Finance Ops',

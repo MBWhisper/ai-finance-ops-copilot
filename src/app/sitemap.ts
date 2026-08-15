@@ -29,9 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/features`,                      lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE}/pricing`,                       lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE}/blog`,                          lastModified: new Date(), changeFrequency: 'daily',   priority: 0.9 },
-    { url: `${BASE}/register`,                      lastModified: new Date(), changeFrequency: 'monthly', priority: 0.8 },
     { url: `${BASE}/about`,                         lastModified: new Date(), changeFrequency: 'monthly', priority: 0.7 },
-    { url: `${BASE}/login`,                         lastModified: new Date(), changeFrequency: 'monthly', priority: 0.5 },
     // Free Tools (high search intent)
     { url: `${BASE}/runway-calculator`,             lastModified: new Date(), changeFrequency: 'monthly', priority: 0.95 },
     { url: `${BASE}/mrr-tracker`,                   lastModified: new Date(), changeFrequency: 'monthly', priority: 0.95 },
@@ -59,8 +57,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE}/what-is-mrr`,                   lastModified: new Date(), changeFrequency: 'monthly', priority: 0.9 },
     { url: `${BASE}/saas-benchmarks-2026`,          lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
     { url: `${BASE}/saas-financial-dashboard`,      lastModified: new Date(), changeFrequency: 'monthly', priority: 0.85 },
-    // Legal & info
-    { url: `${BASE}/privacy`,                       lastModified: new Date(), changeFrequency: 'yearly',  priority: 0.3 },
   ]
 
   const blogPages: MetadataRoute.Sitemap = posts.map(p => ({

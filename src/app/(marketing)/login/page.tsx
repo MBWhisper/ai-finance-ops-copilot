@@ -8,6 +8,7 @@ import { Logo } from "@/components/logo"
 import { Loader2, Check, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { mapAuthError } from "@/lib/auth/error-messages"
+import Head from "next/head"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -100,6 +101,8 @@ export default function LoginPage() {
   }
 
   return (
+    <>
+    <Head><meta name="robots" content="noindex, nofollow" /></Head>
     <div className="min-h-screen bg-gray-950 flex flex-col lg:flex-row">
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-emerald-950/40 items-center justify-center p-12 min-h-screen">
         <div className="absolute inset-0 overflow-hidden">
