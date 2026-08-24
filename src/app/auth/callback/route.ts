@@ -1,13 +1,18 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
-import { resend } from '@/lib/resend'
-import { buildWelcomeEmail } from '@/emails/welcome'
 
 export async function GET(request: NextRequest) {
   const { searchParams, origin } = new URL(request.url)
   const code = searchParams.get('code')
   const next = searchParams.get('next') ?? '/dashboard/overview'
+  const error = searchParams.get('error')
+
+  // Log errors from OAuth provider
+  if (error) {
+    console.error('[AUTH_CALLBACK] OAuth error:', error, searchParams.get('error_description'))
+    return NextResponse.redirect(`${origin}/login?error=${error}`)
+  }
 
   if (code) {
     const response = NextResponse.redirect(`${origin}${next}`)
@@ -19,30 +24,17 @@ export async function GET(request: NextRequest) {
           getAll() { return request.cookies.getAll() },
           setAll(cookiesToSet: { name: string; value: string; options: CookieOptions }[]) {
             cookiesToSet.forEach(({ name, value, options }) =>
-              response.cookies.set(name, value, options)
+              response.cookies.set(name, value, { ...options, sameSite: 'lax', path: '/' })
             )
           },
         },
       }
     )
-    const { error } = await supabase.auth.exchangeCodeForSession(code)
-    if (!error) {
-      // Send welcome email — never block auth flow on email failure
-      try {
-        const { data: { user } } = await supabase.auth.getUser()
-        if (user?.email) {
-          await resend.emails.send({
-            from: 'Mo from AI Finance Ops <mo@aifinanceops.app>',
-            to: user.email,
-            subject: 'Welcome to AI Finance Ops 🚀',
-            html: buildWelcomeEmail({ firstName: user.user_metadata?.full_name }),
-          })
-        }
-      } catch {
-        // Email failure must never break auth
-      }
+    const { error: exchangeError } = await supabase.auth.exchangeCodeForSession(code)
+    if (!exchangeError) {
       return response
     }
+    console.error('[AUTH_CALLBACK] Exchange error:', exchangeError.message)
   }
 
   return NextResponse.redirect(`${origin}/login?error=auth_callback_failed`)

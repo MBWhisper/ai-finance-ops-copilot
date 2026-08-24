@@ -25,7 +25,15 @@ export function middleware(request: NextRequest) {
     },
   })
 
-  const hasSession = request.cookies.getAll().some(c => c.name.startsWith('sb-') && c.name.endsWith('-auth-token'))
+  // Check for any Supabase auth cookie (covers all formats)
+  const cookies = request.cookies.getAll()
+  const hasSession = cookies.some(c => 
+    c.name.startsWith('sb-') && c.name.includes('-auth-token')
+  ) || cookies.some(c => 
+    c.name.startsWith('sb-') && c.name.endsWith('auth-token')
+  ) || cookies.some(c =>
+    c.name.includes('auth') && c.value && c.value.length > 20
+  )
 
   if (pathname.startsWith('/dashboard') && !hasSession) {
     const url = request.nextUrl.clone()
