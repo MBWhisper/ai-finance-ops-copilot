@@ -45,17 +45,11 @@ export async function ensureUserRecord(
     return existing as UserRecord
   }
 
-  const trialEndDate = new Date()
-  trialEndDate.setDate(trialEndDate.getDate() + 14)
-
   const { data: created, error: insertError } = await admin
     .from('profiles')
     .insert({
       id: userId,
-      email,
-      name: name || '',
-      plan: 'free',
-      trial_ends_at: trialEndDate.toISOString().split('T')[0],
+      full_name: name || '',
       onboarding_completed: false,
     })
     .select()

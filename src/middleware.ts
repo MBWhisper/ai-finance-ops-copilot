@@ -25,13 +25,20 @@ export async function middleware(request: NextRequest) {
     },
   })
 
-  // Use Supabase to check session (handles all cookie formats)
-  const { data: { user } } = await supabase.auth.getUser()
+  if (pathname.startsWith('/dashboard')) {
+    // Refresh session — this sets cookies properly
+    const { data: { user } } = await supabase.auth.getUser()
 
-  if (pathname.startsWith('/dashboard') && !user) {
-    const url = request.nextUrl.clone()
-    url.pathname = '/login'
-    return NextResponse.redirect(url)
+    if (!user) {
+      // Try refreshing the session
+      const { data: { session } } = await supabase.auth.getSession()
+      
+      if (!session) {
+        const url = request.nextUrl.clone()
+        url.pathname = '/login'
+        return NextResponse.redirect(url)
+      }
+    }
   }
 
   return response
