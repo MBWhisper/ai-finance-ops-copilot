@@ -517,7 +517,9 @@ export default function LandingPage() {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <Logo size={28} />
-                <span className="text-sm font-bold text-white">AI Finance Ops</span>
+                <span className="text-[15px] font-bold tracking-tight text-white">
+                  AI<span className="text-emerald-400">Finance</span>Ops
+                </span>
               </div>
               <p className="text-sm text-gray-400 leading-relaxed mb-4">
                 SaaS financial intelligence for early-stage founders.

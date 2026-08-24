@@ -78,9 +78,11 @@ export function Navbar() {
         }`}
       >
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6">
-          <Link href="/" className="flex items-center gap-2 shrink-0">
+          <Link href="/" className="flex items-center gap-2.5 shrink-0">
             <Logo size={28} />
-            <span className="text-sm font-semibold text-white">AI Finance Ops</span>
+            <span className="text-[15px] font-bold tracking-tight text-white">
+              AI<span className="text-emerald-400">Finance</span>Ops
+            </span>
           </Link>
 
           <nav aria-label="Main navigation" className="hidden md:flex items-center gap-0.5">
@@ -154,7 +156,9 @@ export function Navbar() {
             onClick={() => setMobileOpen(false)}
           >
             <Logo size={24} />
-            <span className="text-sm font-semibold text-white">AI Finance Ops</span>
+            <span className="text-[15px] font-bold tracking-tight text-white">
+              AI<span className="text-emerald-400">Finance</span>Ops
+            </span>
           </Link>
           <button
             onClick={() => setMobileOpen(false)}
