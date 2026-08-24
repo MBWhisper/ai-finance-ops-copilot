@@ -188,12 +188,12 @@ export default function OnboardingSteps() {
 
         {/* Skip link — متاح في جميع الخطوات */}
         <div className="flex justify-end mb-4">
-          <a
-            href="/dashboard/overview"
-                  className="text-sm text-gray-400 hover:text-gray-300 underline underline-offset-2 transition-colors"
+          <button
+            onClick={() => router.push("/dashboard/overview")}
+            className="text-sm text-gray-400 hover:text-gray-300 underline underline-offset-2 transition-colors"
           >
             Skip for now
-          </a>
+          </button>
         </div>
 
         {/* Step 1: MRR */}
