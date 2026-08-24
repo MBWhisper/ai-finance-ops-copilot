@@ -1,7 +1,7 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname
   let response = NextResponse.next({ request })
 
@@ -25,17 +25,10 @@ export function middleware(request: NextRequest) {
     },
   })
 
-  // Check for any Supabase auth cookie (covers all formats)
-  const cookies = request.cookies.getAll()
-  const hasSession = cookies.some(c => 
-    c.name.startsWith('sb-') && c.name.includes('-auth-token')
-  ) || cookies.some(c => 
-    c.name.startsWith('sb-') && c.name.endsWith('auth-token')
-  ) || cookies.some(c =>
-    c.name.includes('auth') && c.value && c.value.length > 20
-  )
+  // Use Supabase to check session (handles all cookie formats)
+  const { data: { user } } = await supabase.auth.getUser()
 
-  if (pathname.startsWith('/dashboard') && !hasSession) {
+  if (pathname.startsWith('/dashboard') && !user) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)
