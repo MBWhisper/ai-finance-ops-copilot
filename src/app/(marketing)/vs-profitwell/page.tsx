@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Check, ArrowRight } from "lucide-react"
+import { Check, ArrowRight, DollarSign, AlertTriangle } from "lucide-react"
+import { FaqSchema } from "@/components/FaqSchema"
+import { InternalLinks } from "@/components/InternalLinks"
 
 export const metadata: Metadata = {
   title: "AI Finance Ops vs ProfitWell | Free SaaS Alternative (2026)",
@@ -173,23 +175,85 @@ export default function VsProfitWellPage() {
           </div>
         </section>
 
-        {/* Internal Links */}
-        <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-16">
+        {/* What is ProfitWell */}
+        <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-24">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="text-3xl font-bold text-white mb-6">What is ProfitWell?</h2>
+            <p className="text-gray-400 leading-relaxed mb-4">
+              ProfitWell is a subscription analytics platform founded in 2012. In 2022, ProfitWell was acquired by Paddle — a payment infrastructure company. The free metrics dashboard still exists, but the churn-fighting tools are now part of Paddle's ecosystem.
+            </p>
+            <p className="text-gray-400 leading-relaxed mb-4">
+              ProfitWell's core metrics (MRR, churn, LTV) are free — but they're limited. The real value comes from their "Retain" product, which handles dunning and churn reduction. Retain starts at $200/mo as a separate paid add-on.
+            </p>
+            <p className="text-gray-400 leading-relaxed">
+              For founders who need more than basic metrics — like AI forecasting, cash flow projections, or actionable churn alerts — ProfitWell's free tier falls short. And the paid features cost more than alternatives like AI Finance Ops.
+            </p>
+          </div>
+        </section>
+
+        {/* Real Cost Comparison */}
+        <section className="border-t border-gray-800 px-6 py-24">
           <div className="mx-auto max-w-4xl">
-            <h2 className="text-xl font-bold text-white mb-6 text-center">Free SaaS tools from AI Finance Ops</h2>
-            <div className="grid sm:grid-cols-3 gap-4">
+            <h2 className="text-3xl font-bold text-white text-center mb-4">The real cost of ProfitWell</h2>
+            <p className="text-gray-400 text-center mb-12">Free metrics are great — until you need to actually reduce churn.</p>
+            <div className="overflow-x-auto rounded-2xl border border-gray-800 bg-gray-900/50">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="border-b border-gray-800">
+                    <th scope="col" className="p-5 text-sm font-semibold text-gray-500">Feature</th>
+                    <th scope="col" className="p-5 text-sm font-semibold text-gray-500">ProfitWell</th>
+                    <th scope="col" className="p-5 text-sm font-semibold text-emerald-400">AI Finance Ops</th>
+                  </tr>
+                </thead>
+                <tbody className="text-sm">
+                  {[
+                    { feature: "MRR Tracking", pw: "Free", afo: "Free" },
+                    { feature: "Churn Analytics", pw: "Free (basic)", afo: "Free (detailed)" },
+                    { feature: "Churn Alerts", pw: "$200+/mo (Retain)", afo: "Free" },
+                    { feature: "Dunning", pw: "$200+/mo (Retain)", afo: "Free" },
+                    { feature: "AI Forecasting", pw: "Not available", afo: "Free" },
+                    { feature: "Cash Flow Forecast", pw: "Not available", afo: "Free" },
+                    { feature: "At-risk Customer ID", pw: "$200+/mo (Retain)", afo: "Free" },
+                  ].map((row) => (
+                    <tr key={row.feature} className="border-b border-gray-800/50 last:border-0">
+                      <td className="p-5 text-gray-300 font-medium">{row.feature}</td>
+                      <td className="p-5 text-gray-400">{row.pw}</td>
+                      <td className="p-5 text-emerald-400">{row.afo}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-center text-sm text-gray-500 mt-4">
+              <AlertTriangle className="h-4 w-4 inline mr-1" />
+              ProfitWell's churn tools (Retain) cost $200+/mo extra. AI Finance Ops includes everything in the free plan.
+            </p>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-24">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="text-3xl font-bold text-white mb-12 text-center">Frequently Asked Questions</h2>
+            <div className="space-y-6">
               {[
-                { href: "/mrr-tracker", label: "MRR Tracker", desc: "Track Monthly Recurring Revenue automatically" },
-                { href: "/churn-rate-calculator", label: "Churn Rate Calculator", desc: "Customer churn, revenue churn, net revenue churn" },
-                { href: "/ltv-calculator", label: "LTV Calculator", desc: "Customer Lifetime Value + LTV:CAC ratio" },
-              ].map((l) => (
-                <Link key={l.href} href={l.href} className="rounded-xl border border-gray-800 bg-gray-900/50 p-5 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all group">
-                  <div className="text-sm font-semibold text-white mb-1 group-hover:text-emerald-400 transition-colors">{l.label}</div>
-                  <div className="text-xs text-gray-500">{l.desc}</div>
-                </Link>
+                { q: "Is AI Finance Ops a free alternative to ProfitWell?", a: "Yes. AI Finance Ops offers a forever free tier with MRR tracking, churn analysis, and 90-day cash flow forecasting. ProfitWell's core metrics are free, but their churn-fighting tool Retain costs $200+/mo as a separate add-on." },
+                { q: "What does ProfitWell charge for churn reduction?", a: "ProfitWell's Retain product — which handles dunning and churn reduction — starts at $200/month as a separate paid add-on. AI Finance Ops includes churn alerts and at-risk customer identification in the base plan at no extra cost." },
+                { q: "Can I migrate from ProfitWell to AI Finance Ops?", a: "Yes. Connect your Stripe account and AI Finance Ops automatically syncs your historical subscription data. No manual export or import is required. Setup takes about 2 minutes." },
+                { q: "Why did ProfitWell get acquired by Paddle?", a: "Paddle acquired ProfitWell in 2022 to add subscription analytics to their payment infrastructure. The free metrics dashboard still exists, but the focus has shifted to Paddle's enterprise billing platform." },
+              ].map((item) => (
+                <div key={item.q} className="border border-gray-800 rounded-xl p-6">
+                  <h3 className="text-lg font-semibold text-white mb-3">{item.q}</h3>
+                  <p className="text-gray-400 text-sm leading-relaxed">{item.a}</p>
+                </div>
               ))}
             </div>
           </div>
+        </section>
+
+        {/* Internal Links */}
+        <section className="border-t border-gray-800 px-6 py-16">
+          <InternalLinks variant="mixed" exclude="/vs-profitwell" title="Related SaaS Finance Tools" limit={8} />
         </section>
 
         {/* Final CTA */}
@@ -206,6 +270,12 @@ export default function VsProfitWellPage() {
         </section>
       </main>
     </div>
+    <FaqSchema items={[
+      { question: "Is AI Finance Ops a free alternative to ProfitWell?", answer: "Yes. AI Finance Ops offers a forever free tier with MRR tracking, churn analysis, and 90-day cash flow forecasting. ProfitWell's core metrics are free, but their churn-fighting tool Retain costs $200+/mo as a separate add-on." },
+      { question: "What does ProfitWell charge for churn reduction?", answer: "ProfitWell's Retain product — which handles dunning and churn reduction — starts at $200/month as a separate paid add-on. AI Finance Ops includes churn alerts and at-risk customer identification in the base plan at no extra cost." },
+      { question: "Can I migrate from ProfitWell to AI Finance Ops?", answer: "Yes. Connect your Stripe account and AI Finance Ops automatically syncs your historical subscription data. No manual export or import is required. Setup takes about 2 minutes." },
+      { question: "Why did ProfitWell get acquired by Paddle?", answer: "Paddle acquired ProfitWell in 2022 to add subscription analytics to their payment infrastructure. The free metrics dashboard still exists, but the focus has shifted to Paddle's enterprise billing platform." },
+    ]} />
     </>
   )
 }
