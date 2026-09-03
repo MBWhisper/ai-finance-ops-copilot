@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { InternalLinks, CALCULATOR_LINKS, COMPARISON_LINKS } from '@/components/seo/InternalLinks'
+import { FaqSchema } from '@/components/FaqSchema'
+import { Check, ArrowRight } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Features — SaaS Metrics Dashboard | MRR, ARR, Churn',
@@ -141,6 +143,62 @@ export default function FeaturesPage() {
           </Link>
         </div>
 
+        {/* How It Works */}
+        <div className="mb-24">
+          <h2 className="text-3xl font-bold text-white text-center mb-12">How It Works</h2>
+          <div className="grid md:grid-cols-3 gap-8">
+            {[
+              { step: "1", title: "Connect Stripe", desc: "Authorize read-only access to your Stripe account. Takes 60 seconds. We can never move money or modify your account." },
+              { step: "2", title: "Auto-Sync Data", desc: "AI Finance Ops automatically pulls your subscription data, calculates all metrics, and builds your dashboard. No manual setup." },
+              { step: "3", title: "Get Insights", desc: "See your MRR, churn, runway, and cash flow in real time. Get AI-powered recommendations for growing your revenue." },
+            ].map((item) => (
+              <div key={item.step} className="text-center">
+                <div className="w-12 h-12 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold text-xl mx-auto mb-4">
+                  {item.step}
+                </div>
+                <h3 className="text-lg font-semibold text-white mb-2">{item.title}</h3>
+                <p className="text-gray-400 text-sm">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Who Uses AI Finance Ops */}
+        <div className="mb-24">
+          <h2 className="text-3xl font-bold text-white text-center mb-12">Built for Founders Like You</h2>
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { title: "Solo Founders", desc: "You're building solo and don't have a finance team. You need to understand your numbers in 30 seconds, not 30 minutes." },
+              { title: "Bootstrapped Startups", desc: "Every dollar counts. You need to know your runway, burn rate, and which customers are most valuable — without paying $200/mo for enterprise tools." },
+              { title: "Early-Stage Teams", desc: "You're growing fast and need to share metrics with investors and team members. Automated reports save hours every week." },
+            ].map((item) => (
+              <div key={item.title} className="rounded-2xl border border-gray-800 bg-gray-900/50 p-6">
+                <h3 className="text-lg font-semibold text-white mb-2">{item.title}</h3>
+                <p className="text-gray-400 text-sm">{item.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* FAQ */}
+        <div className="mb-24">
+          <h2 className="text-3xl font-bold text-white text-center mb-12">Frequently Asked Questions</h2>
+          <div className="max-w-3xl mx-auto space-y-6">
+            {[
+              { q: "How long does it take to set up?", a: "About 5 minutes. Connect Stripe via OAuth, and AI Finance Ops automatically pulls your data and builds your dashboard. No manual configuration needed." },
+              { q: "Is my Stripe data safe?", a: "Yes. We use read-only OAuth access — we can never make changes to your Stripe account. All data is encrypted in transit and at rest." },
+              { q: "What if I have multiple Stripe accounts?", a: "You can connect multiple Stripe accounts and view all your metrics in a single dashboard. Each account is tracked separately." },
+              { q: "Do I need to know SQL or Excel?", a: "No. AI Finance Ops calculates everything automatically. Connect Stripe and your metrics are ready in minutes." },
+              { q: "Can I share reports with investors?", a: "Yes. Generate shareable links for any report or dashboard. No login required for viewers." },
+            ].map((item) => (
+              <div key={item.q} className="border border-gray-800 rounded-xl p-6">
+                <h3 className="text-lg font-semibold text-white mb-3">{item.q}</h3>
+                <p className="text-gray-400 text-sm leading-relaxed">{item.a}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Internal links for SEO */}
         <div className="border-t border-gray-800 pt-16">
           <InternalLinks links={CALCULATOR_LINKS} title="Free SaaS Calculators" variant="grid" />
@@ -148,6 +206,13 @@ export default function FeaturesPage() {
         </div>
 
       </div>
+      <FaqSchema items={[
+        { question: "How long does it take to set up?", answer: "About 5 minutes. Connect Stripe via OAuth, and AI Finance Ops automatically pulls your data and builds your dashboard. No manual configuration needed." },
+        { question: "Is my Stripe data safe?", answer: "Yes. We use read-only OAuth access — we can never make changes to your Stripe account. All data is encrypted in transit and at rest." },
+        { question: "What if I have multiple Stripe accounts?", answer: "You can connect multiple Stripe accounts and view all your metrics in a single dashboard. Each account is tracked separately." },
+        { question: "Do I need to know SQL or Excel?", answer: "No. AI Finance Ops calculates everything automatically. Connect Stripe and your metrics are ready in minutes." },
+        { question: "Can I share reports with investors?", answer: "Yes. Generate shareable links for any report or dashboard. No login required for viewers." },
+      ]} />
     </div>
   )
 }
