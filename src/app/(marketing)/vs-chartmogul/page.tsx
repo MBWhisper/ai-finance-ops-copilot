@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Check, ArrowRight } from "lucide-react"
+import { Check, ArrowRight, X } from "lucide-react"
+import { FaqSchema } from "@/components/FaqSchema"
+import { InternalLinks } from "@/components/InternalLinks"
 
 export const metadata: Metadata = {
   title: "AI Finance Ops vs ChartMogul | Simpler SaaS Analytics",
@@ -45,7 +47,12 @@ const COMPARISON_ROWS = [
   { label: "Price", ours: "From $29/mo", theirs: "From $199/mo" },
   { label: "Free Plan", ours: "✅", theirs: "❌" },
   { label: "AI Forecasting", ours: "✅", theirs: "❌" },
+  { label: "AI Copilot", ours: "✅", theirs: "❌" },
   { label: "Setup time", ours: "5 minutes", theirs: "2+ hours" },
+  { label: "MRR Tracking", ours: "✅ Real-time", theirs: "✅ Real-time" },
+  { label: "Churn Alerts", ours: "✅ Automatic", theirs: "❌ Manual" },
+  { label: "Cash Flow Forecast", ours: "✅ 90-day AI", theirs: "❌" },
+  { label: "Cohort Analysis", ours: "✅", theirs: "✅" },
   { label: "Built for", ours: "Founders", theirs: "Enterprise" },
 ]
 
@@ -160,6 +167,69 @@ export default function VsChartmogulPage() {
           </div>
         </section>
 
+        {/* What is ChartMogul */}
+        <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-24">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="text-3xl font-bold text-white mb-6">What is ChartMogul?</h2>
+            <p className="text-gray-400 leading-relaxed mb-4">
+              ChartMogul is a subscription analytics platform founded in 2014. It connects to Stripe, PayPal, and other billing systems to calculate MRR, churn, and customer lifetime value. It's popular with mid-market SaaS companies and enterprise teams.
+            </p>
+            <p className="text-gray-400 leading-relaxed mb-4">
+              ChartMogul offers powerful cohort analysis, revenue reporting, and custom dashboards. However, it comes with a steep learning curve and enterprise-level pricing that doesn't work for solo founders or early-stage startups.
+            </p>
+            <p className="text-gray-400 leading-relaxed">
+              The main complaints from early-stage founders: the interface is overwhelming, the pricing jumps from free to $199/mo with nothing in between, and there's no AI-powered forecasting or actionable insights — just charts and data.
+            </p>
+          </div>
+        </section>
+
+        {/* Built for Founders */}
+        <section className="border-t border-gray-800 px-6 py-24">
+          <div className="mx-auto max-w-4xl">
+            <h2 className="text-3xl font-bold text-white text-center mb-12">Built for founders, not enterprises</h2>
+            <div className="grid md:grid-cols-2 gap-6">
+              {[
+                "Connect Stripe and see your MRR in under 5 minutes — no onboarding calls needed",
+                "AI copilot explains metric changes in plain English, not just charts",
+                "90-day cash flow forecasting with P50/P80/P95 scenarios",
+                "Automatic churn alerts when customers are at risk",
+                "Simple pricing that scales with you, not against you",
+                "No SQL, no spreadsheets, no complexity — just your numbers",
+              ].map((item) => (
+                <div key={item} className="flex items-start gap-3">
+                  <Check className="h-5 w-5 text-emerald-500 mt-0.5 shrink-0" />
+                  <span className="text-gray-300 text-sm">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-24">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="text-3xl font-bold text-white mb-12 text-center">Frequently Asked Questions</h2>
+            <div className="space-y-6">
+              {[
+                { q: "Is AI Finance Ops a cheaper alternative to ChartMogul?", a: "Yes. AI Finance Ops starts free and paid plans begin at $29/mo. ChartMogul is free up to $10K MRR, then starts at $59/mo and goes up to $199/mo for Pro features like forecasting." },
+                { q: "Does AI Finance Ops have AI features that ChartMogul lacks?", a: "Yes. AI Finance Ops includes an AI copilot that explains metric changes and provides 90-day cash flow forecasting. ChartMogul is a traditional analytics platform without AI insights." },
+                { q: "Can I migrate from ChartMogul to AI Finance Ops?", a: "Yes. Connect your Stripe account and AI Finance Ops automatically syncs your subscription data. No manual export or import required. Setup takes about 2 minutes." },
+                { q: "What metrics does AI Finance Ops track that ChartMogul doesn't?", a: "AI Finance Ops automatically tracks MRR, ARR, churn rate, LTV, cash flow, and runway with AI-powered forecasting. ChartMogul covers MRR and churn but lacks cash flow forecasting and AI insights." },
+              ].map((item) => (
+                <div key={item.q} className="border border-gray-800 rounded-xl p-6">
+                  <h3 className="text-lg font-semibold text-white mb-3">{item.q}</h3>
+                  <p className="text-gray-400 text-sm leading-relaxed">{item.a}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Internal Links */}
+        <section className="border-t border-gray-800 px-6 py-16">
+          <InternalLinks variant="mixed" exclude="/vs-chartmogul" title="Related SaaS Finance Tools" limit={8} />
+        </section>
+
         {/* Final CTA */}
         <section className="border-t border-gray-800 px-6 py-24">
           <div className="mx-auto max-w-3xl text-center">
@@ -174,6 +244,12 @@ export default function VsChartmogulPage() {
         </section>
       </main>
     </div>
+    <FaqSchema items={[
+      { question: "Is AI Finance Ops a cheaper alternative to ChartMogul?", answer: "Yes. AI Finance Ops starts free and paid plans begin at $29/mo. ChartMogul is free up to $10K MRR, then starts at $59/mo and goes up to $199/mo for Pro features like forecasting." },
+      { question: "Does AI Finance Ops have AI features that ChartMogul lacks?", answer: "Yes. AI Finance Ops includes an AI copilot that explains metric changes and provides 90-day cash flow forecasting. ChartMogul is a traditional analytics platform without AI insights." },
+      { question: "Can I migrate from ChartMogul to AI Finance Ops?", answer: "Yes. Connect your Stripe account and AI Finance Ops automatically syncs your subscription data. No manual export or import required. Setup takes about 2 minutes." },
+      { question: "What metrics does AI Finance Ops track that ChartMogul doesn't?", answer: "AI Finance Ops automatically tracks MRR, ARR, churn rate, LTV, cash flow, and runway with AI-powered forecasting. ChartMogul covers MRR and churn but lacks cash flow forecasting and AI insights." },
+    ]} />
     </>
   )
 }
