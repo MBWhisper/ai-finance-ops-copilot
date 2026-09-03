@@ -27,9 +27,9 @@ const allComparisons: LinkItem[] = [
 ]
 
 const allBlogPosts: LinkItem[] = [
-  { href: "/blog/saas-financial-metrics",          label: "SaaS Financial Metrics Guide",          description: "The 12 metrics every SaaS CFO must track",            emoji: "📖" },
-  { href: "/blog/90-day-cash-flow-forecast",       label: "90-Day Cash Flow Forecast",             description: "How to forecast SaaS cash flow for 90 days",          emoji: "📖" },
-  { href: "/blog/runway",                          label: "SaaS Runway Guide",                     description: "How to calculate and extend your startup runway",      emoji: "📖" },
+  { href: "/blog/saas-financial-metrics-founders",  label: "SaaS Financial Metrics Guide",          description: "The 12 metrics every SaaS founder must track",            emoji: "📖" },
+  { href: "/blog/saas-cash-flow-forecast",          label: "90-Day Cash Flow Forecast",             description: "How to forecast SaaS cash flow for 90 days",          emoji: "📖" },
+  { href: "/blog/startup-runway-calculator",         label: "SaaS Runway Guide",                     description: "How to calculate and extend your startup runway",      emoji: "📖" },
 ]
 
 type Variant = "tools" | "comparisons" | "blog" | "mixed"

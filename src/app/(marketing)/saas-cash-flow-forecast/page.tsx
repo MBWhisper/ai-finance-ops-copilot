@@ -204,7 +204,7 @@ export default function SaasCashFlowForecastPage() {
             <Link href="/register" className="w-full xs:w-auto inline-flex items-center justify-center rounded-lg bg-white px-6 py-3.5 text-sm font-semibold text-black hover:bg-gray-100 active:bg-gray-200 transition-colors min-h-[44px]">
               Start Free — No credit card
             </Link>
-            <Link href="/calculators" className="w-full xs:w-auto inline-flex items-center justify-center rounded-lg border border-white/20 px-6 py-3.5 text-sm text-gray-300 hover:border-white/40 hover:text-white active:bg-white/5 transition-colors min-h-[44px]">
+            <Link href="/mrr-calculator" className="w-full xs:w-auto inline-flex items-center justify-center rounded-lg border border-white/20 px-6 py-3.5 text-sm text-gray-300 hover:border-white/40 hover:text-white active:bg-white/5 transition-colors min-h-[44px]">
               Try Runway Calculator Free
             </Link>
           </div>
@@ -295,7 +295,7 @@ export default function SaasCashFlowForecastPage() {
           <div className="flex flex-wrap gap-3">
             <Link href="/stripe-mrr-dashboard" className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors min-h-[44px] flex items-center">Stripe MRR Dashboard →</Link>
             <Link href="/ai-finance-bootstrapped-startups" className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors min-h-[44px] flex items-center">AI Finance for Bootstrapped Startups →</Link>
-            <Link href="/calculators" className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors min-h-[44px] flex items-center">Free Calculators →</Link>
+            <Link href="/mrr-calculator" className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors min-h-[44px] flex items-center">Free Calculators →</Link>
           </div>
         </div>
       </section>

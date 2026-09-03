@@ -155,7 +155,7 @@ export default function AiFinanceBootstrappedStartupsPage() {
           <div className="flex flex-wrap gap-3">
             <Link href="/stripe-mrr-dashboard" className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors min-h-[44px] flex items-center">Stripe MRR Dashboard →</Link>
             <Link href="/saas-cash-flow-forecast" className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors min-h-[44px] flex items-center">SaaS Cash Flow Forecast →</Link>
-            <Link href="/calculators" className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors min-h-[44px] flex items-center">Free Calculators →</Link>
+            <Link href="/mrr-calculator" className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors min-h-[44px] flex items-center">Free Calculators →</Link>
           </div>
         </div>
       </section>

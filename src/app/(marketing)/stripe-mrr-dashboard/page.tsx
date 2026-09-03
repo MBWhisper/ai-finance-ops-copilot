@@ -312,7 +312,7 @@ export default function StripeMRRDashboardPage() {
             <Link href="/ai-finance-bootstrapped-startups" className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors min-h-[44px] flex items-center">
               AI Finance for Bootstrapped Startups →
             </Link>
-            <Link href="/calculators" className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors min-h-[44px] flex items-center">
+            <Link href="/mrr-calculator" className="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-2.5 text-sm text-gray-400 hover:text-white hover:border-white/20 transition-colors min-h-[44px] flex items-center">
               Free Calculators →
             </Link>
           </div>

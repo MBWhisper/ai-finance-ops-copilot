@@ -113,7 +113,7 @@ export default function CashFlowTrackerPage() {
           </h1>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-8">
             Stop guessing your cash position. Track inflows, outflows, and get a 90-day{" "}
-            <Link href="/blog/90-day-cash-flow-forecast" className="text-emerald-400 hover:underline">
+            <Link href="/blog/saas-cash-flow-forecast" className="text-emerald-400 hover:underline">
               SaaS cash flow projection
             </Link>{" "}
             — automatically.
