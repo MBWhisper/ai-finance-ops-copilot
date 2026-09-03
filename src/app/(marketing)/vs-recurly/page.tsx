@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Check, ArrowRight } from "lucide-react"
+import { Check, ArrowRight, DollarSign, AlertTriangle } from "lucide-react"
+import { FaqSchema } from "@/components/FaqSchema"
+import { InternalLinks } from "@/components/InternalLinks"
 
 export const metadata: Metadata = {
   title: "AI Finance Ops vs Recurly | Simpler SaaS Billing (2026)",
@@ -137,23 +139,158 @@ export default function VsRecurlyPage() {
           </div>
         </section>
 
-        {/* Internal Links */}
-        <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-16">
+        {/* What is Recurly */}
+        <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-24">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="text-3xl font-bold text-white mb-6">What is Recurly?</h2>
+            <p className="text-gray-400 leading-relaxed mb-4">
+              Recurly is a subscription billing platform founded in 2009. It handles subscription management, payment processing, and revenue recognition for SaaS companies. Unlike AI Finance Ops, Recurly is a full billing platform — meaning you'd need to migrate your entire billing stack from Stripe to Recurly.
+            </p>
+            <p className="text-gray-400 leading-relaxed mb-4">
+              Recurly charges a base fee starting at $249/mo plus 0.9% of your revenue. For a SaaS company doing $50k MRR, that's $450/mo in revenue share alone — on top of the base fee. Over a year, that's $5,400+ in fees.
+            </p>
+            <p className="text-gray-400 leading-relaxed">
+              The migration process takes weeks: you need to move customers, subscriptions, payment methods, and historical data. Any mistakes can result in failed charges and angry customers.
+            </p>
+          </div>
+        </section>
+
+        {/* Real Cost Calculator */}
+        <section className="border-t border-gray-800 px-6 py-24">
           <div className="mx-auto max-w-4xl">
-            <h2 className="text-xl font-bold text-white mb-6 text-center">Free tools — works with your Stripe account</h2>
-            <div className="grid sm:grid-cols-3 gap-4">
+            <h2 className="text-3xl font-bold text-white text-center mb-4">The real cost of Recurly</h2>
+            <p className="text-gray-400 text-center mb-12">See how Recurly's 0.9% revenue share adds up as you grow.</p>
+            <div className="overflow-x-auto rounded-2xl border border-gray-800 bg-gray-900/50">
+              <table className="w-full text-left">
+                <thead>
+                  <tr className="border-b border-gray-800">
+                    <th scope="col" className="p-5 text-sm font-semibold text-gray-500">Your MRR</th>
+                    <th scope="col" className="p-5 text-sm font-semibold text-gray-500">Recurly 0.9% Fee</th>
+                    <th scope="col" className="p-5 text-sm font-semibold text-gray-500">Annual Cost</th>
+                    <th scope="col" className="p-5 text-sm font-semibold text-emerald-400">AI Finance Ops</th>
+                  </tr>
+                </thead>
+                <tbody className="text-sm">
+                  {[
+                    { mrr: "$10,000", fee: "$90/mo", annual: "$1,080/yr", ours: "Free" },
+                    { mrr: "$25,000", fee: "$225/mo", annual: "$2,700/yr", ours: "$29/mo" },
+                    { mrr: "$50,000", fee: "$450/mo", annual: "$5,400/yr", ours: "$29/mo" },
+                    { mrr: "$100,000", fee: "$900/mo", annual: "$10,800/yr", ours: "$99/mo" },
+                    { mrr: "$250,000", fee: "$2,250/mo", annual: "$27,000/yr", ours: "$99/mo" },
+                  ].map((row) => (
+                    <tr key={row.mrr} className="border-b border-gray-800/50 last:border-0">
+                      <td className="p-5 text-gray-300 font-medium">{row.mrr}</td>
+                      <td className="p-5 text-red-400">{row.fee}</td>
+                      <td className="p-5 text-red-400">{row.annual}</td>
+                      <td className="p-5 text-emerald-400 font-semibold">{row.ours}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-center text-sm text-gray-500 mt-4">
+              <AlertTriangle className="h-4 w-4 inline mr-1" />
+              Recurly's 0.9% fee is on top of their base fee ($249-$599/mo). AI Finance Ops has flat pricing with no percentage fee.
+            </p>
+          </div>
+        </section>
+
+        {/* Migration Comparison */}
+        <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-24">
+          <div className="mx-auto max-w-4xl">
+            <h2 className="text-3xl font-bold text-white text-center mb-12">Migration: Recurly vs AI Finance Ops</h2>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-8">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <DollarSign className="h-5 w-5 text-red-400" />
+                  Switching to Recurly
+                </h3>
+                <ul className="space-y-3 text-sm text-gray-400">
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400">•</span>
+                    Migrate all customers to new billing system
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400">•</span>
+                    Move payment methods and subscriptions
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400">•</span>
+                    Test all billing flows (upgrades, downgrades, cancellations)
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400">•</span>
+                    Update your codebase and integrations
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400">•</span>
+                    Risk of failed charges during migration
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-red-400">•</span>
+                    Timeline: 2-6 weeks of engineering work
+                  </li>
+                </ul>
+              </div>
+              <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-8">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <Check className="h-5 w-5 text-emerald-400" />
+                  Adding AI Finance Ops
+                </h3>
+                <ul className="space-y-3 text-sm text-gray-400">
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-400">•</span>
+                    Connect Stripe via OAuth (read-only)
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-400">•</span>
+                    Automatic data sync — no migration needed
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-400">•</span>
+                    Keep your existing billing setup unchanged
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-400">•</span>
+                    Zero risk to your current revenue
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-400">•</span>
+                    MRR, churn, and forecasting ready in minutes
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-emerald-400">•</span>
+                    Timeline: 2 minutes
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="border-t border-gray-800 px-6 py-24">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="text-3xl font-bold text-white mb-12 text-center">Frequently Asked Questions</h2>
+            <div className="space-y-6">
               {[
-                { href: "/mrr-tracker", label: "MRR Tracker", desc: "Full MRR breakdown from Stripe" },
-                { href: "/ltv-calculator", label: "LTV Calculator", desc: "Customer Lifetime Value + LTV:CAC" },
-                { href: "/runway-calculator", label: "Runway Calculator", desc: "How many months until you run out" },
-              ].map((l) => (
-                <Link key={l.href} href={l.href} className="rounded-xl border border-gray-800 bg-gray-900/50 p-5 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all group">
-                  <div className="text-sm font-semibold text-white mb-1 group-hover:text-emerald-400 transition-colors">{l.label}</div>
-                  <div className="text-xs text-gray-500">{l.desc}</div>
-                </Link>
+                { q: "Can I use AI Finance Ops with Recurly?", a: "AI Finance Ops connects directly to Stripe, not Recurly. If you're already using Recurly, you'd need to keep both tools. AI Finance Ops is designed as an alternative to migrating to Recurly in the first place." },
+                { q: "How much does Recurly really cost?", a: "Recurly starts at $249/mo plus 0.9% of your revenue. At $50k MRR, that's $450/mo in revenue share alone. At $100k MRR, it's $900/mo. AI Finance Ops has flat pricing with no percentage fee." },
+                { q: "Why would someone choose Recurly over AI Finance Ops?", a: "Recurly is a full billing platform — it processes payments, manages subscriptions, and handles revenue recognition. AI Finance Ops is an analytics layer that connects to your existing Stripe. If you need a billing platform, Recurly is the right choice. If you need analytics, AI Finance Ops is simpler and cheaper." },
+                { q: "Is migrating to Recurly risky?", a: "Yes. Migration involves moving customers, payment methods, and subscription data. Any mistakes can result in failed charges, lost revenue, and angry customers. Most migrations take 2-6 weeks of engineering work." },
+              ].map((item) => (
+                <div key={item.q} className="border border-gray-800 rounded-xl p-6">
+                  <h3 className="text-lg font-semibold text-white mb-3">{item.q}</h3>
+                  <p className="text-gray-400 text-sm leading-relaxed">{item.a}</p>
+                </div>
               ))}
             </div>
           </div>
+        </section>
+
+        {/* Internal Links */}
+        <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-16">
+          <InternalLinks variant="mixed" exclude="/vs-recurly" title="Related SaaS Finance Tools" limit={8} />
         </section>
 
         {/* Final CTA */}
@@ -170,5 +307,11 @@ export default function VsRecurlyPage() {
         </section>
       </main>
     </div>
+    <FaqSchema items={[
+      { question: "Can I use AI Finance Ops with Recurly?", answer: "AI Finance Ops connects directly to Stripe, not Recurly. If you're already using Recurly, you'd need to keep both tools. AI Finance Ops is designed as an alternative to migrating to Recurly in the first place." },
+      { question: "How much does Recurly really cost?", answer: "Recurly starts at $249/mo plus 0.9% of your revenue. At $50k MRR, that's $450/mo in revenue share alone. At $100k MRR, it's $900/mo. AI Finance Ops has flat pricing with no percentage fee." },
+      { question: "Why would someone choose Recurly over AI Finance Ops?", answer: "Recurly is a full billing platform — it processes payments, manages subscriptions, and handles revenue recognition. AI Finance Ops is an analytics layer that connects to your existing Stripe. If you need a billing platform, Recurly is the right choice. If you need analytics, AI Finance Ops is simpler and cheaper." },
+      { question: "Is migrating to Recurly risky?", answer: "Yes. Migration involves moving customers, payment methods, and subscription data. Any mistakes can result in failed charges, lost revenue, and angry customers. Most migrations take 2-6 weeks of engineering work." },
+    ]} />
   )
 }
