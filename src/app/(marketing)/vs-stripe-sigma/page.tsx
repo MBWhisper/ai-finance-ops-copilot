@@ -1,6 +1,8 @@
 import type { Metadata } from "next"
 import Link from "next/link"
-import { Check, ArrowRight } from "lucide-react"
+import { Check, ArrowRight, X, Code, Zap } from "lucide-react"
+import { FaqSchema } from "@/components/FaqSchema"
+import { InternalLinks } from "@/components/InternalLinks"
 
 export const metadata: Metadata = {
   title: "AI Finance Ops vs Stripe Sigma (2026)",
@@ -173,23 +175,114 @@ export default function VsStripeSigmaPage() {
           </div>
         </section>
 
-        {/* Internal Links */}
-        <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-16">
+        {/* What is Stripe Sigma */}
+        <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-24">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="text-3xl font-bold text-white mb-6">What is Stripe Sigma?</h2>
+            <p className="text-gray-400 leading-relaxed mb-4">
+              Stripe Sigma is a SQL-based analytics tool built into the Stripe dashboard. It lets you query your payment data using SQL — giving you access to raw subscription, invoice, and customer data that you can't get from the standard Stripe dashboard.
+            </p>
+            <p className="text-gray-400 leading-relaxed mb-4">
+              Sigma is powerful for data engineers and SQL-savvy teams. But for founders who just need to understand their MRR, churn, and runway — it's overkill. Every report requires writing and maintaining SQL queries, and there's no built-in MRR dashboard or forecasting.
+            </p>
+            <p className="text-gray-400 leading-relaxed">
+              Sigma also requires a paid Stripe plan (Plus at $10/mo or higher). If you're on the basic Stripe plan, you can't use Sigma at all.
+            </p>
+          </div>
+        </section>
+
+        {/* SQL vs AI Finance Ops */}
+        <section className="border-t border-gray-800 px-6 py-24">
           <div className="mx-auto max-w-4xl">
-            <h2 className="text-xl font-bold text-white mb-6 text-center">Free SaaS tools — no SQL required</h2>
-            <div className="grid sm:grid-cols-3 gap-4">
+            <h2 className="text-3xl font-bold text-white text-center mb-12">SQL Query vs AI Finance Ops</h2>
+            <div className="grid md:grid-cols-2 gap-8">
+              <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-8">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <Code className="h-5 w-5 text-gray-400" />
+                  Stripe Sigma (SQL)
+                </h3>
+                <div className="bg-gray-950 rounded-lg p-4 mb-4 font-mono text-xs text-gray-400 overflow-x-auto">
+                  <pre>{`SELECT
+  DATE_TRUNC('month',
+    created_at) AS month,
+  SUM(amount) / 100.0 AS mrr
+FROM subscriptions
+WHERE status = 'active'
+GROUP BY 1
+ORDER BY 1 DESC;`}</pre>
+                </div>
+                <ul className="space-y-2 text-sm text-gray-400">
+                  <li className="flex items-start gap-2">
+                    <X className="h-4 w-4 text-red-400 mt-0.5 shrink-0" />
+                    Write and maintain SQL queries
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <X className="h-4 w-4 text-red-400 mt-0.5 shrink-0" />
+                    Build MRR logic from scratch
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <X className="h-4 w-4 text-red-400 mt-0.5 shrink-0" />
+                    No forecasting or alerts
+                  </li>
+                </ul>
+              </div>
+              <div className="rounded-2xl border border-emerald-500/30 bg-emerald-500/5 p-8">
+                <h3 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                  <Zap className="h-5 w-5 text-emerald-400" />
+                  AI Finance Ops
+                </h3>
+                <div className="bg-gray-950 rounded-lg p-4 mb-4 font-mono text-xs text-emerald-400 overflow-x-auto">
+                  <pre>{`// No code needed!
+// Connect Stripe → metrics auto-calculated
+
+MRR:        $45,230
+ARR:        $542,760
+Churn:      2.3%
+LTV:        $2,850
+Runway:     18 months`}</pre>
+                </div>
+                <ul className="space-y-2 text-sm text-gray-400">
+                  <li className="flex items-start gap-2">
+                    <Check className="h-4 w-4 text-emerald-400 mt-0.5 shrink-0" />
+                    Zero code — automatic calculations
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="h-4 w-4 text-emerald-400 mt-0.5 shrink-0" />
+                    Real-time MRR, churn, LTV, runway
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check className="h-4 w-4 text-emerald-400 mt-0.5 shrink-0" />
+                    AI-powered 90-day forecasting
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* FAQ */}
+        <section className="border-t border-gray-800 bg-gray-900/30 px-6 py-24">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="text-3xl font-bold text-white mb-12 text-center">Frequently Asked Questions</h2>
+            <div className="space-y-6">
               {[
-                { href: "/mrr-tracker", label: "MRR Tracker", desc: "Automatic MRR breakdown from Stripe" },
-                { href: "/churn-rate-calculator", label: "Churn Calculator", desc: "Real-time customer and revenue churn" },
-                { href: "/arr-calculator", label: "ARR Calculator", desc: "Annual Recurring Revenue tracking" },
-              ].map((l) => (
-                <Link key={l.href} href={l.href} className="rounded-xl border border-gray-800 bg-gray-900/50 p-5 hover:border-emerald-500/40 hover:bg-emerald-500/5 transition-all group">
-                  <div className="text-sm font-semibold text-white mb-1 group-hover:text-emerald-400 transition-colors">{l.label}</div>
-                  <div className="text-xs text-gray-500">{l.desc}</div>
-                </Link>
+                { q: "Is AI Finance Ops a free alternative to Stripe Sigma?", a: "Yes. AI Finance Ops is free to start and provides MRR, churn, LTV, and cash flow forecasting automatically. Stripe Sigma requires a paid Stripe plan and you must write all SQL queries yourself." },
+                { q: "Do I need to know SQL to use AI Finance Ops?", a: "No. AI Finance Ops connects to Stripe via OAuth and automatically calculates all SaaS metrics. No SQL, no code, no queries. Stripe Sigma requires you to write and maintain SQL queries for every report." },
+                { q: "What metrics does AI Finance Ops track that Stripe Sigma doesn't?", a: "AI Finance Ops automatically tracks MRR, ARR, churn rate, LTV, cash flow, and runway with AI-powered forecasting. Stripe Sigma is a raw data tool — you must build every metric yourself via SQL." },
+                { q: "Can I use both AI Finance Ops and Stripe Sigma?", a: "Yes, but it's redundant. AI Finance Ops provides everything Sigma offers (and more) without writing SQL. Most founders replace Sigma entirely with AI Finance Ops." },
+              ].map((item) => (
+                <div key={item.q} className="border border-gray-800 rounded-xl p-6">
+                  <h3 className="text-lg font-semibold text-white mb-3">{item.q}</h3>
+                  <p className="text-gray-400 text-sm leading-relaxed">{item.a}</p>
+                </div>
               ))}
             </div>
           </div>
+        </section>
+
+        {/* Internal Links */}
+        <section className="border-t border-gray-800 px-6 py-16">
+          <InternalLinks variant="mixed" exclude="/vs-stripe-sigma" title="Related SaaS Finance Tools" limit={8} />
         </section>
 
         {/* Final CTA */}
@@ -206,6 +299,12 @@ export default function VsStripeSigmaPage() {
         </section>
       </main>
     </div>
+    <FaqSchema items={[
+      { question: "Is AI Finance Ops a free alternative to Stripe Sigma?", answer: "Yes. AI Finance Ops is free to start and provides MRR, churn, LTV, and cash flow forecasting automatically. Stripe Sigma requires a paid Stripe plan and you must write all SQL queries yourself." },
+      { question: "Do I need to know SQL to use AI Finance Ops?", answer: "No. AI Finance Ops connects to Stripe via OAuth and automatically calculates all SaaS metrics. No SQL, no code, no queries. Stripe Sigma requires you to write and maintain SQL queries for every report." },
+      { question: "What metrics does AI Finance Ops track that Stripe Sigma doesn't?", answer: "AI Finance Ops automatically tracks MRR, ARR, churn rate, LTV, cash flow, and runway with AI-powered forecasting. Stripe Sigma is a raw data tool — you must build every metric yourself via SQL." },
+      { question: "Can I use both AI Finance Ops and Stripe Sigma?", answer: "Yes, but it's redundant. AI Finance Ops provides everything Sigma offers (and more) without writing SQL. Most founders replace Sigma entirely with AI Finance Ops." },
+    ]} />
     </>
   )
 }
