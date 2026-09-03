@@ -3,7 +3,7 @@ import Link from "next/link"
 import { ArrowRight, Play, ChevronDown, AlertTriangle, TrendingDown, DollarSign } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: 'AI Finance Ops — SaaS Financial Dashboard & AI Copilot for Founders',
+  title: 'AI Finance Ops — SaaS Dashboard & AI Copilot',
   description: 'Free SaaS financial dashboard for founders. Track MRR, ARR, churn, runway, and cash flow in real time. AI-powered copilot, Stripe integration, 5-minute setup.',
   alternates: { canonical: 'https://aifinanceops.app' },
   openGraph: {

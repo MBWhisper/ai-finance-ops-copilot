@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: "Looking for a Stripe dashboard alternative? AI Finance Ops tracks MRR, churn, LTV, and cash flow — automatically. No SQL. Free plan available.",
   alternates: { canonical: "https://aifinanceops.app/stripe-dashboard-alternative" },
   openGraph: {
-    title: "Stripe Dashboard Alternative 2026: SaaS Metrics Without the Complexity",
+  title: "Stripe Dashboard Alternative 2026: Simpler SaaS Metrics",
     description: "Track MRR, churn, LTV, and cash flow automatically — without the complexity of Stripe's native dashboard. Free alternative.",
     url: "https://aifinanceops.app/stripe-dashboard-alternative",
     siteName: "AI Finance Ops",

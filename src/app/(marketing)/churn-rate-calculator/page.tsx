@@ -5,7 +5,7 @@ import { InternalLinks } from '@/components/InternalLinks'
 import { Check } from 'lucide-react'
 
 export const metadata: Metadata = {
-  title: 'Free Churn Rate Calculator | Calculate SaaS Customer & Revenue Churn',
+  title: 'Free Churn Rate Calculator | SaaS Churn & Revenue',
   description: 'Calculate your SaaS churn rate instantly. Free churn rate calculator — enter your customers or MRR at the start and end of any period and get customer churn rate, revenue churn rate, and net revenue retention.',
   alternates: { canonical: 'https://aifinanceops.app/churn-rate-calculator' },
   openGraph: {

@@ -3,7 +3,7 @@ import Link from "next/link"
 import { OptimizedImage } from "@/components/OptimizedImage"
 
 export const metadata: Metadata = {
-  title: 'About Mo — Founder of AI Finance Ops | Bootstrapped SaaS from Morocco',
+  title: 'About Mo — Founder of AI Finance Ops',
   description: 'Meet Mo, the bootstrapped founder who built AI Finance Ops from Agadir, Morocco. Why he created a free SaaS financial dashboard for founders.',
   alternates: { canonical: 'https://aifinanceops.app/about' },
   openGraph: {

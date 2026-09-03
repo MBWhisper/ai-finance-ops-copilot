@@ -3,7 +3,7 @@ import Link from "next/link"
 import { Check, ArrowRight } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "AI Finance Ops vs Stripe Sigma | Better SaaS Analytics (2026)",
+  title: "AI Finance Ops vs Stripe Sigma (2026)",
   description: "Compare AI Finance Ops vs Stripe Sigma. Get MRR, churn, LTV, and cash flow forecasting without writing SQL queries. Free plan. No Stripe Plus required.",
   alternates: { canonical: "https://aifinanceops.app/vs-stripe-sigma" },
   openGraph: {

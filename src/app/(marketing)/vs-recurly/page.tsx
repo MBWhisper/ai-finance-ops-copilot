@@ -3,7 +3,7 @@ import Link from "next/link"
 import { Check, ArrowRight } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "AI Finance Ops vs Recurly | Simpler SaaS Billing Analytics (2026)",
+  title: "AI Finance Ops vs Recurly | Simpler SaaS Billing (2026)",
   description: "Compare AI Finance Ops vs Recurly. AI Finance Ops connects to your existing Stripe setup — no migration needed. Free MRR tracking, churn alerts, and AI forecasting.",
   alternates: { canonical: "https://aifinanceops.app/vs-recurly" },
   openGraph: {

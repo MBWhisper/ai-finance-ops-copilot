@@ -4,7 +4,7 @@ import { InternalLinks } from "@/components/InternalLinks"
 import { Check } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "Startup Runway Calculator (Free) — Calculate Cash Runway | AI Finance Ops",
+  title: "Startup Runway Calculator — Free | AI Finance Ops",
   description:
     "Free startup runway calculator. Estimate how many months of cash runway you have left based on cash balance and monthly burn. Instant results — no sign up needed.",
   alternates: {

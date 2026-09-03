@@ -19,7 +19,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "What is MRR in SaaS? Complete Guide to Monthly Recurring Revenue (2026)",
+  title: "What is MRR? Complete Guide for SaaS Founders (2026)",
     description: "Learn the MRR meaning, how to calculate monthly recurring revenue, MRR components, benchmarks, and common mistakes.",
     images: ["https://aifinanceops.app/og-image.png"],
   },

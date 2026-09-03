@@ -3,7 +3,7 @@ import Link from "next/link"
 import { Check, ArrowRight } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "AI Finance Ops vs ProfitWell | Free Alternative for SaaS Founders (2026)",
+  title: "AI Finance Ops vs ProfitWell | Free SaaS Alternative (2026)",
   description: "Compare AI Finance Ops vs ProfitWell. See why SaaS founders choose AI Finance Ops — free plan, AI forecasting, and full MRR tracking without ProfitWell's limitations.",
   alternates: { canonical: "https://aifinanceops.app/vs-profitwell" },
   openGraph: {

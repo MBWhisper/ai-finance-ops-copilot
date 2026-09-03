@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { InternalLinks, CALCULATOR_LINKS, COMPARISON_LINKS } from '@/components/seo/InternalLinks'
 
 export const metadata: Metadata = {
-  title: 'Features — Real-Time SaaS Metrics Dashboard | MRR, ARR, Churn, Runway',
+  title: 'Features — SaaS Metrics Dashboard | MRR, ARR, Churn',
   description:
     'Real-time MRR, ARR, churn, LTV, and runway tracking for SaaS founders. AI copilot, Stripe integration, cash flow forecasting. Connect in minutes — no spreadsheets.',
   alternates: { canonical: 'https://aifinanceops.app/features' },

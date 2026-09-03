@@ -4,7 +4,7 @@ import { InternalLinks } from "@/components/InternalLinks"
 import { AlertTriangle, Check, ChevronDown } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: "SaaS Financial Dashboard: Track MRR, Churn & Cash Flow (2026)",
+  title: "SaaS Financial Dashboard | MRR, Churn & Cash Flow",
   description:
     "The SaaS financial dashboard built for founders. Track MRR, churn rate, LTV, cash flow, and runway in one place. Connect Stripe in 5 minutes — free to start.",
   alternates: {
