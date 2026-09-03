@@ -1,6 +1,7 @@
 import type { Metadata } from "next"
 import Link from "next/link"
 import { InternalLinks } from "@/components/InternalLinks"
+import { FaqSchema } from "@/components/FaqSchema"
 import { TrendingUp, BarChart2, AlertCircle, Check, Zap, ArrowDownRight, ArrowUpRight, Clock, DollarSign } from "lucide-react"
 
 export const metadata: Metadata = {
@@ -23,45 +24,6 @@ export const metadata: Metadata = {
     description: "Track and forecast SaaS cash flow in real time.",
     images: ["https://aifinanceops.app/og-image.png"],
   },
-}
-
-const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: [
-    {
-      "@type": "Question",
-      name: "What is SaaS cash flow?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "SaaS cash flow is the movement of money in and out of your business. Cash inflows include subscription revenue and one-time payments. Cash outflows include payroll, hosting, marketing, and operational expenses.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "How do you forecast SaaS cash flow?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Project future inflows based on current MRR, growth rate, and churn. Project outflows based on fixed costs and variable costs. Net cash flow = Inflows - Outflows. AI Finance Ops does this automatically with 90-day P50/P80/P95 projections.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "What is the difference between cash flow and revenue?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Revenue is recognized when earned (accrual accounting). Cash flow is when money actually moves. A $12,000 annual contract paid upfront counts as $12,000 cash flow in month 1 but only $1,000/month in revenue.",
-      },
-    },
-    {
-      "@type": "Question",
-      name: "What is burn rate in SaaS?",
-      acceptedAnswer: {
-        "@type": "Answer",
-        text: "Burn rate is the rate at which you spend cash. Gross burn = total monthly expenses. Net burn = expenses minus revenue. Use net burn for accurate runway calculations.",
-      },
-    },
-  ],
 }
 
 const faqItems = [
@@ -387,10 +349,7 @@ export default function CashFlowTrackerPage() {
         />
       </div>
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
+      <FaqSchema items={faqItems.map(item => ({ question: item.q, answer: item.a }))} />
     </>
   )
 }

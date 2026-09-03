@@ -30,7 +30,7 @@ const softwareSchema = {
   name: 'AI Finance Ops — AI Finance Tool for Bootstrapped Startups',
   applicationCategory: 'BusinessApplication',
   operatingSystem: 'Web',
-  offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD', description: 'Free plan available. Paid plans from $29/mo.' },
+  offers: { '@type': 'Offer', price: 0, priceCurrency: 'USD', description: 'Free plan available. Paid plans from $29/mo.' },
   description: 'AI-powered finance platform for bootstrapped founders. MRR tracking, cash flow forecasting, churn prediction, and AI Copilot chat — without a CFO.',
   url: 'https://aifinanceops.app/ai-finance-bootstrapped-startups',
 }

@@ -73,7 +73,7 @@ const softwareSchema = {
   operatingSystem: 'Web',
   offers: {
     '@type': 'Offer',
-    price: '0',
+    price: 0,
     priceCurrency: 'USD',
     description: 'Free plan available. Paid plans from $29/mo.',
   },

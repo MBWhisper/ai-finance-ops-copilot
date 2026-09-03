@@ -211,27 +211,6 @@ export default function RootLayout({
             }),
           }}
         />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              '@context': 'https://schema.org',
-              '@type': 'SoftwareApplication',
-              name: 'AI Finance Ops',
-              applicationCategory: 'BusinessApplication',
-              operatingSystem: 'Web',
-              url: SITE_URL,
-              description: 'Free SaaS financial dashboard for founders. Track MRR, ARR, churn, runway, and cash flow in real time with AI-powered insights.',
-              offers: {
-                '@type': 'Offer',
-                price: '0',
-                priceCurrency: 'USD',
-                description: 'Free plan available',
-              },
-
-            }),
-          }}
-        />
         {children}
         <CookieBanner />
         <Analytics />
