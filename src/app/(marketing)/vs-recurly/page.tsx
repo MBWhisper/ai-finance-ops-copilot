@@ -56,6 +56,7 @@ const REASONS = [
 
 export default function VsRecurlyPage() {
   return (
+    <>
     <div className="min-h-screen bg-gray-950 text-gray-100">
       <main>
         {/* Hero */}
@@ -313,5 +314,6 @@ export default function VsRecurlyPage() {
       { question: "Why would someone choose Recurly over AI Finance Ops?", answer: "Recurly is a full billing platform — it processes payments, manages subscriptions, and handles revenue recognition. AI Finance Ops is an analytics layer that connects to your existing Stripe. If you need a billing platform, Recurly is the right choice. If you need analytics, AI Finance Ops is simpler and cheaper." },
       { question: "Is migrating to Recurly risky?", answer: "Yes. Migration involves moving customers, payment methods, and subscription data. Any mistakes can result in failed charges, lost revenue, and angry customers. Most migrations take 2-6 weeks of engineering work." },
     ]} />
+    </>
   )
 }
