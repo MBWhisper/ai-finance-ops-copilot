@@ -8,10 +8,10 @@ type LinkItem = {
 }
 
 const allTools: LinkItem[] = [
+  { href: "/mrr-tracker",          label: "MRR Tracker",                 description: "Track MRR growth trends over time",                  emoji: "📈" },
+  { href: "/mrr-calculator",       label: "MRR Calculator",              description: "Calculate Monthly Recurring Revenue",               emoji: "💰" },
   { href: "/churn-rate-calculator", label: "Churn Rate Calculator",       description: "Calculate monthly & annual churn instantly",        emoji: "📉" },
   { href: "/churn-rate-calculator",label: "Churn Rate Calculator (v2)",  description: "Detailed churn analysis with revenue impact",        emoji: "📊" },
-  { href: "/mrr-calculator",       label: "MRR Calculator",              description: "Calculate Monthly Recurring Revenue",               emoji: "💰" },
-  { href: "/mrr-tracker",          label: "MRR Tracker",                 description: "Track MRR growth trends over time",                  emoji: "📈" },
   { href: "/arr-calculator",       label: "ARR Calculator",              description: "Annual Recurring Revenue calculator",                emoji: "🗓️" },
   { href: "/runway-calculator",    label: "Runway Calculator",           description: "How long will your cash last?",                     emoji: "🛫" },
   { href: "/cash-flow-tracker",    label: "Cash Flow Tracker",          description: "Track SaaS cash flow projections",                  emoji: "🌊" },

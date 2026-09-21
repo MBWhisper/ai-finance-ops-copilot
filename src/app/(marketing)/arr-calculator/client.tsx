@@ -44,6 +44,7 @@ export function ARRCalculatorClient() {
         <div className="mb-12 text-center">
           <span className="inline-block rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-400 mb-4">Free Tool</span>
           <h1 className="text-4xl font-bold text-white mb-4">ARR Calculator</h1>
+          <p className="text-sm text-emerald-400 font-medium mb-2">ARR = MRR × 12. Enter your MRR once to see ARR, growth, and time to $100K / $1M / $10M.</p>
           <p className="text-lg text-gray-400">Calculate Annual Recurring Revenue and see how long until you hit your next milestone.</p>
         </div>
 

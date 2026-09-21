@@ -4,12 +4,12 @@ import { ARRCalculatorClient } from './client'
 import { InternalLinks } from '@/components/InternalLinks'
 
 export const metadata: Metadata = {
-  title: 'Free ARR Calculator | Annual Recurring Revenue for SaaS',
-  description: 'Calculate Annual Recurring Revenue (ARR) instantly with our free ARR calculator for SaaS founders. Enter your MRR or subscription plans, get your ARR, growth rate, ARR milestones, benchmarks by stage, and step-by-step calculation guide.',
+  title: 'ARR Calculator: Convert MRR to ARR Instantly',
+  description: 'Free ARR calculator for SaaS. Enter MRR and growth rate to get ARR, months to $1M, and stage benchmarks. No signup.',
   alternates: { canonical: 'https://aifinanceops.app/arr-calculator' },
   openGraph: {
-    title: 'Free ARR Calculator | AI Finance Ops',
-    description: 'Calculate Annual Recurring Revenue (ARR) instantly for your SaaS. Free ARR calculator with benchmarks, milestones, and growth tracking.',
+    title: 'ARR Calculator: Convert MRR to ARR Instantly',
+    description: 'Free ARR calculator for SaaS. Enter MRR and growth rate to get ARR, months to $1M, and stage benchmarks. No signup.',
     url: 'https://aifinanceops.app/arr-calculator',
     siteName: 'AI Finance Ops',
     images: [{ url: 'https://aifinanceops.app/og-image.png', width: 1200, height: 630, alt: 'ARR Calculator' }],
@@ -18,8 +18,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Free ARR Calculator | AI Finance Ops',
-    description: 'Calculate Annual Recurring Revenue (ARR) instantly for your SaaS.',
+    title: 'ARR Calculator: Convert MRR to ARR Instantly',
+    description: 'Free ARR calculator for SaaS. Enter MRR and growth rate to get ARR, months to $1M, and stage benchmarks. No signup.',
     images: ['https://aifinanceops.app/og-image.png'],
   },
 }

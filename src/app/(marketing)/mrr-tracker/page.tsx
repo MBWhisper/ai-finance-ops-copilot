@@ -4,12 +4,12 @@ import { OptimizedImage } from "@/components/OptimizedImage"
 import { Check, TrendingUp, TrendingDown, BarChart3, AlertTriangle, ChevronDown } from "lucide-react"
 
 export const metadata: Metadata = {
-  title: 'Free MRR Tracker for SaaS Founders (2026) — AI Finance Ops',
-  description: 'Track Monthly Recurring Revenue automatically. Connect Stripe, see New MRR, Churn MRR, Expansion MRR in real time. No spreadsheets. Free to start.',
+  title: 'MRR Tracker: New, Expansion, Churn & Net New',
+  description: 'Free MRR tracker for SaaS. See new, expansion, contraction, and churned MRR from Stripe in 2 minutes. No spreadsheet.',
   alternates: { canonical: 'https://aifinanceops.app/mrr-tracker' },
   openGraph: {
-    title: 'Free MRR Tracker for SaaS Founders (2026) — AI Finance Ops',
-    description: 'Track Monthly Recurring Revenue automatically. Connect Stripe, see New MRR, Churn MRR, Expansion MRR in real time. No spreadsheets. Free to start.',
+    title: 'MRR Tracker: New, Expansion, Churn & Net New',
+    description: 'Free MRR tracker for SaaS. See new, expansion, contraction, and churned MRR from Stripe in 2 minutes. No spreadsheet.',
     url: 'https://aifinanceops.app/mrr-tracker',
     siteName: 'AI Finance Ops',
     images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "AI Finance Ops MRR Tracker" }],
@@ -18,8 +18,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Free MRR Tracker for SaaS Founders (2026)",
-    description: "Track Monthly Recurring Revenue automatically with AI. Connect Stripe, get your MRR dashboard in 2 minutes.",
+    title: "MRR Tracker: New, Expansion, Churn & Net New",
+    description: "Free MRR tracker for SaaS. See new, expansion, contraction, and churned MRR from Stripe in 2 minutes. No spreadsheet.",
     images: ["/og-image.png"],
   },
 }
@@ -75,6 +75,14 @@ const faqSchema = {
         "@type": "Answer",
         "text": "AI Finance Ops connects to Stripe via OAuth -- you authorize read-only access in under 60 seconds. No API keys to copy. Once connected, it automatically pulls your subscription data and calculates MRR, churn rate, LTV, and all related metrics in real time."
       }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the best free MRR tracker for SaaS?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "A good MRR tracker should split new, expansion, contraction, and churned MRR from live billing data. AI Finance Ops does that from Stripe in under 2 minutes, with a free plan and no credit card."
+      }
     }
   ]
 }
@@ -112,9 +120,13 @@ const FAQS = [
     a: "Yes. The free plan includes Stripe integration, real-time MRR dashboard, and churn alerts. No credit card required. Paid plans add cohort analysis, investor reports, and multi-currency support."
   },
   {
-    q: "How does it connect to Stripe?",
-    a: "Via OAuth in under 60 seconds. You authorize read-only access — no API keys needed. AI Finance Ops automatically pulls your subscription data and calculates all MRR components in real time."
-  },
+      q: "How does it connect to Stripe?",
+      a: "Via OAuth in under 60 seconds. You authorize read-only access — no API keys needed. AI Finance Ops automatically pulls your subscription data and calculates all MRR components in real time."
+    },
+  {
+      q: "What is the best free MRR tracker for SaaS?",
+      a: "A good MRR tracker should split new, expansion, contraction, and churned MRR from live billing data. AI Finance Ops does that from Stripe in under 2 minutes, with a free plan and no credit card."
+    },
 ]
 
 export default function MrrTrackerPage() {
@@ -132,8 +144,7 @@ export default function MrrTrackerPage() {
             Free Tool
           </div>
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight text-white mb-6">
-            MRR Tracker for<br />
-            <span className="text-emerald-400">SaaS Founders</span>
+            MRR Tracker for SaaS <span className="text-emerald-400">(Free, Stripe-connected)</span>
           </h1>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-4">
             Stop copying numbers into spreadsheets. AI Finance Ops connects to Stripe and tracks your
@@ -266,6 +277,54 @@ export default function MrrTrackerPage() {
                 <div className="text-xs text-gray-500">Connect Stripe → get your first MRR dashboard</div>
               </div>
             </div>
+          </div>
+        </section>
+
+        {/* Comparison: MRR tracker vs spreadsheet vs Baremetrics */}
+        <section className="border-t border-gray-800 px-6 py-20">
+          <div className="mx-auto max-w-3xl">
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">MRR tracker vs spreadsheet vs Baremetrics</h2>
+            <div className="overflow-x-auto mb-6">
+              <table className="w-full text-sm border border-gray-800 rounded-xl overflow-hidden">
+                <thead>
+                  <tr className="bg-gray-900 border-b border-gray-800">
+                    <th className="text-left py-3 px-4 text-gray-400 font-medium"></th>
+                    <th className="text-left py-3 px-4 text-gray-400 font-medium">Spreadsheet</th>
+                    <th className="text-left py-3 px-4 text-gray-400 font-medium">Baremetrics</th>
+                    <th className="text-left py-3 px-4 text-emerald-400 font-medium">AI Finance Ops</th>
+                  </tr>
+                </thead>
+                <tbody className="text-gray-300">
+                  <tr className="border-b border-gray-800/50">
+                    <td className="py-3 px-4 font-medium text-white">New / expansion / churned MRR</td>
+                    <td className="py-3 px-4">Manual formulas</td>
+                    <td className="py-3 px-4">Yes</td>
+                    <td className="py-3 px-4 text-emerald-400">Automatic from Stripe</td>
+                  </tr>
+                  <tr className="border-b border-gray-800/50">
+                    <td className="py-3 px-4 font-medium text-white">Setup time</td>
+                    <td className="py-3 px-4">Hours</td>
+                    <td className="py-3 px-4">~15 minutes</td>
+                    <td className="py-3 px-4 text-emerald-400">Under 2 minutes</td>
+                  </tr>
+                  <tr className="border-b border-gray-800/50">
+                    <td className="py-3 px-4 font-medium text-white">Price</td>
+                    <td className="py-3 px-4">Free</td>
+                    <td className="py-3 px-4">From ~$50/mo</td>
+                    <td className="py-3 px-4 text-emerald-400">Free to start</td>
+                  </tr>
+                  <tr>
+                    <td className="py-3 px-4 font-medium text-white">Built for bootstrapped founders</td>
+                    <td className="py-3 px-4">No</td>
+                    <td className="py-3 px-4">No — enterprise reporting</td>
+                    <td className="py-3 px-4 text-emerald-400">Yes</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <p className="text-sm text-gray-400 leading-relaxed">
+              Need the formula only? Use the <Link href="/mrr-calculator" className="text-emerald-400 hover:underline">MRR calculator</Link>. Annualizing? Use the <Link href="/arr-calculator" className="text-emerald-400 hover:underline">ARR calculator</Link>. Comparing tools? See <Link href="/baremetrics-alternative" className="text-emerald-400 hover:underline">Baremetrics alternative</Link>.
+            </p>
           </div>
         </section>
 
