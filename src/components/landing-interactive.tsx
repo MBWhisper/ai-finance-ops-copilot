@@ -238,21 +238,55 @@ export function BackToTop() {
   )
 }
 
-/* ─── Live Visitor Counter (client-only random to avoid hydration mismatch) ─── */
+/* ─── Live Visitor Counter — realistic fluctuation ─── */
 export function LiveVisitorBadge() {
   const [count, setCount] = useState<number | null>(null)
 
   useEffect(() => {
-    setCount(Math.floor(Math.random() * 30) + 18)
+    // seed with time-based pseudo-random so not identical across reloads
+    const base = 14 + (Math.floor(Date.now() / 60000) % 11) + Math.floor(Math.random() * 6) // 14-30
+    const jitter = Math.floor(Math.random() * 5) - 2
+    setCount(Math.max(11, Math.min(42, base + jitter)))
   }, [])
 
+  useEffect(() => {
+    if (count === null) return
+    let timeout: ReturnType<typeof setTimeout>
+    const schedule = () => {
+      const delay = 2200 + Math.random() * 4200 // 2.2-6.4s irregular
+      timeout = setTimeout(() => {
+        setCount((prev) => {
+          if (prev === null) return prev
+          const r = Math.random()
+          let delta: number
+          if (r < 0.55) delta = Math.random() < 0.5 ? 1 : -1 // small step
+          else if (r < 0.85) delta = 0 // stay
+          else if (r < 0.95) delta = 2
+          else delta = -2
+          // bias to keep in band 12-38
+          if (prev > 32 && delta > 0) delta = -1
+          if (prev < 16 && delta < 0) delta = 1
+          const next = Math.max(12, Math.min(38, prev + delta))
+          return next
+        })
+        schedule()
+      }, delay)
+    }
+    schedule()
+    return () => clearTimeout(timeout)
+  }, [count !== null])
+
   return (
-    <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-4 py-1.5 text-xs text-emerald-400 min-w-[200px] justify-center">
+    <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/20 bg-emerald-500/5 px-4 py-1.5 text-xs text-emerald-400 min-w-[200px] justify-center backdrop-blur-sm">
       <span className="relative flex h-2 w-2 shrink-0" aria-hidden="true">
         <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
         <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
       </span>
-      <span suppressHydrationWarning>{count ?? 0} people are viewing this page</span>
+      <span suppressHydrationWarning className="tabular-nums">
+        {count === null ? "—" : `${count} people are viewing this page`}
+      </span>
+      <span className="h-1 w-1 rounded-full bg-emerald-500/40" aria-hidden="true" />
+      <span className="text-[10px] tracking-widest uppercase text-emerald-400/70">live</span>
     </div>
   )
 }

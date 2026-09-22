@@ -31,6 +31,7 @@ import "@/components/animations.css"
 import { ScrollReveal } from "@/components/landing-interactive"
 import { BackToTop } from "@/components/landing-interactive"
 import { ProductHuntBadge } from "@/components/marketing/ProductHuntBadge"
+import { MouseSpotlight, GrainOverlay } from "@/components/ui/mouse-spotlight"
 import {
   HeroCanvas,
   LiveVisitorBadge,
@@ -172,25 +173,30 @@ function WhyFoundersSwitch() {
           </div>
         </ScrollReveal>
         <div className="space-y-4">
-          {cards.map((card, i) => (
-            <ScrollReveal key={i} delay={i * 100}>
-              <div
-                className={`rounded-xl border p-6 ${
-                  card.highlight
-                    ? "border-emerald-500/30 bg-emerald-500/5"
-                    : "border-gray-800 bg-gray-900/50"
-                }`}
-              >
-                <div className="flex items-start gap-4">
-                  <span className="text-2xl mt-0.5">{card.icon}</span>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white">{card.title}</h3>
-                    <p className="mt-1 text-gray-400 leading-relaxed">{card.desc}</p>
+          {cards.map((card, i) => {
+            // human imperfection: slight rotation, not perfectly aligned
+            const rotations = ["-0.3deg", "0.4deg", "-0.2deg"]
+            return (
+              <ScrollReveal key={i} delay={i * 100}>
+                <div
+                  className={`rounded-xl border p-6 transition-transform hover:rotate-0 ${
+                    card.highlight
+                      ? "border-emerald-500/30 bg-emerald-500/5"
+                      : "border-gray-800 bg-gray-900/50"
+                  }`}
+                  style={{ transform: `rotate(${rotations[i]})` }}
+                >
+                  <div className="flex items-start gap-4">
+                    <span className="text-2xl mt-0.5">{card.icon}</span>
+                    <div>
+                      <h3 className="text-lg font-semibold text-white">{card.title}</h3>
+                      <p className="mt-1 text-gray-400 leading-relaxed">{card.desc}</p>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </ScrollReveal>
-          ))}
+              </ScrollReveal>
+            )
+          })}
         </div>
       </div>
     </section>
@@ -271,17 +277,30 @@ export default function LandingPage() {
       />
       <div>
         {/* ─── HERO ─── (static, critical for LCP) */}
-        <section className="relative overflow-hidden px-6 py-24 sm:py-32 lg:px-8">
+        <section className="relative overflow-hidden px-6 py-24 sm:py-32 lg:px-8 isolate">
           <div className="absolute inset-0 -z-10 overflow-hidden">
             <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-900/20 via-gray-950 to-gray-950" />
-            <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-emerald-500/10 blur-3xl animate-pulse-glow" />
+            {/* aurora blobs - human imperfection: irregular, not symmetric */}
+            <div className="absolute -top-[30%] left-[-10%] w-[900px] h-[700px] rounded-[60%_40%_55%_45%_/_45%_55%_45%_55%] bg-emerald-600/10 blur-[80px] animate-aurora-1" />
+            <div className="absolute top-[20%] right-[-15%] w-[700px] h-[600px] rounded-[40%_60%_45%_55%_/_55%_45%_60%_40%] bg-teal-600/10 blur-[90px] animate-aurora-2" />
+            <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full bg-emerald-500/08 blur-3xl animate-pulse-glow" />
+            {/* subtle drifting grid */}
+            <div
+              className="absolute inset-0 opacity-[0.04] animate-grid-drift"
+              style={{
+                backgroundImage: `linear-gradient(rgba(16,185,129,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.5) 1px, transparent 1px)`,
+                backgroundSize: `40px 40px`,
+              }}
+            />
             <div className="absolute top-[15%] left-[10%] h-4 w-4 rounded-full bg-emerald-400/20 blur-sm animate-float" />
             <div className="absolute top-[30%] right-[15%] h-6 w-6 rounded-full bg-emerald-500/15 blur-sm animate-float-delayed" />
             <div className="absolute bottom-[25%] left-[20%] h-3 w-3 rounded-full bg-emerald-400/20 blur-sm animate-float" style={{ animationDelay: "2s" }} />
             <div className="absolute top-[20%] right-[30%] h-5 w-5 rounded-full bg-blue-400/10 blur-sm animate-float-delayed" style={{ animationDelay: "1s" }} />
             {/* HeroCanvas loads client-side only after LCP */}
             <HeroCanvas />
+            <GrainOverlay />
           </div>
+          <MouseSpotlight />
 
           <div className="mx-auto max-w-4xl text-center">
             <ScrollReveal delay={0}>
@@ -290,7 +309,26 @@ export default function LandingPage() {
               </div>
             </ScrollReveal>
             <h1 className="text-5xl font-bold tracking-tight text-white sm:text-7xl">
-              Your Stripe data is not a financial plan.
+              Your Stripe data is not a{" "}
+              <span className="relative inline-block">
+                financial plan.
+                <svg
+                  aria-hidden="true"
+                  className="absolute -bottom-2 left-0 w-full h-3 text-emerald-400/70"
+                  viewBox="0 0 200 12"
+                  preserveAspectRatio="none"
+                  fill="none"
+                >
+                  <path
+                    d="M2 8 C40 2, 90 10, 130 6 C160 3, 180 5, 198 7"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{ filter: "url(#rough)" }}
+                  />
+                </svg>
+              </span>
             </h1>
             <p className="mt-6 text-xl leading-8 text-gray-400 max-w-2xl mx-auto">
               See MRR, churn, runway, and cash risks in one founder-friendly dashboard. Connect Stripe in 5 minutes.
