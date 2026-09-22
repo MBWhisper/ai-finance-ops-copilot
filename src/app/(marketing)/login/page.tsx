@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
 import { createClient } from "@/lib/supabase/browser"
@@ -8,7 +8,6 @@ import { Logo } from "@/components/logo"
 import { Loader2, Check, ArrowRight } from "lucide-react"
 import Link from "next/link"
 import { mapAuthError } from "@/lib/auth/error-messages"
-import Head from "next/head"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -30,6 +29,43 @@ export default function LoginPage() {
   const triggerShake = useCallback(() => {
     setShake(true)
     setTimeout(() => setShake(false), 400)
+  }, [])
+
+  // Handle OAuth errors from ?error= or #error= (Supabase sometimes returns hash fragment)
+  useEffect(() => {
+    const search = typeof window !== "undefined" ? window.location.search : ""
+    const qp = new URLSearchParams(search)
+    const qpError = qp.get("error")
+    const qpDesc = qp.get("error_description")
+    const hash = typeof window !== "undefined" ? window.location.hash || "" : ""
+    const hashParams = new URLSearchParams(hash.replace(/^#/, ""))
+    const hashError = hashParams.get("error")
+    const hashDesc = hashParams.get("error_description")
+    const hashCode = hashParams.get("error_code")
+
+    const rawError = qpError || hashError
+    const rawDesc = qpDesc || hashDesc || hashCode || ""
+
+    if (rawError) {
+      let msg = ""
+      const decoded = rawDesc ? decodeURIComponent(rawDesc.replace(/\+/g, " ")) : ""
+      if (rawError === "server_error" || rawError === "unexpected_failure") {
+        msg = decoded.includes("Unable to exchange external code")
+          ? "Google login failed: Supabase could not exchange the Google code. This usually means the Google OAuth redirect URL is not whitelisted in Supabase (Auth → URL Configuration) or the Google Client Secret is invalid/expired. Please re-try; if it persists contact support."
+          : decoded || "Google login failed (server_error). Please try again."
+      } else if (rawError === "exchange_failed") {
+        msg = decoded ? `Login failed: ${decoded}` : "Login failed while verifying with the provider. Please try again — if it persists, clear cookies and retry."
+      } else if (rawError === "auth_callback_failed" || rawError === "missing_code") {
+        msg = "Login was interrupted. Please try again and allow cookies for this site."
+      } else {
+        msg = decoded || rawError
+      }
+      setError(msg)
+      setShake(true)
+      setTimeout(() => setShake(false), 400)
+      const clean = window.location.pathname
+      window.history.replaceState({}, "", clean)
+    }
   }, [])
 
   const [needsConfirmation, setNeedsConfirmation] = useState(false)
@@ -101,8 +137,6 @@ export default function LoginPage() {
   }
 
   return (
-    <>
-    <Head><meta name="robots" content="noindex, nofollow" /></Head>
     <div className="min-h-screen bg-gray-950 flex flex-col lg:flex-row">
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden bg-gradient-to-br from-gray-950 via-gray-900 to-emerald-950/40 items-center justify-center p-12 min-h-screen">
         <div className="absolute inset-0 overflow-hidden">
@@ -257,7 +291,6 @@ export default function LoginPage() {
         </motion.div>
       </div>
     </div>
-    </>
   )
 }
 
