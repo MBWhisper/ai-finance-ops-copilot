@@ -51,7 +51,14 @@ const ReassuranceSection = dynamic(() => import("@/components/home/sections").th
 
 function DashboardScreenshot() {
   return (
-    <section className="px-6 py-12 sm:py-16">
+    <section className="relative isolate overflow-hidden px-6 py-12 sm:py-16">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-900/08 via-transparent to-transparent" />
+        <div className="absolute left-1/2 top-1/2 h-[700px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-600/04 blur-[80px] animate-aurora-1" />
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: `linear-gradient(rgba(16,185,129,0.3) 1px, transparent 1px)`, backgroundSize: `40px 40px` }} />
+        <GrainOverlay />
+      </div>
+      <MouseSpotlight />
       <div className="mx-auto max-w-4xl">
         <ScrollReveal>
           <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-1 shadow-2xl shadow-emerald-500/5">
@@ -162,7 +169,15 @@ function WhyFoundersSwitch() {
   ]
 
   return (
-    <section className="border-t border-gray-800 px-6 py-24">
+    <section className="relative isolate overflow-hidden border-t border-gray-800 px-6 py-24">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-orange-900/08 via-transparent to-transparent" />
+        <div className="absolute right-[-10%] top-10 h-[500px] w-[600px] rounded-[50%_40%_60%_50%/_50%_60%_40%_50%] bg-orange-600/05 blur-[70px] animate-aurora-2" />
+        <div className="absolute left-0 bottom-0 h-[400px] w-[600px] rounded-full bg-amber-600/04 blur-[80px] animate-aurora-1" />
+        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: `radial-gradient(rgba(251,146,60,0.6) 1px, transparent 1px)`, backgroundSize: `22px 22px` }} />
+        <GrainOverlay />
+      </div>
+      <MouseSpotlight />
       <div className="mx-auto max-w-5xl">
         <ScrollReveal>
           <div className="text-center mb-12">
@@ -179,7 +194,7 @@ function WhyFoundersSwitch() {
             return (
               <ScrollReveal key={i} delay={i * 100}>
                 <div
-                  className={`rounded-xl border p-6 transition-transform hover:rotate-0 ${
+                  className={`rounded-xl border p-6 transition-transform hover:rotate-0 backdrop-blur-sm ${
                     card.highlight
                       ? "border-emerald-500/30 bg-emerald-500/5"
                       : "border-gray-800 bg-gray-900/50"
@@ -402,7 +417,14 @@ export default function LandingPage() {
           <FeaturesSection />
         </Suspense>
 
-        <div className="content-visibility-section">
+        <div className="relative isolate overflow-hidden content-visibility-section">
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-cyan-900/08 via-transparent to-transparent" />
+            <div className="absolute right-1/3 top-10 h-[500px] w-[600px] rounded-[55%_45%_60%_40%/_40%_50%_55%_60%] bg-cyan-600/05 blur-[70px] animate-aurora-2" />
+            <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: `radial-gradient(rgba(6,182,212,0.6) 1px, transparent 1px)`, backgroundSize: `24px 24px` }} />
+            <GrainOverlay />
+          </div>
+          <MouseSpotlight />
           <Suspense fallback={<div className="h-96 animate-pulse bg-gray-900/50" />}>
             <MRRCalculator />
           </Suspense>
@@ -419,7 +441,15 @@ export default function LandingPage() {
         </Suspense>
 
         {/* ─── FOUNDER STORY ─── */}
-        <section className="border-t border-gray-800 px-6 py-24">
+        <section className="relative isolate overflow-hidden border-t border-gray-800 px-6 py-24">
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-amber-900/06 via-transparent to-transparent" />
+            <div className="absolute left-1/4 bottom-0 h-[600px] w-[700px] rounded-[45%_55%_50%_60%/_60%_50%_55%_45%] bg-amber-600/04 blur-[80px] animate-aurora-1" />
+            <div className="absolute right-10 top-20 h-[400px] w-[400px] rounded-full bg-emerald-600/04 blur-[70px] animate-aurora-2" />
+            <div className="absolute inset-0 opacity-[0.025]" style={{ backgroundImage: `radial-gradient(rgba(245,158,11,0.5) 1px, transparent 1px)`, backgroundSize: `26px 26px` }} />
+            <GrainOverlay />
+          </div>
+          <MouseSpotlight />
           <div className="mx-auto max-w-5xl">
             <ScrollReveal>
               <div className="text-center mb-16">
@@ -507,12 +537,28 @@ export default function LandingPage() {
           <FAQSection />
         </Suspense>
 
-        <Suspense fallback={<div className="h-48 animate-pulse bg-gray-900/50" />}>
-          <NewsletterSignup />
-        </Suspense>
+        <div className="relative isolate overflow-hidden">
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-indigo-900/08 via-transparent to-transparent" />
+            <div className="absolute left-1/4 top-10 h-[400px] w-[600px] rounded-full bg-indigo-600/05 blur-[70px] animate-aurora-1" />
+            <div className="absolute inset-0 opacity-[0.035]" style={{ backgroundImage: `linear-gradient(90deg, rgba(99,102,241,0.3) 1px, transparent 1px)`, backgroundSize: `32px 32px` }} />
+            <GrainOverlay />
+          </div>
+          <MouseSpotlight />
+          <Suspense fallback={<div className="h-48 animate-pulse bg-gray-900/50" />}>
+            <NewsletterSignup />
+          </Suspense>
+        </div>
 
         {/* ─── CTA ─── */}
-        <section className="border-t border-gray-800 px-6 py-24">
+        <section className="relative isolate overflow-hidden border-t border-gray-800 px-6 py-24">
+          <div className="absolute inset-0 -z-10">
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-emerald-900/16 via-gray-950 to-gray-950" />
+            <div className="absolute left-1/2 top-1/2 h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-emerald-600/08 blur-[90px] animate-aurora-1" />
+            <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: `linear-gradient(rgba(16,185,129,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.4) 1px, transparent 1px)`, backgroundSize: `44px 44px` }} />
+            <GrainOverlay />
+          </div>
+          <MouseSpotlight />
           <div className="mx-auto max-w-3xl text-center">
             <ScrollReveal>
               <div className="mx-auto max-w-md rounded-2xl border border-gray-800 bg-gray-900/50 p-6 mb-12 text-left">

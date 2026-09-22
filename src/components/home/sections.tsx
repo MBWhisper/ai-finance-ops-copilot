@@ -3,6 +3,7 @@
 import { ScrollReveal, TestimonialCarousel, FaqAccordion, AnimatedCounter } from "@/components/landing-interactive"
 import { Check } from "lucide-react"
 import Link from "next/link"
+import { MouseSpotlight, GrainOverlay } from "@/components/ui/mouse-spotlight"
 
 export function SocialProofSection() {
   const logos = [
@@ -35,7 +36,20 @@ export function SocialProofSection() {
   ]
 
   return (
-    <section className="border-t border-gray-800/50 bg-gray-900/80 px-6 py-12">
+    <section className="relative isolate overflow-hidden border-t border-gray-800/50 bg-gray-900/80 px-6 py-12">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-b from-gray-900/50 via-gray-950 to-gray-950" />
+        <div className="absolute left-1/4 top-1/2 h-[400px] w-[600px] -translate-y-1/2 rounded-full bg-blue-600/05 blur-[60px] animate-aurora-1" />
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `radial-gradient(rgba(148,163,184,0.8) 1px, transparent 1px)`,
+            backgroundSize: `24px 24px`,
+          }}
+        />
+        <GrainOverlay />
+      </div>
+      <MouseSpotlight />
       <div className="mx-auto max-w-5xl">
         <ScrollReveal>
           <p className="mb-8 text-center text-xs font-medium uppercase tracking-widest text-gray-400">
@@ -60,10 +74,23 @@ export function SocialProofSection() {
 
 export function ProblemSection() {
   return (
-    <section className="border-t border-gray-800 px-6 py-24">
+    <section className="relative isolate overflow-hidden border-t border-gray-800 px-6 py-24">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-amber-900/08 via-transparent to-transparent" />
+        <div className="absolute right-[-10%] top-10 h-[500px] w-[500px] rounded-[45%_55%_60%_40%/_40%_45%_55%_60%] bg-amber-600/06 blur-[70px] animate-aurora-2" />
+        <div className="absolute left-[-5%] bottom-10 h-[400px] w-[600px] rounded-full bg-orange-600/04 blur-[80px] animate-aurora-1" />
+        <div
+          className="absolute inset-0 opacity-[0.025]"
+          style={{
+            backgroundImage: `repeating-linear-gradient(-12deg, transparent, transparent 32px, rgba(251,146,60,0.35) 32px, rgba(251,146,60,0.35) 33px)`,
+          }}
+        />
+        <GrainOverlay />
+      </div>
+      <MouseSpotlight />
       <div className="mx-auto max-w-4xl">
         <ScrollReveal>
-          <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-10 md:p-14 text-center">
+          <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-10 md:p-14 text-center backdrop-blur-sm">
             <p className="text-xl text-gray-300 leading-relaxed">
               You&apos;re building a SaaS. You shouldn&apos;t be rebuilding your revenue report every month.
             </p>
@@ -98,7 +125,20 @@ export function FeaturesSection() {
   ]
 
   return (
-    <section id="features" className="border-t border-gray-800 px-6 py-24">
+    <section id="features" className="relative isolate overflow-hidden border-t border-gray-800 px-6 py-24">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-emerald-900/12 via-transparent to-transparent" />
+        <div className="absolute right-1/4 top-1/3 h-[600px] w-[600px] rounded-full bg-emerald-500/05 blur-[70px] animate-aurora-1" />
+        <div
+          className="absolute inset-0 opacity-[0.035]"
+          style={{
+            backgroundImage: `linear-gradient(rgba(16,185,129,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.4) 1px, transparent 1px)`,
+            backgroundSize: `32px 32px`,
+          }}
+        />
+        <GrainOverlay />
+      </div>
+      <MouseSpotlight />
       <div className="mx-auto max-w-4xl">
         <ScrollReveal>
           <div className="text-center mb-16">
@@ -109,7 +149,7 @@ export function FeaturesSection() {
         <div className="grid gap-4 md:grid-cols-2 max-w-2xl mx-auto">
           {features.map((feat, i) => (
             <ScrollReveal key={feat.label} delay={i * 100} className={i === 4 ? 'md:col-span-2' : ''}>
-              <div className="flex items-center gap-4 rounded-xl border border-gray-800 bg-gray-900/50 p-5 hover:border-gray-700 transition-colors">
+              <div className="flex items-center gap-4 rounded-xl border border-gray-800 bg-gray-900/50 p-5 hover:border-gray-700 transition-colors backdrop-blur-sm">
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-emerald-500/10">
                   <Check className="h-4 w-4 text-emerald-400" />
                 </div>
@@ -136,7 +176,21 @@ export function ComparisonTableSection() {
   ]
 
   return (
-    <section className="border-t border-gray-800 px-6 py-24">
+    <section className="relative isolate overflow-hidden border-t border-gray-800 px-6 py-24">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-indigo-900/10 via-transparent to-transparent" />
+        <div className="absolute left-[-5%] top-10 h-[500px] w-[700px] rounded-[55%_45%_50%_50%/_50%_55%_45%_55%] bg-indigo-600/06 blur-[80px] animate-aurora-2" />
+        <div className="absolute right-[-10%] bottom-0 h-[450px] w-[450px] rounded-full bg-violet-600/05 blur-[70px] animate-aurora-1" />
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `linear-gradient(90deg, rgba(99,102,241,0.4) 1px, transparent 1px)`,
+            backgroundSize: `48px 48px`,
+          }}
+        />
+        <GrainOverlay />
+      </div>
+      <MouseSpotlight />
       <div className="mx-auto max-w-4xl">
         <ScrollReveal>
           <div className="text-center mb-16">
@@ -145,7 +199,7 @@ export function ComparisonTableSection() {
           </div>
         </ScrollReveal>
         <ScrollReveal>
-          <div className="overflow-x-auto">
+          <div className="overflow-x-auto rounded-xl border border-gray-800/50 bg-gray-900/30 backdrop-blur-sm p-2">
             <table className="w-full text-left">
               <thead>
                 <tr className="border-b border-gray-800">
@@ -157,7 +211,7 @@ export function ComparisonTableSection() {
               </thead>
               <tbody>
                 {rows.map((row) => (
-                  <tr key={row.label} className="border-b border-gray-800/50">
+                  <tr key={row.label} className="border-b border-gray-800/50 last:border-0">
                     <td className="py-4 pr-4 text-sm text-gray-400 font-medium">{row.label}</td>
                     {row.values.map((v, i) => (
                       <td
@@ -180,10 +234,23 @@ export function ComparisonTableSection() {
 
 export function ReassuranceSection() {
   return (
-    <section className="border-t border-gray-800 px-6 py-24">
+    <section className="relative isolate overflow-hidden border-t border-gray-800 px-6 py-24">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-teal-900/10 via-transparent to-transparent" />
+        <div className="absolute left-10 top-20 h-[400px] w-[600px] rounded-full bg-teal-600/05 blur-[70px] animate-aurora-1" />
+        <div
+          className="absolute inset-0 opacity-[0.04]"
+          style={{
+            backgroundImage: `radial-gradient(rgba(20,184,166,0.6) 1.2px, transparent 1.2px)`,
+            backgroundSize: `28px 28px`,
+          }}
+        />
+        <GrainOverlay />
+      </div>
+      <MouseSpotlight />
       <div className="mx-auto max-w-4xl">
         <ScrollReveal>
-          <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-10 md:p-14">
+          <div className="rounded-2xl border border-gray-800 bg-gray-900/50 p-10 md:p-14 backdrop-blur-sm">
             <h2 className="text-2xl font-bold text-white mb-2">Built for early-stage SaaS, not enterprises</h2>
             <p className="text-gray-400 mb-10">No sales calls. No implementation teams. No BS.</p>
             <div className="grid gap-8 md:grid-cols-3">
@@ -230,7 +297,21 @@ export function PricingSection() {
   ]
 
   return (
-    <section id="pricing" className="border-t border-gray-800 px-6 py-24">
+    <section id="pricing" className="relative isolate overflow-hidden border-t border-gray-800 px-6 py-24">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-900/14 via-gray-950 to-gray-950" />
+        <div className="absolute left-1/2 top-0 h-[700px] w-[900px] -translate-x-1/2 rounded-full bg-emerald-600/06 blur-[80px] animate-aurora-1" />
+        <div className="absolute right-0 bottom-0 h-[500px] w-[500px] rounded-[50%_40%_60%_45%/_45%_55%_50%_50%] bg-yellow-600/04 blur-[70px] animate-aurora-2" />
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `linear-gradient(rgba(16,185,129,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(16,185,129,0.5) 1px, transparent 1px)`,
+            backgroundSize: `36px 36px`,
+          }}
+        />
+        <GrainOverlay />
+      </div>
+      <MouseSpotlight />
       <div className="mx-auto max-w-6xl">
         <ScrollReveal>
           <div className="text-center mb-16">
@@ -241,7 +322,7 @@ export function PricingSection() {
         <div className="grid gap-8 lg:grid-cols-3">
           {plans.map((plan, i) => (
             <ScrollReveal key={plan.name} delay={i * 100}>
-              <div className={`relative flex flex-col rounded-2xl p-8 ${plan.highlighted ? "border-2 border-emerald-500 bg-gray-900 shadow-xl shadow-emerald-500/10" : "border border-gray-800 bg-gray-900/50"} hover:border-emerald-500/50 transition-colors`}>
+              <div className={`relative flex flex-col rounded-2xl p-8 ${plan.highlighted ? "border-2 border-emerald-500 bg-gray-900 shadow-xl shadow-emerald-500/10" : "border border-gray-800 bg-gray-900/50"} hover:border-emerald-500/50 transition-colors backdrop-blur-sm`}>
                 {plan.highlighted && (
                   <div className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-emerald-600 px-4 py-1 text-sm font-semibold text-white">
                     Recommended
@@ -323,7 +404,21 @@ export function TestimonialsSection() {
   ]
 
   return (
-    <section id="testimonials" className="border-t border-gray-800 px-6 py-24">
+    <section id="testimonials" className="relative isolate overflow-hidden border-t border-gray-800 px-6 py-24">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_var(--tw-gradient-stops))] from-violet-900/10 via-transparent to-transparent" />
+        <div className="absolute right-1/4 top-1/4 h-[600px] w-[700px] rounded-[60%_40%_45%_55%/_45%_55%_60%_40%] bg-violet-600/06 blur-[80px] animate-aurora-2" />
+        <div className="absolute left-10 bottom-10 h-[400px] w-[500px] rounded-full bg-fuchsia-600/04 blur-[70px] animate-aurora-1" />
+        <div
+          className="absolute inset-0 opacity-[0.035]"
+          style={{
+            backgroundImage: `radial-gradient(rgba(168,85,247,0.7) 1px, transparent 1px)`,
+            backgroundSize: `30px 30px`,
+          }}
+        />
+        <GrainOverlay />
+      </div>
+      <MouseSpotlight />
       <div className="mx-auto max-w-6xl">
         <ScrollReveal>
           <div className="text-center mb-12">
@@ -334,7 +429,7 @@ export function TestimonialsSection() {
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((t, i) => (
             <ScrollReveal key={t.name} delay={i * 80}>
-              <div className="flex h-full flex-col rounded-xl border border-gray-800 bg-gray-900/50 p-6 shadow-sm transition-all hover:border-gray-700 hover:bg-gray-900/80">
+              <div className="flex h-full flex-col rounded-xl border border-gray-800 bg-gray-900/50 p-6 shadow-sm transition-all hover:border-gray-700 hover:bg-gray-900/80 backdrop-blur-sm">
                 <div className="mb-4 flex gap-1">
                   {[...Array(5)].map((_, si) => (
                     <svg key={si} className="h-4 w-4 fill-amber-500 text-amber-500" viewBox="0 0 20 20">
@@ -368,7 +463,20 @@ export function TestimonialsSection() {
 
 export function FAQSection() {
   return (
-    <section id="faq" className="border-t border-gray-800 px-6 py-24">
+    <section id="faq" className="relative isolate overflow-hidden border-t border-gray-800 px-6 py-24">
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-800/20 via-transparent to-transparent" />
+        <div className="absolute left-1/3 top-10 h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-slate-600/06 blur-[70px] animate-aurora-1" />
+        <div
+          className="absolute inset-0 opacity-[0.03]"
+          style={{
+            backgroundImage: `linear-gradient(rgba(148,163,184,0.5) 1px, transparent 1px)`,
+            backgroundSize: `40px 40px`,
+          }}
+        />
+        <GrainOverlay />
+      </div>
+      <MouseSpotlight />
       <div className="mx-auto max-w-3xl">
         <ScrollReveal>
           <div className="text-center mb-12">
