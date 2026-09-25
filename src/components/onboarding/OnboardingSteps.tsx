@@ -20,25 +20,32 @@ export default function OnboardingSteps() {
   const [customerStatus, setCustomerStatus] = useState("sent")
   const [loading, setLoading] = useState(false)
   const [checkedOnboarding, setCheckedOnboarding] = useState(false)
+  const [authReady, setAuthReady] = useState(false)
 
   useEffect(() => {
     async function check() {
-      const { data: { user } } = await supabase.auth.getUser()
-      if (!user) {
-        router.push("/login")
-        return
-      }
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("onboarding_completed")
-        .eq("id", user.id)
-        .single()
+      try {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) {
+          router.push("/login")
+          return
+        }
+        setAuthReady(true)
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("onboarding_completed")
+          .eq("id", user.id)
+          .single()
 
-      if (profile?.onboarding_completed) {
-        router.push("/dashboard/overview")
-        return
+        if (profile?.onboarding_completed) {
+          router.push("/dashboard/overview")
+          return
+        }
+        setCheckedOnboarding(true)
+      } catch (e) {
+        console.error("[Onboarding] auth check error:", e)
+        setAuthReady(false)
       }
-      setCheckedOnboarding(true)
     }
     check()
   }, [router, supabase])
@@ -131,7 +138,7 @@ export default function OnboardingSteps() {
     router.push("/dashboard/overview?welcome=true")
   }
 
-  if (!checkedOnboarding) {
+  if (!authReady || !checkedOnboarding) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-950">
         <div className="animate-spin h-8 w-8 border-2 border-emerald-500 border-t-transparent rounded-full" />
