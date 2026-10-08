@@ -89,6 +89,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        {/* Flag JS availability before first paint so scroll-reveal styles only
+            hide content when JS can reveal it (keeps SSR HTML crawlable). */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.add('js');`,
+          }}
+        />
         {/* Consent Mode v2 default — must fire before any GA/Ads tag */}
         <script
           dangerouslySetInnerHTML={{
@@ -154,6 +161,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://images.unsplash.com" />
+        <link rel="alternate" type="application/rss+xml" title="AI Finance Ops Blog" href="/feed.xml" />
         <link rel="dns-prefetch" href="https://images.unsplash.com" />
         {process.env.NEXT_PUBLIC_SUPABASE_URL && (
           <>
@@ -162,7 +170,7 @@ export default function RootLayout({
           </>
         )}
         {process.env.NEXT_PUBLIC_ADSENSE_ID && (
-          <Script id="google-adsense" async strategy="afterInteractive" crossOrigin="anonymous"
+          <Script id="google-adsense" async strategy="lazyOnload" crossOrigin="anonymous"
             src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_ID}`}
           />
         )}
@@ -178,9 +186,10 @@ export default function RootLayout({
                 `,
               }}
             />
+            {/* lazyOnload: analytics never blocks interaction — frees ~190KB + 1.4s CPU on mobile */}
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID}`}
-              strategy="afterInteractive"
+              strategy="lazyOnload"
             />
           </>
         )}
@@ -208,6 +217,17 @@ export default function RootLayout({
                 'https://www.youtube.com/@AIKnowlidgi',
                 'https://twitter.com/MbtechE80106',
               ],
+            }),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'WebSite',
+              name: 'AI Finance Ops',
+              url: SITE_URL,
             }),
           }}
         />

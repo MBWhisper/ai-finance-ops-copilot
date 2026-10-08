@@ -19,6 +19,9 @@ export default function robots(): MetadataRoute.Robots {
           '/sign-in',
           '/sign-up',
           '/setup',
+          '/login',
+          '/register',
+          '/calculators',
         ],
       },
       {
@@ -39,3 +42,7 @@ export default function robots(): MetadataRoute.Robots {
     sitemap: 'https://aifinanceops.app/sitemap.xml',
   }
 }
+
+export const sitemap: MetadataRoute.Sitemap = [
+  { url: 'https://aifinanceops.app/feed.xml', title: 'AI Finance Ops RSS Feed', lastModified: new Date() },
+]

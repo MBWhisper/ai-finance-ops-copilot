@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>AI Finance Ops Blog</title>
+    <link>https://aifinanceops.app/blog</link>
+    <description>Free SaaS finance tools, MRR/ARR guides, and bootstrapped founder insights.</description>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 08 Oct 2026 00:00:00 GMT</lastBuildDate>
+    <atom:link href="https://aifinanceops.app/feed.xml" rel="self" type="application/rss+xml" />
+    <image>
+      <url>https://aifinanceops.app/og-image.png</url>
+      <title>AI Finance Ops</title>
+      <link>https://aifinanceops.app</link>
+    </image>
+
+    <item>
+      <title>SaaS Financial Model: 6 Steps + Free Template (2026)</title>
+      <link>https://aifinanceops.app/blog/how-to-build-saas-financial-model</link>
+      <guid isPermaLink="true">https://aifinanceops.app/blog/how-to-build-saas-financial-model</guid>
+      <pubDate>Mon, 30 Jun 2026 00:00:00 GMT</pubDate>
+      <description>Build a SaaS financial model in 6 steps: MRR forecast, expenses, cash flow, and 3 scenarios. Formulas included. Free template.</description>
+      <content:encoded><![CDATA[
+        <p>Build a SaaS financial model in 6 steps: MRR forecast, expenses, cash flow, and 3 scenarios. Formulas included. Free template.</p>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>Good MRR Growth Rate by Stage (2026 Benchmarks)</title>
+      <link>https://aifinanceops.app/blog/what-is-good-mrr-growth-rate</link>
+      <guid isPermaLink="true">https://aifinanceops.app/blog/what-is-good-mrr-growth-rate</guid>
+      <pubDate>Fri, 12 Jun 2026 00:00:00 GMT</pubDate>
+      <description>What is a good MRR growth rate at $5K, $50K, and $200K? 2026 benchmarks, the formula, and what to fix if you are below them.</description>
+      <content:encoded><![CDATA[
+        <p>What is a good MRR growth rate at $5K, $50K, and $200K? 2026 benchmarks, the formula, and what to fix if you are below them.</p>
+      ]]></content:encoded>
+    </item>
+
+    <item>
+      <title>How to Price a SaaS Product: 4 Models Compared</title>
+      <link>https://aifinanceops.app/blog/how-to-price-saas-product</link>
+      <guid isPermaLink="true">https://aifinanceops.app/blog/how-to-price-saas-product</guid>
+      <pubDate>Wed, 08 Jul 2026 00:00:00 GMT</pubDate>
+      <description>Price your SaaS with per-seat, usage, flat, and hybrid models. See what to charge by stage and the mistakes that cap MRR growth.</description>
+      <content:encoded><![CDATA[
+        <p>Price your SaaS with per-seat, usage, flat, and hybrid models. See what to charge by stage and the mistakes that cap MRR growth.</p>
+      ]]></content:encoded>
+    </item>
+
+  </channel>
+</rss>
