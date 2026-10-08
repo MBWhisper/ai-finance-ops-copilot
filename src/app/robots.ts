@@ -44,5 +44,5 @@ export default function robots(): MetadataRoute.Robots {
 }
 
 export const sitemap: MetadataRoute.Sitemap = [
-  { url: 'https://aifinanceops.app/feed.xml', title: 'AI Finance Ops RSS Feed', lastModified: new Date() },
+  { url: 'https://aifinanceops.app/feed.xml', lastModified: new Date() },
 ]
