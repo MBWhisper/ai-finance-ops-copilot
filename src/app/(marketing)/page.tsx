@@ -560,7 +560,7 @@ export default function LandingPage() {
               </div>
               <Link href="/blog" className="text-sm font-medium text-emerald-400 hover:text-emerald-300 transition-colors">View all →</Link>
             </div>
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5">
               {[
                 { title: "How to Calculate Burn Rate", desc: "Formula + 2026 benchmarks by stage. Fix high burn fast.", href: "/blog/how-to-calculate-burn-rate", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=340&fit=crop" },
                 { title: "LTV:CAC Ratio for SaaS", desc: "Calculate LTV and CAC correctly. 2026 benchmarks included.", href: "/blog/ltv-cac-ratio-saas", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=340&fit=crop" },
@@ -568,6 +568,10 @@ export default function LandingPage() {
                 { title: "SaaS MRR Dashboard", desc: "Track MRR from Stripe automatically — no spreadsheet chaos.", href: "/blog/saas-mrr-dashboard", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=340&fit=crop" },
                 { title: "How to Reduce Churn Rate", desc: "5 actionable tactics: activation, exit surveys, annual discounts.", href: "/blog/how-to-reduce-saas-churn", img: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=340&fit=crop" },
                 { title: "SaaS Pricing Models Compared", desc: "Per-seat vs usage vs flat vs hybrid — which fits your stage.", href: "/blog/saas-pricing-models-comparison", img: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&h=340&fit=crop" },
+                { title: "What Is Net New MRR?", desc: "Formula + 5 components: New, Expansion, Contraction, Churned, Reactivation.", href: "/blog/what-is-net-new-mrr", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=340&fit=crop" },
+                { title: "ARR vs MRR: Difference & Conversion", desc: "When to use ARR for investors vs MRR for internal growth tracking.", href: "/blog/arr-vs-mrr-difference", img: "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=600&h=340&fit=crop" },
+                { title: "SaaS Cohort Analysis Guide", desc: "Build retention curves by signup month and fix activation gaps.", href: "/blog/saas-cohort-analysis-guide", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=340&fit=crop" },
+                { title: "How to Calculate Customer LTV", desc: "LTV formula + common mistakes (gross vs net, ignoring churn).", href: "/blog/how-to-calculate-customer-lifetime-value-saas", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=340&fit=crop" },
               ].map((item) => (
                 <Link key={item.href} href={item.href} className="group rounded-2xl border border-gray-800 bg-gray-900/50 overflow-hidden hover:border-emerald-500/40 transition-all backdrop-blur-sm">
                   <div className="aspect-video overflow-hidden">
