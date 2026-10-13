@@ -550,6 +550,40 @@ export default function LandingPage() {
           </Suspense>
         </div>
 
+        {/* Latest Insights — new articles from SEO push */}
+        <section className="border-t border-gray-800 px-6 py-24">
+          <div className="mx-auto max-w-6xl">
+            <div className="flex items-end justify-between mb-12">
+              <div>
+                <h2 className="text-3xl md:text-4xl font-bold text-white">Latest Insights</h2>
+                <p className="text-gray-400 mt-2">New guides on MRR, ARR, pricing, and runway.</p>
+              </div>
+              <Link href="/blog" className="text-sm font-medium text-emerald-400 hover:text-emerald-300 transition-colors">View all →</Link>
+            </div>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+              {[
+                { title: "How to Calculate Burn Rate", desc: "Formula + 2026 benchmarks by stage. Fix high burn fast.", href: "/blog/how-to-calculate-burn-rate", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=340&fit=crop" },
+                { title: "LTV:CAC Ratio for SaaS", desc: "Calculate LTV and CAC correctly. 2026 benchmarks included.", href: "/blog/ltv-cac-ratio-saas", img: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&h=340&fit=crop" },
+                { title: "Startup Runway Calculator", desc: "Months of cash left + how to extend with pricing tweaks.", href: "/blog/startup-runway-calculator", img: "https://images.unsplash.com/photo-1518186285589-2f7649de83e0?w=600&h=340&fit=crop" },
+                { title: "SaaS MRR Dashboard", desc: "Track MRR from Stripe automatically — no spreadsheet chaos.", href: "/blog/saas-mrr-dashboard", img: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=340&fit=crop" },
+                { title: "How to Reduce Churn Rate", desc: "5 actionable tactics: activation, exit surveys, annual discounts.", href: "/blog/how-to-reduce-saas-churn", img: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=340&fit=crop" },
+                { title: "SaaS Pricing Models Compared", desc: "Per-seat vs usage vs flat vs hybrid — which fits your stage.", href: "/blog/saas-pricing-models-comparison", img: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600&h=340&fit=crop" },
+              ].map((item) => (
+                <Link key={item.href} href={item.href} className="group rounded-2xl border border-gray-800 bg-gray-900/50 overflow-hidden hover:border-emerald-500/40 transition-all backdrop-blur-sm">
+                  <div className="aspect-video overflow-hidden">
+                    <img src={item.img} alt={item.title} className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105" loading="lazy" />
+                  </div>
+                  <div className="p-6">
+                    <h3 className="text-lg font-semibold text-white group-hover:text-emerald-400 transition-colors">{item.title}</h3>
+                    <p className="text-sm text-gray-400 mt-2 leading-relaxed">{item.desc}</p>
+                    <span className="inline-block mt-4 text-xs font-medium text-emerald-400 group-hover:text-emerald-300 transition-colors">Read →</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* ─── CTA ─── */}
         <section className="relative isolate overflow-hidden border-t border-gray-800 px-6 py-24">
           <div className="absolute inset-0 -z-10">
