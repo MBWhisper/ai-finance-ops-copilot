@@ -103,6 +103,13 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        // Consolidate www -> apex so Google sees ONE canonical host
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.aifinanceops.app' }],
+        destination: 'https://aifinanceops.app/:path*',
+        permanent: true,
+      },
+      {
         source: '/churn-calculator',
         destination: '/churn-rate-calculator',
         permanent: true,
@@ -154,4 +161,6 @@ module.exports = withSentryConfig(nextConfig, {
   // Disable release creation when org is not configured
   release: sentryEnabled ? undefined : { create: false, finalize: false },
   telemetry: false,
+  // Revalidate blog static pages every 6 hours for fresh SEO
+  // (next.config.js does not support per-page revalidate directly; use generateStaticParams or route config instead)
 })
